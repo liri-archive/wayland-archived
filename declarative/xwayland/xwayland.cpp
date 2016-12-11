@@ -26,9 +26,9 @@
 
 #include <QtCore/QTimer>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandClient>
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandsurface_p.h>
+#include <QtWaylandCompositor/QWaylandClient>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/private/qwaylandsurface_p.h>
 
 #include "xwayland.h"
 #include "xwaylandmanager.h"

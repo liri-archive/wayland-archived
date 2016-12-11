@@ -28,7 +28,7 @@
 #ifndef GREENISLAND_TASKMANAGER_P_H
 #define GREENISLAND_TASKMANAGER_P_H
 
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
+#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <GreenIsland/Server/ClientWindow>
 #include <GreenIsland/Server/TaskManager>

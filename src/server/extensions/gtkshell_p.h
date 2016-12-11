@@ -29,7 +29,7 @@
 #define GREENISLAND_GTKSHELL_P_H
 
 #include <GreenIsland/Server/GtkShell>
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
+#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <GreenIsland/server/private/qwayland-server-gtk.h>
 

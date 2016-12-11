@@ -20,14 +20,13 @@ endforeach()
 
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../waylandcompositor"
     "${CMAKE_CURRENT_BINARY_DIR}"
-    "${CMAKE_CURRENT_BINARY_DIR}/../waylandcompositor"
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
     ${Qt5Qml_PRIVATE_INCLUDE_DIRS}
     ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
+    ${Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS}
 )
 
 if(systemd_FOUND)
@@ -39,9 +38,6 @@ add_definitions(
     -DQT_WAYLAND_COMPOSITOR_QUICK
 )
 
-include(GreenIslandServerConfigExtrasLocal.cmake)
-include(GreenIslandServerMacros.cmake)
-
 set(SOURCES
     serverlogging_p.cpp
     core/abstractplugin.cpp
@@ -49,7 +45,6 @@ set(SOURCES
     core/diagnostic_p.cpp
     core/homeapplication.cpp
     core/quickoutput.cpp
-    input/keymap.cpp
     output/outputchangeset.cpp
     output/outputconfiguration.cpp
     output/outputmanagement.cpp
@@ -67,32 +62,32 @@ set(SOURCES
     extensions/screenshooter.cpp
 )
 
-greenisland_add_server_protocol(SOURCES
+ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/wayland/wayland.xml"
     BASENAME wayland
     PREFIX wl_
 )
-greenisland_add_server_protocol(SOURCES
+ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland.xml"
     BASENAME greenisland
     PREFIX greenisland_
 )
-greenisland_add_server_protocol(SOURCES
+ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-screencaster.xml"
     BASENAME greenisland-screencaster
     PREFIX greenisland_
 )
-greenisland_add_server_protocol(SOURCES
+ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-screenshooter.xml"
     BASENAME greenisland-screenshooter
     PREFIX greenisland_
 )
-greenisland_add_server_protocol(SOURCES
+ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-outputmanagement.xml"
     BASENAME greenisland-outputmanagement
     PREFIX greenisland_
 )
-greenisland_add_server_protocol(SOURCES
+ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/gtk/gtk-shell.xml"
     BASENAME gtk
     PREFIX gtk_
@@ -107,8 +102,8 @@ target_link_libraries(GreenIslandServer
         Qt5::Core
         Qt5::Gui
         Qt5::Quick
+        Qt5::WaylandCompositor
         Wayland::Server
-        GreenIsland::Compositor
         GreenIsland::Platform
     PRIVATE
         Wayland::Cursor
@@ -156,19 +151,6 @@ ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
         GreenIslandServer_HEADERS
     RELATIVE
         core
-)
-
-ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
-    HEADER_NAMES
-        Keymap
-    PREFIX
-        Server
-    OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
-    REQUIRED_HEADERS
-        GreenIslandServer_HEADERS
-    RELATIVE
-        input
 )
 
 ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
@@ -238,7 +220,6 @@ private_headers(GreenIslandServer_PRIVATE_HEADERS
         "${CMAKE_CURRENT_SOURCE_DIR}/extensions/applicationmanager_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/extensions/screencaster_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/extensions/screenshooter_p.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/input/keymap_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/output/outputchangeset_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/output/outputconfiguration_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/output/outputmanagement_p.h"
@@ -289,7 +270,6 @@ ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/GreenIslandServer
                                   INSTALL_DESTINATION ${GreenIslandServer_CMAKECONFIG_INSTALL_DIR})
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfigVersion.cmake"
-              "${CMAKE_CURRENT_SOURCE_DIR}/GreenIslandServerConfigExtras.cmake"
               "${CMAKE_CURRENT_SOURCE_DIR}/GreenIslandServerMacros.cmake"
         DESTINATION "${GreenIslandServer_CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel)
@@ -301,7 +281,7 @@ install(EXPORT GreenIslandServerTargets
 include(ECMGeneratePriFile)
 ecm_generate_pri_file(BASE_NAME GreenIslandServer
                       LIB_NAME GreenIslandServer
-                      DEPS "core gui quick GreenIslandCompositor"
+                      DEPS "core gui quick waylandcompositor"
                       FILENAME_VAR PRI_FILENAME
                       INCLUDE_INSTALL_DIR "${HAWAII_INCLUDEDIR} ${GREENISLAND_INCLUDEDIR}")
 install(FILES ${PRI_FILENAME}
@@ -311,7 +291,7 @@ install(FILES ${PRI_FILENAME}
 include(ECMGeneratePkgConfigFile)
 #ecm_generate_pkgconfig_file(BASE_NAME GreenIslandServer
 #                            LIB_NAME GreenIslandServer
-#                            DEPS "Qt5Core Qt5Gui Qt5Quick GreenIslandCompositor"
+#                            DEPS "Qt5Core Qt5Gui Qt5Quick Qt5WaylandCompositor"
 #                            FILENAME_VAR PKGCONFIG_FILENAME
 #                            INCLUDE_INSTALL_DIR "${HAWAII_INCLUDEDIR} ${GREENISLAND_INCLUDEDIR}"
 #                            INSTALL)

@@ -27,9 +27,9 @@
 
 #include <QtGui/QGuiApplication>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandWlShell>
-#include <GreenIsland/QtWaylandCompositor/QWaylandXdgShell>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandWlShell>
+#include <QtWaylandCompositor/QWaylandXdgShell>
 
 #include "clientwindow.h"
 #include "clientwindow_p.h"

@@ -29,10 +29,10 @@
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandSeat>
-#include <GreenIsland/QtWaylandCompositor/QWaylandShellSurface>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickItem>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandSeat>
+#include <QtWaylandCompositor/QWaylandShellSurface>
+#include <QtWaylandCompositor/QWaylandQuickItem>
 
 #include "clientwindow.h"
 #include "clientwindow_p.h"

@@ -28,7 +28,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/QWaylandOutput>
 
 #include "xwaylandquickshellintegration.h"
 #include "xwaylandquickshellsurfaceitem.h"

@@ -30,8 +30,8 @@
 #include <QtQuick/QQuickItem>
 #include <QtQuick/QQuickItemGrabResult>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandDestroyListener>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandDestroyListener>
 
 #include "screencaster.h"
 #include "screencaster_p.h"

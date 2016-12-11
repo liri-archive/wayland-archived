@@ -30,7 +30,7 @@
 
 #include <QtQml/QQmlListProperty>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickOutput>
+#include <QtWaylandCompositor/QWaylandQuickOutput>
 #include <GreenIsland/Server/Screen>
 
 #include <GreenIsland/server/greenislandserver_export.h>

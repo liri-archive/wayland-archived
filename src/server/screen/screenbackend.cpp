@@ -29,7 +29,7 @@
 #include <QtGui/qpa/qplatformintegration.h>
 #include <QtGui/qpa/qwindowsysteminterface.h>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandCompositor>
 #include <GreenIsland/Platform/EglFSScreen>
 
 #include "output/outputchangeset.h"

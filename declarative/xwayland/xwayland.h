@@ -31,7 +31,7 @@
 #include <QtCore/QLoggingCategory>
 #include <QtQml/QQmlParserStatus>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandSurface>
+#include <QtWaylandCompositor/QWaylandSurface>
 
 Q_DECLARE_LOGGING_CATEGORY(XWAYLAND)
 Q_DECLARE_LOGGING_CATEGORY(XWAYLAND_TRACE)

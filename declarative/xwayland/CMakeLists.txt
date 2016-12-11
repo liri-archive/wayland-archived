@@ -55,10 +55,10 @@ endif()
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
-    "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland/QtWaylandCompositor"
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
     ${Qt5Qml_PRIVATE_INCLUDE_DIRS}
     ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
+    ${Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS}
 )
 
 set(SOURCES
@@ -84,7 +84,7 @@ add_library(GreenIsland::XWaylandPlugin ALIAS GreenIslandXWaylandPlugin)
 target_link_libraries(GreenIslandXWaylandPlugin
     Qt5::Qml
     Qt5::Quick
-    GreenIsland::Compositor
+    Qt5::WaylandCompositor
     GreenIsland::Server
     XCB::XCB
     XCB::XFIXES

@@ -30,8 +30,8 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandWlShell>
-#include <GreenIsland/QtWaylandCompositor/QWaylandXdgShell>
+#include <QtWaylandCompositor/QWaylandWlShell>
+#include <QtWaylandCompositor/QWaylandXdgShell>
 
 #include <GreenIsland/Server/ApplicationManager>
 #include <GreenIsland/Server/ClientWindow>

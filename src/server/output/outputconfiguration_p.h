@@ -28,8 +28,8 @@
 #ifndef GREENISLAND_OUTPUTCONFIGURATION_P_H
 #define GREENISLAND_OUTPUTCONFIGURATION_P_H
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
+#include <QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <GreenIsland/Server/OutputConfiguration>
 #include <GreenIsland/server/private/qwayland-server-greenisland-outputmanagement.h>

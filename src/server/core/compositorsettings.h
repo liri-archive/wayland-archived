@@ -28,9 +28,10 @@
 #ifndef GREENISLAND_COMPOSITORSETTINGS_H
 #define GREENISLAND_COMPOSITORSETTINGS_H
 
+#include <QtCore/QObject>
 #include <QtQml/QQmlParserStatus>
 
-#include <GreenIsland/Server/Keymap>
+#include <GreenIsland/server/greenislandserver_export.h>
 
 class QWaylandCompositor;
 
@@ -49,7 +50,6 @@ class GREENISLANDSERVER_EXPORT CompositorSettings : public QObject, public QQmlP
     Q_PROPERTY(Qt::KeyboardModifier windowActionKey READ windowActionKey WRITE setWindowActionKey NOTIFY windowActionKeyChanged)
     Q_PROPERTY(quint32 keyboardRepeatRate READ keyboardRepeatRate WRITE setKeyboardRepeatRate NOTIFY keyboardRepeatRateChanged)
     Q_PROPERTY(quint32 keyboardRepeatDelay READ keyboardRepeatDelay WRITE setKeyboardRepeatDelay NOTIFY keyboardRepeatDelayChanged)
-    Q_PROPERTY(Keymap *keymap READ keymap WRITE setKeymap NOTIFY keymapChanged)
 public:
     CompositorSettings(QObject *parent = Q_NULLPTR);
 
@@ -65,22 +65,18 @@ public:
     quint32 keyboardRepeatDelay() const;
     void setKeyboardRepeatDelay(quint32 delay);
 
-    Keymap *keymap() const;
-    void setKeymap(Keymap *keymap);
-
 Q_SIGNALS:
     void compositorChanged();
     void windowActionKeyChanged();
     void keyboardRepeatRateChanged();
     void keyboardRepeatDelayChanged();
-    void keymapChanged();
 
 protected:
     void classBegin() Q_DECL_OVERRIDE;
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Q_PRIVATE_SLOT(d_func(), void _q_setupKeymap())
+    Q_PRIVATE_SLOT(d_func(), void _q_setupKeyboard())
 };
 
 } // namespace Server

@@ -25,7 +25,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandoutput_p.h>
+#include <QtWaylandCompositor/private/qwaylandoutput_p.h>
 
 #include "outputchangeset.h"
 #include "outputchangeset_p.h"

@@ -31,7 +31,7 @@
 #ifndef XWAYLANDQUICKSHELLSURFACEITEM_H
 #define XWAYLANDQUICKSHELLSURFACEITEM_H
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickItem>
+#include <QtWaylandCompositor/QWaylandQuickItem>
 
 class XWaylandQuickShellIntegration;
 class XWaylandShellSurface;

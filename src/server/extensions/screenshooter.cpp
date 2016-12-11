@@ -29,8 +29,8 @@
 #include <QtQuick/QQuickItemGrabResult>
 #include <QtQuick/QQuickWindow>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandView>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandView>
 
 #include "screenshooter.h"
 #include "screenshooter_p.h"

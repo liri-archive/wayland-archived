@@ -31,7 +31,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QSize>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/QWaylandOutput>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

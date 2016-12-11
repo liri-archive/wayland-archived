@@ -30,9 +30,9 @@
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
-#include <GreenIsland/QtWaylandCompositor/QWaylandSurface>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickItem>
+#include <QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/QWaylandSurface>
+#include <QtWaylandCompositor/QWaylandQuickItem>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

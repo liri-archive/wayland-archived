@@ -57,18 +57,16 @@ public:
         , windowActionKey(Qt::MetaModifier)
         , repeatRate(40)
         , repeatDelay(400)
-        , keymap(Q_NULLPTR)
     {
     }
 
-    void _q_setupKeymap();
+    void _q_setupKeyboard();
 
     bool initialized;
     QWaylandCompositor *compositor;
     Qt::KeyboardModifier windowActionKey;
     quint32 repeatRate;
     quint32 repeatDelay;
-    Keymap *keymap;
 };
 
 } // namespace Server

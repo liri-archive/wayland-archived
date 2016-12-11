@@ -29,7 +29,5 @@ include(GenerateHeaders)
 include(PrivateHeaders)
 
 add_subdirectory(client)
-add_subdirectory(hardwareintegration)
 add_subdirectory(platform)
 add_subdirectory(server)
-add_subdirectory(waylandcompositor)

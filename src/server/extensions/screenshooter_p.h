@@ -30,9 +30,9 @@
 
 #include <QtQuick/QQuickItem>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
-#include <GreenIsland/QtWaylandCompositor/QWaylandSurface>
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
+#include <QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/QWaylandSurface>
+#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <GreenIsland/Server/Screenshooter>
 #include <GreenIsland/server/private/qwayland-server-greenisland-screenshooter.h>

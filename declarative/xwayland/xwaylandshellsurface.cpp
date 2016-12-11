@@ -49,7 +49,7 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandCompositor>
 
 #include "xcbwrapper.h"
 #include "xcbresources.h"

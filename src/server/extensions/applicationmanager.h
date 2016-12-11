@@ -28,7 +28,7 @@
 #ifndef GREENISLAND_APPLICATIONMANAGER_H
 #define GREENISLAND_APPLICATIONMANAGER_H
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositorExtension>
+#include <QtWaylandCompositor/QWaylandCompositorExtension>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

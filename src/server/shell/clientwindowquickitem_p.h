@@ -28,7 +28,7 @@
 #ifndef GREENISLAND_CLIENTWINDOWQUICKITEM_P_H
 #define GREENISLAND_CLIENTWINDOWQUICKITEM_P_H
 
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandquickshellsurfaceitem_p.h>
+#include <QtWaylandCompositor/private/qwaylandquickshellsurfaceitem_p.h>
 
 #include <GreenIsland/Server/ClientWindowQuickItem>
 

@@ -5,9 +5,6 @@ include_directories(
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/../server/GreenIslandServerConfigExtrasLocal.cmake")
-include("${CMAKE_CURRENT_SOURCE_DIR}/../server/GreenIslandServerMacros.cmake")
-
 # Avoid warnings regarding wl_buffer being deprecated
 add_definitions(-Wno-deprecated-declarations)
 
@@ -34,27 +31,27 @@ set(SOURCES
     touch.cpp
 )
 
-greenisland_add_client_protocol(SOURCES
+ecm_add_qtwayland_client_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/wayland/wayland.xml"
     BASENAME wayland
     PREFIX wl_
 )
-greenisland_add_client_protocol(SOURCES
+ecm_add_qtwayland_client_protocol(SOURCES
     PROTOCOL "${WAYLAND_PROTOCOLS_DIR}/unstable/fullscreen-shell/fullscreen-shell-unstable-v1.xml"
     BASENAME fullscreen-shell-unstable-v1
     PREFIX zwp_
 )
-greenisland_add_client_protocol(SOURCES
+ecm_add_qtwayland_client_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-screencaster.xml"
     BASENAME greenisland-screencaster
     PREFIX greenisland_
 )
-greenisland_add_client_protocol(SOURCES
+ecm_add_qtwayland_client_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-screenshooter.xml"
     BASENAME greenisland-screenshooter
     PREFIX greenisland_
 )
-greenisland_add_client_protocol(SOURCES
+ecm_add_qtwayland_client_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-outputmanagement.xml"
     BASENAME greenisland-outputmanagement
     PREFIX greenisland_

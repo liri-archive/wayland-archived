@@ -28,9 +28,9 @@
 #ifndef GREENISLAND_GTKSHELL_H
 #define GREENISLAND_GTKSHELL_H
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositorExtension>
-#include <GreenIsland/QtWaylandCompositor/QWaylandResource>
-#include <GreenIsland/QtWaylandCompositor/QWaylandShellSurface>
+#include <QtWaylandCompositor/QWaylandCompositorExtension>
+#include <QtWaylandCompositor/QWaylandResource>
+#include <QtWaylandCompositor/QWaylandShellSurface>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

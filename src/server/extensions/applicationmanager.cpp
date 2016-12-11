@@ -25,9 +25,9 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandClient>
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandSurface>
+#include <QtWaylandCompositor/QWaylandClient>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandSurface>
 
 #include "applicationmanager.h"
 #include "applicationmanager_p.h"

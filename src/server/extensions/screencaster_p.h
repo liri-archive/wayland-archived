@@ -30,8 +30,8 @@
 
 #include <QtQuick/QQuickWindow>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
+#include <QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <GreenIsland/Server/Screencaster>
 #include <GreenIsland/server/private/qwayland-server-greenisland-screencaster.h>

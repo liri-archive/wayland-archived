@@ -35,7 +35,7 @@
 #include <GreenIsland/Client/Shm>
 #include <GreenIsland/Client/ShmPool>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandCompositor>
 
 using namespace GreenIsland;
 

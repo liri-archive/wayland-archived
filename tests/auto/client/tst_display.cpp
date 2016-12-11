@@ -30,8 +30,8 @@
 
 #include <GreenIsland/Client/ClientConnection>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositor_p.h>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/private/qwaylandcompositor_p.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>

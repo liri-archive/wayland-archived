@@ -31,7 +31,7 @@
 #include <QtCore/QMultiMap>
 #include <QtQuick/QQuickItem>
 
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
+#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <GreenIsland/Server/ApplicationManager>
 #include <GreenIsland/server/private/qwayland-server-greenisland.h>

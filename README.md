@@ -19,8 +19,7 @@ in the same process.
 
 Green Island includes:
 
-* A QtWaylandCompositor API copy
-* Compositor extensions for xdg-shell, screenshots, screencast,
+* Compositor extensions for screenshots, screencast,
   applicaion manager, task manager
 * Support for Plasma 5
 * XWayland support
@@ -38,14 +37,6 @@ Green Island includes:
 * Compositor to run your UX
 * Minimal desktop compositor and shell
 * Qt-style API for Wayland clients
-
-A QtWaylandCompositor API copy is available here and it's built as one of the Green Island
-libraries until the upstream code will be stable, feature complete and available on
-some distributions (Fedora and ArchLinux are the main targets here because they are
-pretty up to date).  Relying on an always changing API that is not available on distros
-made the development harder in the past, to overcome this issue it has been decided
-to ship a copy here until the requirements listed above are not met.  Once the time
-will come we'll remove the copy here and just link to the official library.
 
 The server-side API extends QtWaylandCompositor with additional features needed by any
 real world Wayland compositor.
@@ -76,10 +67,11 @@ Compiler requirements:
 * [gcc >= 4.8](https://gcc.gnu.org/gcc-4.8/) or
 * [Clang](http://clang.llvm.org/)
 
-Qt >= 5.6.0 with at least the following modules is required:
+Qt >= 5.8.0 with at least the following modules is required:
 
 * [qtbase](http://code.qt.io/cgit/qt/qtbase.git)
 * [qtdeclarative](http://code.qt.io/cgit/qt/qtdeclarative.git)
+* [qtwayland](http://code.qt.io/cgit/qt/qtwayland.git)
 
 The following modules and their dependencies are required:
 

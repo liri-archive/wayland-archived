@@ -25,7 +25,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandCompositor>
 
 #include "serverlogging_p.h"
 #include "taskmanager.h"

@@ -28,7 +28,7 @@
 #ifndef GREENISLAND_OUTPUTMANAGEMENT_P_H
 #define GREENISLAND_OUTPUTMANAGEMENT_P_H
 
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
+#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <GreenIsland/Server/OutputManagement>
 #include <GreenIsland/server/private/qwayland-server-greenisland-outputmanagement.h>

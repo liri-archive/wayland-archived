@@ -28,7 +28,7 @@
 #ifndef GREENISLAND_SCREENSHOOTER_H
 #define GREENISLAND_SCREENSHOOTER_H
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositorExtension>
+#include <QtWaylandCompositor/QWaylandCompositorExtension>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

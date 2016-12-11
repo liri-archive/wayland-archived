@@ -30,7 +30,7 @@
 
 #include <QtQml/QQmlPropertyMap>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickShellSurfaceItem>
+#include <QtWaylandCompositor/QWaylandQuickShellSurfaceItem>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

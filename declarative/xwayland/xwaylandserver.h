@@ -30,7 +30,7 @@
 #include <QtCore/QString>
 #include <QtCore/QProcess>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandCompositor>
 
 struct wl_client;
 

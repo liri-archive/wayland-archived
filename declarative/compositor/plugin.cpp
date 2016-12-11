@@ -27,22 +27,7 @@
 
 #include <QtQml/QQmlExtensionPlugin>
 #include <QtQml/QQmlComponent>
-
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickItem>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickSurface>
-#include <GreenIsland/QtWaylandCompositor/QWaylandClient>
-#include <GreenIsland/QtWaylandCompositor/QWaylandDrag>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickOutput>
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositorExtension>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickExtension>
-#include <GreenIsland/QtWaylandCompositor/QWaylandSeat>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQuickShellSurfaceItem>
-#include <GreenIsland/QtWaylandCompositor/QWaylandResource>
-#include <GreenIsland/QtWaylandCompositor/QWaylandQtWindowManager>
-#include <GreenIsland/QtWaylandCompositor/QWaylandWlShell>
-#include <GreenIsland/QtWaylandCompositor/QWaylandTextInputManager>
-#include <GreenIsland/QtWaylandCompositor/QWaylandXdgShell>
+#include <QtWaylandCompositor/QWaylandQuickExtension>
 
 #include <GreenIsland/Server/ApplicationManager>
 #include <GreenIsland/Server/ClientWindow>
@@ -53,7 +38,6 @@
 #include <GreenIsland/Server/QuickOutput>
 #include <GreenIsland/Server/QuickOutputConfiguration>
 #include <GreenIsland/Server/GtkShell>
-#include <GreenIsland/Server/Keymap>
 #include <GreenIsland/Server/Screen>
 #include <GreenIsland/Server/Screencaster>
 #include <GreenIsland/Server/Screenshooter>
@@ -62,15 +46,8 @@
 
 #include "fpscounter.h"
 #include "keyeventfilter.h"
-#include "qwaylandmousetracker_p.h"
 
 using namespace GreenIsland::Server;
-
-Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CONTAINER_CLASS(QWaylandQuickCompositor)
-Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(QWaylandQtWindowManager)
-Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(QWaylandWlShell)
-Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(QWaylandXdgShell)
-Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(QWaylandTextInputManager)
 
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(ApplicationManager)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(GtkShell)
@@ -90,50 +67,6 @@ void GreenIslandPlugin::registerTypes(const char *uri)
 {
     // @uri GreenIsland
     Q_ASSERT(QLatin1String(uri) == QLatin1String("GreenIsland"));
-
-    // Base types
-    qmlRegisterType<QWaylandQuickCompositorQuickExtensionContainer>(uri, 1, 0, "WaylandCompositor");
-    qmlRegisterType<QWaylandQuickItem>(uri, 1, 0, "WaylandQuickItem");
-    qmlRegisterType<QWaylandMouseTracker>(uri, 1, 0, "WaylandMouseTracker");
-    qmlRegisterType<QWaylandQuickOutput>(uri, 1, 0, "WaylandOutput");
-    qmlRegisterType<QWaylandQuickSurface>(uri, 1, 0, "WaylandSurface");
-
-    // Uncreatable types
-    qmlRegisterUncreatableType<QWaylandCompositorExtension>(uri, 1, 0, "WaylandExtension",
-                                                            QObject::tr("Cannot create instance of WaylandExtension"));
-    qmlRegisterUncreatableType<QWaylandClient>(uri, 1, 0, "WaylandClient",
-                                               QObject::tr("Cannot create instance of WaylandClient"));
-    qmlRegisterUncreatableType<QWaylandOutput>(uri, 1, 0, "WaylandOutputBase",
-                                               QObject::tr("Cannot create instance of WaylandOutputBase, use WaylandOutput instead"));
-    qmlRegisterUncreatableType<QWaylandView>(uri, 1, 0, "WaylandView",
-                                             QObject::tr("Cannot create instance of WaylandView, it can be retrieved by accessor on WaylandQuickItem"));
-    qmlRegisterUncreatableType<QWaylandSeat>(uri, 1, 0, "WaylandSeat",
-                                             QObject::tr("Cannot create instance of WaylandSeat"));
-    qmlRegisterUncreatableType<QWaylandDrag>(uri, 1, 0, "WaylandDrag",
-                                             QObject::tr("Cannot create instance of WaylandDrag"));
-    qmlRegisterUncreatableType<QWaylandCompositor>(uri, 1, 0, "WaylandCompositorBase",
-                                                   QObject::tr("Cannot create instance of WaylandCompositorBase, use WaylandCompositor instead"));
-    qmlRegisterUncreatableType<QWaylandSurface>(uri, 1, 0, "WaylandSurfaceBase",
-                                                QObject::tr("Cannot create instance of WaylandSurfaceBase, use WaylandSurface instead"));
-    qmlRegisterUncreatableType<QWaylandShell>(uri, 1, 0, "Shell",
-                                              QObject::tr("Cannot create instance of Shell"));
-    qmlRegisterUncreatableType<QWaylandShellSurface>(uri, 1, 0, "ShellSurface",
-                                                     QObject::tr("Cannot create instance of ShellSurface"));
-    qmlRegisterUncreatableType<QWaylandWlShellSurface>(uri, 1, 0, "WlShellSurfaceBase",
-                                                       QObject::tr("Cannot create instance of WlShellSurfaceBase, use WlShellSurface instead"));
-    qmlRegisterUncreatableType<QWaylandXdgSurface>(uri, 1, 0, "XdgSurfaceBase",
-                                                   QObject::tr("Cannot create instance of XdgSurfaceBase, use XdgSurface instead"));
-    qmlRegisterUncreatableType<QWaylandResource>(uri, 1, 0, "WaylandResource",
-                                                 QObject::tr("Cannot create instance of WaylandResource"));
-
-    // Extensions
-    qmlRegisterType<QWaylandQtWindowManagerQuickExtension>(uri, 1, 0, "QtWindowManager");
-    qmlRegisterType<QWaylandWlShellQuickExtension>(uri, 1, 0, "WlShell");
-    qmlRegisterType<QWaylandWlShellSurface>(uri, 1, 0, "WlShellSurface");
-    qmlRegisterType<QWaylandQuickShellSurfaceItem>(uri, 1, 0, "ShellSurfaceItem");
-    qmlRegisterType<QWaylandXdgShellQuickExtension>(uri, 1, 0, "XdgShell");
-    qmlRegisterType<QWaylandXdgSurface>(uri, 1, 0, "XdgSurface");
-    qmlRegisterType<QWaylandTextInputManagerQuickExtension>(uri, 1, 0, "TextInputManager");
 
     // More specialized output
     qmlRegisterType<QuickOutput>(uri, 1, 0, "ExtendedOutput");
@@ -180,9 +113,6 @@ void GreenIslandPlugin::registerTypes(const char *uri)
 
     // Key event filter
     qmlRegisterType<KeyEventFilter>(uri, 1, 0, "KeyEventFilter");
-
-    // Keymap
-    qmlRegisterType<Keymap>(uri, 1, 0, "Keymap");
 
     // Settings
     qmlRegisterType<CompositorSettings>(uri, 1, 0, "CompositorSettings");

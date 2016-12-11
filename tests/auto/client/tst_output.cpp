@@ -33,8 +33,8 @@
 #include <GreenIsland/Client/Output>
 #include <GreenIsland/Client/Registry>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandOutput>
 
 using namespace GreenIsland;
 

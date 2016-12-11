@@ -77,8 +77,12 @@ if ("${ECM_VERSION}" VERSION_LESS "1.7.0")
 endif()
 
 # Find Qt5
-set(REQUIRED_QT_VERSION 5.6.0)
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core DBus Gui Qml Quick)
+set(REQUIRED_QT_VERSION "5.8.0")
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED
+             Core DBus Gui Qml Quick WaylandCompositor)
+
+# Find QtWaylandScanner
+find_package(QtWaylandScanner REQUIRED)
 
 # OpenGL
 find_package(OpenGL)

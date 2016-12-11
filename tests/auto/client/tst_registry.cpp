@@ -45,10 +45,10 @@
 #include <GreenIsland/Server/Screencaster>
 #include <GreenIsland/Server/Screenshooter>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandSeat>
-#include <GreenIsland/QtWaylandCompositor/QWaylandOutput>
-#include <GreenIsland/QtWaylandCompositor/private/qwaylandcompositor_p.h>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandSeat>
+#include <QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/private/qwaylandcompositor_p.h>
 
 using namespace GreenIsland;
 

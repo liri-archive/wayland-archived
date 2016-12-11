@@ -32,7 +32,7 @@
 #include <QtCore/QMultiHash>
 #include <QtCore/QMutex>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositorExtension>
+#include <QtWaylandCompositor/QWaylandCompositorExtension>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

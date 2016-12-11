@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
-#include <GreenIsland/QtWaylandCompositor/QWaylandSeat>
+#include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandSeat>
 
 #include "compositorsettings.h"
 #include "compositorsettings_p.h"
@@ -40,26 +40,13 @@ namespace Server {
  * CompositorSettingsPrivate
  */
 
-void CompositorSettingsPrivate::_q_setupKeymap()
+void CompositorSettingsPrivate::_q_setupKeyboard()
 {
-    if (!compositor || !keymap || !initialized)
+    if (!compositor || !initialized)
         return;
 
     QWaylandSeat *seat = compositor->defaultSeat();
     if (seat && seat->keyboard()) {
-        qCDebug(gLcCore,
-                "Setting keymap to '%s' (variant '%s', options '%s', model '%s', rules '%s')",
-                qPrintable(keymap->layout()),
-                qPrintable(keymap->variant()),
-                qPrintable(keymap->options()),
-                qPrintable(keymap->model()),
-                qPrintable(keymap->rules()));
-
-        QWaylandKeymap wlKeymap(keymap->layout(), keymap->variant(),
-                                keymap->options(), keymap->model(),
-                                keymap->rules());
-        seat->keyboard()->setKeymap(wlKeymap);
-
         seat->keyboard()->setRepeatRate(repeatRate);
         seat->keyboard()->setRepeatDelay(repeatDelay);
     }
@@ -89,12 +76,12 @@ void CompositorSettings::setCompositor(QWaylandCompositor *compositor)
 
     if (d->compositor)
         disconnect(compositor, SIGNAL(defaultSeatChanged(QWaylandSeat*,QWaylandSeat*)),
-                   this, SLOT(_q_setupKeymap()));
+                   this, SLOT(_q_setupKeyboard()));
 
     if (compositor) {
         connect(compositor, SIGNAL(defaultSeatChanged(QWaylandSeat*,QWaylandSeat*)),
-                this, SLOT(_q_setupKeymap()));
-        d->_q_setupKeymap();
+                this, SLOT(_q_setupKeyboard()));
+        d->_q_setupKeyboard();
     }
 
     d->compositor = compositor;
@@ -164,51 +151,6 @@ void CompositorSettings::setKeyboardRepeatDelay(quint32 delay)
     }
 }
 
-Keymap *CompositorSettings::keymap() const
-{
-    Q_D(const CompositorSettings);
-    return d->keymap;
-}
-
-void CompositorSettings::setKeymap(Keymap *keymap)
-{
-    Q_D(CompositorSettings);
-
-    if (d->keymap == keymap)
-        return;
-
-    if (d->keymap) {
-        disconnect(keymap, SIGNAL(rulesChanged()),
-                   this, SLOT(_q_setupKeymap()));
-        disconnect(keymap, SIGNAL(modelChanged()),
-                   this, SLOT(_q_setupKeymap()));
-        disconnect(keymap, SIGNAL(layoutChanged()),
-                   this, SLOT(_q_setupKeymap()));
-        disconnect(keymap, SIGNAL(variantChanged()),
-                   this, SLOT(_q_setupKeymap()));
-        disconnect(keymap, SIGNAL(optionsChanged()),
-                   this, SLOT(_q_setupKeymap()));
-    }
-
-    if (keymap) {
-        connect(keymap, SIGNAL(rulesChanged()),
-                this, SLOT(_q_setupKeymap()));
-        connect(keymap, SIGNAL(modelChanged()),
-                this, SLOT(_q_setupKeymap()));
-        connect(keymap, SIGNAL(layoutChanged()),
-                this, SLOT(_q_setupKeymap()));
-        connect(keymap, SIGNAL(variantChanged()),
-                this, SLOT(_q_setupKeymap()));
-        connect(keymap, SIGNAL(optionsChanged()),
-                this, SLOT(_q_setupKeymap()));
-
-        d->_q_setupKeymap();
-    }
-
-    d->keymap = keymap;
-    Q_EMIT keymapChanged();
-}
-
 void CompositorSettings::classBegin()
 {
 }
@@ -217,7 +159,7 @@ void CompositorSettings::componentComplete()
 {
     Q_D(CompositorSettings);
     d->initialized = true;
-    d->_q_setupKeymap();
+    d->_q_setupKeyboard();
 }
 
 } // namespace Server

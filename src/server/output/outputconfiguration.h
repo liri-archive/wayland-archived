@@ -30,8 +30,8 @@
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositorExtension>
-#include <GreenIsland/QtWaylandCompositor/QWaylandResource>
+#include <QtWaylandCompositor/QWaylandCompositorExtension>
+#include <QtWaylandCompositor/QWaylandResource>
 
 #include <GreenIsland/server/greenislandserver_export.h>
 

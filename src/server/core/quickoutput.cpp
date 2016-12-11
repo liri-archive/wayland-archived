@@ -29,7 +29,7 @@
 #include <QtCore/private/qobject_p.h>
 #include <QtGui/QScreen>
 
-#include <GreenIsland/QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandCompositor>
 
 #include <GreenIsland/Platform/EglFSScreen>
 

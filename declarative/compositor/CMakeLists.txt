@@ -30,14 +30,13 @@ set(SOURCES
     plugin.cpp
     fpscounter.cpp
     keyeventfilter.cpp
-    qwaylandmousetracker.cpp
 )
 
 add_library(greenislandplugin SHARED ${SOURCES})
 target_link_libraries(greenislandplugin
     Qt5::Qml
     Qt5::Quick
-    GreenIsland::Compositor
+    Qt5::WaylandCompositor
     GreenIsland::Server
 )
 
@@ -46,7 +45,6 @@ install(TARGETS greenislandplugin LIBRARY
 
 set(MODULE_FILES
     qmldir
-    WaylandCursorItem.qml
     WaylandOutputWindow.qml
     WindowChrome.qml
 )
