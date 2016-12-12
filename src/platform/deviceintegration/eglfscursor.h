@@ -38,7 +38,7 @@
 #include <QtGui/qpa/qplatformscreen.h>
 #include <QtGui/private/qinputdevicemanager_p.h>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <GreenIsland/Platform/EglFSGlobal>
 
 class QOpenGLShaderProgram;
 

@@ -25,7 +25,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/Platform/EGLPbuffer>
+#include <QtEglSupport/private/qeglpbuffer_p.h>
 
 #include "eglfswaylandcontext.h"
 #include "eglfswaylandblitter.h"
@@ -42,7 +42,7 @@ EglFSWaylandContext::EglFSWaylandContext(const QSurfaceFormat &format,
                                          EGLDisplay display,
                                          EGLConfig *config,
                                          const QVariant &nativeHandle)
-    : EGLPlatformContext(format, share, display, config, nativeHandle)
+    : QEGLPlatformContext(format, share, display, config, nativeHandle)
     , m_blitter(Q_NULLPTR)
     , m_useNativeDefaultFbo(false)
 {
@@ -56,7 +56,7 @@ EglFSWaylandContext::~EglFSWaylandContext()
 
 bool EglFSWaylandContext::makeCurrent(QPlatformSurface *surface)
 {
-    bool result = EGLPlatformContext::makeCurrent(surface);
+    bool result = QEGLPlatformContext::makeCurrent(surface);
 
     EglFSWaylandWindow *window = static_cast<EglFSWaylandWindow *>(surface);
     window->bindContentFBO();
@@ -96,17 +96,17 @@ EGLSurface EglFSWaylandContext::eglSurfaceForPlatformSurface(QPlatformSurface *s
     if (surface->surface()->surfaceClass() == QSurface::Window)
         return static_cast<EglFSWaylandWindow *>(surface)->surface();
     else
-        return static_cast<EGLPbuffer *>(surface)->pbuffer();
+        return static_cast<QEGLPbuffer *>(surface)->pbuffer();
 }
 
 EGLSurface EglFSWaylandContext::createTemporaryOffscreenSurface()
 {
-    return EGLPlatformContext::createTemporaryOffscreenSurface();
+    return QEGLPlatformContext::createTemporaryOffscreenSurface();
 }
 
 void EglFSWaylandContext::destroyTemporaryOffscreenSurface(EGLSurface surface)
 {
-    EGLPlatformContext::destroyTemporaryOffscreenSurface(surface);
+    QEGLPlatformContext::destroyTemporaryOffscreenSurface(surface);
 }
 
 } // namespace Platform

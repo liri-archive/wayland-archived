@@ -1,7 +1,11 @@
 /****************************************************************************
  * This file is part of Hawaii.
  *
+ * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
+ *
+ * Author(s):
+ *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:QTLGPL$
  *
@@ -27,38 +31,22 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLPBUFFER_H
-#define GREENISLAND_EGLPBUFFER_H
+#pragma once
 
-#include <EGL/egl.h>
-#include <QtGui/qpa/qplatformoffscreensurface.h>
+#include <QtCore/qglobal.h>
 
-#include <GreenIsland/Platform/EGLPlatformContext>
+#include <GreenIsland/platform/greenislandplatform_export.h>
 
-namespace GreenIsland {
+#include <QtEglSupport/private/qt_egl_p.h>
 
-namespace Platform {
-
-class GREENISLANDPLATFORM_EXPORT EGLPbuffer : public QPlatformOffscreenSurface
-{
-public:
-    EGLPbuffer(EGLDisplay display, const QSurfaceFormat &format, QOffscreenSurface *offscreenSurface,
-                EGLPlatformContext::Flags flags = 0);
-    ~EGLPbuffer();
-
-    QSurfaceFormat format() const Q_DECL_OVERRIDE { return m_format; }
-    bool isValid() const Q_DECL_OVERRIDE { return m_pbuffer != EGL_NO_SURFACE; }
-
-    EGLSurface pbuffer() const { return m_pbuffer; }
-
-private:
-    QSurfaceFormat m_format;
-    EGLDisplay m_display;
-    EGLSurface m_pbuffer;
-};
-
-} // namespace Platform
-
-} // namespace GreenIsland
-
-#endif // GREENISLAND_EGLPBUFFER_H
+#undef Status
+#undef None
+#undef Bool
+#undef CursorShape
+#undef KeyPress
+#undef KeyRelease
+#undef FocusIn
+#undef FocusOut
+#undef FontChange
+#undef Expose
+#undef Unsorted

@@ -29,8 +29,7 @@
 #define GREENISLAND_EGLFSWAYLANDCONTEXT_H
 
 #include <QtCore/QVariant>
-
-#include <GreenIsland/Platform/EGLPlatformContext>
+#include <QtEglSupport/private/qeglplatformcontext_p.h>
 
 #include "eglfswaylandintegration.h"
 
@@ -40,7 +39,7 @@ namespace Platform {
 
 class EglFSWaylandBlitter;
 
-class EglFSWaylandContext : public EGLPlatformContext
+class EglFSWaylandContext : public QEGLPlatformContext
 {
 public:
     EglFSWaylandContext(const QSurfaceFormat &format, QPlatformOpenGLContext *share,

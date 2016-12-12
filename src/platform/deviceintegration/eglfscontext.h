@@ -34,14 +34,15 @@
 #define GREENISLAND_EGLFSCONTEXT_H
 
 #include <QtCore/QVariant>
+#include <QtEglSupport/private/qeglplatformcontext_p.h>
 
-#include <GreenIsland/Platform/EGLPlatformContext>
+#include <GreenIsland/Platform/EglFSGlobal>
 
 namespace GreenIsland {
 
 namespace Platform {
 
-class GREENISLANDPLATFORM_EXPORT EglFSContext : public EGLPlatformContext
+class GREENISLANDPLATFORM_EXPORT EglFSContext : public QEGLPlatformContext
 {
 public:
     EglFSContext(const QSurfaceFormat &format, QPlatformOpenGLContext *share, EGLDisplay display,
@@ -50,7 +51,7 @@ public:
     EGLSurface eglSurfaceForPlatformSurface(QPlatformSurface *surface) Q_DECL_OVERRIDE;
     EGLSurface createTemporaryOffscreenSurface() Q_DECL_OVERRIDE;
     void destroyTemporaryOffscreenSurface(EGLSurface surface) Q_DECL_OVERRIDE;
-    void runGLchecks() Q_DECL_OVERRIDE;
+    void runGLChecks() Q_DECL_OVERRIDE;
     void swapBuffers(QPlatformSurface *surface) Q_DECL_OVERRIDE;
 
 private:

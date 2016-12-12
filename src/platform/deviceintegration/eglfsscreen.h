@@ -60,6 +60,7 @@ public:
     ~EglFSScreen();
 
     QRect geometry() const Q_DECL_OVERRIDE;
+    virtual QRect rawGeometry() const;
     int depth() const Q_DECL_OVERRIDE;
     QImage::Format format() const Q_DECL_OVERRIDE;
 

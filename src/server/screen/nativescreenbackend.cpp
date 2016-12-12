@@ -31,6 +31,7 @@
 #include <QtGui/QScreen>
 #include <QtGui/qpa/qplatformscreen.h>
 
+#include <GreenIsland/Platform/EglFSGlobal>
 #include <GreenIsland/Platform/EglFSScreen>
 
 #include "nativescreenbackend.h"

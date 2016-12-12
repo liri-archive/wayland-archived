@@ -137,7 +137,7 @@ void EglFSWaylandIntegration::platformDestroy()
 
 EGLNativeDisplayType EglFSWaylandIntegration::platformDisplay() const
 {
-    return m_connection->display();
+    return reinterpret_cast<EGLNativeDisplayType>(m_connection->display());
 }
 
 bool EglFSWaylandIntegration::handlesInput()

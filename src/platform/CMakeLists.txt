@@ -22,7 +22,12 @@ set_package_properties(Libdl PROPERTIES
     PURPOSE "Required to load GL functions")
 
 # Qt5PlatformSupport
-find_package(Qt5PlatformSupport REQUIRED)
+find_package(Qt5FontDatabaseSupport REQUIRED)
+find_package(Qt5ThemeSupport REQUIRED)
+find_package(Qt5ServiceSupport REQUIRED)
+find_package(Qt5EventDispatcherSupport REQUIRED)
+find_package(Qt5PlatformCompositorSupport REQUIRED)
+find_package(Qt5EglSupport REQUIRED)
 find_package(Freetype REQUIRED)
 set_package_properties(Freetype PROPERTIES
     DESCRIPTION "A font rendering engine"
@@ -48,10 +53,6 @@ set(SOURCES
     deviceintegration/eglfsscreen.cpp
     deviceintegration/eglfswindow.cpp
     deviceintegration/eglfsxkb.cpp
-    eglconvenience/eglconvenience.cpp
-    eglconvenience/eglpbuffer.cpp
-    eglconvenience/eglplatformcontext.cpp
-    eglconvenience/eglstreamconvenience.cpp
     udev/udev.cpp
     udev/udevdevice.cpp
     udev/udevenumerate.cpp
@@ -64,8 +65,6 @@ set(SOURCES
     libinput/libinputkeyboard.cpp
     libinput/libinputpointer.cpp
     libinput/libinputtouch.cpp
-    platformcompositor/openglcompositorbackingstore.cpp
-    platformcompositor/openglcompositor.cpp
 )
 
 qt5_add_resources(SOURCES deviceintegration/cursor.qrc)
@@ -96,18 +95,17 @@ target_link_libraries(GreenIslandPlatform
         ${UDEV_LIBS}
         ${xkbcommon_LIBRARIES}
         ${gio_LIBRARIES}
+        Libdl::Libdl
+        Qt5FontDatabaseSupport::Qt5FontDatabaseSupport
+        Qt5ThemeSupport::Qt5ThemeSupport
+        Qt5ServiceSupport::Qt5ServiceSupport
+        Qt5EventDispatcherSupport::Qt5EventDispatcherSupport
+        Qt5PlatformCompositorSupport::Qt5PlatformCompositorSupport
+        Qt5EglSupport::Qt5EglSupport
     PRIVATE
         Libinput::Libinput
-        Libdl::Libdl
         ${FONTCONFIG_LIBRARIES}
         ${FREETYPE_LIBRARIES}
-        Qt5PlatformSupport::Qt5PlatformSupport
-)
-
-target_compile_definitions(GreenIslandPlatform
-    PUBLIC
-        -DMESA_EGL_NO_X11_HEADERS
-        -DQ_FONTCONFIGDATABASE
 )
 
 if(${Qt5Gui_OPENGL_IMPLEMENTATION} STREQUAL "GL")
@@ -136,6 +134,7 @@ ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
         EGLDeviceIntegration
         EglFSContext
         EglFSCursor
+        EglFSGlobal
         EglFSIntegration
         EglFSNativeInterface
         EglFSOffscreenWindow
@@ -150,22 +149,6 @@ ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
         GreenIslandPlatform_HEADERS
     RELATIVE
         deviceintegration
-)
-
-ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
-    HEADER_NAMES
-        EGLConvenience
-        EGLPbuffer
-        EGLPlatformContext
-        EGLStreamConvenience
-    PREFIX
-        Platform
-    OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
-    REQUIRED_HEADERS
-        GreenIslandPlatform_HEADERS
-    RELATIVE
-        eglconvenience
 )
 
 ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
@@ -209,20 +192,6 @@ ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
         GreenIslandPlatform_HEADERS
     RELATIVE
        libinput
-)
-
-ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
-    HEADER_NAMES
-        OpenGLCompositor
-        OpenGLCompositorBackingStore
-    PREFIX
-        Platform
-    OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
-    REQUIRED_HEADERS
-        GreenIslandPlatform_HEADERS
-    RELATIVE
-       platformcompositor
 )
 
 install(FILES ${GreenIslandPlatform_CAMELCASE_HEADERS}

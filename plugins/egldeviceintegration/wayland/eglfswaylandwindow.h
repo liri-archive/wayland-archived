@@ -30,10 +30,9 @@
 
 #include <QtCore/QObject>
 #include <QtGui/qpa/qplatformwindow.h>
+#include <QtEglSupport/private/qeglconvenience_p.h>
 
 #include <GreenIsland/Client/Surface>
-
-#include <GreenIsland/Platform/EGLPlatformContext>
 
 #include "eglfswaylandintegration.h"
 

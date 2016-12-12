@@ -28,7 +28,6 @@
 #include <QtGui/QGuiApplication>
 #include <QtGui/QOpenGLFramebufferObject>
 
-#include <GreenIsland/Platform/EGLConvenience>
 #include <GreenIsland/Platform/EglFSIntegration>
 
 #include <GreenIsland/client/private/surface_p.h>
@@ -146,7 +145,7 @@ void EglFSWaylandWindow::create()
     m_eglDisplay = nativeScreen->display();
     QSurfaceFormat platformFormat = egl_device_integration()->surfaceFormatFor(window()->requestedFormat());
     m_eglConfig = EglFSIntegration::chooseConfig(m_eglDisplay, platformFormat);
-    m_format = EglUtils::glFormatFromConfig(m_eglDisplay, m_eglConfig, platformFormat);
+    m_format = q_glFormatFromConfig(m_eglDisplay, m_eglConfig, platformFormat);
 
     resetSurface();
 

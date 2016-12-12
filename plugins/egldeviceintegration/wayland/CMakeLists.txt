@@ -1,4 +1,3 @@
-find_package(Qt5PlatformSupport REQUIRED)
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../../headers"
     "${CMAKE_CURRENT_BINARY_DIR}/../../../headers/GreenIsland"

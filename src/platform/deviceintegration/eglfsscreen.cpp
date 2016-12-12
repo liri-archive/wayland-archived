@@ -35,12 +35,12 @@
 #include <QtGui/qwindow.h>
 #include <QtGui/qpa/qwindowsysteminterface.h>
 #include <QtGui/qpa/qplatformcursor.h>
+#include <QtPlatformCompositorSupport/private/qopenglcompositor_p.h>
 
 #include "logging.h"
 #include "deviceintegration/egldeviceintegration.h"
 #include "deviceintegration/eglfsscreen.h"
 #include "deviceintegration/eglfswindow.h"
-#include "platformcompositor/openglcompositor.h"
 
 namespace GreenIsland {
 
@@ -58,10 +58,35 @@ EglFSScreen::EglFSScreen(EGLDisplay dpy)
 EglFSScreen::~EglFSScreen()
 {
     delete m_cursor;
-    OpenGLCompositor::destroy();
+    QOpenGLCompositor::destroy();
 }
 
 QRect EglFSScreen::geometry() const
+{
+    QRect r = rawGeometry();
+
+    static int rotation = qEnvironmentVariableIntValue("GREENISLAND_QPA_EGLFS_ROTATION");
+    switch (rotation) {
+    case 0:
+    case 180:
+    case -180:
+        break;
+    case 90:
+    case -90: {
+        int h = r.height();
+        r.setHeight(r.width());
+        r.setWidth(h);
+        break;
+    }
+    default:
+        qWarning("Invalid rotation %d specified in GREENISLAND_QPA_EGLFS_ROTATION", rotation);
+        break;
+    }
+
+    return r;
+}
+
+QRect EglFSScreen::rawGeometry() const
 {
     return QRect(QPoint(0, 0), egl_device_integration()->screenSize());
 }
@@ -118,8 +143,8 @@ void EglFSScreen::setPrimarySurface(EGLSurface surface)
 
 void EglFSScreen::handleCursorMove(const QPoint &pos)
 {
-    const OpenGLCompositor *compositor = OpenGLCompositor::instance();
-    const QList<OpenGLCompositorWindow *> windows = compositor->windows();
+    const QOpenGLCompositor *compositor = QOpenGLCompositor::instance();
+    const QList<QOpenGLCompositorWindow *> windows = compositor->windows();
 
     // Generate enter and leave events like a real windowing system would do.
     if (windows.isEmpty())
@@ -155,8 +180,8 @@ void EglFSScreen::handleCursorMove(const QPoint &pos)
 
 QPixmap EglFSScreen::grabWindow(WId wid, int x, int y, int width, int height) const
 {
-    OpenGLCompositor *compositor = OpenGLCompositor::instance();
-    const QList<OpenGLCompositorWindow *> windows = compositor->windows();
+    QOpenGLCompositor *compositor = QOpenGLCompositor::instance();
+    const QList<QOpenGLCompositorWindow *> windows = compositor->windows();
     Q_ASSERT(!windows.isEmpty());
 
     QImage img;
@@ -186,7 +211,7 @@ QPixmap EglFSScreen::grabWindow(WId wid, int x, int y, int width, int height) co
         return QPixmap::fromImage(img).copy(x, y, width, height);
     }
 
-    foreach (OpenGLCompositorWindow *w, windows) {
+    foreach (QOpenGLCompositorWindow *w, windows) {
         const QWindow *window = w->sourceWindow();
         if (window->winId() == wid) {
             const QRect geom = window->geometry();

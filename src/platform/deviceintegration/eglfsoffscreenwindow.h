@@ -36,9 +36,7 @@
 
 #include <QtGui/qpa/qplatformoffscreensurface.h>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
-
-#include <EGL/egl.h>
+#include <GreenIsland/Platform/EglFSGlobal>
 
 namespace GreenIsland {
 

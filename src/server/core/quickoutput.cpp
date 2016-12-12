@@ -25,6 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
+#include <GreenIsland/Platform/EglFSGlobal>
+
 #include <QtCore/QElapsedTimer>
 #include <QtCore/private/qobject_p.h>
 #include <QtGui/QScreen>

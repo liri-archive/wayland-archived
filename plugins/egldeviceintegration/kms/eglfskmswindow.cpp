@@ -31,8 +31,7 @@
  ***************************************************************************/
 
 #include <QtGui/qpa/qwindowsysteminterface.h>
-
-#include <GreenIsland/Platform/EGLPlatformContext>
+#include <QtEglSupport/private/qeglconvenience_p.h>
 
 #include "eglfskmsscreen.h"
 #include "eglfskmswindow.h"

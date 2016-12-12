@@ -27,6 +27,8 @@
 
 #include <QtGui/QOpenGLShaderProgram>
 
+#include <GreenIsland/Platform/EglFSGlobal>
+
 #include "eglfswaylandblitter.h"
 #include "eglfswaylandcontext.h"
 #include "eglfswaylandwindow.h"

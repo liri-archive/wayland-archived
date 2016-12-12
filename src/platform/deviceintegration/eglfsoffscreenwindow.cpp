@@ -31,12 +31,12 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtGui/QOffscreenSurface>
-
 #include "logging.h"
-#include "eglconvenience/eglconvenience.h"
 #include "deviceintegration/egldeviceintegration.h"
 #include "deviceintegration/eglfsoffscreenwindow.h"
+
+#include <QtGui/QOffscreenSurface>
+#include <QtEglSupport/private/qeglconvenience_p.h>
 
 namespace GreenIsland {
 
@@ -64,10 +64,10 @@ EglFSOffscreenWindow::EglFSOffscreenWindow(EGLDisplay display, const QSurfaceFor
         qCWarning(lcDeviceIntegration, "EglFSOffscreenWindow: Failed to create native window");
         return;
     }
-    EGLConfig config = EglUtils::configFromGLFormat(m_display, m_format);
+    EGLConfig config = q_configFromGLFormat(m_display, m_format);
     m_surface = eglCreateWindowSurface(m_display, config, m_window, 0);
     if (m_surface != EGL_NO_SURFACE)
-        m_format = EglUtils::glFormatFromConfig(m_display, config);
+        m_format = q_glFormatFromConfig(m_display, config);
 }
 
 EglFSOffscreenWindow::~EglFSOffscreenWindow()

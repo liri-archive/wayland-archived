@@ -31,6 +31,12 @@
  * $END_LICENSE$
  ***************************************************************************/
 
+#include "logging.h"
+#include "deviceintegration/deviceintegration_p.h"
+#include "deviceintegration/egldeviceintegration.h"
+#include "deviceintegration/eglfscursor.h"
+#include "deviceintegration/eglfsintegration.h"
+
 #include <QtCore/QDir>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
@@ -39,12 +45,7 @@
 #include <QtGui/QScreen>
 #include <QtGui/private/qguiapplication_p.h>
 
-#include "logging.h"
-#include "eglconvenience/eglconvenience.h"
-#include "deviceintegration/deviceintegration_p.h"
-#include "deviceintegration/egldeviceintegration.h"
-#include "deviceintegration/eglfscursor.h"
-#include "deviceintegration/eglfsintegration.h"
+#include <QtEglSupport/private/qeglconvenience_p.h>
 
 #if defined(Q_OS_LINUX)
 #include <fcntl.h>
@@ -174,12 +175,12 @@ void EGLDeviceIntegration::screenDestroy()
 
 QSizeF EGLDeviceIntegration::physicalScreenSize() const
 {
-    return EglUtils::physicalScreenSizeFromFb(framebuffer, screenSize());
+    return q_physicalScreenSizeFromFb(framebuffer, screenSize());
 }
 
 QSize EGLDeviceIntegration::screenSize() const
 {
-    return EglUtils::screenSizeFromFb(framebuffer);
+    return q_screenSizeFromFb(framebuffer);
 }
 
 QDpi EGLDeviceIntegration::logicalDpi() const
@@ -211,7 +212,7 @@ Qt::ScreenOrientation EGLDeviceIntegration::orientation() const
 
 int EGLDeviceIntegration::screenDepth() const
 {
-    return EglUtils::screenDepthFromFb(framebuffer);
+    return q_screenDepthFromFb(framebuffer);
 }
 
 QImage::Format EGLDeviceIntegration::screenFormat() const
@@ -221,7 +222,7 @@ QImage::Format EGLDeviceIntegration::screenFormat() const
 
 qreal EGLDeviceIntegration::refreshRate() const
 {
-    return EglUtils::refreshRateFromFb(framebuffer);
+    return q_refreshRateFromFb(framebuffer);
 }
 
 QSurfaceFormat EGLDeviceIntegration::surfaceFormatFor(const QSurfaceFormat &inputFormat) const

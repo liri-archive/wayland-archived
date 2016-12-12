@@ -37,14 +37,14 @@
 #include <QtGui/qpa/qplatformintegration.h>
 #include <QtGui/private/qguiapplication_p.h>
 #include <QtGui/private/qopenglcontext_p.h>
+#include <QtEglSupport/private/qeglconvenience_p.h>
+#include <QtPlatformCompositorSupport/private/qopenglcompositorbackingstore_p.h>
 
 #include "logging.h"
-#include "eglconvenience/eglconvenience.h"
 #include "deviceintegration/egldeviceintegration.h"
 #include "deviceintegration/eglfscursor.h"
 #include "deviceintegration/eglfsintegration.h"
 #include "deviceintegration/eglfswindow.h"
-#include "platformcompositor/openglcompositorbackingstore.h"
 
 namespace GreenIsland {
 
@@ -104,7 +104,7 @@ void EglFSWindow::create()
     // raster windows will not have their own native window, surface and context. Instead,
     // they will be composited onto the root window's surface.
     EglFSScreen *screen = this->screen();
-    OpenGLCompositor *compositor = OpenGLCompositor::instance();
+    QOpenGLCompositor *compositor = QOpenGLCompositor::instance();
     if (screen->primarySurface() != EGL_NO_SURFACE) {
         if (isRaster() && compositor->targetWindow()) {
             m_format = compositor->targetWindow()->format();
@@ -127,7 +127,7 @@ void EglFSWindow::create()
     EGLDisplay display = static_cast<EglFSScreen *>(screen)->display();
     QSurfaceFormat platformFormat = egl_device_integration()->surfaceFormatFor(window()->requestedFormat());
     m_config = EglFSIntegration::chooseConfig(display, platformFormat);
-    m_format = EglUtils::glFormatFromConfig(display, m_config, platformFormat);
+    m_format = q_glFormatFromConfig(display, m_config, platformFormat);
 
     resetSurface();
 
@@ -142,7 +142,7 @@ void EglFSWindow::create()
             qFatal("EGLFS: Failed to create compositing context");
             return;
         }
-        compositor->setTarget(context, window());
+        compositor->setTarget(context, window(), screen->rawGeometry());
         // If there is a "root" window into which raster and QOpenGLWidget content is
         // composited, all other contexts must share with its context.
         if (!qt_gl_global_share_context()) {
@@ -169,7 +169,7 @@ void EglFSWindow::destroy()
     }
 
     m_flags = 0;
-    OpenGLCompositor::instance()->removeWindow(this);
+    QOpenGLCompositor::instance()->removeWindow(this);
 }
 
 // The virtual functions resetSurface and invalidateSurface may get overridden
@@ -203,8 +203,8 @@ void EglFSWindow::resetSurface()
 
 void EglFSWindow::setVisible(bool visible)
 {
-    OpenGLCompositor *compositor = OpenGLCompositor::instance();
-    QList<OpenGLCompositorWindow *> windows = compositor->windows();
+    QOpenGLCompositor *compositor = QOpenGLCompositor::instance();
+    QList<QOpenGLCompositorWindow *> windows = compositor->windows();
     QWindow *wnd = window();
 
     if (wnd->type() != Qt::Desktop) {
@@ -254,7 +254,7 @@ QRect EglFSWindow::geometry() const
 void EglFSWindow::requestActivateWindow()
 {
     if (window()->type() != Qt::Desktop)
-        OpenGLCompositor::instance()->moveToTop(this);
+        QOpenGLCompositor::instance()->moveToTop(this);
 
     QWindow *wnd = window();
     QWindowSystemInterface::handleWindowActivated(wnd);
@@ -265,15 +265,15 @@ void EglFSWindow::raise()
 {
     QWindow *wnd = window();
     if (wnd->type() != Qt::Desktop) {
-        OpenGLCompositor::instance()->moveToTop(this);
+        QOpenGLCompositor::instance()->moveToTop(this);
         QWindowSystemInterface::handleExposeEvent(wnd, QRect(QPoint(0, 0), wnd->geometry().size()));
     }
 }
 
 void EglFSWindow::lower()
 {
-    OpenGLCompositor *compositor = OpenGLCompositor::instance();
-    QList<OpenGLCompositorWindow *> windows = compositor->windows();
+    QOpenGLCompositor *compositor = QOpenGLCompositor::instance();
+    QList<QOpenGLCompositorWindow *> windows = compositor->windows();
     if (window()->type() != Qt::Desktop && windows.count() > 1) {
         int idx = windows.indexOf(this);
         if (idx > 0) {

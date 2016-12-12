@@ -31,25 +31,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtGui/QGuiApplication>
-#include <QtGui/QOffscreenSurface>
-#include <QtGui/QOpenGLContext>
-#include <QtGui/QWindow>
-#include <QtGui/QScreen>
+#include <QtCore/qtextstream.h>
+#include <QtGui/private/qguiapplication_p.h>
+
+#include <QtGui/qpa/qplatformwindow.h>
 #include <QtGui/QSurfaceFormat>
-
-#include <QtGui/qpa/qplatforminputcontextfactory_p.h>
+#include <QtGui/QOpenGLContext>
+#include <QtGui/QScreen>
+#include <QtGui/QOffscreenSurface>
+#include <QtGui/QWindow>
 #include <QtGui/qpa/qwindowsysteminterface.h>
+#include <QtGui/qpa/qplatforminputcontextfactory_p.h>
 
-#include <QtPlatformSupport/private/qgenericunixeventdispatcher_p.h>
-#include <QtPlatformSupport/private/qgenericunixfontdatabase_p.h>
-#include <QtPlatformSupport/private/qgenericunixservices_p.h>
-
-#include <QtPlatformHeaders/QEGLNativeContext>
-
-#include "eglconvenience/eglconvenience.h"
-#include "eglconvenience/eglplatformcontext.h"
-#include "eglconvenience/eglpbuffer.h"
 #include "deviceintegration/egldeviceintegration.h"
 #include "deviceintegration/eglfscontext.h"
 #include "deviceintegration/eglfscursor.h"
@@ -61,7 +54,18 @@
 #include "logging.h"
 #include "libinput/libinputmanager_p.h"
 #include "libinput/libinputhandler.h"
-#include "platformcompositor/openglcompositorbackingstore.h"
+
+#include <QtEglSupport/private/qeglconvenience_p.h>
+#include <QtEglSupport/private/qeglplatformcontext_p.h>
+#include <QtEglSupport/private/qeglpbuffer_p.h>
+
+#include <QtFontDatabaseSupport/private/qgenericunixfontdatabase_p.h>
+#include <QtServiceSupport/private/qgenericunixservices_p.h>
+#include <QtThemeSupport/private/qgenericunixthemes_p.h>
+#include <QtEventDispatcherSupport/private/qgenericunixeventdispatcher_p.h>
+#include <QtPlatformCompositorSupport/private/qopenglcompositorbackingstore_p.h>
+
+#include <QtPlatformHeaders/QEGLNativeContext>
 
 static void initResources()
 {
@@ -199,7 +203,7 @@ QPlatformBackingStore *EglFSIntegration::createPlatformBackingStore(QWindow *win
     if (pbs)
         return pbs;
 
-    OpenGLCompositorBackingStore *bs = new OpenGLCompositorBackingStore(window);
+    QOpenGLCompositorBackingStore *bs = new QOpenGLCompositorBackingStore(window);
     if (!window->handle())
         window->create();
     static_cast<EglFSWindow *>(window->handle())->setBackingStore(bs);
@@ -235,7 +239,7 @@ QPlatformOffscreenSurface *EglFSIntegration::createPlatformOffscreenSurface(QOff
     EGLDisplay dpy = surface->screen() ? static_cast<EglFSScreen *>(surface->screen()->handle())->display() : display();
     QSurfaceFormat fmt = egl_device_integration()->surfaceFormatFor(surface->requestedFormat());
     if (egl_device_integration()->supportsPBuffers())
-        return new EGLPbuffer(dpy, fmt, surface);
+        return new QEGLPbuffer(dpy, fmt, surface);
     else
         return new EglFSOffscreenWindow(dpy, fmt, surface);
     // Never return null. Multiple QWindows are not supported by this plugin.
@@ -269,13 +273,13 @@ void EglFSIntegration::removeScreen(QPlatformScreen *screen)
 
 EGLConfig EglFSIntegration::chooseConfig(EGLDisplay display, const QSurfaceFormat &format)
 {
-    class Chooser : public EglConfigChooser {
+    class Chooser : public QEglConfigChooser {
     public:
         Chooser(EGLDisplay display)
-            : EglConfigChooser(display) { }
+            : QEglConfigChooser(display) { }
         bool filterConfig(EGLConfig config) const Q_DECL_OVERRIDE {
             return egl_device_integration()->filterConfig(display(), config)
-                    && EglConfigChooser::filterConfig(config);
+                    && QEglConfigChooser::filterConfig(config);
         }
     };
 
@@ -357,3 +361,5 @@ void EglFSIntegration::actualInitialization()
 } // namespace Platform
 
 } // namespace GreenIsland
+
+#include "moc_eglfsintegration.cpp"

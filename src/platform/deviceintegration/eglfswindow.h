@@ -34,22 +34,18 @@
 #define GREENISLAND_EGLFSWINDOW_H
 
 #include <QtGui/qpa/qplatformwindow.h>
+#include <QtPlatformCompositorSupport/private/qopenglcompositor_p.h>
 
-#include <GreenIsland/Platform/OpenGLCompositor>
-
-#include "eglfsscreen.h"
-
-#include <EGL/egl.h>
+#include <GreenIsland/Platform/EglFSScreen>
 
 class QPlatformTextureList;
+class QOpenGLCompositorBackingStore;
 
 namespace GreenIsland {
 
 namespace Platform {
 
-class OpenGLCompositorBackingStore;
-
-class GREENISLANDPLATFORM_EXPORT EglFSWindow : public QPlatformWindow, public OpenGLCompositorWindow
+class GREENISLANDPLATFORM_EXPORT EglFSWindow : public QPlatformWindow, public QOpenGLCompositorWindow
 {
 public:
     EglFSWindow(QWindow *w);
@@ -83,8 +79,8 @@ public:
     virtual void invalidateSurface() Q_DECL_OVERRIDE;
     virtual void resetSurface();
 
-    OpenGLCompositorBackingStore *backingStore() { return m_backingStore; }
-    void setBackingStore(OpenGLCompositorBackingStore *backingStore) { m_backingStore = backingStore; }
+    QOpenGLCompositorBackingStore *backingStore() { return m_backingStore; }
+    void setBackingStore(QOpenGLCompositorBackingStore *backingStore) { m_backingStore = backingStore; }
     bool isRaster() const;
 
     QWindow *sourceWindow() const Q_DECL_OVERRIDE;
@@ -92,7 +88,7 @@ public:
     void endCompositing() Q_DECL_OVERRIDE;
 
 protected:
-    OpenGLCompositorBackingStore *m_backingStore;
+    QOpenGLCompositorBackingStore *m_backingStore;
     bool m_raster;
     WId m_winId;
 

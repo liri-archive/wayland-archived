@@ -40,9 +40,7 @@
 #include <QtGui/qpa/qplatformintegration.h>
 #include <QtGui/qpa/qplatformscreen.h>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
-
-#include <EGL/egl.h>
+#include <GreenIsland/Platform/EglFSGlobal>
 
 class QPlatformSurface;
 

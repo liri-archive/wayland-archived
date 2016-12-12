@@ -33,16 +33,14 @@
 #ifndef GREENISLAND_EGLFSINTEGRATION_H
 #define GREENISLAND_EGLFSINTEGRATION_H
 
-#include <QtGui/qpa/qplatformfontdatabase.h>
+#include <QtCore/QVariant>
 #include <QtGui/qpa/qplatformintegration.h>
+#include <QtGui/qpa/qplatformnativeinterface.h>
 #include <QtGui/qpa/qplatformscreen.h>
-#include <QtGui/qpa/qplatformservices.h>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <GreenIsland/Platform/EglFSGlobal>
 #include <GreenIsland/Platform/EglFSNativeInterface>
 #include <GreenIsland/Platform/VtHandler>
-
-#include <EGL/egl.h>
 
 namespace GreenIsland {
 
