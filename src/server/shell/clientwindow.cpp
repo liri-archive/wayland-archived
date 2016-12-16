@@ -299,17 +299,17 @@ void ClientWindowPrivate::_q_wlShellSurfaceCreated(QWaylandWlShellSurface *wlShe
                      q, SLOT(_q_handleDefaultSeatChanged(QWaylandSeat*,QWaylandSeat*)));
 }
 
-void ClientWindowPrivate::_q_xdgSurfaceCreated(QWaylandXdgSurface *xdgSurface)
+void ClientWindowPrivate::_q_xdgSurfaceCreated(QWaylandXdgSurfaceV5 *xdgSurface)
 {
     Q_Q(ClientWindow);
 
     if (xdgSurface->surface() != surface)
         return;
 
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::setTopLevel, q, [this, q, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::setTopLevel, q, [this, q, xdgSurface] {
         setType(ClientWindow::TopLevel);
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::setTransient, q, [this, q, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::setTransient, q, [this, q, xdgSurface] {
         setParentWindow(applicationManager->windowForSurface(xdgSurface->parentSurface()->surface()));
 
         // Set position relative to parent
@@ -323,24 +323,24 @@ void ClientWindowPrivate::_q_xdgSurfaceCreated(QWaylandXdgSurface *xdgSurface)
             setType(ClientWindow::Transient);
         }
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::titleChanged, q, [this, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::titleChanged, q, [this, xdgSurface] {
         setTitle(xdgSurface->title());
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::appIdChanged, q, [this, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::appIdChanged, q, [this, xdgSurface] {
         setAppId(xdgSurface->appId());
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::windowGeometryChanged, q, [this, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::windowGeometryChanged, q, [this, xdgSurface] {
         setWindowGeometry(xdgSurface->windowGeometry());
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::maximizedChanged, q, [this, q, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::maximizedChanged, q, [this, q, xdgSurface] {
         setMaximized(xdgSurface->maximized());
         q->setMinimized(false);
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::fullscreenChanged, q, [this, q, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::fullscreenChanged, q, [this, q, xdgSurface] {
         setFullscreen(xdgSurface->fullscreen());
         q->setMinimized(false);
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::activatedChanged, q, [this, q, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::activatedChanged, q, [this, q, xdgSurface] {
         setActive(xdgSurface->activated());
         q->setMinimized(false);
 
@@ -353,14 +353,14 @@ void ClientWindowPrivate::_q_xdgSurfaceCreated(QWaylandXdgSurface *xdgSurface)
             q->raise();
         }
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::setMinimized, q, [this, q, xdgSurface] {
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::setMinimized, q, [this, q, xdgSurface] {
         q->setMinimized(true);
     });
-    QObject::connect(xdgSurface, &QWaylandXdgSurface::showWindowMenu,
+    QObject::connect(xdgSurface, &QWaylandXdgSurfaceV5::showWindowMenu,
                      q, &ClientWindow::showWindowMenu);
 }
 
-void ClientWindowPrivate::_q_xdgPopupCreated(QWaylandXdgPopup *xdgPopup)
+void ClientWindowPrivate::_q_xdgPopupCreated(QWaylandXdgPopupV5 *xdgPopup)
 {
     Q_Q(ClientWindow);
 
@@ -481,12 +481,12 @@ ClientWindow::ClientWindow(ApplicationManager *applicationManager, QWaylandSurfa
     if (d->wlShell)
         connect(d->wlShell, SIGNAL(wlShellSurfaceCreated(QWaylandWlShellSurface*)),
                 this, SLOT(_q_wlShellSurfaceCreated(QWaylandWlShellSurface*)));
-    d->xdgShell = QWaylandXdgShell::findIn(surface->compositor());
+    d->xdgShell = QWaylandXdgShellV5::findIn(surface->compositor());
     if (d->xdgShell) {
-        connect(d->xdgShell, SIGNAL(xdgSurfaceCreated(QWaylandXdgSurface*)),
-                this, SLOT(_q_xdgSurfaceCreated(QWaylandXdgSurface*)));
-        connect(d->xdgShell, SIGNAL(xdgPopupCreated(QWaylandXdgPopup*)),
-                this, SLOT(_q_xdgPopupCreated(QWaylandXdgPopup*)));
+        connect(d->xdgShell, SIGNAL(xdgSurfaceCreated(QWaylandXdgSurfaceV5*)),
+                this, SLOT(_q_xdgSurfaceCreated(QWaylandXdgSurfaceV5*)));
+        connect(d->xdgShell, SIGNAL(xdgPopupCreated(QWaylandXdgPopupV5*)),
+                this, SLOT(_q_xdgPopupCreated(QWaylandXdgPopupV5*)));
     }
     d->gtkShell = GtkShell::findIn(surface->compositor());
     if (d->gtkShell)
@@ -748,10 +748,10 @@ void ClientWindow::close()
 {
     Q_D(ClientWindow);
 
-    if (d->surface->role() == QWaylandXdgSurface::role())
-        QWaylandXdgSurface::findIn(d->surface)->sendClose();
-    else if (d->surface->role() == QWaylandXdgPopup::role())
-        QWaylandXdgPopup::findIn(d->surface)->sendPopupDone();
+    if (d->surface->role() == QWaylandXdgSurfaceV5::role())
+        QWaylandXdgSurfaceV5::findIn(d->surface)->sendClose();
+    else if (d->surface->role() == QWaylandXdgPopupV5::role())
+        QWaylandXdgPopupV5::findIn(d->surface)->sendPopupDone();
     else
         d->surface->destroy();
 }

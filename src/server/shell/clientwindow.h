@@ -37,8 +37,8 @@
 #include <GreenIsland/server/greenislandserver_export.h>
 
 class QWaylandWlShellSurface;
-class QWaylandXdgSurface;
-class QWaylandXdgPopup;
+class QWaylandXdgSurfaceV5;
+class QWaylandXdgPopupV5;
 
 namespace GreenIsland {
 
@@ -153,8 +153,8 @@ private:
     ClientWindow(ApplicationManager *applicationManager, QWaylandSurface *surface);
 
     Q_PRIVATE_SLOT(d_func(), void _q_wlShellSurfaceCreated(QWaylandWlShellSurface *wlShellSurface))
-    Q_PRIVATE_SLOT(d_func(), void _q_xdgSurfaceCreated(QWaylandXdgSurface *xdgSurface))
-    Q_PRIVATE_SLOT(d_func(), void _q_xdgPopupCreated(QWaylandXdgPopup *xdgPopup))
+    Q_PRIVATE_SLOT(d_func(), void _q_xdgSurfaceCreated(QWaylandXdgSurfaceV5 *xdgSurface))
+    Q_PRIVATE_SLOT(d_func(), void _q_xdgPopupCreated(QWaylandXdgPopupV5 *xdgPopup))
     Q_PRIVATE_SLOT(d_func(), void _q_gtkSurfaceCreated(GtkSurface *gtkSurface))
     Q_PRIVATE_SLOT(d_func(), void _q_handleDefaultSeatChanged(QWaylandSeat *newSeat, QWaylandSeat *oldSeat))
     Q_PRIVATE_SLOT(d_func(), void _q_handleFocusChanged(QWaylandSurface *newSurface, QWaylandSurface *oldSurface))

@@ -32,6 +32,7 @@
 #include <QtGui/QScreen>
 
 #include <QtWaylandCompositor/QWaylandCompositor>
+#include <QtWaylandCompositor/QWaylandOutputMode>
 
 #include <GreenIsland/Platform/EglFSScreen>
 
@@ -360,10 +361,8 @@ void QuickOutput::initialize()
     if (d->nativeScreen && modes.size() > 0 && !sizeFollowsWindow()) {
         int modeId = 0;
         Q_FOREACH (const Screen::Mode &mode, modes) {
-            Mode::Flags flags;
-            if (modeId == d->nativeScreen->preferredMode())
-                flags |= Mode::Flag::Preferred;
-            addMode(mode.size, flags, mode.refreshRate);
+            QWaylandOutputMode wlMode(mode.size, qRound(mode.refreshRate * 1000));
+            addMode(wlMode, modeId == d->nativeScreen->preferredMode());
             modeId++;
         }
 
@@ -372,7 +371,7 @@ void QuickOutput::initialize()
         if (currentModeId < 0)
             currentModeId = 0;
         Screen::Mode currentMode = modes.at(currentModeId);
-        setCurrentMode(currentMode.size, currentMode.refreshRate);
+        setCurrentMode(QWaylandOutputMode(currentMode.size, qRound(currentMode.refreshRate * 1000)));
     }
 
     // Set the window visible now

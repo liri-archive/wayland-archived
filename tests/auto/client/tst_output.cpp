@@ -67,9 +67,11 @@ private Q_SLOTS:
         m_compositor->setSocketName(s_socketName.toUtf8());
 
         m_output = new QWaylandOutput(m_compositor, Q_NULLPTR);
-        m_output->addMode(QSize(800, 600), QWaylandOutput::Mode::Preferred);
-        m_output->addMode(QSize(1024, 768), QWaylandOutput::Mode::Current);
-        m_output->addMode(QSize(1920, 1080));
+        m_output->addMode(QWaylandOutputMode(QSize(800, 600), 60000), true);
+        QWaylandOutputMode currentMode(QSize(1024, 768), 60000);
+        m_output->addMode(currentMode);
+        m_output->addMode(QWaylandOutputMode(QSize(1920, 1080), 60000));
+        m_output->setCurrentMode(currentMode);
         m_output->setPosition(QPoint(0, 0));
         m_output->setPhysicalSize(QSize(350, 420));
         m_compositor->create();
@@ -253,7 +255,7 @@ private Q_SLOTS:
         QCOMPARE(modes.at(2).flags, 0);
         QCOMPARE(modes.at(2).refreshRate, qreal(60));
 
-        m_output->setCurrentMode(QSize(1920, 1080));
+        m_output->setCurrentMode(QWaylandOutputMode(QSize(1920, 1080), 60000));
         QVERIFY(modeChangedSpy.wait());
         QCOMPARE(sizeChangedSpy.count(), 5);
         QCOMPARE(geometryChangedSpy.count(), 5);

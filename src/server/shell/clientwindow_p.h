@@ -31,7 +31,7 @@
 #include <QtCore/private/qobject_p.h>
 
 #include <QtWaylandCompositor/QWaylandWlShell>
-#include <QtWaylandCompositor/QWaylandXdgShell>
+#include <QtWaylandCompositor/QWaylandXdgShellV5>
 
 #include <GreenIsland/Server/ApplicationManager>
 #include <GreenIsland/Server/ClientWindow>
@@ -61,7 +61,7 @@ public:
     ApplicationManager *applicationManager;
 
     QWaylandWlShell *wlShell;
-    QWaylandXdgShell *xdgShell;
+    QWaylandXdgShellV5 *xdgShell;
     GtkShell *gtkShell;
 
     QWaylandSurface *surface;
@@ -101,8 +101,8 @@ public:
     void setFullscreen(bool fullscreen);
 
     void _q_wlShellSurfaceCreated(QWaylandWlShellSurface *wlShellSurface);
-    void _q_xdgSurfaceCreated(QWaylandXdgSurface *xdgSurface);
-    void _q_xdgPopupCreated(QWaylandXdgPopup *xdgPopup);
+    void _q_xdgSurfaceCreated(QWaylandXdgSurfaceV5 *xdgSurface);
+    void _q_xdgPopupCreated(QWaylandXdgPopupV5 *xdgPopup);
     void _q_gtkSurfaceCreated(GtkSurface *gtkSurface);
 
     void _q_handleDefaultSeatChanged(QWaylandSeat *newSeat, QWaylandSeat *oldSeat);

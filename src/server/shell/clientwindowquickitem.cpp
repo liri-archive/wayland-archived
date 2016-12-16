@@ -29,7 +29,7 @@
 
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/QWaylandWlShell>
-#include <QtWaylandCompositor/QWaylandXdgShell>
+#include <QtWaylandCompositor/QWaylandXdgShellV5>
 
 #include "clientwindow.h"
 #include "clientwindow_p.h"
@@ -118,7 +118,7 @@ void ClientWindowQuickItem::mousePressEvent(QMouseEvent *event)
             return;
         }
 
-        QWaylandXdgSurface *xdgSurface = qobject_cast<QWaylandXdgSurface *>(shellSurface());
+        QWaylandXdgSurfaceV5 *xdgSurface = qobject_cast<QWaylandXdgSurfaceV5 *>(shellSurface());
         if (xdgSurface) {
             Q_EMIT xdgSurface->startMove(compositor()->defaultSeat());
             return;
