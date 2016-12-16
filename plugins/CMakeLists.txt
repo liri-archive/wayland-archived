@@ -4,6 +4,3 @@ if(ENABLE_ONLY_EGLDEVICEINTEGRATION)
 endif()
 
 add_subdirectory(egldeviceintegration)
-#if(NOT ENABLE_ONLY_EGLDEVICEINTEGRATION)
-#    add_subdirectory(extensions)
-#endif()
