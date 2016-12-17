@@ -268,7 +268,6 @@ ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/GreenIslandServer
                                   INSTALL_DESTINATION ${GreenIslandServer_CMAKECONFIG_INSTALL_DIR})
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfigVersion.cmake"
-              "${CMAKE_CURRENT_SOURCE_DIR}/GreenIslandServerMacros.cmake"
         DESTINATION "${GreenIslandServer_CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel)
 install(EXPORT GreenIslandServerTargets

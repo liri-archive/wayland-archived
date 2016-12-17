@@ -11,4 +11,3 @@ find_dependency(GreenIslandPlatform @PROJECT_VERSION@)
 
 include("${CMAKE_CURRENT_LIST_DIR}/GreenIslandServerConfigExtras.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/GreenIslandServerTargets.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/GreenIslandServerMacros.cmake")
