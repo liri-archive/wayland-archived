@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,18 +25,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_UDEVENUMERATE_H
-#define GREENISLAND_UDEVENUMERATE_H
+#ifndef LIRI_UDEVENUMERATE_H
+#define LIRI_UDEVENUMERATE_H
 
-#include <GreenIsland/Platform/UdevDevice>
+#include <Liri/Platform/UdevDevice>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 class UdevEnumeratePrivate;
 
-class GREENISLANDPLATFORM_EXPORT UdevEnumerate
+class LIRIPLATFORM_EXPORT UdevEnumerate
 {
     Q_DECLARE_PRIVATE(UdevEnumerate)
 public:
@@ -51,6 +51,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #endif // UDEVENUMERATE_H

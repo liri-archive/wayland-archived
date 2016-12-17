@@ -1,10 +1,7 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2012-2014 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
- *
- * Author(s):
- *    Pier Luigi Fiorini
  *
  * $BEGIN_LICENSE:LGPL$
  *
@@ -29,25 +26,25 @@
 #include <QtQml/QQmlComponent>
 #include <QtWaylandCompositor/QWaylandQuickExtension>
 
-#include <GreenIsland/Server/ApplicationManager>
-#include <GreenIsland/Server/ClientWindow>
-#include <GreenIsland/Server/ClientWindowQuickItem>
-#include <GreenIsland/Server/CompositorSettings>
-#include <GreenIsland/Server/OutputChangeset>
-#include <GreenIsland/Server/OutputManagement>
-#include <GreenIsland/Server/QuickOutput>
-#include <GreenIsland/Server/QuickOutputConfiguration>
-#include <GreenIsland/Server/GtkShell>
-#include <GreenIsland/Server/Screen>
-#include <GreenIsland/Server/Screencaster>
-#include <GreenIsland/Server/Screenshooter>
-//#include <GreenIsland/Server/TaskManager>
-#include <GreenIsland/Server/QuickScreenManager>
+#include <Liri/WaylandServer/ApplicationManager>
+#include <Liri/WaylandServer/ClientWindow>
+#include <Liri/WaylandServer/ClientWindowQuickItem>
+#include <Liri/WaylandServer/CompositorSettings>
+#include <Liri/WaylandServer/OutputChangeset>
+#include <Liri/WaylandServer/OutputManagement>
+#include <Liri/WaylandServer/QuickOutput>
+#include <Liri/WaylandServer/QuickOutputConfiguration>
+#include <Liri/WaylandServer/GtkShell>
+#include <Liri/WaylandServer/Screen>
+#include <Liri/WaylandServer/Screencaster>
+#include <Liri/WaylandServer/Screenshooter>
+//#include <Liri/WaylandServer/TaskManager>
+#include <Liri/WaylandServer/QuickScreenManager>
 
 #include "fpscounter.h"
 #include "keyeventfilter.h"
 
-using namespace GreenIsland::Server;
+using namespace Liri::WaylandServer;
 
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(ApplicationManager)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(GtkShell)
@@ -55,7 +52,7 @@ Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(OutputManagement)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(Screencaster)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(Screenshooter)
 
-class GreenIslandPlugin : public QQmlExtensionPlugin
+class LiriWaylandServerPlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface/1.0")
@@ -63,10 +60,10 @@ public:
     void registerTypes(const char *uri);
 };
 
-void GreenIslandPlugin::registerTypes(const char *uri)
+void LiriWaylandServerPlugin::registerTypes(const char *uri)
 {
-    // @uri GreenIsland
-    Q_ASSERT(QLatin1String(uri) == QLatin1String("GreenIsland"));
+    // @uri Liri.WaylandServer
+    Q_ASSERT(QLatin1String(uri) == QLatin1String("Liri.WaylandServer"));
 
     // More specialized output
     qmlRegisterType<QuickOutput>(uri, 1, 0, "ExtendedOutput");

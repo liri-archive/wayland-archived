@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -27,9 +27,9 @@
 
 #include "shmformats_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 static wl_shm_format formats[] = {
     wl_shm_format(INT_MIN),    // Format_Invalid
@@ -82,6 +82,6 @@ QImage::Format ShmFormats::fromWayland(wl_shm_format format)
     return QImage::Format_Invalid;
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri

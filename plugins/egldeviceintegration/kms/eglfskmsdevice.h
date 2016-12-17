@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -31,8 +31,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSKMSDEVICE_H
-#define GREENISLAND_EGLFSKMSDEVICE_H
+#ifndef LIRI_EGLFSKMSDEVICE_H
+#define LIRI_EGLFSKMSDEVICE_H
 
 #include "eglfskmscursor.h"
 #include "eglfskmsintegration.h"
@@ -41,7 +41,7 @@
 #include <xf86drmMode.h>
 #include <gbm.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -91,6 +91,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSKMSDEVICE
+#endif // LIRI_EGLFSKMSDEVICE

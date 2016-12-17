@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -35,7 +35,7 @@
 #include "eglfsscreen.h"
 #include "eglfswindow.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -185,4 +185,4 @@ QFunctionPointer EglFSNativeInterface::platformFunction(const QByteArray &functi
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

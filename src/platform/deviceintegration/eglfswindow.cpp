@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -46,7 +46,7 @@
 #include "deviceintegration/eglfsintegration.h"
 #include "deviceintegration/eglfswindow.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -343,4 +343,4 @@ void EglFSWindow::setOpacity(qreal)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

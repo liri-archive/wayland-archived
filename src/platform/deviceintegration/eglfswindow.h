@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -30,22 +30,22 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSWINDOW_H
-#define GREENISLAND_EGLFSWINDOW_H
+#ifndef LIRI_EGLFSWINDOW_H
+#define LIRI_EGLFSWINDOW_H
 
 #include <QtGui/qpa/qplatformwindow.h>
 #include <QtPlatformCompositorSupport/private/qopenglcompositor_p.h>
 
-#include <GreenIsland/Platform/EglFSScreen>
+#include <Liri/Platform/EglFSScreen>
 
 class QPlatformTextureList;
 class QOpenGLCompositorBackingStore;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
-class GREENISLANDPLATFORM_EXPORT EglFSWindow : public QPlatformWindow, public QOpenGLCompositorWindow
+class LIRIPLATFORM_EXPORT EglFSWindow : public QPlatformWindow, public QOpenGLCompositorWindow
 {
 public:
     EglFSWindow(QWindow *w);
@@ -108,6 +108,6 @@ protected:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSWINDOW_H
+#endif // LIRI_EGLFSWINDOW_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,16 +25,16 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_FAKESCREENBACKEND_H
-#define GREENISLAND_FAKESCREENBACKEND_H
+#ifndef LIRI_FAKESCREENBACKEND_H
+#define LIRI_FAKESCREENBACKEND_H
 
-#include <GreenIsland/Server/ScreenBackend>
+#include <Liri/WaylandServer/ScreenBackend>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT FakeScreenBackend : public ScreenBackend
+class LIRIWAYLANDSERVER_EXPORT FakeScreenBackend : public ScreenBackend
 {
     Q_OBJECT
 public:
@@ -48,8 +48,8 @@ private:
     QString m_fileName;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_FAKESCREENBACKEND_H
+#endif // LIRI_FAKESCREENBACKEND_H

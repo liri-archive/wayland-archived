@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,7 +25,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/Platform/EglFSXkb>
+#include <Liri/Platform/EglFSXkb>
 
 #include "eglfswaylandinput.h"
 #include "eglfswaylandlogging.h"
@@ -34,11 +34,11 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
-EglFSWaylandInput::EglFSWaylandInput(Client::Seat *seat, QObject *parent)
+EglFSWaylandInput::EglFSWaylandInput(WaylandClient::Seat *seat, QObject *parent)
     : QObject(parent)
     , m_seat(seat)
     , m_modifiers(Qt::NoModifier)
@@ -185,7 +185,7 @@ void EglFSWaylandInput::pointerAxisChanged(quint32 time, const Qt::Orientation &
                                              QPoint(), angleDelta);
 }
 
-void EglFSWaylandInput::touchSequenceStarted(Client::TouchPoint *p)
+void EglFSWaylandInput::touchSequenceStarted(WaylandClient::TouchPoint *p)
 {
     QWindowSystemInterface::TouchPoint tp;
     tp.id = p->id();
@@ -206,7 +206,7 @@ void EglFSWaylandInput::touchSequenceCanceled()
 QWindowSystemInterface::handleTouchCancelEvent(Q_NULLPTR, m_touchDevice);
 }
 
-void EglFSWaylandInput::touchPointAdded(Client::TouchPoint *p)
+void EglFSWaylandInput::touchPointAdded(WaylandClient::TouchPoint *p)
 {
     QWindowSystemInterface::TouchPoint tp;
     tp.id = p->id();
@@ -216,7 +216,7 @@ void EglFSWaylandInput::touchPointAdded(Client::TouchPoint *p)
     QWindowSystemInterface::handleTouchEvent(Q_NULLPTR, m_touchDevice, m_touchPoints);
 }
 
-void EglFSWaylandInput::touchPointRemoved(Client::TouchPoint *p)
+void EglFSWaylandInput::touchPointRemoved(WaylandClient::TouchPoint *p)
 {
     for (int i = 0; i < m_touchPoints.count(); i++) {
         if (m_touchPoints.at(i).id == p->id()) {
@@ -227,7 +227,7 @@ void EglFSWaylandInput::touchPointRemoved(Client::TouchPoint *p)
     QWindowSystemInterface::handleTouchEvent(Q_NULLPTR, m_touchDevice, m_touchPoints);
 }
 
-void EglFSWaylandInput::touchPointMoved(Client::TouchPoint *p)
+void EglFSWaylandInput::touchPointMoved(WaylandClient::TouchPoint *p)
 {
     for (int i = 0; i < m_touchPoints.count(); i++) {
         if (m_touchPoints.at(i).id == p->id()) {
@@ -338,6 +338,6 @@ void EglFSWaylandInput::repeatKey()
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_eglfswaylandinput.cpp"

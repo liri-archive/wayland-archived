@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -38,7 +38,7 @@
 
 #include <private/qcore_unix_p.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -96,4 +96,4 @@ void EglFSMaliIntegration::destroyNativeWindow(EGLNativeWindowType window)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

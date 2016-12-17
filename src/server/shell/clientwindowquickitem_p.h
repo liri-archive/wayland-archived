@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,12 +25,12 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_CLIENTWINDOWQUICKITEM_P_H
-#define GREENISLAND_CLIENTWINDOWQUICKITEM_P_H
+#ifndef LIRI_CLIENTWINDOWQUICKITEM_P_H
+#define LIRI_CLIENTWINDOWQUICKITEM_P_H
 
 #include <QtWaylandCompositor/private/qwaylandquickshellsurfaceitem_p.h>
 
-#include <GreenIsland/Server/ClientWindowQuickItem>
+#include <Liri/WaylandServer/ClientWindowQuickItem>
 
 //  W A R N I N G
 //  -------------
@@ -41,11 +41,11 @@
 //
 // We mean it.
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT ClientWindowQuickItemPrivate : public QWaylandQuickShellSurfaceItemPrivate
+class LIRIWAYLANDSERVER_EXPORT ClientWindowQuickItemPrivate : public QWaylandQuickShellSurfaceItemPrivate
 {
     Q_DECLARE_PUBLIC(ClientWindowQuickItem)
 public:
@@ -58,9 +58,9 @@ public:
     bool isModifierHeld;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_CLIENTWINDOWQUICKITEM_P_H
+#endif // LIRI_CLIENTWINDOWQUICKITEM_P_H
 

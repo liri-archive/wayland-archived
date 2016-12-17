@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015 Pier Luigi Fiorini
  *
@@ -35,7 +35,7 @@
 #include "deviceintegration/deviceintegration_p.h"
 #include "deviceintegration/egldeviceintegration.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -119,15 +119,15 @@ DeviceIntegration::DeviceIntegration()
             << "EGL device integration plugin lookup paths:"
             << qPrintable(paths.join(' '));
 
-    if (qEnvironmentVariableIsSet("GREENISLAND_QPA_INTEGRATION"))
-        preferred = QString::fromLatin1(qgetenv("GREENISLAND_QPA_INTEGRATION"));
+    if (qEnvironmentVariableIsSet("LIRI_QPA_INTEGRATION"))
+        preferred = QString::fromLatin1(qgetenv("LIRI_QPA_INTEGRATION"));
 
     qCDebug(lcDeviceIntegration)
             << "Preferred EGL device integration based on the hardware configuration:"
             << preferred;
 
     Q_FOREACH (const QString &path, paths) {
-        const QDir dir(path + QStringLiteral("/greenisland/egldeviceintegration/"),
+        const QDir dir(path + QStringLiteral("/liri/egldeviceintegration/"),
                        QLatin1String("*.so"),
                        QDir::SortFlags(QDir::NoSort),
                        QDir::NoDotAndDotDot | QDir::Files);
@@ -191,4 +191,4 @@ DeviceIntegration::~DeviceIntegration()
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

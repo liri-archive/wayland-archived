@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -31,8 +31,8 @@
 #include <QtCore/QSize>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/ShmPool>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/ShmPool>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G
@@ -45,11 +45,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT BufferPrivate
+class LIRIWAYLANDCLIENT_EXPORT BufferPrivate
         : public QObjectPrivate
         , public QtWayland::wl_buffer
 {
@@ -69,8 +69,8 @@ public:
     bool used;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} //namespace GreenIsland
+} //namespace Liri
 
 #endif // BUFFER_P_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
@@ -35,8 +35,8 @@
 #include "xwaylandshellsurface.h"
 #include "xwaylandserver.h"
 
-Q_LOGGING_CATEGORY(XWAYLAND, "greenisland.xwayland")
-Q_LOGGING_CATEGORY(XWAYLAND_TRACE, "greenisland.xwayland.trace")
+Q_LOGGING_CATEGORY(XWAYLAND, "liri.xwayland")
+Q_LOGGING_CATEGORY(XWAYLAND_TRACE, "liri.xwayland.trace")
 
 XWayland::XWayland(QObject *parent)
     : QObject(parent)

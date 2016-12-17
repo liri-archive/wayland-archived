@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -36,9 +36,9 @@
 
 #include <wayland-client.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * ClientConnectionPrivate
@@ -272,8 +272,8 @@ void ClientConnection::blockingReadEvents()
     }
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_clientconnection.cpp"

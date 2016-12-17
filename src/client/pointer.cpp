@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -31,9 +31,9 @@
 #include "surface.h"
 #include "surface_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * PointerPrivate
@@ -182,8 +182,8 @@ QByteArray Pointer::interfaceName()
     return QByteArrayLiteral("wl_pointer");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_pointer.cpp"

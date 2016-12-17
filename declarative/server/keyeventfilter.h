@@ -1,10 +1,10 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
- * Copyright (C) 2012-2014 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2014-2016 Pier Luigi Fiorini
  *
  * Author(s):
- *    Pier Luigi Fiorini
+ *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPL$
  *
@@ -25,48 +25,23 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtQuick/QQuickWindow>
+#ifndef KEYEVENTFILTER_H
+#define KEYEVENTFILTER_H
 
-#include "fpscounter.h"
+#include <QtCore/QPointer>
+#include <QtQuick/QQuickItem>
 
-FpsCounter::FpsCounter(QQuickItem *parent)
-    : QQuickItem(parent)
-    , m_counter(0)
-    , m_fps(0)
+class KeyEventFilter : public QQuickItem
 {
-    setFlag(QQuickItem::ItemHasContents, false);
-    QMetaObject::invokeMethod(this, "setup", Qt::QueuedConnection);
-}
+    Q_OBJECT
+public:
+    KeyEventFilter(QQuickItem *parent = Q_NULLPTR);
 
-unsigned int FpsCounter::fps() const
-{
-    return m_fps;
-}
+protected:
+    bool eventFilter(QObject *, QEvent *);
 
-void FpsCounter::setup()
-{
-    QQuickWindow *parentWindow = window();
-    connect(parentWindow, SIGNAL(frameSwapped()),
-            this, SLOT(frameSwapped()));
+private:
+    QPointer<QQuickWindow> m_window;
+};
 
-    connect(&m_timer, SIGNAL(timeout()),
-            this, SLOT(updateFps()));
-    m_timer.setInterval(2000);
-    m_timer.start();
-}
-
-void FpsCounter::frameSwapped()
-{
-    m_counter++;
-}
-
-void FpsCounter::updateFps()
-{
-    if (m_counter > 0) {
-        m_fps = m_counter / 2;
-        m_counter = 0;
-        Q_EMIT fpsChanged();
-    }
-}
-
-#include "moc_fpscounter.cpp"
+#endif // KEYEVENTFILTER_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,24 +25,24 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_OUTPUTMANAGEMENT_H
-#define GREENISLAND_OUTPUTMANAGEMENT_H
+#ifndef LIRI_OUTPUTMANAGEMENT_H
+#define LIRI_OUTPUTMANAGEMENT_H
 
 #include <QtCore/QObject>
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 #include <QtWaylandCompositor/QWaylandResource>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class OutputConfiguration;
 class OutputManagementPrivate;
 
-class GREENISLANDSERVER_EXPORT OutputManagement : public QWaylandCompositorExtensionTemplate<OutputManagement>
+class LIRIWAYLANDSERVER_EXPORT OutputManagement : public QWaylandCompositorExtensionTemplate<OutputManagement>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(OutputManagement)
@@ -57,11 +57,11 @@ public:
 
 Q_SIGNALS:
     void createOutputConfiguration(const QWaylandResource &resource);
-    void outputConfigurationCreated(GreenIsland::Server::OutputConfiguration *configuration);
+    void outputConfigurationCreated(Liri::WaylandServer::OutputConfiguration *configuration);
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_OUTPUTMANAGEMENT_H
+#endif // LIRI_OUTPUTMANAGEMENT_H

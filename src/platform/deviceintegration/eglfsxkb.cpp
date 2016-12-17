@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015 Pier Luigi Fiorini
  *
@@ -30,7 +30,7 @@
 
 #include "eglfsxkb.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -200,4 +200,4 @@ Qt::KeyboardModifiers EglFSXkb::modifiers(xkb_state *state)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

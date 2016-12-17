@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_KEYBOARD_P_H
-#define GREENISLANDCLIENT_KEYBOARD_P_H
+#ifndef LIRIWAYLANDCLIENT_KEYBOARD_P_H
+#define LIRIWAYLANDCLIENT_KEYBOARD_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Keyboard>
-#include <GreenIsland/Client/Surface>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/Keyboard>
+#include <Liri/WaylandClient/Surface>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G
@@ -45,11 +45,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT KeyboardPrivate
+class LIRIWAYLANDCLIENT_EXPORT KeyboardPrivate
         : public QObjectPrivate
         , public QtWayland::wl_keyboard
 {
@@ -81,8 +81,8 @@ protected:
     void keyboard_repeat_info(int32_t rate, int32_t delay) Q_DECL_OVERRIDE;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_KEYBOARD_P_H
+#endif // LIRIWAYLANDCLIENT_KEYBOARD_P_H

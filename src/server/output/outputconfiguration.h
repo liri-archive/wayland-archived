@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,15 +25,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_OUTPUTCONFIGURATION_H
-#define GREENISLAND_OUTPUTCONFIGURATION_H
+#ifndef LIRI_OUTPUTCONFIGURATION_H
+#define LIRI_OUTPUTCONFIGURATION_H
 
 #include <QtCore/QObject>
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 #include <QtWaylandCompositor/QWaylandResource>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -41,16 +41,16 @@ class QWaylandOutput;
 
 QT_END_NAMESPACE
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class OutputChangeset;
 class OutputConfigurationPrivate;
 class OutputManagement;
 class OutputManagementPrivate;
 
-class GREENISLANDSERVER_EXPORT OutputConfiguration
+class LIRIWAYLANDSERVER_EXPORT OutputConfiguration
         : public QWaylandCompositorExtensionTemplate<OutputConfiguration>
 {
     Q_OBJECT
@@ -60,7 +60,7 @@ public:
     explicit OutputConfiguration(OutputManagement *parent, const QWaylandResource &resource);
     virtual ~OutputConfiguration();
 
-    Q_INVOKABLE void initialize(GreenIsland::Server::OutputManagement *parent, const QWaylandResource &resource);
+    Q_INVOKABLE void initialize(Liri::WaylandServer::OutputManagement *parent, const QWaylandResource &resource);
     
     QHash<QWaylandOutput *, OutputChangeset *> changes() const;
 
@@ -80,8 +80,8 @@ private:
     void initialize() Q_DECL_OVERRIDE;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_OUTPUTCONFIGURATION_H
+#endif // LIRI_OUTPUTCONFIGURATION_H

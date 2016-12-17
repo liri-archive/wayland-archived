@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,31 +25,31 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_APPLICATIONMANAGER_H
-#define GREENISLAND_APPLICATIONMANAGER_H
+#ifndef LIRI_APPLICATIONMANAGER_H
+#define LIRI_APPLICATIONMANAGER_H
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 class QWaylandCompositor;
 class QWaylandOutput;
 class QWaylandSurface;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class ApplicationManagerPrivate;
 class ClientWindow;
 
-class GREENISLANDSERVER_EXPORT ApplicationManager : public QWaylandCompositorExtensionTemplate<ApplicationManager>
+class LIRIWAYLANDSERVER_EXPORT ApplicationManager : public QWaylandCompositorExtensionTemplate<ApplicationManager>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(ApplicationManager)
     Q_PROPERTY(QWaylandCompositor *compositor READ compositor NOTIFY compositorChanged)
-    Q_PROPERTY(GreenIsland::Server::ClientWindow *focusedWindow READ focusedWindow NOTIFY focusedWindowChanged)
-    Q_PRIVATE_PROPERTY(ApplicationManager::d_func(), QQmlListProperty<GreenIsland::Server::ClientWindow> windows READ windows NOTIFY windowsChanged)
+    Q_PROPERTY(Liri::WaylandServer::ClientWindow *focusedWindow READ focusedWindow NOTIFY focusedWindowChanged)
+    Q_PRIVATE_PROPERTY(ApplicationManager::d_func(), QQmlListProperty<Liri::WaylandServer::ClientWindow> windows READ windows NOTIFY windowsChanged)
 public:
     ApplicationManager();
     ApplicationManager(QWaylandCompositor *compositor);
@@ -59,11 +59,11 @@ public:
     /*!
      * Returns the focused window.
      */
-    GreenIsland::Server::ClientWindow *focusedWindow() const;
+    Liri::WaylandServer::ClientWindow *focusedWindow() const;
 
-    Q_INVOKABLE GreenIsland::Server::ClientWindow *createWindow(QWaylandSurface *surface);
+    Q_INVOKABLE Liri::WaylandServer::ClientWindow *createWindow(QWaylandSurface *surface);
 
-    Q_INVOKABLE GreenIsland::Server::ClientWindow *windowForSurface(QWaylandSurface *surface) const;
+    Q_INVOKABLE Liri::WaylandServer::ClientWindow *windowForSurface(QWaylandSurface *surface) const;
     Q_INVOKABLE QVariantList windowsForOutput(QWaylandOutput *desiredOutput = Q_NULLPTR) const;
 
     /*!
@@ -121,13 +121,13 @@ Q_SIGNALS:
      * \brief A new window was created.
      * \param window Window that was just created.
      */
-    void windowCreated(GreenIsland::Server::ClientWindow *window);
+    void windowCreated(Liri::WaylandServer::ClientWindow *window);
 
     /*!
      * \brief A window was closed.
      * \param window Window that was closed.
      */
-    void windowClosed(GreenIsland::Server::ClientWindow *window);
+    void windowClosed(Liri::WaylandServer::ClientWindow *window);
 
     /*!
      * \brief A window was either created or closed.
@@ -144,8 +144,8 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_outputRemoved(QWaylandOutput*))
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_APPLICATIONMANAGER_H
+#endif // LIRI_APPLICATIONMANAGER_H

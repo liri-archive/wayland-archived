@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -31,13 +31,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSKMSSCREEN_H
-#define GREENISLAND_EGLFSKMSSCREEN_H
+#ifndef LIRI_EGLFSKMSSCREEN_H
+#define LIRI_EGLFSKMSSCREEN_H
 
 #include <QtCore/QList>
 #include <QtCore/QMutex>
 
-#include <GreenIsland/Platform/EglFSScreen>
+#include <Liri/Platform/EglFSScreen>
 
 #include "eglfskmsintegration.h"
 
@@ -45,7 +45,7 @@
 #include <xf86drmMode.h>
 #include <gbm.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -191,6 +191,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSKMSSCREEN_H
+#endif // LIRI_EGLFSKMSSCREEN_H

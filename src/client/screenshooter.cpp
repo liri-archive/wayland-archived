@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -31,16 +31,16 @@
 #include "screenshooter.h"
 #include "screenshooter_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * ScreenshooterPrivate
  */
 
 ScreenshooterPrivate::ScreenshooterPrivate()
-    : QtWayland::greenisland_screenshooter()
+    : QtWayland::liri_screenshooter()
     , registry(Q_NULLPTR)
     , shm(Q_NULLPTR)
     , shmPool(Q_NULLPTR)
@@ -137,7 +137,7 @@ Screenshot *Screenshooter::captureArea(Effects effects)
 
 QByteArray Screenshooter::interfaceName()
 {
-    return QByteArrayLiteral("greenisland_screenshooter");
+    return QByteArrayLiteral("liri_screenshooter");
 }
 
 /*
@@ -145,7 +145,7 @@ QByteArray Screenshooter::interfaceName()
  */
 
 ScreenshotPrivate::ScreenshotPrivate(Screenshooter *s)
-    : QtWayland::greenisland_screenshot()
+    : QtWayland::liri_screenshot()
     , screenshooter(s)
     , output(Q_NULLPTR)
 {
@@ -233,11 +233,11 @@ Output *Screenshot::output() const
 
 QByteArray Screenshot::interfaceName()
 {
-    return QByteArrayLiteral("greenisland_screenshot");
+    return QByteArrayLiteral("liri_screenshot");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_screenshooter.cpp"

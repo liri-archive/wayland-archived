@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,15 +25,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SCREENCASTER_P_H
-#define GREENISLANDCLIENT_SCREENCASTER_P_H
+#ifndef LIRIWAYLANDCLIENT_SCREENCASTER_P_H
+#define LIRIWAYLANDCLIENT_SCREENCASTER_P_H
 
 #include <QtCore/QMutexLocker>
 #include <QtCore/QThread>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Screencaster>
-#include <GreenIsland/client/private/qwayland-greenisland-screencaster.h>
+#include <Liri/WaylandClient/Screencaster>
+#include <Liri/waylandclient/private/qwayland-liri-screencaster.h>
 
 //
 //  W A R N I N G
@@ -46,16 +46,16 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class ScreencastBuffer;
 class ScreencastHandler;
 
-class GREENISLANDCLIENT_EXPORT ScreencasterPrivate
+class LIRIWAYLANDCLIENT_EXPORT ScreencasterPrivate
         : public QObjectPrivate
-        , public QtWayland::greenisland_screencaster
+        , public QtWayland::liri_screencaster
 {
     Q_DECLARE_PUBLIC(Screencaster)
 public:
@@ -69,9 +69,9 @@ public:
     static ScreencasterPrivate *get(Screencaster *screencaster) { return screencaster->d_func(); }
 };
 
-class GREENISLANDCLIENT_EXPORT ScreencastPrivate
+class LIRIWAYLANDCLIENT_EXPORT ScreencastPrivate
         : public QObjectPrivate
-        , public QtWayland::greenisland_screencast
+        , public QtWayland::liri_screencast
 {
     Q_DECLARE_PUBLIC(Screencast)
 public:
@@ -101,8 +101,8 @@ protected:
     void screencast_cancelled(struct ::wl_buffer *buffer) Q_DECL_OVERRIDE;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SCREENCASTER_P_H
+#endif // LIRIWAYLANDCLIENT_SCREENCASTER_P_H

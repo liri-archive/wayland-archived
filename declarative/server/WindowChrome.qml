@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -26,8 +26,8 @@
  ***************************************************************************/
 
 import QtQuick 2.0
-import GreenIsland 1.0
 import QtGraphicalEffects 1.0
+import Liri.WaylandServer 1.0
 
 ClientWindowItem {
     property QtObject window

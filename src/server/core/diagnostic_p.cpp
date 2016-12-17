@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2012-2016 Pier Luigi Fiorini
  * Copyright (C) 2015 The Qt Company Ltd.
@@ -35,7 +35,7 @@
 #include <QtGui/qpa/qplatformnativeinterface.h>
 
 #include "diagnostic_p.h"
-#include "greenisland_version.h"
+#include "liriwayland_version.h"
 
 #include <wayland-version.h>
 
@@ -44,7 +44,7 @@
 
 extern char **environ;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace DiagnosticOutput {
 
@@ -153,7 +153,7 @@ QString openGlContext()
         }
 
         QWindow window;
-        if (QGuiApplication::platformName() == QLatin1String("greenisland"))
+        if (QGuiApplication::platformName() == QLatin1String("liri"))
             window.setFlags(Qt::Desktop);
         window.setSurfaceType(QSurface::OpenGLSurface);
         //window.setScreen(QGuiApplication::primaryScreen());
@@ -190,7 +190,7 @@ QString framework()
 
     str << "Wayland version: " << WAYLAND_VERSION
         << "\nQt version: " << QT_VERSION_STR
-        << "\nGreen Island version: " << GREENISLAND_VERSION_STRING
+        << "\nLiri Wayland version: " << LIRIWAYLAND_VERSION_STRING
         << '\n';
 
     return result;
@@ -216,4 +216,4 @@ QString environment()
 
 } // namespace DiagnosticOutput
 
-} // namespace GreenIsland
+} // namespace Liri

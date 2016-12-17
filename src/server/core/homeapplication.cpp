@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2012-2016 Pier Luigi Fiorini
  *
@@ -44,9 +44,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * HomeApplicationPrivate
@@ -134,9 +134,9 @@ void HomeApplication::setScreenConfiguration(const QString &fileName)
     QString backendName = d->screenConfiguration.isEmpty()
             ? QStringLiteral("native")
             : QStringLiteral("fake");
-    QCoreApplication::instance()->setProperty("__greenisland_screen_backend", backendName);
+    QCoreApplication::instance()->setProperty("__liri_screen_backend", backendName);
     if (!d->screenConfiguration.isEmpty())
-        QCoreApplication::instance()->setProperty("__greenisland_screen_configuration", d->screenConfiguration);
+        QCoreApplication::instance()->setProperty("__liri_screen_configuration", d->screenConfiguration);
 }
 
 QList<QObject *> HomeApplication::rootObjects() const
@@ -199,7 +199,7 @@ bool HomeApplication::load(const QString &shell)
     QStringList files =
             QStandardPaths::locateAll(
                 QStandardPaths::GenericDataLocation,
-                QStringLiteral("/greenisland/shells/%1/metadata.desktop").arg(shell));
+                QStringLiteral("/liri/shells/%1/metadata.desktop").arg(shell));
     Q_FOREACH (const QString &file, files) {
         QSettings metadata(file, QSettings::IniFormat);
         metadata.setIniCodec("UTF-8");
@@ -265,8 +265,8 @@ bool HomeApplication::loadUrl(const QUrl &url)
     return true;
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_homeapplication.cpp"

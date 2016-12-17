@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_POINTER_P_H
-#define GREENISLANDCLIENT_POINTER_P_H
+#ifndef LIRIWAYLANDCLIENT_POINTER_P_H
+#define LIRIWAYLANDCLIENT_POINTER_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Pointer>
-#include <GreenIsland/Client/Surface>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/Pointer>
+#include <Liri/WaylandClient/Surface>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 #include <wayland-cursor.h>
 
@@ -47,11 +47,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT PointerPrivate
+class LIRIWAYLANDCLIENT_EXPORT PointerPrivate
         : public QObjectPrivate
         , public QtWayland::wl_pointer
 {
@@ -80,8 +80,8 @@ protected:
     void pointer_axis(uint32_t time, uint32_t axis, wl_fixed_t value) Q_DECL_OVERRIDE;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_POINTER_P_H
+#endif // LIRIWAYLANDCLIENT_POINTER_P_H

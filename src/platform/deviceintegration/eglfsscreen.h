@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -31,24 +31,24 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSSCREEN_H
-#define GREENISLAND_EGLFSSCREEN_H
+#ifndef LIRI_EGLFSSCREEN_H
+#define LIRI_EGLFSSCREEN_H
 
 #include <QtGui/qpa/qplatformscreen.h>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
 #include <EGL/egl.h>
 
 class QOpenGLContext;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 class EglFSWindow;
 
-class GREENISLANDPLATFORM_EXPORT EglFSScreen : public QPlatformScreen
+class LIRIPLATFORM_EXPORT EglFSScreen : public QPlatformScreen
 {
 public:
     struct Mode {
@@ -106,6 +106,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSSCREEN_H
+#endif // LIRI_EGLFSSCREEN_H

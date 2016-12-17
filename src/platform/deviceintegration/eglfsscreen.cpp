@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -42,7 +42,7 @@
 #include "deviceintegration/eglfsscreen.h"
 #include "deviceintegration/eglfswindow.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -65,7 +65,7 @@ QRect EglFSScreen::geometry() const
 {
     QRect r = rawGeometry();
 
-    static int rotation = qEnvironmentVariableIntValue("GREENISLAND_QPA_EGLFS_ROTATION");
+    static int rotation = qEnvironmentVariableIntValue("LIRI_QPA_EGLFS_ROTATION");
     switch (rotation) {
     case 0:
     case 180:
@@ -79,7 +79,7 @@ QRect EglFSScreen::geometry() const
         break;
     }
     default:
-        qWarning("Invalid rotation %d specified in GREENISLAND_QPA_EGLFS_ROTATION", rotation);
+        qWarning("Invalid rotation %d specified in LIRI_QPA_EGLFS_ROTATION", rotation);
         break;
     }
 
@@ -334,4 +334,4 @@ QString EglFSScreen::serialNumber() const
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

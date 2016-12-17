@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_COMPOSITOR_P_H
-#define GREENISLANDCLIENT_COMPOSITOR_P_H
+#ifndef LIRIWAYLANDCLIENT_COMPOSITOR_P_H
+#define LIRIWAYLANDCLIENT_COMPOSITOR_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Compositor>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/Compositor>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G
@@ -44,11 +44,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT CompositorPrivate
+class LIRIWAYLANDCLIENT_EXPORT CompositorPrivate
         : public QObjectPrivate
         , public QtWayland::wl_compositor
 {
@@ -59,8 +59,8 @@ public:
     static CompositorPrivate *get(Compositor *compositor) { return compositor->d_func(); }
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_COMPOSITOR_P_H
+#endif // LIRIWAYLANDCLIENT_COMPOSITOR_P_H

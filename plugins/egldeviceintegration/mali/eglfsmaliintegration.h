@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -27,12 +27,12 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSMALIINTEGRATION_H
-#define GREENISLAND_EGLFSMALIINTEGRATION_H
+#ifndef LIRI_EGLFSMALIINTEGRATION_H
+#define LIRI_EGLFSMALIINTEGRATION_H
 
-#include <GreenIsland/Platform/EGLDeviceIntegration>
+#include <Liri/Platform/EGLDeviceIntegration>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -46,6 +46,6 @@ public:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSMALIINTEGRATION_H
+#endif // LIRI_EGLFSMALIINTEGRATION_H

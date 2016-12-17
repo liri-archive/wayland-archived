@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_UDEV_P_H
-#define GREENISLAND_UDEV_P_H
+#ifndef LIRI_UDEV_P_H
+#define LIRI_UDEV_P_H
 
 extern "C" {
 #include <libudev.h>
 }
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -51,7 +51,7 @@ public:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_UDEV_P_H
+#endif // LIRI_UDEV_P_H
 

@@ -27,10 +27,10 @@
 
 #include <QtTest/QtTest>
 
-#include <GreenIsland/Platform/Udev>
-#include <GreenIsland/Platform/UdevEnumerate>
+#include <Liri/Platform/Udev>
+#include <Liri/Platform/UdevEnumerate>
 
-using namespace GreenIsland::Platform;
+using namespace Liri::Platform;
 
 class TestUdev : public QObject
 {

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -32,11 +32,11 @@
 #include <QtCore/QTimer>
 #include <QtGui/qpa/qwindowsysteminterface.h>
 
-#include <GreenIsland/Client/Touch>
+#include <Liri/WaylandClient/Touch>
 
 #include <xkbcommon/xkbcommon.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -44,7 +44,7 @@ class EglFSWaylandInput : public QObject
 {
     Q_OBJECT
 public:
-    EglFSWaylandInput(Client::Seat *seat, QObject *parent = Q_NULLPTR);
+    EglFSWaylandInput(WaylandClient::Seat *seat, QObject *parent = Q_NULLPTR);
 
     void setTouchDevice(QTouchDevice *td);
 
@@ -59,15 +59,15 @@ public Q_SLOTS:
     void pointerButtonPressed(quint32 serial, quint32 time, const Qt::MouseButton &button);
     void pointerButtonReleased(quint32 serial, quint32 time, const Qt::MouseButton &button);
     void pointerAxisChanged(quint32 time, const Qt::Orientation &orientation, qreal value);
-    void touchSequenceStarted(Client::TouchPoint *p);
+    void touchSequenceStarted(WaylandClient::TouchPoint *p);
     void touchSequenceFinished();
     void touchSequenceCanceled();
-    void touchPointAdded(Client::TouchPoint *p);
-    void touchPointRemoved(Client::TouchPoint *p);
-    void touchPointMoved(Client::TouchPoint *p);
+    void touchPointAdded(WaylandClient::TouchPoint *p);
+    void touchPointRemoved(WaylandClient::TouchPoint *p);
+    void touchPointMoved(WaylandClient::TouchPoint *p);
 
 private:
-    Client::Seat *m_seat;
+    WaylandClient::Seat *m_seat;
     Qt::KeyboardModifiers m_modifiers;
     quint32 m_nativeModifiers;
     Qt::MouseButtons m_mouseButtons;
@@ -95,6 +95,6 @@ private Q_SLOTS:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #endif // EGLFSWAYLANDINPUT_H

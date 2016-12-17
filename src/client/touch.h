@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,16 +25,16 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_TOUCH_H
-#define GREENISLANDCLIENT_TOUCH_H
+#ifndef LIRIWAYLANDCLIENT_TOUCH_H
+#define LIRIWAYLANDCLIENT_TOUCH_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class Seat;
 class Surface;
@@ -43,7 +43,7 @@ class TouchPrivate;
 class TouchPoint;
 class TouchPointPrivate;
 
-class GREENISLANDCLIENT_EXPORT Touch : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Touch : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Touch)
@@ -62,7 +62,7 @@ Q_SIGNALS:
     void pointMoved(TouchPoint *point);
 };
 
-class GREENISLANDCLIENT_EXPORT TouchPoint
+class LIRIWAYLANDCLIENT_EXPORT TouchPoint
 {
     Q_DECLARE_PRIVATE(TouchPoint)
 public:
@@ -85,8 +85,8 @@ private:
     friend class TouchPrivate;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_TOUCH_H
+#endif // LIRIWAYLANDCLIENT_TOUCH_H

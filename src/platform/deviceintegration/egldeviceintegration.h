@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -31,8 +31,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLDEVICEINTEGRATION_H
-#define GREENISLAND_EGLDEVICEINTEGRATION_H
+#ifndef LIRI_EGLDEVICEINTEGRATION_H
+#define LIRI_EGLDEVICEINTEGRATION_H
 
 #include <QtCore/QString>
 #include <QtGui/QSurfaceFormat>
@@ -40,17 +40,17 @@
 #include <QtGui/qpa/qplatformintegration.h>
 #include <QtGui/qpa/qplatformscreen.h>
 
-#include <GreenIsland/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSGlobal>
 
 class QPlatformSurface;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
-#define GreenIslandDeviceIntegrationFactoryInterface_iid "org.hawaiios.GreenIsland.DeviceIntegrationFactoryInterface.1.0"
+#define LiriDeviceIntegrationFactoryInterface_iid "io.liri.DeviceIntegrationFactoryInterface.1.0"
 
-class GREENISLANDPLATFORM_EXPORT EGLDeviceIntegration
+class LIRIPLATFORM_EXPORT EGLDeviceIntegration
 {
 public:
     virtual ~EGLDeviceIntegration();
@@ -113,17 +113,17 @@ public:
     virtual void *wlDisplay() const;
 };
 
-class GREENISLANDPLATFORM_EXPORT EGLDeviceIntegrationPlugin : public QObject
+class LIRIPLATFORM_EXPORT EGLDeviceIntegrationPlugin : public QObject
 {
     Q_OBJECT
 public:
     virtual EGLDeviceIntegration *create() = 0;
 };
 
-GREENISLANDPLATFORM_EXPORT EGLDeviceIntegration *egl_device_integration();
+LIRIPLATFORM_EXPORT EGLDeviceIntegration *egl_device_integration();
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLDEVICEINTEGRATION_H
+#endif // LIRI_EGLDEVICEINTEGRATION_H

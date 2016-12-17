@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,18 +25,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_QUICKSCREENMANAGER_H
-#define GREENISLAND_QUICKSCREENMANAGER_H
+#ifndef LIRI_QUICKSCREENMANAGER_H
+#define LIRI_QUICKSCREENMANAGER_H
 
 #include <QtQml/QQmlParserStatus>
 
-#include <GreenIsland/Server/ScreenManager>
+#include <Liri/WaylandServer/ScreenManager>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT QuickScreenManager : public ScreenManager, public QQmlParserStatus
+class LIRIWAYLANDSERVER_EXPORT QuickScreenManager : public ScreenManager, public QQmlParserStatus
 {
     Q_INTERFACES(QQmlParserStatus)
     Q_OBJECT
@@ -50,8 +50,8 @@ protected:
     void componentComplete() Q_DECL_OVERRIDE;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_QUICKSCREENMANAGER_H
+#endif // LIRI_QUICKSCREENMANAGER_H

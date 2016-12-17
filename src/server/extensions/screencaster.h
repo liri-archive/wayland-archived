@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENCASTER_H
-#define GREENISLAND_SCREENCASTER_H
+#ifndef LIRI_SCREENCASTER_H
+#define LIRI_SCREENCASTER_H
 
 #include <QtCore/QObject>
 #include <QtCore/QMultiHash>
@@ -34,19 +34,19 @@
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 class QQuickWindow;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class Screencast;
 class ScreencastPrivate;
 class ScreencasterPrivate;
 
-class GREENISLANDSERVER_EXPORT Screencaster : public QWaylandCompositorExtensionTemplate<Screencaster>
+class LIRIWAYLANDSERVER_EXPORT Screencaster : public QWaylandCompositorExtensionTemplate<Screencaster>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Screencaster)
@@ -65,7 +65,7 @@ Q_SIGNALS:
     void captureRequested(Screencast *screencast);
 };
 
-class GREENISLANDSERVER_EXPORT Screencast : public QWaylandCompositorExtensionTemplate<Screencast>
+class LIRIWAYLANDSERVER_EXPORT Screencast : public QWaylandCompositorExtensionTemplate<Screencast>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Screencast)
@@ -84,8 +84,8 @@ private:
     friend class ScreencasterPrivate;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENCASTER_H
+#endif // LIRI_SCREENCASTER_H

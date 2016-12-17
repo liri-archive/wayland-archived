@@ -1,3 +1,4 @@
-module GreenIsland.XWayland
-plugin GreenIslandXWaylandPlugin
+module Liri.XWayland
+plugin lirixwaylandplugin
+classname LiriXWaylandPlugin
 XWaylandWindowChrome 1.0 XWaylandWindowChrome.qml

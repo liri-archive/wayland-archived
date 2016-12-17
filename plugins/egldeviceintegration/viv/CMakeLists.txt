@@ -1,6 +1,5 @@
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
-    "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
@@ -14,10 +13,10 @@ set(SOURCES
 
 add_library(viv SHARED MODULE ${SOURCES})
 target_link_libraries(viv
-    GreenIsland::Platform
+    Liri::Platform
     Wayland::Server
     GAL
 )
 
 install(TARGETS viv
-        DESTINATION ${PLUGIN_INSTALL_DIR}/greenisland/egldeviceintegration)
+        DESTINATION ${PLUGIN_INSTALL_DIR}/liri/egldeviceintegration)

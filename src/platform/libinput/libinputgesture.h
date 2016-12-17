@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LIBINPUTGESTURE_H
-#define GREENISLAND_LIBINPUTGESTURE_H
+#ifndef LIRI_LIBINPUTGESTURE_H
+#define LIRI_LIBINPUTGESTURE_H
 
 //
 //  W A R N I N G
@@ -41,7 +41,7 @@
 
 struct libinput_event_gesture;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -63,6 +63,6 @@ public:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_LIBINPUTGESTURE_H
+#endif // LIRI_LIBINPUTGESTURE_H

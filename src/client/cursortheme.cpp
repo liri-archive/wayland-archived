@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -35,11 +35,11 @@
 #include "shmpool.h"
 #include "surface_p.h"
 
-Q_LOGGING_CATEGORY(WLCURSORTHEME, "greenisland.client.cursortheme")
+Q_LOGGING_CATEGORY(WLCURSORTHEME, "liri.wlclient.cursortheme")
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * CursorThemePrivate
@@ -305,8 +305,8 @@ void CursorTheme::changeCursor(CursorShape shape)
     }
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_cursortheme.cpp"

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,17 +25,17 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SCREENCASTER_H
-#define GREENISLANDCLIENT_SCREENCASTER_H
+#ifndef LIRIWAYLANDCLIENT_SCREENCASTER_H
+#define LIRIWAYLANDCLIENT_SCREENCASTER_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/Client/Buffer>
-#include <GreenIsland/Client/Shm>
+#include <Liri/WaylandClient/Buffer>
+#include <Liri/WaylandClient/Shm>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class Output;
 class Registry;
@@ -43,7 +43,7 @@ class Screencast;
 class ScreencastPrivate;
 class ScreencasterPrivate;
 
-class GREENISLANDCLIENT_EXPORT Screencaster : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Screencaster : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Screencaster)
@@ -66,7 +66,7 @@ private:
     friend class Registry;
 };
 
-class GREENISLANDCLIENT_EXPORT Screencast : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Screencast : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Screencast)
@@ -97,8 +97,8 @@ private:
     friend class Screencaster;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SCREENCASTER_H
+#endif // LIRIWAYLANDCLIENT_SCREENCASTER_H

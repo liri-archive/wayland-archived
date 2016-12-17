@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,28 +25,28 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SHMFORMATS_P_H
-#define GREENISLANDCLIENT_SHMFORMATS_P_H
+#ifndef LIRIWAYLANDCLIENT_SHMFORMATS_P_H
+#define LIRIWAYLANDCLIENT_SHMFORMATS_P_H
 
 #include <QtGui/QImage>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
 #include <wayland-client.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT ShmFormats
+class LIRIWAYLANDCLIENT_EXPORT ShmFormats
 {
 public:
     static wl_shm_format fromQt(QImage::Format format);
     static QImage::Format fromWayland(wl_shm_format format);
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SHMFORMATS_P_H
+#endif // LIRIWAYLANDCLIENT_SHMFORMATS_P_H

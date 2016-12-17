@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,22 +25,22 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_CLIENTCONNECTION_H
-#define GREENISLANDCLIENT_CLIENTCONNECTION_H
+#ifndef LIRIWAYLANDCLIENT_CLIENTCONNECTION_H
+#define LIRIWAYLANDCLIENT_CLIENTCONNECTION_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
 struct wl_display;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class ClientConnectionPrivate;
 
-class GREENISLANDCLIENT_EXPORT ClientConnection : public QObject
+class LIRIWAYLANDCLIENT_EXPORT ClientConnection : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(ClientConnection)
@@ -78,8 +78,8 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_initConnection())
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
 } // namespace GreenIslanmd
 
-#endif // GREENISLANDCLIENT_CLIENTCONNECTION_H
+#endif // LIRIWAYLANDCLIENT_CLIENTCONNECTION_H

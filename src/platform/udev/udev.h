@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,21 +25,21 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_UDEV_H
-#define GREENISLAND_UDEV_H
+#ifndef LIRI_UDEV_H
+#define LIRI_UDEV_H
 
 #include <QtCore/QString>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 class UdevDevice;
 class UdevPrivate;
 
-class GREENISLANDPLATFORM_EXPORT Udev
+class LIRIPLATFORM_EXPORT Udev
 {
     Q_DECLARE_PRIVATE(Udev)
 public:
@@ -58,6 +58,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_UDEV_H
+#endif // LIRI_UDEV_H

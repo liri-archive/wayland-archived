@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -52,7 +52,7 @@
 #define DRM_CAP_CURSOR_HEIGHT 0x9
 #endif
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -188,7 +188,7 @@ void EglFSKmsCursor::setPos(const QPoint &pos)
 
 void EglFSKmsCursor::initCursorAtlas()
 {
-    static QByteArray json = qgetenv("GREENISLAND_QPA_CURSOR");
+    static QByteArray json = qgetenv("LIRI_QPA_CURSOR");
     if (json.isEmpty())
         json = ":/cursor.json";
 
@@ -232,6 +232,6 @@ void EglFSKmsCursor::initCursorAtlas()
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_eglfskmscursor.cpp"

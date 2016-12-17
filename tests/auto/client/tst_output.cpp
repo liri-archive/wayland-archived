@@ -27,18 +27,17 @@
 
 #include <QtCore/QThread>
 #include <QtTest/QtTest>
-
-#include <GreenIsland/Client/ClientConnection>
-#include <GreenIsland/Client/Compositor>
-#include <GreenIsland/Client/Output>
-#include <GreenIsland/Client/Registry>
-
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/QWaylandOutput>
 
-using namespace GreenIsland;
+#include <Liri/WaylandClient/ClientConnection>
+#include <Liri/WaylandClient/Compositor>
+#include <Liri/WaylandClient/Output>
+#include <Liri/WaylandClient/Registry>
 
-static const QString s_socketName = QStringLiteral("greenisland-test-0");
+using namespace Liri::WaylandClient;
+
+static const QString s_socketName = QStringLiteral("liri-test-0");
 
 class TestOutput : public QObject
 {
@@ -57,7 +56,7 @@ private:
     QWaylandCompositor *m_compositor;
     QWaylandOutput *m_output;
     QThread *m_thread;
-    Client::ClientConnection *m_display;
+    ClientConnection *m_display;
 
 private Q_SLOTS:
     void init()
@@ -77,7 +76,7 @@ private Q_SLOTS:
         m_compositor->create();
 
         delete m_display;
-        m_display = new Client::ClientConnection();
+        m_display = new ClientConnection();
         m_display->setSocketName(s_socketName);
 
         delete m_thread;
@@ -115,7 +114,7 @@ private Q_SLOTS:
 
     void testAnnounce()
     {
-        Client::Registry registry;
+        Registry registry;
         registry.create(m_display->display());
         QSignalSpy announced(&registry, SIGNAL(outputAnnounced(quint32,quint32)));
         QVERIFY(announced.isValid());
@@ -125,7 +124,7 @@ private Q_SLOTS:
 
         const quint32 name = announced.first().first().value<quint32>();
         const quint32 version = announced.first().last().value<quint32>();
-        Client::Output *output = registry.createOutput(name, version, this);
+        Output *output = registry.createOutput(name, version, this);
         QVERIFY(output);
 
         // Output holds an invalid data at the beginning
@@ -137,8 +136,8 @@ private Q_SLOTS:
         QVERIFY(output->geometry().isEmpty());
         QVERIFY(output->geometry().isNull());
         QCOMPARE(output->scale(), 1);
-        QCOMPARE(output->transform(), Client::Output::TransformNormal);
-        QCOMPARE(output->subpixel(), Client::Output::SubpixelUnknown);
+        QCOMPARE(output->transform(), Output::TransformNormal);
+        QCOMPARE(output->subpixel(), Output::SubpixelUnknown);
 
         // Then we should receive the current geometry
         QSignalSpy outputSpy(output, SIGNAL(outputChanged()));
@@ -150,7 +149,7 @@ private Q_SLOTS:
 
     void testChanged()
     {
-        Client::Registry registry;
+        Registry registry;
         registry.create(m_display->display());
         QSignalSpy announced(&registry, SIGNAL(outputAnnounced(quint32,quint32)));
         QVERIFY(announced.isValid());
@@ -160,7 +159,7 @@ private Q_SLOTS:
 
         const quint32 name = announced.first().first().value<quint32>();
         const quint32 version = announced.first().last().value<quint32>();
-        Client::Output *output = registry.createOutput(name, version, this);
+        Output *output = registry.createOutput(name, version, this);
         QVERIFY(output);
 
         QSignalSpy outputSpy(output, SIGNAL(outputChanged()));
@@ -194,17 +193,17 @@ private Q_SLOTS:
         // Subpixel
         m_output->setSubpixel(QWaylandOutput::SubpixelHorizontalBgr);
         QVERIFY(outputSpy.wait());
-        QCOMPARE(output->subpixel(), Client::Output::SubpixelHorizontalBgr);
+        QCOMPARE(output->subpixel(), Output::SubpixelHorizontalBgr);
 
         // Transform
         m_output->setTransform(QWaylandOutput::Transform90);
         QVERIFY(outputSpy.wait());
-        QCOMPARE(output->transform(), Client::Output::Transform90);
+        QCOMPARE(output->transform(), Output::Transform90);
     }
 
     void testMode()
     {
-        Client::Registry registry;
+        Registry registry;
         registry.create(m_display->display());
         QSignalSpy announced(&registry, SIGNAL(outputAnnounced(quint32,quint32)));
         QVERIFY(announced.isValid());
@@ -214,14 +213,14 @@ private Q_SLOTS:
 
         const quint32 name = announced.first().first().value<quint32>();
         const quint32 version = announced.first().last().value<quint32>();
-        Client::Output *output = registry.createOutput(name, version, this);
+        Output *output = registry.createOutput(name, version, this);
         QVERIFY(output);
 
         QSignalSpy outputSpy(output, SIGNAL(outputChanged()));
         QVERIFY(outputSpy.isValid());
-        QSignalSpy modeAddedSpy(output, SIGNAL(modeAdded(GreenIsland::Client::Output::Mode)));
+        QSignalSpy modeAddedSpy(output, SIGNAL(modeAdded(Output::Mode)));
         QVERIFY(modeAddedSpy.isValid());
-        QSignalSpy modeChangedSpy(output, SIGNAL(modeChanged(GreenIsland::Client::Output::Mode)));
+        QSignalSpy modeChangedSpy(output, SIGNAL(modeChanged(Output::Mode)));
         QVERIFY(modeChangedSpy.isValid());
         QSignalSpy sizeChangedSpy(output, SIGNAL(sizeChanged()));
         QVERIFY(sizeChangedSpy.isValid());
@@ -233,23 +232,23 @@ private Q_SLOTS:
         QVERIFY(outputSpy.wait());
 
         QCOMPARE(modeAddedSpy.count(), 3);
-        QCOMPARE(modeAddedSpy.at(0).first().value<Client::Output::Mode>().flags, Client::Output::PreferredMode);
-        QCOMPARE(modeAddedSpy.at(0).first().value<Client::Output::Mode>().size, QSize(800, 600));
-        QCOMPARE(modeAddedSpy.at(0).first().value<Client::Output::Mode>().refreshRate, qreal(60));
-        QCOMPARE(modeAddedSpy.at(1).first().value<Client::Output::Mode>().flags, Client::Output::CurrentMode);
-        QCOMPARE(modeAddedSpy.at(1).first().value<Client::Output::Mode>().size, QSize(1024, 768));
-        QCOMPARE(modeAddedSpy.at(1).first().value<Client::Output::Mode>().refreshRate, qreal(60));
-        QCOMPARE(modeAddedSpy.at(2).first().value<Client::Output::Mode>().flags, 0);
-        QCOMPARE(modeAddedSpy.at(2).first().value<Client::Output::Mode>().size, QSize(1920, 1080));
-        QCOMPARE(modeAddedSpy.at(2).first().value<Client::Output::Mode>().refreshRate, qreal(60));
+        QCOMPARE(modeAddedSpy.at(0).first().value<Output::Mode>().flags, Output::PreferredMode);
+        QCOMPARE(modeAddedSpy.at(0).first().value<Output::Mode>().size, QSize(800, 600));
+        QCOMPARE(modeAddedSpy.at(0).first().value<Output::Mode>().refreshRate, qreal(60));
+        QCOMPARE(modeAddedSpy.at(1).first().value<Output::Mode>().flags, Output::CurrentMode);
+        QCOMPARE(modeAddedSpy.at(1).first().value<Output::Mode>().size, QSize(1024, 768));
+        QCOMPARE(modeAddedSpy.at(1).first().value<Output::Mode>().refreshRate, qreal(60));
+        QCOMPARE(modeAddedSpy.at(2).first().value<Output::Mode>().flags, 0);
+        QCOMPARE(modeAddedSpy.at(2).first().value<Output::Mode>().size, QSize(1920, 1080));
+        QCOMPARE(modeAddedSpy.at(2).first().value<Output::Mode>().refreshRate, qreal(60));
 
-        QList<Client::Output::Mode> modes = output->modes();
+        QList<Output::Mode> modes = output->modes();
         QCOMPARE(modes.count(), 3);
         QCOMPARE(modes.at(0).size, QSize(800, 600));
-        QCOMPARE(modes.at(0).flags, Client::Output::PreferredMode);
+        QCOMPARE(modes.at(0).flags, Output::PreferredMode);
         QCOMPARE(modes.at(0).refreshRate, qreal(60));
         QCOMPARE(modes.at(1).size, QSize(1024, 768));
-        QCOMPARE(modes.at(1).flags, Client::Output::CurrentMode);
+        QCOMPARE(modes.at(1).flags, Output::CurrentMode);
         QCOMPARE(modes.at(1).refreshRate, qreal(60));
         QCOMPARE(modes.at(2).size, QSize(1920, 1080));
         QCOMPARE(modes.at(2).flags, 0);
@@ -261,14 +260,14 @@ private Q_SLOTS:
         QCOMPARE(geometryChangedSpy.count(), 5);
         QCOMPARE(refreshRateChangedSpy.count(), 5);
         QCOMPARE(modeChangedSpy.count(), 2);
-        QCOMPARE(modeChangedSpy.at(1).first().value<Client::Output::Mode>().flags, Client::Output::CurrentMode);
-        QCOMPARE(modeChangedSpy.at(1).first().value<Client::Output::Mode>().size, QSize(1920, 1080));
-        QCOMPARE(modeChangedSpy.at(1).first().value<Client::Output::Mode>().refreshRate, qreal(60));
+        QCOMPARE(modeChangedSpy.at(1).first().value<Output::Mode>().flags, Output::CurrentMode);
+        QCOMPARE(modeChangedSpy.at(1).first().value<Output::Mode>().size, QSize(1920, 1080));
+        QCOMPARE(modeChangedSpy.at(1).first().value<Output::Mode>().refreshRate, qreal(60));
 
         modes = output->modes();
         QCOMPARE(modes.count(), 3);
         QCOMPARE(modes.at(2).size, QSize(1920, 1080));
-        QCOMPARE(modes.at(2).flags, Client::Output::CurrentMode);
+        QCOMPARE(modes.at(2).flags, Output::CurrentMode);
         QCOMPARE(modes.at(2).refreshRate, qreal(60));
     }
 };

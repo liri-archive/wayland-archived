@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,15 +25,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_TOUCH_P_H
-#define GREENISLANDCLIENT_TOUCH_P_H
+#ifndef LIRIWAYLANDCLIENT_TOUCH_P_H
+#define LIRIWAYLANDCLIENT_TOUCH_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Seat>
-#include <GreenIsland/Client/Surface>
-#include <GreenIsland/Client/Touch>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/Seat>
+#include <Liri/WaylandClient/Surface>
+#include <Liri/WaylandClient/Touch>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G
@@ -46,11 +46,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT TouchPrivate
+class LIRIWAYLANDCLIENT_EXPORT TouchPrivate
         : public QObjectPrivate
         , public QtWayland::wl_touch
 {
@@ -80,7 +80,7 @@ protected:
     void touch_cancel() Q_DECL_OVERRIDE;
 };
 
-class GREENISLANDCLIENT_EXPORT TouchPointPrivate
+class LIRIWAYLANDCLIENT_EXPORT TouchPointPrivate
 {
     Q_DECLARE_PUBLIC(TouchPoint)
 public:
@@ -97,8 +97,8 @@ private:
     TouchPoint *q_ptr;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_TOUCH_P_H
+#endif // LIRIWAYLANDCLIENT_TOUCH_P_H

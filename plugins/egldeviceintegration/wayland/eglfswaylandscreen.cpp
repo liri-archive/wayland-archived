@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -28,13 +28,13 @@
 #include "eglfswaylandintegration.h"
 #include "eglfswaylandscreen.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 EglFSWaylandScreen::EglFSWaylandScreen(EGLDisplay display,
                                        EglFSWaylandIntegration *integration,
-                                       Client::Output *output)
+                                       WaylandClient::Output *output)
     : EglFSScreen(display)
     , m_integration(integration)
     , m_output(output)
@@ -100,4 +100,4 @@ qreal EglFSWaylandScreen::refreshRate() const
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

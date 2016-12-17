@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_OUTPUTCONFIGURATION_P_H
-#define GREENISLANDCLIENT_OUTPUTCONFIGURATION_P_H
+#ifndef LIRIWAYLANDCLIENT_OUTPUTCONFIGURATION_P_H
+#define LIRIWAYLANDCLIENT_OUTPUTCONFIGURATION_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/OutputConfiguration>
-#include <GreenIsland/client/private/qwayland-greenisland-outputmanagement.h>
+#include <Liri/WaylandClient/OutputConfiguration>
+#include <Liri/waylandclient/private/qwayland-liri-outputmanagement.h>
 
 //
 //  W A R N I N G
@@ -44,13 +44,13 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT OutputConfigurationPrivate
+class LIRIWAYLANDCLIENT_EXPORT OutputConfigurationPrivate
         : public QObjectPrivate
-        , public QtWayland::greenisland_outputconfiguration
+        , public QtWayland::liri_outputconfiguration
 {
     Q_DECLARE_PUBLIC(OutputConfiguration)
 public:
@@ -59,8 +59,8 @@ public:
     static OutputConfigurationPrivate *get(OutputConfiguration *c) { return c->d_func(); }
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_OUTPUTCONFIGURATION_P_H
+#endif // LIRIWAYLANDCLIENT_OUTPUTCONFIGURATION_P_H

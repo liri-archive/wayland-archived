@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -37,9 +37,9 @@
 #include "shmpool.h"
 #include "shmpool_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class ScreencastBuffer
 {
@@ -108,7 +108,7 @@ protected:
  */
 
 ScreencasterPrivate::ScreencasterPrivate()
-    : QtWayland::greenisland_screencaster()
+    : QtWayland::liri_screencaster()
     , registry(Q_NULLPTR)
     , shm(Q_NULLPTR)
 {
@@ -151,7 +151,7 @@ Screencast *Screencaster::capture(Output *output)
 
 QByteArray Screencaster::interfaceName()
 {
-    return QByteArrayLiteral("greenisland_screencaster");
+    return QByteArrayLiteral("liri_screencaster");
 }
 
 /*
@@ -159,7 +159,7 @@ QByteArray Screencaster::interfaceName()
  */
 
 ScreencastPrivate::ScreencastPrivate(Screencaster *s)
-    : QtWayland::greenisland_screencast()
+    : QtWayland::liri_screencast()
     , shmPool(Q_NULLPTR)
     , screencaster(s)
     , starving(false)
@@ -299,11 +299,11 @@ Screencast::Screencast(QObject *parent)
 
 QByteArray Screencast::interfaceName()
 {
-    return QByteArrayLiteral("greenisland_screencast");
+    return QByteArrayLiteral("liri_screencast");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_screencaster.cpp"

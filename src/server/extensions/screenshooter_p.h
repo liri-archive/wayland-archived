@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENSHOOTER_P_H
-#define GREENISLAND_SCREENSHOOTER_P_H
+#ifndef LIRI_SCREENSHOOTER_P_H
+#define LIRI_SCREENSHOOTER_P_H
 
 #include <QtQuick/QQuickItem>
 
@@ -34,8 +34,8 @@
 #include <QtWaylandCompositor/QWaylandSurface>
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <GreenIsland/Server/Screenshooter>
-#include <GreenIsland/server/private/qwayland-server-greenisland-screenshooter.h>
+#include <Liri/WaylandServer/Screenshooter>
+#include <Liri/waylandserver/private/qwayland-server-liri-screenshooter.h>
 
 //
 //  W A R N I N G
@@ -48,13 +48,13 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT ScreenshooterPrivate
+class LIRIWAYLANDSERVER_EXPORT ScreenshooterPrivate
         : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::greenisland_screenshooter
+        , public QtWaylandServer::liri_screenshooter
 {
     Q_DECLARE_PUBLIC(Screenshooter)
 public:
@@ -78,9 +78,9 @@ protected:
                                     wl_array *effects) Q_DECL_OVERRIDE;
 };
 
-class GREENISLANDSERVER_EXPORT ScreenshotPrivate
+class LIRIWAYLANDSERVER_EXPORT ScreenshotPrivate
         : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::greenisland_screenshot
+        , public QtWaylandServer::liri_screenshot
 {
     Q_DECLARE_PUBLIC(Screenshot)
 public:
@@ -102,8 +102,8 @@ protected:
                            struct ::wl_resource *bufferResource) Q_DECL_OVERRIDE;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENSHOOTER_P_H
+#endif // LIRI_SCREENSHOOTER_P_H

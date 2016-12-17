@@ -27,10 +27,10 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
 
-#include <GreenIsland/Platform/LibInputHandler>
-#include <GreenIsland/Platform/Logind>
+#include <Liri/Platform/LibInputHandler>
+#include <Liri/Platform/Logind>
 
-using namespace GreenIsland::Platform;
+using namespace Liri::Platform;
 
 int main(int argc, char *argv[])
 {

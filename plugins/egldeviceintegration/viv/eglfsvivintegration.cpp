@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -34,7 +34,7 @@
 
 #include <wayland-server.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -90,4 +90,4 @@ void EglFSVivIntegration::destroyNativeWindow(EGLNativeWindowType window)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

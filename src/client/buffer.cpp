@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2013 Martin Gräßlin
@@ -35,9 +35,9 @@
 
 Q_DECLARE_METATYPE(uchar*)
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * BufferPrivate
@@ -151,8 +151,8 @@ void Buffer::copy(const void *source)
     memcpy(address(), source, d->size.height() * d->stride);
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} //namespace GreenIsland
+} //namespace Liri
 
 #include "moc_buffer.cpp"

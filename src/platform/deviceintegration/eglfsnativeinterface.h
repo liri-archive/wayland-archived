@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
@@ -27,20 +27,20 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSNATIVEINTERFACE_H
-#define GREENISLAND_EGLFSNATIVEINTERFACE_H
+#ifndef LIRI_EGLFSNATIVEINTERFACE_H
+#define LIRI_EGLFSNATIVEINTERFACE_H
 
 #include <QtGui/qpa/qplatformnativeinterface.h>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 class EglFSIntegration;
 
-class GREENISLANDPLATFORM_EXPORT EglFSNativeInterface : public QPlatformNativeInterface
+class LIRIPLATFORM_EXPORT EglFSNativeInterface : public QPlatformNativeInterface
 {
 public:
     EglFSNativeInterface(EglFSIntegration *integration);
@@ -59,6 +59,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSNATIVEINTERFACE_H
+#endif // LIRI_EGLFSNATIVEINTERFACE_H

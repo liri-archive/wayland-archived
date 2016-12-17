@@ -1,4 +1,4 @@
 {
-    "Keys": [ "greenisland_kms" ],
+    "Keys": [ "liri_kms" ],
     "Hardware": "kms"
 }

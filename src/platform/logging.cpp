@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -27,8 +27,8 @@
 
 #include "logging.h"
 
-Q_LOGGING_CATEGORY(lcEglConvenience, "greenisland.qpa.eglconvenience")
-Q_LOGGING_CATEGORY(lcDeviceIntegration, "greenisland.qpa.deviceintegration")
-Q_LOGGING_CATEGORY(lcInput, "greenisland.qpa.input")
-Q_LOGGING_CATEGORY(lcLogind, "greenisland.qpa.logind")
-Q_LOGGING_CATEGORY(lcUdev, "greenisland.qpa.udev")
+Q_LOGGING_CATEGORY(lcEglConvenience, "liri.qpa.eglconvenience")
+Q_LOGGING_CATEGORY(lcDeviceIntegration, "liri.qpa.deviceintegration")
+Q_LOGGING_CATEGORY(lcInput, "liri.qpa.input")
+Q_LOGGING_CATEGORY(lcLogind, "liri.qpa.logind")
+Q_LOGGING_CATEGORY(lcUdev, "liri.qpa.udev")

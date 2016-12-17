@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_UDEVMONITOR_H
-#define GREENISLAND_UDEVMONITOR_H
+#ifndef LIRI_UDEVMONITOR_H
+#define LIRI_UDEVMONITOR_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -40,7 +40,7 @@ class Udev;
 class UdevDevice;
 class UdevMonitorPrivate;
 
-class GREENISLANDPLATFORM_EXPORT UdevMonitor : public QObject
+class LIRIPLATFORM_EXPORT UdevMonitor : public QObject
 {
     Q_DECLARE_PRIVATE(UdevMonitor)
 public:
@@ -64,6 +64,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_UDEVMONITOR_H
+#endif // LIRI_UDEVMONITOR_H

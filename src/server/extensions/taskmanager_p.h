@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_TASKMANAGER_P_H
-#define GREENISLAND_TASKMANAGER_P_H
+#ifndef LIRI_TASKMANAGER_P_H
+#define LIRI_TASKMANAGER_P_H
 
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <GreenIsland/Server/ClientWindow>
-#include <GreenIsland/Server/TaskManager>
-#include <GreenIsland/server/private/qwayland-server-greenisland.h>
+#include <Liri/WaylandServer/ClientWindow>
+#include <Liri/WaylandServer/TaskManager>
+#include <Liri/waylandserver/private/qwayland-server-liri.h>
 
 //
 //  W A R N I N G
@@ -45,13 +45,13 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT TaskManagerPrivate
+class LIRIWAYLANDSERVER_EXPORT TaskManagerPrivate
         : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::greenisland_windows
+        , public QtWaylandServer::liri_windows
 {
     Q_DECLARE_PUBLIC(TaskManager)
 public:
@@ -71,9 +71,9 @@ protected:
     void windows_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
 };
 
-class GREENISLANDSERVER_EXPORT TaskItemPrivate
+class LIRIWAYLANDSERVER_EXPORT TaskItemPrivate
         : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::greenisland_window
+        , public QtWaylandServer::liri_window
 {
     Q_DECLARE_PUBLIC(TaskItem)
 public:
@@ -89,8 +89,8 @@ public:
     static TaskItemPrivate *get(TaskItem *t) { return t->d_func(); }
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_TASKMANAGER_P_H
+#endif // LIRI_TASKMANAGER_P_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,16 +25,16 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSWAYLANDSCREEN_H
-#define GREENISLAND_EGLFSWAYLANDSCREEN_H
+#ifndef LIRI_EGLFSWAYLANDSCREEN_H
+#define LIRI_EGLFSWAYLANDSCREEN_H
 
-#include <GreenIsland/Client/Output>
+#include <Liri/WaylandClient/Output>
 
-#include <GreenIsland/Platform/EglFSScreen>
+#include <Liri/Platform/EglFSScreen>
 
 #include "eglfswaylandintegration.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -43,7 +43,7 @@ class EglFSWaylandScreen : public EglFSScreen
 public:
     EglFSWaylandScreen(EGLDisplay display,
                        EglFSWaylandIntegration *integration,
-                       Client::Output *output);
+                       WaylandClient::Output *output);
 
     QRect geometry() const Q_DECL_OVERRIDE;
     int depth() const Q_DECL_OVERRIDE;
@@ -64,16 +64,16 @@ public:
     void setVirtualSiblings(QList<QPlatformScreen *> sl) { m_siblings = sl; }
 
     EglFSWaylandIntegration *integration() const { return m_integration; }
-    Client::Output *output() const { return m_output; }
+    WaylandClient::Output *output() const { return m_output; }
 
 private:
     EglFSWaylandIntegration *m_integration;
-    Client::Output *m_output;
+    WaylandClient::Output *m_output;
     QList<QPlatformScreen *> m_siblings;
 };
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSWAYLANDSCREEN_H
+#endif // LIRI_EGLFSWAYLANDSCREEN_H

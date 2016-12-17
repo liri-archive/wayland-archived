@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,24 +25,24 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_QUICKOUTPUTCONFIGURATION_H
-#define GREENISLAND_QUICKOUTPUTCONFIGURATION_H
+#ifndef LIRI_QUICKOUTPUTCONFIGURATION_H
+#define LIRI_QUICKOUTPUTCONFIGURATION_H
 
 #include <QtQml/QQmlListProperty>
 
-#include <GreenIsland/Server/OutputConfiguration>
+#include <Liri/WaylandServer/OutputConfiguration>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class QuickOutputConfigurationPrivate;
 
-class GREENISLANDSERVER_EXPORT QuickOutputConfiguration : public OutputConfiguration
+class LIRIWAYLANDSERVER_EXPORT QuickOutputConfiguration : public OutputConfiguration
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QuickOutputConfiguration)
-    Q_PRIVATE_PROPERTY(QuickOutputConfiguration::d_func(), QQmlListProperty<GreenIsland::Server::OutputChangeset> changes READ changes NOTIFY changesChanged)
+    Q_PRIVATE_PROPERTY(QuickOutputConfiguration::d_func(), QQmlListProperty<Liri::WaylandServer::OutputChangeset> changes READ changes NOTIFY changesChanged)
     Q_PROPERTY(QQmlListProperty<QObject> data READ data DESIGNABLE false)
     Q_CLASSINFO("DefaultProperty", "data")
 public:
@@ -54,8 +54,8 @@ Q_SIGNALS:
     void changesChanged();
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_QUICKOUTPUTCONFIGURATION_H
+#endif // LIRI_QUICKOUTPUTCONFIGURATION_H

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="greenisland_screencaster">
+<protocol name="liri_screencaster">
   <copyright><![CDATA[
     Copyright (C) 2015-2016 Pier Luigi Fiorini
 
@@ -16,37 +16,37 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
-  <interface name="greenisland_screencaster" version="1">
+  <interface name="liri_screencaster" version="1">
     <description summary="capture frames of an output">
       This interface is used by programs to record screencasts of an output.
 
       The client asks the compositor to capture an output, as a result a
-      greenisland_screencast object is created to drive the screencast.
+      liri_screencast object is created to drive the screencast.
 
-      See the documentation of greenisland_screencast for more details.
+      See the documentation of liri_screencast for more details.
     </description>
 
     <enum name="error">
-      <description summary="greenisland_screencaster error values">
+      <description summary="liri_screencaster error values">
         These errors can be emitted in response to
-        greenisland_screencaster requests.
+        liri_screencaster requests.
       </description>
       <entry name="bad_output" value="0" summary="The client passed an invalid output"/>
     </enum>
 
     <request name="capture">
       <description summary="initiate a screencast">
-        This creates a greenisland_screencast object to drive screencasts.
-        See the documentation of greenisland_screencast for more details.
+        This creates a liri_screencast object to drive screencasts.
+        See the documentation of liri_screencast for more details.
 
         If the output is not valid, a protocol error will be sent.
       </description>
-      <arg name="id" type="new_id" interface="greenisland_screencast"/>
+      <arg name="id" type="new_id" interface="liri_screencast"/>
       <arg name="output" type="object" interface="wl_output"/>
     </request>
   </interface>
 
-  <interface name="greenisland_screencast" version="1">
+  <interface name="liri_screencast" version="1">
     <description summary="frame capture">
       This interface drives the frame capture into client-allocated buffers.
       Immediately after this object is created, the compositor sends
@@ -58,7 +58,7 @@
     </description>
 
     <enum name="error">
-      <description summary="greenisland_screencast error values">
+      <description summary="liri_screencast error values">
         These errors are emitted with the 'failed' event when a
         capture request fails.
       </description>
@@ -75,8 +75,8 @@
     </enum>
 
     <request name="destroy" type="destructor">
-      <description summary="destroy greenisland_screencast">
-        Destroy this greenisland_screencast object.
+      <description summary="destroy liri_screencast">
+        Destroy this liri_screencast object.
         Pending capture requests will be discarded.
       </description>
     </request>
@@ -95,7 +95,7 @@
     <event name="setup">
       <description summary="notify buffer size requirements">
         This event will be sent immediately after creating the
-        greenisland_screencast object.
+        liri_screencast object.
 
         The wl_buffer passed to the 'record' request must be big enough to
         accomodate an image with the given width, height and format.

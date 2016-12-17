@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,17 +25,17 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_CLIENTWINDOW_P_H
-#define GREENISLAND_CLIENTWINDOW_P_H
+#ifndef LIRI_CLIENTWINDOW_P_H
+#define LIRI_CLIENTWINDOW_P_H
 
 #include <QtCore/private/qobject_p.h>
 
 #include <QtWaylandCompositor/QWaylandWlShell>
 #include <QtWaylandCompositor/QWaylandXdgShellV5>
 
-#include <GreenIsland/Server/ApplicationManager>
-#include <GreenIsland/Server/ClientWindow>
-#include <GreenIsland/Server/GtkShell>
+#include <Liri/WaylandServer/ApplicationManager>
+#include <Liri/WaylandServer/ClientWindow>
+#include <Liri/WaylandServer/GtkShell>
 
 //  W A R N I N G
 //  -------------
@@ -48,11 +48,11 @@
 
 class QWaylandSurface;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT ClientWindowPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT ClientWindowPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(ClientWindow)
 public:
@@ -123,8 +123,8 @@ public:
     static ClientWindowPrivate *get(ClientWindow *clientWindow) { return clientWindow->d_func(); }
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_CLIENTWINDOW_P_H
+#endif // LIRI_CLIENTWINDOW_P_H

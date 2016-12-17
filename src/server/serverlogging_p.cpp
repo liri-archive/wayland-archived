@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -27,15 +27,15 @@
 
 #include "serverlogging_p.h"
 
-Q_LOGGING_CATEGORY(gLcCore, "greenisland.compositor", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcOutputManagement, "greenisland.outputmanagement", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcGtkShell, "greenisland.protocols.gtkshell", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcGtkShellTrace, "greenisland.protocols.gtkshell.trace", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcScreencaster, "greenisland.protocols.screencaster", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcScreenshooter, "greenisland.protocols.screenshooter", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcTaskManager, "greenisland.protocols.taskmanager", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcXdgShell, "greenisland.protocols.xdgshell", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcXdgShellTrace, "greenisland.protocols.xdgshell.trace", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcScreenBackend, "greenisland.screenbackend", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcFakeScreenBackend, "greenisland.screenbackend.fake", QtDebugMsg)
-Q_LOGGING_CATEGORY(gLcNativeScreenBackend, "greenisland.screenbackend.native", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcCore, "liri.wlserver", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcOutputManagement, "liri.wlserver.outputmanagement", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcGtkShell, "liri.wlserver.gtkshell", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcGtkShellTrace, "liri.wlserver.gtkshell.trace", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcScreencaster, "liri.wlserver.screencaster", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcScreenshooter, "liri.wlserver.screenshooter", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcTaskManager, "liri.wlserver.taskmanager", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcXdgShell, "liri.wlserver.xdgshell", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcXdgShellTrace, "liri.wlserver.xdgshell.trace", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcScreenBackend, "liri.wlserver.screenbackend", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcFakeScreenBackend, "liri.wlserver.screenbackend.fake", QtDebugMsg)
+Q_LOGGING_CATEGORY(gLcNativeScreenBackend, "liri.wlserver.screenbackend.native", QtDebugMsg)

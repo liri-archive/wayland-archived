@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,20 +25,20 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_VTHANDLER_H
-#define GREENISLAND_VTHANDLER_H
+#ifndef LIRI_VTHANDLER_H
+#define LIRI_VTHANDLER_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 class VtHandlerPrivate;
 
-class GREENISLANDPLATFORM_EXPORT VtHandler : public QObject
+class LIRIPLATFORM_EXPORT VtHandler : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(VtHandler)
@@ -59,6 +59,6 @@ Q_SIGNALS:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_VTHANDLER_H
+#endif // LIRI_VTHANDLER_H

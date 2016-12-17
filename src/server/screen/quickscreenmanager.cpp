@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -27,9 +27,9 @@
 
 #include "quickscreenmanager.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 QuickScreenManager::QuickScreenManager(QObject *parent)
     : ScreenManager(parent)
@@ -50,8 +50,8 @@ void QuickScreenManager::componentComplete()
     create();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_quickscreenmanager.cpp"

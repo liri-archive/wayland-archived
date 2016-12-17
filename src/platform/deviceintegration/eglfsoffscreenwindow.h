@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -31,18 +31,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSOFFSCREENWINDOW_H
-#define GREENISLAND_EGLFSOFFSCREENWINDOW_H
+#ifndef LIRI_EGLFSOFFSCREENWINDOW_H
+#define LIRI_EGLFSOFFSCREENWINDOW_H
 
 #include <QtGui/qpa/qplatformoffscreensurface.h>
 
-#include <GreenIsland/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSGlobal>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
-class GREENISLANDPLATFORM_EXPORT EglFSOffscreenWindow : public QPlatformOffscreenSurface
+class LIRIPLATFORM_EXPORT EglFSOffscreenWindow : public QPlatformOffscreenSurface
 {
 public:
     EglFSOffscreenWindow(EGLDisplay display, const QSurfaceFormat &format, QOffscreenSurface *offscreenSurface);
@@ -60,6 +60,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSOFFSCREENWINDOW_H
+#endif // LIRI_EGLFSOFFSCREENWINDOW_H

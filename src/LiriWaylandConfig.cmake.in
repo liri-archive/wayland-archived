@@ -1,0 +1,38 @@
+if(NOT LiriWayland_FIND_COMPONENTS)
+    set(LiriWayland_NOT_FOUND_MESSAGE "The LiriWayland package requires at least one component")
+    set(LiriWayland_FOUND False)
+    return()
+endif()
+
+set(_LiriWayland_FIND_PARTS_REQUIRED)
+if (LiriWayland_FIND_REQUIRED)
+    set(_LiriWayland_FIND_PARTS_REQUIRED REQUIRED)
+endif()
+set(_LiriWayland_FIND_PARTS_QUIET)
+if (LiriWayland_FIND_QUIETLY)
+    set(_LiriWayland_FIND_PARTS_QUIET QUIET)
+endif()
+
+get_filename_component(_liriwayland_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+
+set(_LiriWayland_NOTFOUND_MESSAGE)
+
+foreach(module ${LiriWayland_FIND_COMPONENTS})
+    find_package(LiriWayland${module}
+        ${_LiriWayland_FIND_PARTS_QUIET}
+        ${_LiriWayland_FIND_PARTS_REQUIRED}
+        PATHS "${_liriwayland_install_prefix}" NO_DEFAULT_PATH
+    )
+    if (NOT LiriWayland${module}_FOUND)
+        if (LiriWayland_FIND_REQUIRED_${module})
+            set(_LiriWayland_NOTFOUND_MESSAGE "${_LiriWayland_NOTFOUND_MESSAGE}Failed to find LiriWayland component \"${module}\" config file at \"${_liriwayland_install_prefix}/LiriWayland${module}/LiriWayland${module}Config.cmake\"\n")
+        elseif(NOT LiriWayland_FIND_QUIETLY)
+            message(WARNING "Failed to find LiriWayland component \"${module}\" config file at \"${_liriwayland_install_prefix}/LiriWayland${module}/LiriWayland${module}Config.cmake\"")
+        endif()
+    endif()
+endforeach()
+
+if (_LiriWayland_NOTFOUND_MESSAGE)
+    set(LiriWayland_NOT_FOUND_MESSAGE "${_LiriWayland_NOTFOUND_MESSAGE}")
+    set(LiriWayland_FOUND False)
+endif()

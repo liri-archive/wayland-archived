@@ -6,7 +6,6 @@ find_package(X11_XCB REQUIRED)
 
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../../headers"
-    "${CMAKE_CURRENT_BINARY_DIR}/../../../headers/GreenIsland"
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
@@ -18,11 +17,11 @@ set(SOURCES
 
 add_library(x11 SHARED MODULE ${SOURCES})
 target_link_libraries(x11
-    GreenIsland::Platform
-    ${X11_LIBRARIES}
-    XCB::XCB
-    X11::XCB
+                      Liri::Platform
+                      ${X11_LIBRARIES}
+                      XCB::XCB
+                      X11::XCB
 )
 
 install(TARGETS x11
-        DESTINATION ${PLUGIN_INSTALL_DIR}/greenisland/egldeviceintegration)
+        DESTINATION ${PLUGIN_INSTALL_DIR}/liri/egldeviceintegration)

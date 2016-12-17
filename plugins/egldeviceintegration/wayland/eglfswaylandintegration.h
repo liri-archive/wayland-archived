@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,25 +25,25 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSWAYLANDINTEGRATION_H
-#define GREENISLAND_EGLFSWAYLANDINTEGRATION_H
+#ifndef LIRI_EGLFSWAYLANDINTEGRATION_H
+#define LIRI_EGLFSWAYLANDINTEGRATION_H
 
 #include <QtGui/qpa/qplatformwindow.h>
 
-#include <GreenIsland/Client/ClientConnection>
-#include <GreenIsland/Client/Compositor>
-#include <GreenIsland/Client/FullScreenShell>
-#include <GreenIsland/Client/Keyboard>
-#include <GreenIsland/Client/Pointer>
-#include <GreenIsland/Client/Registry>
-#include <GreenIsland/Client/Seat>
-#include <GreenIsland/Client/Touch>
+#include <Liri/WaylandClient/ClientConnection>
+#include <Liri/WaylandClient/Compositor>
+#include <Liri/WaylandClient/FullScreenShell>
+#include <Liri/WaylandClient/Keyboard>
+#include <Liri/WaylandClient/Pointer>
+#include <Liri/WaylandClient/Registry>
+#include <Liri/WaylandClient/Seat>
+#include <Liri/WaylandClient/Touch>
 
-#include <GreenIsland/Platform/EGLDeviceIntegration>
+#include <Liri/Platform/EGLDeviceIntegration>
 
 #include "eglfswaylandinput.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -71,17 +71,17 @@ public:
 
     bool hasCapability(QPlatformIntegration::Capability cap) const Q_DECL_OVERRIDE;
 
-    Client::Compositor *compositor() const { return m_compositor; }
-    Client::FullScreenShell *fullScreenShell() const { return m_fullScreenShell; }
+    WaylandClient::Compositor *compositor() const { return m_compositor; }
+    WaylandClient::FullScreenShell *fullScreenShell() const { return m_fullScreenShell; }
 
 private:
     QThread *m_thread;
-    Client::ClientConnection *m_connection;
-    Client::Registry *m_registry;
-    Client::Compositor *m_compositor;
-    Client::FullScreenShell *m_fullScreenShell;
-    Client::Seat *m_seat;
-    QVector<Client::Output *> m_outputs;
+    WaylandClient::ClientConnection *m_connection;
+    WaylandClient::Registry *m_registry;
+    WaylandClient::Compositor *m_compositor;
+    WaylandClient::FullScreenShell *m_fullScreenShell;
+    WaylandClient::Seat *m_seat;
+    QVector<WaylandClient::Output *> m_outputs;
     QVector<EglFSWaylandScreen *> m_screens;
     EglFSWaylandInput *m_input;
     QTouchDevice *m_touchDevice;
@@ -95,6 +95,6 @@ private Q_SLOTS:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSWAYLANDINTEGRATION_H
+#endif // LIRI_EGLFSWAYLANDINTEGRATION_H

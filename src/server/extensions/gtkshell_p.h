@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_GTKSHELL_P_H
-#define GREENISLAND_GTKSHELL_P_H
+#ifndef LIRI_GTKSHELL_P_H
+#define LIRI_GTKSHELL_P_H
 
-#include <GreenIsland/Server/GtkShell>
+#include <Liri/WaylandServer/GtkShell>
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <GreenIsland/server/private/qwayland-server-gtk.h>
+#include <Liri/waylandserver/private/qwayland-server-gtk.h>
 
 //
 //  W A R N I N G
@@ -44,11 +44,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT GtkShellPrivate
+class LIRIWAYLANDSERVER_EXPORT GtkShellPrivate
         : public QWaylandCompositorExtensionPrivate
         , public QtWaylandServer::gtk_shell
 {
@@ -65,7 +65,7 @@ protected:
                                wl_resource *surfaceResource)  Q_DECL_OVERRIDE;
 };
 
-class GREENISLANDSERVER_EXPORT GtkSurfacePrivate
+class LIRIWAYLANDSERVER_EXPORT GtkSurfacePrivate
         : public QWaylandCompositorExtensionPrivate
         , public QtWaylandServer::gtk_surface
 {
@@ -102,9 +102,9 @@ private:
     QString m_uniqueBusName;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_GTKSHELL_P_H
+#endif // LIRI_GTKSHELL_P_H
 

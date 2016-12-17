@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -35,9 +35,9 @@
 #include "shell/clientwindow.h"
 #include "shell/clientwindow_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * ApplicationManagerPrivate
@@ -45,14 +45,14 @@ namespace Server {
 
 ApplicationManagerPrivate::ApplicationManagerPrivate()
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_applications()
+    , QtWaylandServer::liri_applications()
     , rootItem(new QQuickItem())
     , focusedWindow(Q_NULLPTR)
 {
     // Populate appId mapping
-    appIdMap[QLatin1String("org.hawaiios.hawaii-system-preferences")] = QLatin1String("org.hawaiios.SystemPreferences");
-    appIdMap[QLatin1String("org.hawaiios.hawaii-screenshot")] = QLatin1String("org.hawaiios.Screenshot");
-    appIdMap[QLatin1String("org.hawaiios.hawaii-terminal")] = QLatin1String("org.hawaiios.terminal");
+    appIdMap[QLatin1String("io.liri.hawaii-system-preferences")] = QLatin1String("io.liri.SystemPreferences");
+    appIdMap[QLatin1String("io.liri.hawaii-screenshot")] = QLatin1String("io.liri.Screenshot");
+    appIdMap[QLatin1String("io.liri.hawaii-terminal")] = QLatin1String("io.liri.terminal");
     appIdMap[QLatin1String("org.qterminal.qterminal-qt5")] = QLatin1String("qterminal-qt5");
 }
 
@@ -348,8 +348,8 @@ QByteArray ApplicationManager::interfaceName()
     return ApplicationManagerPrivate::interfaceName();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_applicationmanager.cpp"

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -27,14 +27,14 @@
 
 #include <QtGui/QOpenGLShaderProgram>
 
-#include <GreenIsland/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSGlobal>
 
 #include "eglfswaylandblitter.h"
 #include "eglfswaylandcontext.h"
 #include "eglfswaylandwindow.h"
 #include "eglfswaylandlogging.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -133,4 +133,4 @@ void EglFSWaylandBlitter::blit(EglFSWaylandWindow *window)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

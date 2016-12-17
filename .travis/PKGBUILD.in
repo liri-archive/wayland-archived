@@ -1,22 +1,23 @@
 # Maintainer: Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
 
-pkgname=greenisland-git
+pkgname=liri-wayland-git
 pkgver=@PKGVER@
 pkgrel=1
-pkgdesc="Green Island: Qt-based compositor infrastructure for Wayland"
+pkgdesc="Wayland client and server libraries for QtQuick"
 arch=('i686' 'x86_64' 'armv6h' 'armv7h')
-url='http://hawaiios.org'
+url='https://liri.io'
 license=('GPL2' 'GPL3' 'LGPL3')
-depends=('systemd' 'wayland-protocols' 'libdrm' 'libinput' 'qt5-declarative'
+depends=('systemd' 'wayland-protocols' 'libdrm' 'libinput' 'qt5-declarative' 'qt5-wayland'
          'xkeyboard-config' 'libxkbcommon' 'fontconfig' 'freetype2')
-provides=('greenisland')
-conflicts=('greenisland')
-replaces=('greenisland')
 makedepends=('git' 'extra-cmake-modules' 'xcb-util-cursor' 'libxcursor')
+conflicts=('greenisland' 'greenisland-git' 'liri-wayland')
+replaces=('greenisland' 'greenisland-git' 'liri-wayland')
+provides=('liri-wayland')
+groups=('liri-git')
 
-_gitroot="git://github.com/greenisland/greenisland.git"
+_gitroot="git://github.com/lirios/wayland.git"
 _gitbranch=@GITBRANCH@
-_gitname=greenisland
+_gitname=liri-wayland
 source=(${_gitname}::${_gitroot}#branch=${_gitbranch})
 md5sums=('SKIP')
 
@@ -26,7 +27,7 @@ pkgver() {
 }
 
 prepare() {
-	mkdir build
+	mkdir -p build
 }
 
 build() {

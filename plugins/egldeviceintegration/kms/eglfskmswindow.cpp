@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -36,7 +36,7 @@
 #include "eglfskmsscreen.h"
 #include "eglfskmswindow.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -84,4 +84,4 @@ void EglFSKmsWindow::resizeSurface()
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

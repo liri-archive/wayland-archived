@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,27 +25,27 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_GTKSHELL_H
-#define GREENISLAND_GTKSHELL_H
+#ifndef LIRI_GTKSHELL_H
+#define LIRI_GTKSHELL_H
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 #include <QtWaylandCompositor/QWaylandResource>
 #include <QtWaylandCompositor/QWaylandShellSurface>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 class QWaylandClient;
 class QWaylandSurface;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class GtkShellPrivate;
 class GtkSurface;
 class GtkSurfacePrivate;
 
-class GREENISLANDSERVER_EXPORT GtkShell : public QWaylandCompositorExtensionTemplate<GtkShell>
+class LIRIWAYLANDSERVER_EXPORT GtkShell : public QWaylandCompositorExtensionTemplate<GtkShell>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(GtkShell)
@@ -64,7 +64,7 @@ Q_SIGNALS:
     void gtkSurfaceCreated(GtkSurface *gtkSurface);
 };
 
-class GREENISLANDSERVER_EXPORT GtkSurface : public QWaylandShellSurfaceTemplate<GtkSurface>
+class LIRIWAYLANDSERVER_EXPORT GtkSurface : public QWaylandShellSurfaceTemplate<GtkSurface>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(GtkSurface)
@@ -116,8 +116,8 @@ private:
     void initialize() Q_DECL_OVERRIDE;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_GTKSHELL_H
+#endif // LIRI_GTKSHELL_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_REGION_P_H
-#define GREENISLANDCLIENT_REGION_P_H
+#ifndef LIRIWAYLANDCLIENT_REGION_P_H
+#define LIRIWAYLANDCLIENT_REGION_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Region>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/Region>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G
@@ -44,11 +44,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT RegionPrivate
+class LIRIWAYLANDCLIENT_EXPORT RegionPrivate
         : public QObjectPrivate
         , public QtWayland::wl_region
 {
@@ -61,8 +61,8 @@ public:
     QRegion region;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_REGION_P_H
+#endif // LIRIWAYLANDCLIENT_REGION_P_H

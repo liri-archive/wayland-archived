@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,19 +25,19 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_CURSORTHEME_H
-#define GREENISLANDCLIENT_CURSORTHEME_H
+#ifndef LIRIWAYLANDCLIENT_CURSORTHEME_H
+#define LIRIWAYLANDCLIENT_CURSORTHEME_H
 
 #include <QtCore/QLoggingCategory>
 #include <QtGui/QCursor>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
 struct wl_cursor_image;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class Compositor;
 class CursorThemePrivate;
@@ -45,7 +45,7 @@ class Registry;
 class Seat;
 class ShmPool;
 
-class GREENISLANDCLIENT_EXPORT CursorTheme : public QObject
+class LIRIWAYLANDCLIENT_EXPORT CursorTheme : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(CursorTheme)
@@ -91,8 +91,8 @@ public:
     void changeCursor(CursorShape shape);
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_CURSORTHEME_H
+#endif // LIRIWAYLANDCLIENT_CURSORTHEME_H

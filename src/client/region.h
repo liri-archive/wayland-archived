@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,21 +25,21 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_REGION_H
-#define GREENISLANDCLIENT_REGION_H
+#ifndef LIRIWAYLANDCLIENT_REGION_H
+#define LIRIWAYLANDCLIENT_REGION_H
 
 #include <QtCore/QObject>
 #include <QtGui/QRegion>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class RegionPrivate;
 
-class GREENISLANDCLIENT_EXPORT Region : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Region : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Region)
@@ -57,8 +57,8 @@ public:
     static QByteArray interfaceName();
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_REGION_H
+#endif // LIRIWAYLANDCLIENT_REGION_H

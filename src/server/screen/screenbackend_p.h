@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENBACKEND_P_H
-#define GREENISLAND_SCREENBACKEND_P_H
+#ifndef LIRI_SCREENBACKEND_P_H
+#define LIRI_SCREENBACKEND_P_H
 
 #include <QtCore/private/qobject_p.h>
 #include <QtCore/QPoint>
 #include <QtCore/QSize>
 
-#include <GreenIsland/Server/ScreenBackend>
+#include <Liri/WaylandServer/ScreenBackend>
 
 //
 //  W A R N I N G
@@ -45,11 +45,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT ScreenPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT ScreenPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(Screen)
 public:
@@ -91,7 +91,7 @@ public:
     QList<Screen::Mode> m_modes;
 };
 
-class GREENISLANDSERVER_EXPORT ScreenBackendPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT ScreenBackendPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(ScreenBackend)
 public:
@@ -103,9 +103,9 @@ public:
     QList<Screen *> screens;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENBACKEND_P_H
+#endif // LIRI_SCREENBACKEND_P_H
 

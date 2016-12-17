@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -39,9 +39,9 @@
 
 #define SCREENCASTER_FORMAT WL_SHM_FORMAT_XRGB8888
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 static const QEvent::Type SuccessEventType =
         static_cast<QEvent::Type>(QEvent::registerEventType());
@@ -82,7 +82,7 @@ public:
 
 ScreencasterPrivate::ScreencasterPrivate()
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_screencaster()
+    , QtWaylandServer::liri_screencaster()
 {
 }
 
@@ -110,13 +110,13 @@ void ScreencasterPrivate::removeRequest(QQuickWindow *window, Screencast *screen
 void ScreencasterPrivate::screencaster_bind_resource(Resource *resource)
 {
     // TODO: Deny access to unauthorized clients
-    QtWaylandServer::greenisland_screencaster::screencaster_bind_resource(resource);
+    QtWaylandServer::liri_screencaster::screencaster_bind_resource(resource);
 }
 
 void ScreencasterPrivate::screencaster_destroy_resource(Resource *resource)
 {
     // A client disconnected, invalidate all its screencast requests
-    QtWaylandServer::greenisland_screencaster::screencaster_destroy_resource(resource);
+    QtWaylandServer::liri_screencaster::screencaster_destroy_resource(resource);
 }
 
 void ScreencasterPrivate::screencaster_capture(Resource *resource, uint32_t id,
@@ -249,7 +249,7 @@ QByteArray Screencaster::interfaceName()
 
 ScreencastPrivate::ScreencastPrivate()
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_screencast()
+    , QtWaylandServer::liri_screencast()
     , valid(true)
     , screencaster(Q_NULLPTR)
     , output(Q_NULLPTR)
@@ -411,8 +411,8 @@ bool Screencast::event(QEvent *event)
     return true;
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_screencaster.cpp"

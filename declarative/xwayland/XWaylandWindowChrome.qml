@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -27,7 +27,7 @@
 
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
-import GreenIsland.XWayland 1.0
+import Liri.XWayland 1.0
 
 XWaylandShellSurfaceItem {
     property bool decorated: true

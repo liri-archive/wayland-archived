@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -30,9 +30,9 @@
 #include "outputchangeset.h"
 #include "outputchangeset_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * OutputChangesetPrivate
@@ -140,8 +140,8 @@ int OutputChangeset::scaleFactor() const
     return d->scaleFactor;
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_outputchangeset.cpp"

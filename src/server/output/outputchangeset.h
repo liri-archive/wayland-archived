@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,23 +25,23 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_OUTPUTCHANGESET_H
-#define GREENISLAND_OUTPUTCHANGESET_H
+#ifndef LIRI_OUTPUTCHANGESET_H
+#define LIRI_OUTPUTCHANGESET_H
 
 #include <QtCore/QObject>
 
 #include <QtWaylandCompositor/QWaylandOutput>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class OutputChangesetPrivate;
 class OutputConfigurationPrivate;
 
-class GREENISLANDSERVER_EXPORT OutputChangeset : public QObject
+class LIRIWAYLANDSERVER_EXPORT OutputChangeset : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(OutputChangeset)
@@ -81,8 +81,8 @@ private:
     friend class OutputConfigurationPrivate;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_OUTPUTCHANGESET_H
+#endif // LIRI_OUTPUTCHANGESET_H

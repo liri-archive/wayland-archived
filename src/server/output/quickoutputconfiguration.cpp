@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -29,9 +29,9 @@
 #include "quickoutputconfiguration.h"
 #include "quickoutputconfiguration_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * QuickOutputConfigurationPrivate
@@ -74,8 +74,8 @@ QQmlListProperty<QObject> QuickOutputConfiguration::data()
     return QQmlListProperty<QObject>(this, d->objects);
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_quickoutputconfiguration.cpp"

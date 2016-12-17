@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LIBINPUTHANDLER_P_H
-#define GREENISLAND_LIBINPUTHANDLER_P_H
+#ifndef LIRI_LIBINPUTHANDLER_P_H
+#define LIRI_LIBINPUTHANDLER_P_H
 
 #include <QtCore/private/qobject_p.h>
 
@@ -49,7 +49,7 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -99,6 +99,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_LIBINPUTHANDLER_P_H
+#endif // LIRI_LIBINPUTHANDLER_P_H

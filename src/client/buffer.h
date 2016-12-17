@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2013 Martin Gräßlin
@@ -28,22 +28,22 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_BUFFER_H
-#define GREENISLANDCLIENT_BUFFER_H
+#ifndef LIRIWAYLANDCLIENT_BUFFER_H
+#define LIRIWAYLANDCLIENT_BUFFER_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/Client/Shm>
+#include <Liri/WaylandClient/Shm>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class BufferPrivate;
 class ShmPool;
 class ShmPoolPrivate;
 
-class GREENISLANDCLIENT_EXPORT Buffer : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Buffer : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Buffer)
@@ -83,8 +83,8 @@ private:
 typedef QWeakPointer<Buffer> BufferPtr;
 typedef QSharedPointer<Buffer> BufferSharedPtr;
 
-} // namespace Client
+} // namespace WaylandClient
 
-} //namespace GreenIsland
+} //namespace Liri
 
-#endif // GREENISLANDCLIENT_BUFFER_H
+#endif // LIRIWAYLANDCLIENT_BUFFER_H

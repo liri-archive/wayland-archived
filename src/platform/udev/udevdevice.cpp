@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -30,7 +30,7 @@
 #include "udev/udev_p.h"
 #include "udev/udevdevice.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -207,4 +207,4 @@ QDebug operator<<(QDebug dbg, const UdevDevice &device)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

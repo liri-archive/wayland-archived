@@ -1,6 +1,6 @@
-# System copy of GreenIsland::Platform
+# System copy of Liri::Platform
 if(ENABLE_ONLY_EGLDEVICEINTEGRATION)
-    find_package(GreenIsland REQUIRED)
+    find_package(LiriPlatform REQUIRED)
 endif()
 
 add_subdirectory(egldeviceintegration)

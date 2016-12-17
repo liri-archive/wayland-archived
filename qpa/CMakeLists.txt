@@ -1,6 +1,5 @@
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../headers"
-    "${CMAKE_CURRENT_BINARY_DIR}/../headers/GreenIsland"
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
@@ -9,11 +8,11 @@ set(SOURCES
     main.cpp
 )
 
-add_library(GreenIslandEglFS MODULE ${SOURCES})
-target_link_libraries(GreenIslandEglFS
-    Qt5::Core
-    Qt5::Gui
-    GreenIsland::Platform
+add_library(lirieglfs MODULE ${SOURCES})
+target_link_libraries(lirieglfs
+                      Qt5::Core
+                      Qt5::Gui
+                      Liri::Platform
 )
 
-install(TARGETS GreenIslandEglFS DESTINATION ${PLUGIN_INSTALL_DIR}/platforms)
+install(TARGETS lirieglfs DESTINATION ${PLUGIN_INSTALL_DIR}/platforms)

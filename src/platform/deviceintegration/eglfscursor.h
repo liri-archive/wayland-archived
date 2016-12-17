@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -30,19 +30,19 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSCURSOR_H
-#define GREENISLAND_EGLFSCURSOR_H
+#ifndef LIRI_EGLFSCURSOR_H
+#define LIRI_EGLFSCURSOR_H
 
 #include <QtGui/QOpenGLFunctions>
 #include <QtGui/qpa/qplatformcursor.h>
 #include <QtGui/qpa/qplatformscreen.h>
 #include <QtGui/private/qinputdevicemanager_p.h>
 
-#include <GreenIsland/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSGlobal>
 
 class QOpenGLShaderProgram;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -63,7 +63,7 @@ private:
     EglFSCursor *m_cursor;
 };
 
-class GREENISLANDPLATFORM_EXPORT EglFSCursor : public QPlatformCursor, protected QOpenGLFunctions
+class LIRIPLATFORM_EXPORT EglFSCursor : public QPlatformCursor, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
@@ -129,6 +129,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSCURSOR_H
+#endif // LIRI_EGLFSCURSOR_H

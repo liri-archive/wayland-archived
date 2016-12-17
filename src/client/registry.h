@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2013 Martin Gräßlin
@@ -28,18 +28,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_REGISTRY_H
-#define GREENISLANDCLIENT_REGISTRY_H
+#ifndef LIRIWAYLANDCLIENT_REGISTRY_H
+#define LIRIWAYLANDCLIENT_REGISTRY_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
 struct wl_display;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class Compositor;
 class FullScreenShell;
@@ -51,7 +51,7 @@ class Screenshooter;
 class Seat;
 class Shm;
 
-class GREENISLANDCLIENT_EXPORT Registry : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Registry : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Registry)
@@ -126,8 +126,8 @@ Q_SIGNALS:
     void screenshooterRemoved(quint32 name);
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_REGISTRY_H
+#endif // LIRIWAYLANDCLIENT_REGISTRY_H

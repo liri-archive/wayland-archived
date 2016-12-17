@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,17 +25,17 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_HOMEAPPLICATION_P_H
-#define GREENISLAND_HOMEAPPLICATION_P_H
+#ifndef LIRI_HOMEAPPLICATION_P_H
+#define LIRI_HOMEAPPLICATION_P_H
 
 #include <QtCore/QFileInfo>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Server/HomeApplication>
+#include <Liri/WaylandServer/HomeApplication>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 static int convertPermission(const QFileInfo &fileInfo)
 {
@@ -63,7 +63,7 @@ static int convertPermission(const QFileInfo &fileInfo)
     return p;
 }
 
-class GREENISLANDSERVER_EXPORT HomeApplicationPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT HomeApplicationPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(HomeApplication)
 public:
@@ -84,9 +84,9 @@ public:
     QQmlApplicationEngine *engine;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_HOMEAPPLICATION_P_H
+#endif // LIRI_HOMEAPPLICATION_P_H
 

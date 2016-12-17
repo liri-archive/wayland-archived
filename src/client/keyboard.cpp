@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -32,9 +32,9 @@
 
 #include <unistd.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * KeyboardPrivate
@@ -170,8 +170,8 @@ QByteArray Keyboard::interfaceName()
     return QByteArrayLiteral("wl_keyboard");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_keyboard.cpp"

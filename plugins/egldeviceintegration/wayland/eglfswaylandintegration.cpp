@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -31,7 +31,7 @@
 #include <QtGui/qpa/qplatformintegration.h>
 #include <QtPlatformHeaders/QEGLNativeContext>
 
-#include <GreenIsland/Platform/EglFSIntegration>
+#include <Liri/Platform/EglFSIntegration>
 
 #include "eglfswaylandcontext.h"
 #include "eglfswaylandintegration.h"
@@ -39,15 +39,15 @@
 #include "eglfswaylandscreen.h"
 #include "eglfswaylandlogging.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 EglFSWaylandIntegration::EglFSWaylandIntegration()
     : QObject()
     , m_thread(new QThread())
-    , m_connection(new Client::ClientConnection())
-    , m_registry(new Client::Registry(this))
+    , m_connection(new WaylandClient::ClientConnection())
+    , m_registry(new WaylandClient::Registry(this))
     , m_compositor(Q_NULLPTR)
     , m_fullScreenShell(Q_NULLPTR)
     , m_seat(Q_NULLPTR)
@@ -69,29 +69,29 @@ void EglFSWaylandIntegration::platformInit()
     Q_ASSERT(integration);
 
     // Bind
-    connect(m_registry, &Client::Registry::compositorAnnounced, this, [this](quint32 name, quint32 version) {
+    connect(m_registry, &WaylandClient::Registry::compositorAnnounced, this, [this](quint32 name, quint32 version) {
         m_compositor = m_registry->createCompositor(name, version);
     });
-    connect(m_registry, &Client::Registry::fullscreenShellAnnounced, this, [this](quint32 name, quint32 version) {
+    connect(m_registry, &WaylandClient::Registry::fullscreenShellAnnounced, this, [this](quint32 name, quint32 version) {
         m_fullScreenShell = m_registry->createFullScreenShell(name, version);
     });
-    connect(m_registry, &Client::Registry::outputAnnounced, this, [this](quint32 name, quint32 version) {
-        Client::Output *output = m_registry->createOutput(name, version, this);
+    connect(m_registry, &WaylandClient::Registry::outputAnnounced, this, [this](quint32 name, quint32 version) {
+        WaylandClient::Output *output = m_registry->createOutput(name, version, this);
         m_outputs.append(output);
     });
-    connect(m_registry, &Client::Registry::seatAnnounced, this, [this](quint32 name, quint32 version) {
+    connect(m_registry, &WaylandClient::Registry::seatAnnounced, this, [this](quint32 name, quint32 version) {
         m_seat = m_registry->createSeat(name, version, this);
 
         delete m_input;
         m_input = new EglFSWaylandInput(m_seat, this);
 
-        connect(m_seat, &Client::Seat::keyboardAdded,
+        connect(m_seat, &WaylandClient::Seat::keyboardAdded,
                 this, &EglFSWaylandIntegration::keyboardAdded);
-        connect(m_seat, &Client::Seat::pointerAdded,
+        connect(m_seat, &WaylandClient::Seat::pointerAdded,
                 this, &EglFSWaylandIntegration::pointerAdded);
-        connect(m_seat, &Client::Seat::touchAdded,
+        connect(m_seat, &WaylandClient::Seat::touchAdded,
                 this, &EglFSWaylandIntegration::touchAdded);
-        connect(m_seat, &Client::Seat::touchRemoved,
+        connect(m_seat, &WaylandClient::Seat::touchRemoved,
                 this, &EglFSWaylandIntegration::touchRemoved);
     });
 
@@ -176,7 +176,7 @@ void EglFSWaylandIntegration::screenInit()
     EglFSIntegration *integration = static_cast<EglFSIntegration *>(
                 QGuiApplicationPrivate::platformIntegration());
     QList<QPlatformScreen *> siblings;
-    Q_FOREACH (Client::Output *output, m_outputs) {
+    Q_FOREACH (WaylandClient::Output *output, m_outputs) {
         EglFSWaylandScreen *screen = new EglFSWaylandScreen(integration->display(), this, output);
         siblings.append(screen);
         integration->addScreen(screen);
@@ -241,29 +241,29 @@ bool EglFSWaylandIntegration::hasCapability(QPlatformIntegration::Capability cap
 
 void EglFSWaylandIntegration::keyboardAdded()
 {
-    connect(m_seat->keyboard(), &Client::Keyboard::keymapChanged,
+    connect(m_seat->keyboard(), &WaylandClient::Keyboard::keymapChanged,
             m_input, &EglFSWaylandInput::keymapChanged);
-    connect(m_seat->keyboard(), &Client::Keyboard::keyPressed,
+    connect(m_seat->keyboard(), &WaylandClient::Keyboard::keyPressed,
             m_input, &EglFSWaylandInput::keyPressed);
-    connect(m_seat->keyboard(), &Client::Keyboard::keyReleased,
+    connect(m_seat->keyboard(), &WaylandClient::Keyboard::keyReleased,
             m_input, &EglFSWaylandInput::keyReleased);
-    connect(m_seat->keyboard(), &Client::Keyboard::modifiersChanged,
+    connect(m_seat->keyboard(), &WaylandClient::Keyboard::modifiersChanged,
             m_input, &EglFSWaylandInput::keyboardModifiersChanged);
 }
 
 void EglFSWaylandIntegration::pointerAdded()
 {
-    connect(m_seat->pointer(), &Client::Pointer::enter,
+    connect(m_seat->pointer(), &WaylandClient::Pointer::enter,
             m_input, &EglFSWaylandInput::pointerEnter);
-    connect(m_seat->pointer(), &Client::Pointer::leave,
+    connect(m_seat->pointer(), &WaylandClient::Pointer::leave,
             m_input, &EglFSWaylandInput::pointerLeave);
-    connect(m_seat->pointer(), &Client::Pointer::motion,
+    connect(m_seat->pointer(), &WaylandClient::Pointer::motion,
             m_input, &EglFSWaylandInput::pointerMotion);
-    connect(m_seat->pointer(), &Client::Pointer::buttonPressed,
+    connect(m_seat->pointer(), &WaylandClient::Pointer::buttonPressed,
             m_input, &EglFSWaylandInput::pointerButtonPressed);
-    connect(m_seat->pointer(), &Client::Pointer::buttonReleased,
+    connect(m_seat->pointer(), &WaylandClient::Pointer::buttonReleased,
             m_input, &EglFSWaylandInput::pointerButtonReleased);
-    connect(m_seat->pointer(), &Client::Pointer::axisChanged,
+    connect(m_seat->pointer(), &WaylandClient::Pointer::axisChanged,
             m_input, &EglFSWaylandInput::pointerAxisChanged);
 }
 
@@ -275,18 +275,18 @@ void EglFSWaylandIntegration::touchAdded()
     QWindowSystemInterface::registerTouchDevice(m_touchDevice);
     m_input->setTouchDevice(m_touchDevice);
 
-    connect(m_seat->touch(), &Client::Touch::sequenceStarted,
+    connect(m_seat->touch(), &WaylandClient::Touch::sequenceStarted,
             m_input, &EglFSWaylandInput::touchSequenceStarted);
-    connect(m_seat->touch(), &Client::Touch::sequenceFinished,
+    connect(m_seat->touch(), &WaylandClient::Touch::sequenceFinished,
             m_input, &EglFSWaylandInput::touchSequenceFinished);
-    connect(m_seat->touch(), &Client::Touch::sequenceCanceled,
+    connect(m_seat->touch(), &WaylandClient::Touch::sequenceCanceled,
             m_input, &EglFSWaylandInput::touchSequenceCanceled);
 
-    connect(m_seat->touch(), &Client::Touch::pointAdded,
+    connect(m_seat->touch(), &WaylandClient::Touch::pointAdded,
             m_input, &EglFSWaylandInput::touchPointAdded);
-    connect(m_seat->touch(), &Client::Touch::pointRemoved,
+    connect(m_seat->touch(), &WaylandClient::Touch::pointRemoved,
             m_input, &EglFSWaylandInput::touchPointRemoved);
-    connect(m_seat->touch(), &Client::Touch::pointMoved,
+    connect(m_seat->touch(), &WaylandClient::Touch::pointMoved,
             m_input, &EglFSWaylandInput::touchPointMoved);
 }
 
@@ -302,6 +302,6 @@ void EglFSWaylandIntegration::touchRemoved()
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_eglfswaylandintegration.cpp"

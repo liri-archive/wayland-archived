@@ -1,12 +1,12 @@
 {
   "package": {
-    "name": "greenisland",
+    "name": "liri-wayland",
     "repo": "archlinux-@GITBRANCH@",
-    "subject": "greenisland",
-    "desc": "QtQuick Wayland compositor and shell for desktop and mobile",
-    "website_url": "http://hawaiios.org",
-    "issue_tracker_url": "https://github.com/greenisland/greenisland",
-    "vcs_url": "https://github.com/greenisland/greenisland",
+    "subject": "liri-wayland",
+    "desc": "Wayland client and server library for QtQuick",
+    "website_url": "https://liri.io",
+    "issue_tracker_url": "https://github.com/lirios/wayland",
+    "vcs_url": "https://github.com/lirios/wayland",
     "licenses": ["GPL-3.0"],
     "labels": ["qt", "qtquick", "qml", "wayland"]
   },
@@ -22,8 +22,8 @@
     "gpgSign": false
   },
   "files": [
-    {"includePattern": "cibuild/(greenisland-git-.*.pkg.tar.xz)", "uploadPattern": "@ARCH@/$1", "matrixParams": {"override": 1}},
-    {"includePattern": "cibuild/(greenisland.db.tar.gz)", "uploadPattern": "@ARCH@/greenisland.db", "matrixParams": {"override": 1}}
+    {"includePattern": "cibuild/(liri-wayland-git-.*.pkg.tar.xz)", "uploadPattern": "@ARCH@/$1", "matrixParams": {"override": 1}},
+    {"includePattern": "cibuild/(liri-wayland.db.tar.gz)", "uploadPattern": "@ARCH@/liri-wayland.db", "matrixParams": {"override": 1}}
   ],
   "publish": true
 }

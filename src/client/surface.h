@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,26 +25,26 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SURFACE_H
-#define GREENISLANDCLIENT_SURFACE_H
+#ifndef LIRIWAYLANDCLIENT_SURFACE_H
+#define LIRIWAYLANDCLIENT_SURFACE_H
 
 #include <QtCore/QObject>
 #include <QtCore/QRect>
 
-#include <GreenIsland/Client/Buffer>
-#include <GreenIsland/Client/Output>
+#include <Liri/WaylandClient/Buffer>
+#include <Liri/WaylandClient/Output>
 
 class QWindow;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class Output;
 class Region;
 class SurfacePrivate;
 
-class GREENISLANDCLIENT_EXPORT Surface : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Surface : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Surface)
@@ -80,8 +80,8 @@ Q_SIGNALS:
     void frameRendered();
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SURFACE_H
+#endif // LIRIWAYLANDCLIENT_SURFACE_H

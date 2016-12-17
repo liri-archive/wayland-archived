@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -31,7 +31,7 @@
 #include "libinput/libinputhandler.h"
 #include "libinput/libinputmanager_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -133,6 +133,6 @@ LibInputHandler *LibInputManager::handler() const
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_libinputmanager_p.cpp"

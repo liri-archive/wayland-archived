@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,21 +25,21 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LOGIND_H
-#define GREENISLAND_LOGIND_H
+#ifndef LIRI_LOGIND_H
+#define LIRI_LOGIND_H
 
 #include <QtCore/QObject>
 #include <QtDBus/QDBusConnection>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 class LogindPrivate;
 
-class GREENISLANDPLATFORM_EXPORT Logind : public QObject
+class LIRIPLATFORM_EXPORT Logind : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
@@ -123,6 +123,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(Logind::InhibitFlags)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_LOGIND_H
+#endif // LIRI_LOGIND_H

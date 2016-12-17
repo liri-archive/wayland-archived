@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,16 +25,16 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/Platform/EGLDeviceIntegration>
+#include <Liri/Platform/EGLDeviceIntegration>
 
 #include "eglfswaylandintegration.h"
 
-using namespace GreenIsland::Platform;
+using namespace Liri::Platform;
 
 class EglFSWaylandIntegrationPlugin : public EGLDeviceIntegrationPlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID GreenIslandDeviceIntegrationFactoryInterface_iid FILE "wayland.json")
+    Q_PLUGIN_METADATA(IID LiriDeviceIntegrationFactoryInterface_iid FILE "wayland.json")
 public:
     EGLDeviceIntegration *create() Q_DECL_OVERRIDE;
 };

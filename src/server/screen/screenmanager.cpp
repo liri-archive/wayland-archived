@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -28,9 +28,9 @@
 #include "screenmanager.h"
 #include "screenmanager_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 ScreenManager::ScreenManager(QObject *parent)
     : QObject(*new ScreenManagerPrivate(), parent)
@@ -66,8 +66,8 @@ void ScreenManager::create()
     d->backend->acquireConfiguration();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_screenmanager.cpp"

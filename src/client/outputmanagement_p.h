@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_OUTPUTMANAGEMENT_P_H
-#define GREENISLANDCLIENT_OUTPUTMANAGEMENT_P_H
+#ifndef LIRIWAYLANDCLIENT_OUTPUTMANAGEMENT_P_H
+#define LIRIWAYLANDCLIENT_OUTPUTMANAGEMENT_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/OutputManagement>
-#include <GreenIsland/client/private/qwayland-greenisland-outputmanagement.h>
+#include <Liri/WaylandClient/OutputManagement>
+#include <Liri/waylandclient/private/qwayland-liri-outputmanagement.h>
 
 //
 //  W A R N I N G
@@ -44,13 +44,13 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT OutputManagementPrivate
+class LIRIWAYLANDCLIENT_EXPORT OutputManagementPrivate
         : public QObjectPrivate
-        , public QtWayland::greenisland_outputmanagement
+        , public QtWayland::liri_outputmanagement
 {
     Q_DECLARE_PUBLIC(OutputManagement)
 public:
@@ -61,8 +61,8 @@ public:
     static OutputManagementPrivate *get(OutputManagement *m) { return m->d_func(); }
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_OUTPUTMANAGEMENT_P_H
+#endif // LIRIWAYLANDCLIENT_OUTPUTMANAGEMENT_P_H

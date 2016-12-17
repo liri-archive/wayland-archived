@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -35,9 +35,9 @@
 #include "touch.h"
 #include "touch_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * SeatPrivate
@@ -148,8 +148,8 @@ QByteArray Seat::interfaceName()
     return QByteArrayLiteral("wl_seat");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_seat.cpp"

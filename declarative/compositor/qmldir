@@ -1,4 +1,0 @@
-module GreenIsland
-plugin greenislandplugin
-WaylandOutputWindow 1.0 WaylandOutputWindow.qml
-WindowChrome 1.0 WindowChrome.qml

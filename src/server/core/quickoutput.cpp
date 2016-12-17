@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2014-2016 Pier Luigi Fiorini
  *
@@ -25,7 +25,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <GreenIsland/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSGlobal>
 
 #include <QtCore/QElapsedTimer>
 #include <QtCore/private/qobject_p.h>
@@ -34,16 +34,16 @@
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/QWaylandOutputMode>
 
-#include <GreenIsland/Platform/EglFSScreen>
+#include <Liri/Platform/EglFSScreen>
 
 #include "quickoutput.h"
 #include "serverlogging_p.h"
 #include "extensions/screencaster.h"
 #include "screen/screenbackend.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * WindowFilter
@@ -215,7 +215,7 @@ void QuickOutput::setNativeScreen(Screen *screen)
 
     if (d->initialized) {
         qCWarning(gLcCore)
-                << "Setting GreenIsland::Server::Output::nativeScreen "
+                << "Setting Liri::WaylandServer::Output::nativeScreen "
                    "after initialization has no effect";
         return;
     }
@@ -348,7 +348,7 @@ void QuickOutput::initialize()
     if (!quickWindow) {
         qCWarning(gLcCore,
                   "Could not locate QQuickWindow on initializing"
-                  "GreenIsland::Server::Output %p.\n", this);
+                  "Liri::WaylandServer::Output %p.\n", this);
         return;
     }
 
@@ -394,8 +394,8 @@ void QuickOutput::readContent()
         screencaster->recordFrame(quickWindow);
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_quickoutput.cpp"

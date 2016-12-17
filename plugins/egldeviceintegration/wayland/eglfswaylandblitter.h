@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSWAYLANDBLITTER_H
-#define GREENISLAND_EGLFSWAYLANDBLITTER_H
+#ifndef LIRI_EGLFSWAYLANDBLITTER_H
+#define LIRI_EGLFSWAYLANDBLITTER_H
 
 #include <QtGui/QOpenGLFunctions>
 
 class QOpenGLShaderProgram;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -54,6 +54,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSWAYLANDBLITTER_H
+#endif // LIRI_EGLFSWAYLANDBLITTER_H

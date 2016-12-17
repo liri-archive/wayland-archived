@@ -69,24 +69,24 @@ set(SOURCES
 
 qt5_add_resources(SOURCES deviceintegration/cursor.qrc)
 
-add_library(GreenIslandPlatform SHARED ${SOURCES})
-generate_export_header(GreenIslandPlatform EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland/platform/greenislandplatform_export.h")
-add_library(GreenIsland::Platform ALIAS GreenIslandPlatform)
+add_library(LiriPlatform SHARED ${SOURCES})
+generate_export_header(LiriPlatform EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/platform/liriplatform_export.h")
+add_library(Liri::Platform ALIAS LiriPlatform)
 
-target_include_directories(GreenIslandPlatform
+target_include_directories(LiriPlatform
     PUBLIC
         ${UDEV_INCLUDE_DIR}
         ${xkbcommon_INCLUDE_DIRS}
         ${gio_INCLUDE_DIR}
     PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
         ${Qt5Core_PRIVATE_INCLUDE_DIRS}
         ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
         ${Libdl_INCLUDE_DIR}
 )
 
-target_link_libraries(GreenIslandPlatform
+target_link_libraries(LiriPlatform
     PUBLIC
         Qt5::Core
         Qt5::DBus
@@ -109,27 +109,26 @@ target_link_libraries(GreenIslandPlatform
 )
 
 if(${Qt5Gui_OPENGL_IMPLEMENTATION} STREQUAL "GL")
-    target_link_libraries(GreenIslandPlatform PUBLIC ${OPENGL_LIBRARIES})
+    target_link_libraries(LiriPlatform PUBLIC ${OPENGL_LIBRARIES})
 else()
-    target_link_libraries(GreenIslandPlatform PUBLIC ${OPENGLES_LIBRARIES})
+    target_link_libraries(LiriPlatform PUBLIC ${OPENGLES_LIBRARIES})
 endif()
 
 target_include_directories(
-    GreenIslandPlatform
+    LiriPlatform
         INTERFACE
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../../headers>"
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland>"
-	    "$<INSTALL_INTERFACE:${HAWAII_INCLUDEDIR}>"
-	    "$<INSTALL_INTERFACE:${GREENISLAND_INCLUDEDIR}>"
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri>"
+	    "$<INSTALL_INTERFACE:${LIRI_INCLUDEDIR}>"
 )
 
-set_target_properties(GreenIslandPlatform PROPERTIES
+set_target_properties(LiriPlatform PROPERTIES
     VERSION     ${PROJECT_VERSION}
     SOVERSION   ${PROJECT_SOVERSION}
     EXPORT_NAME Platform
 )
 
-ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
+ecm_generate_headers(LiriPlatform_CAMELCASE_HEADERS
     HEADER_NAMES
         EGLDeviceIntegration
         EglFSContext
@@ -144,14 +143,14 @@ ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
     PREFIX
         Platform
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandPlatform_HEADERS
+        LiriPlatform_HEADERS
     RELATIVE
         deviceintegration
 )
 
-ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
+ecm_generate_headers(LiriPlatform_CAMELCASE_HEADERS
     HEADER_NAMES
         Udev
         UdevDevice
@@ -160,90 +159,90 @@ ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
     PREFIX
         Platform
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandPlatform_HEADERS
+        LiriPlatform_HEADERS
     RELATIVE
         udev
 )
 
-ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
+ecm_generate_headers(LiriPlatform_CAMELCASE_HEADERS
     HEADER_NAMES
         Logind
         VtHandler
     PREFIX
         Platform
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandPlatform_HEADERS
+        LiriPlatform_HEADERS
     RELATIVE
         logind
 )
 
-ecm_generate_headers(GreenIslandPlatform_CAMELCASE_HEADERS
+ecm_generate_headers(LiriPlatform_CAMELCASE_HEADERS
     HEADER_NAMES
         LibInputHandler
     PREFIX
         Platform
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandPlatform_HEADERS
+        LiriPlatform_HEADERS
     RELATIVE
        libinput
 )
 
-install(FILES ${GreenIslandPlatform_CAMELCASE_HEADERS}
-        DESTINATION ${GREENISLAND_INCLUDEDIR}/Platform
+install(FILES ${LiriPlatform_CAMELCASE_HEADERS}
+        DESTINATION ${LIRI_INCLUDEDIR}/Platform
         COMPONENT Devel)
 
 install(
     FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland/platform/greenislandplatform_export.h"
-        ${GreenIslandPlatform_HEADERS}
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/platform/liriplatform_export.h"
+        ${LiriPlatform_HEADERS}
     DESTINATION
-        ${GREENISLAND_INCLUDEDIR}/platform
+        ${LIRI_INCLUDEDIR}/platform
     COMPONENT
         Devel
 )
 
-install(TARGETS GreenIslandPlatform
-        EXPORT GreenIslandPlatformTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS LiriPlatform
+        EXPORT LiriPlatformTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 # CMake package version
-ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX GREENISLAND
-                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandPlatformConfigVersion.cmake"
+ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX LIRI
+                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/LiriPlatformConfigVersion.cmake"
                   SOVERSION ${PROJECT_SOVERSION})
 
 # CMake package config
-set(GreenIslandPlatform_CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/GreenIslandPlatform")
-ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/GreenIslandPlatformConfig.cmake.in"
-                                  "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandPlatformConfig.cmake"
-                                  INSTALL_DESTINATION ${GreenIslandPlatform_CMAKECONFIG_INSTALL_DIR})
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandPlatformConfig.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandPlatformConfigVersion.cmake"
-        DESTINATION "${GreenIslandPlatform_CMAKECONFIG_INSTALL_DIR}"
+set(LiriPlatform_CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/LiriPlatform")
+ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/LiriPlatformConfig.cmake.in"
+                                  "${CMAKE_CURRENT_BINARY_DIR}/LiriPlatformConfig.cmake"
+                                  INSTALL_DESTINATION ${LiriPlatform_CMAKECONFIG_INSTALL_DIR})
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/LiriPlatformConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/LiriPlatformConfigVersion.cmake"
+        DESTINATION "${LiriPlatform_CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel)
-install(EXPORT GreenIslandPlatformTargets
-        DESTINATION "${GreenIslandPlatform_CMAKECONFIG_INSTALL_DIR}"
-        FILE GreenIslandPlatformTargets.cmake NAMESPACE GreenIsland::)
+install(EXPORT LiriPlatformTargets
+        DESTINATION "${LiriPlatform_CMAKECONFIG_INSTALL_DIR}"
+        FILE LiriPlatformTargets.cmake NAMESPACE Liri::)
 
 # qmake pri file
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME GreenIslandPlatform
-                      LIB_NAME GreenIslandPlatform
+ecm_generate_pri_file(BASE_NAME LiriPlatform
+                      LIB_NAME LiriPlatform
                       DEPS "core dbus gui"
                       FILENAME_VAR PRI_FILENAME
-                      INCLUDE_INSTALL_DIR "${HAWAII_INCLUDEDIR} ${GREENISLAND_INCLUDEDIR}")
+                      INCLUDE_INSTALL_DIR "${LIRI_INCLUDEDIR}")
 install(FILES ${PRI_FILENAME}
         DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 # pkg-config file
 include(ECMGeneratePkgConfigFile)
-#ecm_generate_pkgconfig_file(BASE_NAME GreenIslandPlatform
-#                            LIB_NAME GreenIslandPlatform
+#ecm_generate_pkgconfig_file(BASE_NAME LiriPlatform
+#                            LIB_NAME LiriPlatform
 #                            DEPS "Qt5Core Qt5DBus Qt5Gui xkbcommon"
 #                            FILENAME_VAR PKGCONFIG_FILENAME
-#                            INCLUDE_INSTALL_DIR "${HAWAII_INCLUDEDIR} ${GREENISLAND_INCLUDEDIR}"
+#                            INCLUDE_INSTALL_DIR "${LIRI_INCLUDEDIR}"
 #                            INSTALL)

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,15 +25,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSWAYLANDCONTEXT_H
-#define GREENISLAND_EGLFSWAYLANDCONTEXT_H
+#ifndef LIRI_EGLFSWAYLANDCONTEXT_H
+#define LIRI_EGLFSWAYLANDCONTEXT_H
 
 #include <QtCore/QVariant>
 #include <QtEglSupport/private/qeglplatformcontext_p.h>
 
 #include "eglfswaylandintegration.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -66,6 +66,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSWAYLANDCONTEXT_H
+#endif // LIRI_EGLFSWAYLANDCONTEXT_H

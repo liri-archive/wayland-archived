@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -30,8 +30,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LIBINPUTTOUCH_H
-#define GREENISLAND_LIBINPUTTOUCH_H
+#ifndef LIRI_LIBINPUTTOUCH_H
+#define LIRI_LIBINPUTTOUCH_H
 
 //
 //  W A R N I N G
@@ -49,7 +49,7 @@ struct libinput_event_touch;
 
 class QTouchDevice;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -78,6 +78,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_LIBINPUTTOUCH_H
+#endif // LIRI_LIBINPUTTOUCH_H

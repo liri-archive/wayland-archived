@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -32,9 +32,9 @@
 #include "compositorsettings_p.h"
 #include "serverlogging_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * CompositorSettingsPrivate
@@ -162,8 +162,8 @@ void CompositorSettings::componentComplete()
     d->_q_setupKeyboard();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_compositorsettings.cpp"

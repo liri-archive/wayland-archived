@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -29,16 +29,16 @@
 #include "outputconfiguration.h"
 #include "outputconfiguration_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * OutputConfigurationPrivate
  */
 
 OutputConfigurationPrivate::OutputConfigurationPrivate()
-    : QtWayland::greenisland_outputconfiguration()
+    : QtWayland::liri_outputconfiguration()
 {
 }
 
@@ -106,8 +106,8 @@ void OutputConfiguration::apply()
     d->apply();
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_outputconfiguration.cpp"

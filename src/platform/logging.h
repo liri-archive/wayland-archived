@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LOGGING_H
-#define GREENISLAND_LOGGING_H
+#ifndef LIRI_LOGGING_H
+#define LIRI_LOGGING_H
 
 #include <QtCore/QLoggingCategory>
 
@@ -36,4 +36,4 @@ Q_DECLARE_LOGGING_CATEGORY(lcInput)
 Q_DECLARE_LOGGING_CATEGORY(lcLogind)
 Q_DECLARE_LOGGING_CATEGORY(lcUdev)
 
-#endif // GREENISLAND_LOGGING_H
+#endif // LIRI_LOGGING_H

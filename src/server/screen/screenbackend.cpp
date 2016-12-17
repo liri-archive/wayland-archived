@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -30,17 +30,17 @@
 #include <QtGui/qpa/qwindowsysteminterface.h>
 #include <QtWaylandCompositor/QWaylandCompositor>
 
-#include <GreenIsland/Platform/EglFSGlobal>
-#include <GreenIsland/Platform/EglFSScreen>
+#include <Liri/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSScreen>
 
 #include "output/outputchangeset.h"
 #include "serverlogging_p.h"
 #include "screenbackend.h"
 #include "screenbackend_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * ScreenPrivate
@@ -268,7 +268,7 @@ bool Screen::applyChangeset(OutputChangeset *changeset)
                 QWindowSystemInterface::handleScreenGeometryChange(d->m_screen, geometry, d->m_screen->availableGeometry());
             }
         } else {
-            qCWarning(gLcScreenBackend) << "Output changeset can be applied only when using the greenisland QPA plugin";
+            qCWarning(gLcScreenBackend) << "Output changeset can be applied only when using the liri QPA plugin";
             return false;
         }
     } else {
@@ -324,8 +324,8 @@ void ScreenBackend::acquireConfiguration()
     qCWarning(gLcScreenBackend) << "ScreenBackend::acquireConfiguration() must be reimplemented";
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_screenbackend.cpp"

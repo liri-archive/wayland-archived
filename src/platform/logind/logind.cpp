@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -47,7 +47,7 @@ const static QString login1SessionInterface = QLatin1String("org.freedesktop.log
 const static QString dbusService = QLatin1String("org.freedesktop.DBus");
 const static QString dbusPropertiesInterface = QLatin1String("org.freedesktop.DBus.Properties");
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -609,6 +609,6 @@ void Logind::switchTo(quint32 vt)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_logind.cpp"

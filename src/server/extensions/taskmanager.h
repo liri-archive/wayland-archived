@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,22 +25,22 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_TASKMANAGER_H
-#define GREENISLAND_TASKMANAGER_H
+#ifndef LIRI_TASKMANAGER_H
+#define LIRI_TASKMANAGER_H
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class TaskItem;
 class TaskItemPrivate;
 class TaskManagerPrivate;
 
-class GREENISLANDSERVER_EXPORT TaskManager : public QWaylandCompositorExtensionTemplate<TaskManager>
+class LIRIWAYLANDSERVER_EXPORT TaskManager : public QWaylandCompositorExtensionTemplate<TaskManager>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(TaskManager)
@@ -54,7 +54,7 @@ public:
     static QByteArray interfaceName();
 };
 
-class GREENISLANDSERVER_EXPORT TaskItem : public QWaylandCompositorExtensionTemplate<TaskItem>
+class LIRIWAYLANDSERVER_EXPORT TaskItem : public QWaylandCompositorExtensionTemplate<TaskItem>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(TaskItem)
@@ -68,8 +68,8 @@ private:
     friend class TaskManagerPrivate;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_TASKMANAGER_H
+#endif // LIRI_TASKMANAGER_H

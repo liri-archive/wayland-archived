@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,10 +25,10 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_QUICKOUTPUTCONFIGURATION_P_H
-#define GREENISLAND_QUICKOUTPUTCONFIGURATION_P_H
+#ifndef LIRI_QUICKOUTPUTCONFIGURATION_P_H
+#define LIRI_QUICKOUTPUTCONFIGURATION_P_H
 
-#include <GreenIsland/Server/QuickOutputConfiguration>
+#include <Liri/WaylandServer/QuickOutputConfiguration>
 
 //
 //  W A R N I N G
@@ -41,11 +41,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT QuickOutputConfigurationPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT QuickOutputConfigurationPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QuickOutputConfiguration)
 public:
@@ -59,8 +59,8 @@ public:
     static OutputChangeset *changesAt(QQmlListProperty<OutputChangeset> *prop, int index);
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_QUICKOUTPUTCONFIGURATION_P_H
+#endif // LIRI_QUICKOUTPUTCONFIGURATION_P_H

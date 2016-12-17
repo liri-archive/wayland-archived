@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSWAYLANDWINDOW_H
-#define GREENISLAND_EGLFSWAYLANDWINDOW_H
+#ifndef LIRI_EGLFSWAYLANDWINDOW_H
+#define LIRI_EGLFSWAYLANDWINDOW_H
 
 #include <QtCore/QObject>
 #include <QtGui/qpa/qplatformwindow.h>
 #include <QtEglSupport/private/qeglconvenience_p.h>
 
-#include <GreenIsland/Client/Surface>
+#include <Liri/WaylandClient/Surface>
 
 #include "eglfswaylandintegration.h"
 
@@ -40,7 +40,7 @@ class QOpenGLFramebufferObject;
 
 struct wl_egl_window;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -53,7 +53,7 @@ public:
 
     WId winId() const Q_DECL_OVERRIDE;
 
-    Client::Surface *waylandSurface() const { return m_surface; }
+    WaylandClient::Surface *waylandSurface() const { return m_surface; }
     EGLSurface surface() const { return m_eglSurface; }
 
     GLuint contentFBO();
@@ -82,13 +82,13 @@ public:
 
     void handleContentOrientationChange(Qt::ScreenOrientation orientation) Q_DECL_OVERRIDE;
 
-    static EglFSWaylandWindow *fromSurface(Client::Surface *surface);
+    static EglFSWaylandWindow *fromSurface(WaylandClient::Surface *surface);
 
 private:
     EglFSWaylandIntegration *m_integration;
     WId m_winId;
-    Client::Surface *m_surface;
-    Client::Output *m_output;
+    WaylandClient::Surface *m_surface;
+    WaylandClient::Output *m_output;
 
     EGLDisplay m_eglDisplay;
     EGLConfig m_eglConfig;
@@ -103,6 +103,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSWAYLANDWINDOW_H
+#endif // LIRI_EGLFSWAYLANDWINDOW_H

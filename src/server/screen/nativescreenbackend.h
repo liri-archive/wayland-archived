@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,18 +25,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_NATIVESCREENBACKEND_H
-#define GREENISLAND_NATIVESCREENBACKEND_H
+#ifndef LIRI_NATIVESCREENBACKEND_H
+#define LIRI_NATIVESCREENBACKEND_H
 
-#include <GreenIsland/Server/ScreenBackend>
+#include <Liri/WaylandServer/ScreenBackend>
 
 class QScreen;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT NativeScreenBackend : public ScreenBackend
+class LIRIWAYLANDSERVER_EXPORT NativeScreenBackend : public ScreenBackend
 {
     Q_OBJECT
 public:
@@ -53,8 +53,8 @@ private Q_SLOTS:
     void handleScreenChanged(QScreen *qscreen, Screen *screen);
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_NATIVESCREENBACKEND_H
+#endif // LIRI_NATIVESCREENBACKEND_H

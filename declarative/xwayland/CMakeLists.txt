@@ -33,7 +33,6 @@ endif()
 
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
-    "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
     ${Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS}
 )
 
@@ -55,13 +54,12 @@ set(SOURCES
     sigwatch.cpp
 )
 
-add_library(GreenIslandXWaylandPlugin SHARED ${SOURCES})
-add_library(GreenIsland::XWaylandPlugin ALIAS GreenIslandXWaylandPlugin)
-target_link_libraries(GreenIslandXWaylandPlugin
+add_library(lirixwaylandplugin SHARED ${SOURCES})
+target_link_libraries(lirixwaylandplugin
     Qt5::Qml
     Qt5::Quick
     Qt5::WaylandCompositor
-    GreenIsland::Server
+    Liri::WaylandServer
     XCB::XCB
     XCB::XFIXES
     XCB::CURSOR
@@ -71,12 +69,12 @@ target_link_libraries(GreenIslandXWaylandPlugin
     ${X11_Xcursor_LIB}
 )
 
-install(TARGETS GreenIslandXWaylandPlugin LIBRARY
-    DESTINATION ${QML_INSTALL_DIR}/GreenIsland/XWayland)
+install(TARGETS lirixwaylandplugin LIBRARY
+        DESTINATION ${QML_INSTALL_DIR}/Liri/XWayland)
 
 set(MODULE_FILES
     qmldir
     XWaylandWindowChrome.qml
 )
 install(FILES ${MODULE_FILES}
-    DESTINATION ${QML_INSTALL_DIR}/GreenIsland/XWayland)
+        DESTINATION ${QML_INSTALL_DIR}/Liri/XWayland)

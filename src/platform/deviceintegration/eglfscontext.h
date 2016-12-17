@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -30,19 +30,19 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSCONTEXT_H
-#define GREENISLAND_EGLFSCONTEXT_H
+#ifndef LIRI_EGLFSCONTEXT_H
+#define LIRI_EGLFSCONTEXT_H
 
 #include <QtCore/QVariant>
 #include <QtEglSupport/private/qeglplatformcontext_p.h>
 
-#include <GreenIsland/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSGlobal>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
-class GREENISLANDPLATFORM_EXPORT EglFSContext : public QEGLPlatformContext
+class LIRIPLATFORM_EXPORT EglFSContext : public QEGLPlatformContext
 {
 public:
     EglFSContext(const QSurfaceFormat &format, QPlatformOpenGLContext *share, EGLDisplay display,
@@ -60,6 +60,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSCONTEXT_H
+#endif // LIRI_EGLFSCONTEXT_H

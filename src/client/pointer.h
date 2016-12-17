@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,25 +25,25 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_POINTER_H
-#define GREENISLANDCLIENT_POINTER_H
+#ifndef LIRIWAYLANDCLIENT_POINTER_H
+#define LIRIWAYLANDCLIENT_POINTER_H
 
 #include <QtCore/QObject>
 #include <QtCore/QPoint>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
 struct wl_cursor_image;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class PointerPrivate;
 class Seat;
 class Surface;
 
-class GREENISLANDCLIENT_EXPORT Pointer : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Pointer : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Pointer)
@@ -70,8 +70,8 @@ Q_SIGNALS:
     void axisChanged(quint32 time, const Qt::Orientation &orientation, qreal value);
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_POINTER_H
+#endif // LIRIWAYLANDCLIENT_POINTER_H

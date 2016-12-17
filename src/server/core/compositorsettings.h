@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,23 +25,23 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_COMPOSITORSETTINGS_H
-#define GREENISLAND_COMPOSITORSETTINGS_H
+#ifndef LIRI_COMPOSITORSETTINGS_H
+#define LIRI_COMPOSITORSETTINGS_H
 
 #include <QtCore/QObject>
 #include <QtQml/QQmlParserStatus>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 class QWaylandCompositor;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class CompositorSettingsPrivate;
 
-class GREENISLANDSERVER_EXPORT CompositorSettings : public QObject, public QQmlParserStatus
+class LIRIWAYLANDSERVER_EXPORT CompositorSettings : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -79,8 +79,8 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_setupKeyboard())
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_COMPOSITORSETTINGS_H
+#endif // LIRI_COMPOSITORSETTINGS_H

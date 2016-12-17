@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,21 +25,21 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SEAT_H
-#define GREENISLANDCLIENT_SEAT_H
+#ifndef LIRIWAYLANDCLIENT_SEAT_H
+#define LIRIWAYLANDCLIENT_SEAT_H
 
-#include <GreenIsland/Client/Registry>
+#include <Liri/WaylandClient/Registry>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class Keyboard;
 class Pointer;
 class SeatPrivate;
 class Touch;
 
-class GREENISLANDCLIENT_EXPORT Seat : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Seat : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Seat)
@@ -69,8 +69,8 @@ private:
     friend class Registry;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SEAT_H
+#endif // LIRIWAYLANDCLIENT_SEAT_H

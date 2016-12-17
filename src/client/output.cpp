@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -32,9 +32,9 @@
 #include "output.h"
 #include "output_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 static Output::Subpixel toSubpixel(const QtWayland::wl_output::subpixel &value)
 {
@@ -317,8 +317,8 @@ QByteArray Output::interfaceName()
     return QByteArrayLiteral("wl_output");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_output.cpp"

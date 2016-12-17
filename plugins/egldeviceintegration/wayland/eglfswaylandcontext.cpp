@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -33,7 +33,7 @@
 #include "eglfswaylandlogging.h"
 #include "stateguard.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -111,4 +111,4 @@ void EglFSWaylandContext::destroyTemporaryOffscreenSurface(EGLSurface surface)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

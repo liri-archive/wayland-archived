@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -58,7 +58,7 @@ extern "C" {
 
 #define VT_HANDLER_LOGIND 1
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -292,7 +292,7 @@ public:
                 kbMode = K_UNICODE;
             }
 
-            if (!qEnvironmentVariableIntValue("GREENISLAND_QPA_ENABLE_TERMINAL_KEYBOARD")) {
+            if (!qEnvironmentVariableIntValue("LIRI_QPA_ENABLE_TERMINAL_KEYBOARD")) {
                 // Avoid input going to the tty
                 if (::ioctl(vtFd, KDSKBMUTE, 1) < 0 &&
                         ::ioctl(vtFd, KDSKBMODE, K_OFF) < 0) {
@@ -441,6 +441,6 @@ void VtHandler::activate(quint32 nr)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_vthandler.cpp"

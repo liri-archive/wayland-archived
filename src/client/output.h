@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,24 +25,24 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_OUTPUT_H
-#define GREENISLANDCLIENT_OUTPUT_H
+#ifndef LIRIWAYLANDCLIENT_OUTPUT_H
+#define LIRIWAYLANDCLIENT_OUTPUT_H
 
 #include <QtCore/QObject>
 #include <QtCore/QRect>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
 class QScreen;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class OutputPrivate;
 class Registry;
 
-class GREENISLANDCLIENT_EXPORT Output : public QObject
+class LIRIWAYLANDCLIENT_EXPORT Output : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Output)
@@ -120,8 +120,8 @@ Q_SIGNALS:
     void subpixelChanged();
     void transformChanged();
     void outputChanged();
-    void modeAdded(const GreenIsland::Client::Output::Mode &mode);
-    void modeChanged(const GreenIsland::Client::Output::Mode &mode);
+    void modeAdded(const Liri::WaylandClient::Output::Mode &mode);
+    void modeChanged(const Liri::WaylandClient::Output::Mode &mode);
 
 private:
     Output(QObject *parent = Q_NULLPTR);
@@ -129,10 +129,10 @@ private:
     friend class Registry;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-Q_DECLARE_METATYPE(GreenIsland::Client::Output::Mode)
+Q_DECLARE_METATYPE(Liri::WaylandClient::Output::Mode)
 
-#endif // GREENISLANDCLIENT_OUTPUT_H
+#endif // LIRIWAYLANDCLIENT_OUTPUT_H

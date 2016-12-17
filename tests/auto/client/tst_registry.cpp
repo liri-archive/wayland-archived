@@ -28,31 +28,30 @@
 #include <QtCore/QThread>
 #include <QtTest/QtTest>
 #include <QtQuick/QQuickItem>
-
-#include <GreenIsland/Client/Buffer>
-#include <GreenIsland/Client/ClientConnection>
-#include <GreenIsland/Client/Compositor>
-#include <GreenIsland/Client/FullScreenShell>
-#include <GreenIsland/Client/Output>
-#include <GreenIsland/Client/Registry>
-#include <GreenIsland/Client/Region>
-#include <GreenIsland/Client/Screencaster>
-#include <GreenIsland/Client/Screenshooter>
-#include <GreenIsland/Client/Seat>
-#include <GreenIsland/Client/Shm>
-#include <GreenIsland/Client/ShmPool>
-#include <GreenIsland/Client/Surface>
-#include <GreenIsland/Server/Screencaster>
-#include <GreenIsland/Server/Screenshooter>
-
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/QWaylandSeat>
 #include <QtWaylandCompositor/QWaylandOutput>
 #include <QtWaylandCompositor/private/qwaylandcompositor_p.h>
 
-using namespace GreenIsland;
+#include <Liri/WaylandClient/Buffer>
+#include <Liri/WaylandClient/ClientConnection>
+#include <Liri/WaylandClient/Compositor>
+#include <Liri/WaylandClient/FullScreenShell>
+#include <Liri/WaylandClient/Output>
+#include <Liri/WaylandClient/Registry>
+#include <Liri/WaylandClient/Region>
+#include <Liri/WaylandClient/Screencaster>
+#include <Liri/WaylandClient/Screenshooter>
+#include <Liri/WaylandClient/Seat>
+#include <Liri/WaylandClient/Shm>
+#include <Liri/WaylandClient/ShmPool>
+#include <Liri/WaylandClient/Surface>
+#include <Liri/WaylandServer/Screencaster>
+#include <Liri/WaylandServer/Screenshooter>
 
-static const QString s_socketName = QStringLiteral("greenisland-test-0");
+using namespace Liri;
+
+static const QString s_socketName = QStringLiteral("liri-test-0");
 
 class TestRegistry : public QObject
 {
@@ -76,8 +75,8 @@ private Q_SLOTS:
         m_compositor->setSocketName(s_socketName.toUtf8());
 
         new QWaylandOutput(m_compositor, Q_NULLPTR);
-        new Server::Screencaster(m_compositor);
-        new Server::Screenshooter(m_compositor);
+        new WaylandServer::Screencaster(m_compositor);
+        new WaylandServer::Screenshooter(m_compositor);
 
         m_compositor->create();
     }
@@ -90,7 +89,7 @@ private Q_SLOTS:
 
     void testSetup()
     {
-        Client::ClientConnection *display(new Client::ClientConnection());
+        WaylandClient::ClientConnection *display(new WaylandClient::ClientConnection());
         display->setSocketName(s_socketName);
 
         QThread *thread = new QThread(this);
@@ -105,7 +104,7 @@ private Q_SLOTS:
         QCOMPARE(failedSpy.count(), 0);
         QVERIFY(display->display());
 
-        Client::Registry registry;
+        WaylandClient::Registry registry;
         registry.create(display->display());
         registry.setup();
 
@@ -116,7 +115,7 @@ private Q_SLOTS:
     }
 
 #define TEST_CREATE_BEGIN() \
-    Client::ClientConnection *display(new Client::ClientConnection()); \
+    WaylandClient::ClientConnection *display(new WaylandClient::ClientConnection()); \
     display->setSocketName(s_socketName); \
     \
     QThread *thread = new QThread(this); \
@@ -132,7 +131,7 @@ private Q_SLOTS:
     QVERIFY(display->display())
 
 #define TEST_CREATE_BODY(signalSignature, createMethod) \
-    Client::Registry registry; \
+    WaylandClient::Registry registry; \
     registry.create(display->display()); \
     QSignalSpy announced(&registry, signalSignature); \
     QVERIFY(announced.isValid()); \
@@ -157,9 +156,9 @@ private Q_SLOTS:
 
         TEST_CREATE_BODY(SIGNAL(compositorAnnounced(quint32,quint32)), createCompositor);
 
-        Client::Surface *surface = o->createSurface(this);
+        WaylandClient::Surface *surface = o->createSurface(this);
         QVERIFY(surface);
-        Client::Region *region = o->createRegion(this);
+        WaylandClient::Region *region = o->createRegion(this);
         QVERIFY(region);
 
         TEST_CREATE_END();
@@ -222,11 +221,11 @@ private Q_SLOTS:
 
         TEST_CREATE_BODY(SIGNAL(shmAnnounced(quint32,quint32)), createShm);
 
-        Client::ShmPool *pool = o->createPool(1024);
+        WaylandClient::ShmPool *pool = o->createPool(1024);
         QVERIFY(pool);
-        Client::BufferPtr buffer = pool->createBuffer(QSize(10, 10), 10 * 4);
+        WaylandClient::BufferPtr buffer = pool->createBuffer(QSize(10, 10), 10 * 4);
         QVERIFY(!buffer.isNull());
-        Client::BufferPtr buffer2 = pool->createBuffer(QSize(10, 10), 10 * 4, buffer.data()->address());
+        WaylandClient::BufferPtr buffer2 = pool->createBuffer(QSize(10, 10), 10 * 4, buffer.data()->address());
         QVERIFY(!buffer2.isNull());
 
         TEST_CREATE_END();
@@ -238,7 +237,7 @@ private Q_SLOTS:
     {
         TEST_CREATE_BEGIN();
 
-        Client::Registry registry;
+        WaylandClient::Registry registry;
         registry.create(display->display());
 
         QSignalSpy shmAnnounced(&registry, SIGNAL(shmAnnounced(quint32,quint32)));
@@ -254,12 +253,12 @@ private Q_SLOTS:
 
         const quint32 shmName = shmAnnounced.first().first().value<quint32>();
         const quint32 shmVersion = shmAnnounced.first().last().value<quint32>();
-        Client::Shm *shm = registry.createShm(shmName, shmVersion, this);
+        WaylandClient::Shm *shm = registry.createShm(shmName, shmVersion, this);
         QVERIFY(shm);
 
         const quint32 name = announced.first().first().value<quint32>();
         const quint32 version = announced.first().last().value<quint32>();
-        Client::Screencaster *screencaster = registry.createScreencaster(shm, name, version, this);
+        WaylandClient::Screencaster *screencaster = registry.createScreencaster(shm, name, version, this);
         QVERIFY(screencaster);
 
         delete screencaster;
@@ -272,7 +271,7 @@ private Q_SLOTS:
     {
         TEST_CREATE_BEGIN();
 
-        Client::Registry registry;
+        WaylandClient::Registry registry;
         registry.create(display->display());
 
         QSignalSpy shmAnnounced(&registry, SIGNAL(shmAnnounced(quint32,quint32)));
@@ -288,12 +287,12 @@ private Q_SLOTS:
 
         const quint32 shmName = shmAnnounced.first().first().value<quint32>();
         const quint32 shmVersion = shmAnnounced.first().last().value<quint32>();
-        Client::Shm *shm = registry.createShm(shmName, shmVersion, this);
+        WaylandClient::Shm *shm = registry.createShm(shmName, shmVersion, this);
         QVERIFY(shm);
 
         const quint32 name = announced.first().first().value<quint32>();
         const quint32 version = announced.first().last().value<quint32>();
-        Client::Screenshooter *screenshooter = registry.createScreenshooter(shm, name, version, this);
+        WaylandClient::Screenshooter *screenshooter = registry.createScreenshooter(shm, name, version, this);
         QVERIFY(screenshooter);
 
         delete screenshooter;

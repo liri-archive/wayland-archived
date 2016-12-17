@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -35,15 +35,15 @@
 #include <QtGui/private/qguiapplication_p.h>
 #include <QtGui/qpa/qplatformwindow.h>
 
-#include <GreenIsland/Platform/EglFSIntegration>
-#include <GreenIsland/Platform/EglFSWindow>
-#include <GreenIsland/Platform/VtHandler>
+#include <Liri/Platform/EglFSIntegration>
+#include <Liri/Platform/EglFSWindow>
+#include <Liri/Platform/VtHandler>
 
 #include "eglfskmsscreen.h"
 #include "eglfskmsdevice.h"
 #include "eglfskmscursor.h"
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -602,4 +602,4 @@ QString EglFSKmsScreen::parseEdidString(const quint8 *data)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

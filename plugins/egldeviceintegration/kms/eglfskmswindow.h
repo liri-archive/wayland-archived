@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -30,12 +30,12 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSKMSWINDOW_H
-#define GREENISLAND_EGLFSKMSWINDOW_H
+#ifndef LIRI_EGLFSKMSWINDOW_H
+#define LIRI_EGLFSKMSWINDOW_H
 
-#include <GreenIsland/Platform/EglFSWindow>
+#include <Liri/Platform/EglFSWindow>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -49,6 +49,6 @@ public:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSKMSWINDOW_H
+#endif // LIRI_EGLFSKMSWINDOW_H

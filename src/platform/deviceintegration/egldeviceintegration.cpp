@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -54,7 +54,7 @@
 #include <sys/ioctl.h>
 #endif
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -78,7 +78,7 @@ EGLNativeDisplayType EGLDeviceIntegration::platformDisplay() const
 
 QByteArray EGLDeviceIntegration::fbDeviceName() const
 {
-    QByteArray fbDev = qgetenv("GREENISLAND_QPA_FB");
+    QByteArray fbDev = qgetenv("LIRI_QPA_FB");
     if (fbDev.isEmpty())
         fbDev = QByteArrayLiteral("/dev/fb0");
 
@@ -122,9 +122,9 @@ void EGLDeviceIntegration::platformDestroy()
 
 QString EGLDeviceIntegration::configurationFileName() const
 {
-    QString configFileName = QString::fromUtf8(qgetenv("GREENISLAND_QPA_CONFIG"));
+    QString configFileName = QString::fromUtf8(qgetenv("LIRI_QPA_CONFIG"));
     if (configFileName.isEmpty())
-        configFileName = QStringLiteral("%1/greenisland/platform.json")
+        configFileName = QStringLiteral("%1/liri/platform.json")
                 .arg(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
     return configFileName;
 }
@@ -229,7 +229,7 @@ QSurfaceFormat EGLDeviceIntegration::surfaceFormatFor(const QSurfaceFormat &inpu
 {
     QSurfaceFormat format = inputFormat;
 
-    static const bool force888 = qEnvironmentVariableIntValue("GREENISLAND_QPA_FORCE888");
+    static const bool force888 = qEnvironmentVariableIntValue("LIRI_QPA_FORCE888");
     if (force888) {
         format.setRedBufferSize(8);
         format.setGreenBufferSize(8);
@@ -305,7 +305,7 @@ void EGLDeviceIntegration::waitForVSync(QPlatformSurface *surface) const
     Q_UNUSED(surface);
 
 #if defined(FBIO_WAITFORVSYNC)
-    static const bool forceSync = qEnvironmentVariableIntValue("GREENISLAND_QPA_FORCEVSYNC");
+    static const bool forceSync = qEnvironmentVariableIntValue("LIRI_QPA_FORCEVSYNC");
     if (forceSync && framebuffer != -1) {
         int arg = 0;
         if (ioctl(framebuffer, FBIO_WAITFORVSYNC, &arg) == -1)
@@ -336,6 +336,6 @@ void *EGLDeviceIntegration::wlDisplay() const
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_egldeviceintegration.cpp"

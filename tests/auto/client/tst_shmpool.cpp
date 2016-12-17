@@ -28,18 +28,18 @@
 #include <QtCore/QThread>
 #include <QtTest/QtTest>
 
-#include <GreenIsland/Client/Buffer>
-#include <GreenIsland/Client/ClientConnection>
-#include <GreenIsland/Client/Compositor>
-#include <GreenIsland/Client/Registry>
-#include <GreenIsland/Client/Shm>
-#include <GreenIsland/Client/ShmPool>
+#include <Liri/WaylandClient/Buffer>
+#include <Liri/WaylandClient/ClientConnection>
+#include <Liri/WaylandClient/Compositor>
+#include <Liri/WaylandClient/Registry>
+#include <Liri/WaylandClient/Shm>
+#include <Liri/WaylandClient/ShmPool>
 
 #include <QtWaylandCompositor/QWaylandCompositor>
 
-using namespace GreenIsland;
+using namespace Liri;
 
-static const QString s_socketName = QStringLiteral("greenisland-test-0");
+static const QString s_socketName = QStringLiteral("liri-test-0");
 
 class TestShmPool : public QObject
 {
@@ -58,9 +58,9 @@ public:
 private:
     QWaylandCompositor *m_compositor;
     QThread *m_thread;
-    Client::ClientConnection *m_display;
-    Client::Shm *m_shm;
-    Client::ShmPool *m_shmPool;
+    WaylandClient::ClientConnection *m_display;
+    WaylandClient::Shm *m_shm;
+    WaylandClient::ShmPool *m_shmPool;
 
 private Q_SLOTS:
     void init()
@@ -71,7 +71,7 @@ private Q_SLOTS:
         m_compositor->create();
 
         delete m_display;
-        m_display = new Client::ClientConnection();
+        m_display = new WaylandClient::ClientConnection();
         m_display->setSocketName(s_socketName);
 
         delete m_thread;
@@ -87,7 +87,7 @@ private Q_SLOTS:
         QCOMPARE(failedSpy.count(), 0);
         QVERIFY(m_display->display());
 
-        Client::Registry registry;
+        WaylandClient::Registry registry;
         registry.create(m_display->display());
         QSignalSpy shmAnnounced(&registry, SIGNAL(shmAnnounced(quint32,quint32)));
         QVERIFY(shmAnnounced.isValid());
@@ -154,7 +154,7 @@ private Q_SLOTS:
         image.fill(Qt::red);
         QVERIFY(!image.isNull());
 
-        Client::BufferSharedPtr buffer = m_shmPool->createBuffer(image).toStrongRef();
+        WaylandClient::BufferSharedPtr buffer = m_shmPool->createBuffer(image).toStrongRef();
         QVERIFY(buffer);
         QCOMPARE(image.byteCount(), buffer->stride() * buffer->size().height());
         QCOMPARE(image.size(), buffer->size());
@@ -170,7 +170,7 @@ private Q_SLOTS:
         image.fill(Qt::red);
         QVERIFY(!image.isNull());
 
-        Client::BufferSharedPtr buffer = m_shmPool->createBuffer(image.size(),
+        WaylandClient::BufferSharedPtr buffer = m_shmPool->createBuffer(image.size(),
                                                                  image.bytesPerLine(), image.constBits()).toStrongRef();
         QVERIFY(buffer);
         QCOMPARE(image.byteCount(), buffer->stride() * buffer->size().height());
@@ -187,13 +187,13 @@ private Q_SLOTS:
         image.fill(Qt::red);
         QVERIFY(!image.isNull());
 
-        Client::BufferSharedPtr buffer = m_shmPool->createBuffer(image).toStrongRef();
+        WaylandClient::BufferSharedPtr buffer = m_shmPool->createBuffer(image).toStrongRef();
         QVERIFY(buffer);
         buffer->setReleased(true);
         buffer->setUsed(false);
 
         // The second buffer should be the same because it's using the same image
-        Client::BufferSharedPtr buffer2 = m_shmPool->createBuffer(image).toStrongRef();
+        WaylandClient::BufferSharedPtr buffer2 = m_shmPool->createBuffer(image).toStrongRef();
         QCOMPARE(buffer, buffer2);
         buffer2->setReleased(true);
         buffer2->setUsed(false);
@@ -203,7 +203,7 @@ private Q_SLOTS:
         image2.fill(Qt::red);
         QVERIFY(!image2.isNull());
         QVERIFY(image2 != image);
-        Client::BufferSharedPtr buffer3 = m_shmPool->createBuffer(image2).toStrongRef();
+        WaylandClient::BufferSharedPtr buffer3 = m_shmPool->createBuffer(image2).toStrongRef();
         QVERIFY(buffer3 != buffer2);
 
         // An image with a different format should get a new buffer
@@ -212,7 +212,7 @@ private Q_SLOTS:
         QVERIFY(!image3.isNull());
         QVERIFY(image3 != image);
         QVERIFY(image3 != image2);
-        Client::BufferSharedPtr buffer4 = m_shmPool->createBuffer(image3).toStrongRef();
+        WaylandClient::BufferSharedPtr buffer4 = m_shmPool->createBuffer(image3).toStrongRef();
         QVERIFY(buffer4 != buffer2);
         QVERIFY(buffer4 != buffer3);
     }

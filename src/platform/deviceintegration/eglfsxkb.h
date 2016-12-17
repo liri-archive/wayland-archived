@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015 Pier Luigi Fiorini
  *
@@ -25,20 +25,20 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSXKB_H
-#define GREENISLAND_EGLFSXKB_H
+#ifndef LIRI_EGLFSXKB_H
+#define LIRI_EGLFSXKB_H
 
 #include <Qt>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
 #include <xkbcommon/xkbcommon.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
-class GREENISLANDPLATFORM_EXPORT EglFSXkb
+class LIRIPLATFORM_EXPORT EglFSXkb
 {
 public:
     static int keysymToQtKey(xkb_keysym_t keysym);
@@ -48,6 +48,6 @@ public:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSXKB_H
+#endif // LIRI_EGLFSXKB_H

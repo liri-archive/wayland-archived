@@ -1,7 +1,7 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
- * Copyright (C) 2014-2016 Pier Luigi Fiorini
+ * Copyright (C) 2012-2016 Pier Luigi Fiorini
  *
  * Author(s):
  *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
@@ -25,23 +25,33 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef KEYEVENTFILTER_H
-#define KEYEVENTFILTER_H
+#ifndef FPSCOUNTER_H
+#define FPSCOUNTER_H
 
-#include <QtCore/QPointer>
+#include <QtCore/QTimer>
 #include <QtQuick/QQuickItem>
 
-class KeyEventFilter : public QQuickItem
+class FpsCounter : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(unsigned int fps READ fps NOTIFY fpsChanged)
 public:
-    KeyEventFilter(QQuickItem *parent = Q_NULLPTR);
+    explicit FpsCounter(QQuickItem *parent = 0);
 
-protected:
-    bool eventFilter(QObject *, QEvent *);
+    unsigned int fps() const;
+
+Q_SIGNALS:
+    void fpsChanged();
+
+private Q_SLOTS:
+    void setup();
+    void frameSwapped();
+    void updateFps();
 
 private:
-    QPointer<QQuickWindow> m_window;
+    unsigned int m_counter;
+    unsigned int m_fps;
+    QTimer m_timer;
 };
 
-#endif // KEYEVENTFILTER_H
+#endif // FPSCOUNTER_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SCREENSHOOTER_P_H
-#define GREENISLANDCLIENT_SCREENSHOOTER_P_H
+#ifndef LIRIWAYLANDCLIENT_SCREENSHOOTER_P_H
+#define LIRIWAYLANDCLIENT_SCREENSHOOTER_P_H
 
 #include <QtCore/QMutexLocker>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Screenshooter>
-#include <GreenIsland/client/private/qwayland-greenisland-screenshooter.h>
+#include <Liri/WaylandClient/Screenshooter>
+#include <Liri/waylandclient/private/qwayland-liri-screenshooter.h>
 
 //
 //  W A R N I N G
@@ -45,13 +45,13 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT ScreenshooterPrivate
+class LIRIWAYLANDCLIENT_EXPORT ScreenshooterPrivate
         : public QObjectPrivate
-        , public QtWayland::greenisland_screenshooter
+        , public QtWayland::liri_screenshooter
 {
     Q_DECLARE_PUBLIC(Screenshooter)
 public:
@@ -70,9 +70,9 @@ public:
     static ScreenshooterPrivate *get(Screenshooter *screenshooter) { return screenshooter->d_func(); }
 };
 
-class GREENISLANDCLIENT_EXPORT ScreenshotPrivate
+class LIRIWAYLANDCLIENT_EXPORT ScreenshotPrivate
         : public QObjectPrivate
-        , public QtWayland::greenisland_screenshot
+        , public QtWayland::liri_screenshot
 {
     Q_DECLARE_PUBLIC(Screenshot)
 public:
@@ -94,8 +94,8 @@ protected:
     void screenshot_failed(int32_t error) Q_DECL_OVERRIDE;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SCREENSHOOTER_P_H
+#endif // LIRIWAYLANDCLIENT_SCREENSHOOTER_P_H

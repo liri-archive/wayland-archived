@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,23 +25,23 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LIBINPUT_H
-#define GREENISLAND_LIBINPUT_H
+#ifndef LIRI_LIBINPUT_H
+#define LIRI_LIBINPUT_H
 
 #include <QtCore/QObject>
 #include <QtGui/qpa/qwindowsysteminterface.h>
 
-#include <GreenIsland/platform/greenislandplatform_export.h>
+#include <Liri/platform/liriplatform_export.h>
 
 class QTouchDevice;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
 class LibInputHandlerPrivate;
 
-struct GREENISLANDPLATFORM_EXPORT LibInputKeyEvent
+struct LIRIPLATFORM_EXPORT LibInputKeyEvent
 {
     int key;
     Qt::KeyboardModifiers modifiers;
@@ -53,7 +53,7 @@ struct GREENISLANDPLATFORM_EXPORT LibInputKeyEvent
     ushort repeatCount;
 };
 
-struct GREENISLANDPLATFORM_EXPORT LibInputMouseEvent
+struct LIRIPLATFORM_EXPORT LibInputMouseEvent
 {
     QPoint pos;
     Qt::MouseButtons buttons;
@@ -62,14 +62,14 @@ struct GREENISLANDPLATFORM_EXPORT LibInputMouseEvent
     Qt::Orientation wheelOrientation;
 };
 
-struct GREENISLANDPLATFORM_EXPORT LibInputTouchEvent
+struct LIRIPLATFORM_EXPORT LibInputTouchEvent
 {
     QTouchDevice *device;
     QList<QWindowSystemInterface::TouchPoint> touchPoints;
     Qt::KeyboardModifiers modifiers;
 };
 
-class GREENISLANDPLATFORM_EXPORT LibInputHandler : public QObject
+class LIRIPLATFORM_EXPORT LibInputHandler : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool suspended READ isSuspended NOTIFY suspendedChanged)
@@ -127,6 +127,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(LibInputHandler::Capabilities)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_LIBINPUT_H
+#endif // LIRI_LIBINPUT_H

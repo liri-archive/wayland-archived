@@ -9,7 +9,6 @@ set_package_properties(gbm PROPERTIES
 
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../../headers"
-    "${CMAKE_CURRENT_BINARY_DIR}/../../../headers/GreenIsland"
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
@@ -25,10 +24,10 @@ set(SOURCES
 
 add_library(kms SHARED MODULE ${SOURCES})
 target_link_libraries(kms
-    GreenIsland::Platform
-    Libdrm::Libdrm
-    gbm::gbm
+                      Liri::Platform
+                      Libdrm::Libdrm
+                      gbm::gbm
 )
 
 install(TARGETS kms
-        DESTINATION ${PLUGIN_INSTALL_DIR}/greenisland/egldeviceintegration)
+        DESTINATION ${PLUGIN_INSTALL_DIR}/liri/egldeviceintegration)

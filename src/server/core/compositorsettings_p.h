@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,12 +25,12 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_COMPOSITORSETTINGS_P_H
-#define GREENISLAND_COMPOSITORSETTINGS_P_H
+#ifndef LIRI_COMPOSITORSETTINGS_P_H
+#define LIRI_COMPOSITORSETTINGS_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Server/CompositorSettings>
+#include <Liri/WaylandServer/CompositorSettings>
 
 //
 //  W A R N I N G
@@ -43,9 +43,9 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class CompositorSettingsPrivate : public QObjectPrivate
 {
@@ -69,8 +69,8 @@ public:
     quint32 repeatDelay;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_COMPOSITORSETTINGS_P_H
+#endif // LIRI_COMPOSITORSETTINGS_P_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,18 +25,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENMANAGER_H
-#define GREENISLAND_SCREENMANAGER_H
+#ifndef LIRI_SCREENMANAGER_H
+#define LIRI_SCREENMANAGER_H
 
-#include <GreenIsland/Server/Screen>
+#include <Liri/WaylandServer/Screen>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class ScreenManagerPrivate;
 
-class GREENISLANDSERVER_EXPORT ScreenManager : public QObject
+class LIRIWAYLANDSERVER_EXPORT ScreenManager : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(ScreenManager)
@@ -56,8 +56,8 @@ Q_SIGNALS:
     void primaryScreenChanged(Screen *screen);
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENMANAGER_H
+#endif // LIRI_SCREENMANAGER_H

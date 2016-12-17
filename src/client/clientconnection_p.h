@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,12 +25,12 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_CLIENTCONNECTION_P_H
-#define GREENISLANDCLIENT_CLIENTCONNECTION_P_H
+#ifndef LIRIWAYLANDCLIENT_CLIENTCONNECTION_P_H
+#define LIRIWAYLANDCLIENT_CLIENTCONNECTION_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/ClientConnection>
+#include <Liri/WaylandClient/ClientConnection>
 
 //
 //  W A R N I N G
@@ -43,11 +43,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT ClientConnectionPrivate : public QObjectPrivate
+class LIRIWAYLANDCLIENT_EXPORT ClientConnectionPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(ClientConnection)
 public:
@@ -70,9 +70,9 @@ private:
     void setupSocketNotifier();
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_CLIENTCONNECTION_P_H
+#endif // LIRIWAYLANDCLIENT_CLIENTCONNECTION_P_H
 

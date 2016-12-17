@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -35,16 +35,16 @@
 #include <QtCore/private/qcore_unix_p.h>
 #include <QtGui/private/qguiapplication_p.h>
 
-#include <GreenIsland/Platform/EGLDeviceIntegration>
-#include <GreenIsland/Platform/EglFSIntegration>
-#include <GreenIsland/Platform/Logind>
+#include <Liri/Platform/EGLDeviceIntegration>
+#include <Liri/Platform/EglFSIntegration>
+#include <Liri/Platform/Logind>
 
 #include "eglfskmsdevice.h"
 #include "eglfskmsscreen.h"
 
 #define ARRAY_LENGTH(a) (sizeof (a) / sizeof (a)[0])
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -291,8 +291,8 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
                        << "@" << refresh << "hz for output" << connectorName;
     }
 
-    static const int width = qEnvironmentVariableIntValue("GREENISLAND_QPA_PHYSICAL_WIDTH");
-    static const int height = qEnvironmentVariableIntValue("GREENISLAND_QPA_PHYSICAL_HEIGHT");
+    static const int width = qEnvironmentVariableIntValue("LIRI_QPA_PHYSICAL_WIDTH");
+    static const int height = qEnvironmentVariableIntValue("LIRI_QPA_PHYSICAL_HEIGHT");
     QSizeF size(width, height);
     if (size.isEmpty())
         size = QSizeF(connector->mmWidth, connector->mmHeight);
@@ -465,7 +465,7 @@ void EglFSKmsDevice::createScreens()
         Q_FOREACH (QPlatformScreen *screen, siblings)
             static_cast<EglFSKmsScreen *>(screen)->setVirtualSiblings(siblings);
 
-        if (primaryScreen && qEnvironmentVariableIsSet("GREENISLAND_QPA_SHOW_CURSOR"))
+        if (primaryScreen && qEnvironmentVariableIsSet("LIRI_QPA_SHOW_CURSOR"))
             m_globalCursor = new EglFSKmsCursor(primaryScreen);
     }
 }
@@ -498,4 +498,4 @@ void EglFSKmsDevice::handleDrmEvent()
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

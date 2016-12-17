@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,16 +25,16 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENCASTER_P_H
-#define GREENISLAND_SCREENCASTER_P_H
+#ifndef LIRI_SCREENCASTER_P_H
+#define LIRI_SCREENCASTER_P_H
 
 #include <QtQuick/QQuickWindow>
 
 #include <QtWaylandCompositor/QWaylandOutput>
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <GreenIsland/Server/Screencaster>
-#include <GreenIsland/server/private/qwayland-server-greenisland-screencaster.h>
+#include <Liri/WaylandServer/Screencaster>
+#include <Liri/waylandserver/private/qwayland-server-liri-screencaster.h>
 
 //
 //  W A R N I N G
@@ -47,13 +47,13 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT ScreencasterPrivate
+class LIRIWAYLANDSERVER_EXPORT ScreencasterPrivate
         : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::greenisland_screencaster
+        , public QtWaylandServer::liri_screencaster
 {
     Q_DECLARE_PUBLIC(Screencaster)
 public:
@@ -75,9 +75,9 @@ protected:
                               struct ::wl_resource *outputResource) Q_DECL_OVERRIDE;
 };
 
-class GREENISLANDSERVER_EXPORT ScreencastPrivate
+class LIRIWAYLANDSERVER_EXPORT ScreencastPrivate
         : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::greenisland_screencast
+        , public QtWaylandServer::liri_screencast
 {
     Q_DECLARE_PUBLIC(Screencast)
 public:
@@ -101,8 +101,8 @@ protected:
                            struct ::wl_resource *bufferResource) Q_DECL_OVERRIDE;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENCASTER_P_H
+#endif // LIRI_SCREENCASTER_P_H

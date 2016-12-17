@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -34,7 +34,7 @@
 #include "xwaylandshellsurface.h"
 #include "xwaylandquickshellsurfaceitem.h"
 
-class XWaylandPlugin : public QQmlExtensionPlugin
+class LiriXWaylandPluging : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface/1.0")
@@ -42,10 +42,10 @@ public:
     void registerTypes(const char *uri);
 };
 
-void XWaylandPlugin::registerTypes(const char *uri)
+void LiriXWaylandPluging::registerTypes(const char *uri)
 {
-    // @uri GreenIsland.XWayland
-    Q_ASSERT(QLatin1String(uri) == QLatin1String("GreenIsland.XWayland"));
+    // @uri Liri.XWayland
+    Q_ASSERT(QLatin1String(uri) == QLatin1String("Liri.XWayland"));
 
     qmlRegisterType<XWayland>(uri, 1, 0, "XWayland");
     qmlRegisterUncreatableType<XWaylandShellSurface>(uri, 1, 0, "XWaylandWindow",

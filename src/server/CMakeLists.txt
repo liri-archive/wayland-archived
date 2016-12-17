@@ -22,7 +22,6 @@ include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
-    "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
     ${Qt5Qml_PRIVATE_INCLUDE_DIRS}
     ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
@@ -67,24 +66,24 @@ ecm_add_qtwayland_server_protocol(SOURCES
     PREFIX wl_
 )
 ecm_add_qtwayland_server_protocol(SOURCES
-    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland.xml"
-    BASENAME greenisland
-    PREFIX greenisland_
+    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/liri/liri.xml"
+    BASENAME liri
+    PREFIX liri_
 )
 ecm_add_qtwayland_server_protocol(SOURCES
-    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-screencaster.xml"
-    BASENAME greenisland-screencaster
-    PREFIX greenisland_
+    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/liri/liri-screencaster.xml"
+    BASENAME liri-screencaster
+    PREFIX liri_
 )
 ecm_add_qtwayland_server_protocol(SOURCES
-    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-screenshooter.xml"
-    BASENAME greenisland-screenshooter
-    PREFIX greenisland_
+    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/liri/liri-screenshooter.xml"
+    BASENAME liri-screenshooter
+    PREFIX liri_
 )
 ecm_add_qtwayland_server_protocol(SOURCES
-    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/greenisland/greenisland-outputmanagement.xml"
-    BASENAME greenisland-outputmanagement
-    PREFIX greenisland_
+    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/liri/liri-outputmanagement.xml"
+    BASENAME liri-outputmanagement
+    PREFIX liri_
 )
 ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/gtk/gtk-shell.xml"
@@ -92,18 +91,18 @@ ecm_add_qtwayland_server_protocol(SOURCES
     PREFIX gtk_
 )
 
-add_library(GreenIslandServer SHARED ${SOURCES})
-generate_export_header(GreenIslandServer EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland/server/greenislandserver_export.h")
-add_library(GreenIsland::Server ALIAS GreenIslandServer)
+add_library(LiriWaylandServer SHARED ${SOURCES})
+generate_export_header(LiriWaylandServer EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/waylandserver/liriwaylandserver_export.h")
+add_library(Liri::WaylandServer ALIAS LiriWaylandServer)
 
-target_link_libraries(GreenIslandServer
+target_link_libraries(LiriWaylandServer
     PUBLIC
         Qt5::Core
         Qt5::Gui
         Qt5::Quick
         Qt5::WaylandCompositor
         Wayland::Server
-        GreenIsland::Platform
+        Liri::Platform
     PRIVATE
         Wayland::Cursor
         EGL::EGL
@@ -111,63 +110,62 @@ target_link_libraries(GreenIslandServer
 
 if(EGL_FOUND)
     if(${Qt5Gui_OPENGL_IMPLEMENTATION} STREQUAL "GL")
-        target_link_libraries(GreenIslandServer PRIVATE ${OPENGL_LIBRARIES})
+        target_link_libraries(LiriWaylandServer PRIVATE ${OPENGL_LIBRARIES})
     else()
-        target_link_libraries(GreenIslandServer PRIVATE ${OPENGLES_LIBRARIES})
+        target_link_libraries(LiriWaylandServer PRIVATE ${OPENGLES_LIBRARIES})
     endif()
 endif()
 
 if(systemd_FOUND)
-    target_link_libraries(GreenIslandServer PRIVATE ${systemd_LIBRARIES})
+    target_link_libraries(LiriWaylandServer PRIVATE ${systemd_LIBRARIES})
 endif()
 
 target_include_directories(
-    GreenIslandServer
+    LiriWaylandServer
         INTERFACE
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../../headers>"
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland>"
-            "$<INSTALL_INTERFACE:${HAWAII_INCLUDEDIR}>"
-            "$<INSTALL_INTERFACE:${GREENISLAND_INCLUDEDIR}>"
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri>"
+            "$<INSTALL_INTERFACE:${LIRI_INCLUDEDIR}>"
 )
 
-set_target_properties(GreenIslandServer PROPERTIES
+set_target_properties(LiriWaylandServer PROPERTIES
     VERSION   ${PROJECT_VERSION}
     SOVERSION ${PROJECT_SOVERSION}
-    EXPORT_NAME Server
+    EXPORT_NAME WaylandServer
 )
 
-ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
+ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
     HEADER_NAMES
         CompositorSettings
         HomeApplication
         QuickOutput
     PREFIX
-        Server
+        WaylandServer
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandServer_HEADERS
+        LiriWaylandServer_HEADERS
     RELATIVE
         core
 )
 
-ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
+ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
     HEADER_NAMES
         OutputChangeset
         OutputConfiguration
         OutputManagement
         QuickOutputConfiguration
     PREFIX
-        Server
+        WaylandServer
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandServer_HEADERS
+        LiriWaylandServer_HEADERS
     RELATIVE
         output
 )
 
-ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
+ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
     HEADER_NAMES
         ApplicationManager
         GtkShell,GtkSurface
@@ -175,45 +173,45 @@ ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
         Screenshooter,Screenshot
         TaskManager,TaskItem
     PREFIX
-        Server
+        WaylandServer
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandServer_HEADERS
+        LiriWaylandServer_HEADERS
     RELATIVE
         extensions
 )
 
-ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
+ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
     HEADER_NAMES
         QuickScreenManager
         ScreenBackend,Screen
         ScreenManager
     PREFIX
-        Server
+        WaylandServer
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandServer_HEADERS
+        LiriWaylandServer_HEADERS
     RELATIVE
         screen
 )
 
-ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
+ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
     HEADER_NAMES
         ClientWindow
         ClientWindowQuickItem
     PREFIX
-        Server
+        WaylandServer
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     REQUIRED_HEADERS
-        GreenIslandServer_HEADERS
+        LiriWaylandServer_HEADERS
     RELATIVE
         shell
 )
 
-private_headers(GreenIslandServer_PRIVATE_HEADERS
+private_headers(LiriWaylandServer_PRIVATE_HEADERS
     HEADERS
         "${CMAKE_CURRENT_SOURCE_DIR}/extensions/applicationmanager_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/extensions/screencaster_p.h"
@@ -226,69 +224,69 @@ private_headers(GreenIslandServer_PRIVATE_HEADERS
         "${CMAKE_CURRENT_SOURCE_DIR}/screen/screenmanager_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/shell/clientwindow_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/shell/clientwindowquickitem_p.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-greenisland-outputmanagement.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-greenisland-screencaster.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-greenisland-screenshooter.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-liri-outputmanagement.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-liri-screencaster.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-liri-screenshooter.h"
         "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-gtk.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-greenisland.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/wayland-greenisland-outputmanagement-server-protocol.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/wayland-greenisland-screencaster-server-protocol.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/wayland-greenisland-screenshooter-server-protocol.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-liri.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/wayland-liri-outputmanagement-server-protocol.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/wayland-liri-screencaster-server-protocol.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/wayland-liri-screenshooter-server-protocol.h"
         "${CMAKE_CURRENT_BINARY_DIR}/wayland-gtk-shell-server-protocol.h"
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland/server"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/waylandserver"
 )
 
-install(TARGETS GreenIslandServer
-        EXPORT GreenIslandServerTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS LiriWaylandServer
+        EXPORT LiriWaylandServerTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
-install(FILES ${GreenIslandServer_CamelCase_HEADERS}
-        DESTINATION ${GREENISLAND_INCLUDEDIR}/Server
+install(FILES ${LiriWaylandServer_CamelCase_HEADERS}
+        DESTINATION ${LIRI_INCLUDEDIR}/WaylandServer
         COMPONENT Devel)
 
 install(
     FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/GreenIsland/server/greenislandserver_export.h"
-        ${GreenIslandServer_HEADERS}
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/waylandserver/liriwaylandserver_export.h"
+        ${LiriWaylandServer_HEADERS}
     DESTINATION
-        ${GREENISLAND_INCLUDEDIR}/server
+        ${LIRI_INCLUDEDIR}/waylandserver
     COMPONENT
         Devel
 )
 
 # CMake package version
-ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX GREENISLAND
-                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfigVersion.cmake"
+ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX LIRI
+                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/LiriWaylandServerConfigVersion.cmake"
                   SOVERSION ${PROJECT_SOVERSION})
 
 # CMake package config
-set(GreenIslandServer_CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/GreenIslandServer")
-ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/GreenIslandServerConfig.cmake.in"
-                                  "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfig.cmake"
-                                  INSTALL_DESTINATION ${GreenIslandServer_CMAKECONFIG_INSTALL_DIR})
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfig.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/GreenIslandServerConfigVersion.cmake"
-        DESTINATION "${GreenIslandServer_CMAKECONFIG_INSTALL_DIR}"
+set(LiriWaylandServer_CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/LiriWaylandServer")
+ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/LiriWaylandServerConfig.cmake.in"
+                                  "${CMAKE_CURRENT_BINARY_DIR}/LiriWaylandServerConfig.cmake"
+                                  INSTALL_DESTINATION ${LiriWaylandServer_CMAKECONFIG_INSTALL_DIR})
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/LiriWaylandServerConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/LiriWaylandServerConfigVersion.cmake"
+        DESTINATION "${LiriWaylandServer_CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel)
-install(EXPORT GreenIslandServerTargets
-        DESTINATION "${GreenIslandServer_CMAKECONFIG_INSTALL_DIR}"
-        FILE GreenIslandServerTargets.cmake NAMESPACE GreenIsland::)
+install(EXPORT LiriWaylandServerTargets
+        DESTINATION "${LiriWaylandServer_CMAKECONFIG_INSTALL_DIR}"
+        FILE LiriWaylandServerTargets.cmake NAMESPACE Liri::)
 
 # qmake pri file
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME GreenIslandServer
-                      LIB_NAME GreenIslandServer
+ecm_generate_pri_file(BASE_NAME LiriWaylandServer
+                      LIB_NAME LiriWaylandServer
                       DEPS "core gui quick waylandcompositor"
                       FILENAME_VAR PRI_FILENAME
-                      INCLUDE_INSTALL_DIR "${HAWAII_INCLUDEDIR} ${GREENISLAND_INCLUDEDIR}")
+                      INCLUDE_INSTALL_DIR "${LIRI_INCLUDEDIR}")
 install(FILES ${PRI_FILENAME}
         DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 # pkg-config file
 include(ECMGeneratePkgConfigFile)
-#ecm_generate_pkgconfig_file(BASE_NAME GreenIslandServer
-#                            LIB_NAME GreenIslandServer
+#ecm_generate_pkgconfig_file(BASE_NAME LiriWaylandServer
+#                            LIB_NAME LiriWaylandServer
 #                            DEPS "Qt5Core Qt5Gui Qt5Quick Qt5WaylandCompositor"
 #                            FILENAME_VAR PKGCONFIG_FILENAME
-#                            INCLUDE_INSTALL_DIR "${HAWAII_INCLUDEDIR} ${GREENISLAND_INCLUDEDIR}"
+#                            INCLUDE_INSTALL_DIR "${LIRI_INCLUDEDIR}"
 #                            INSTALL)

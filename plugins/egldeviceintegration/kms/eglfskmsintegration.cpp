@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -43,10 +43,10 @@
 #include <QtGui/qpa/qplatformcursor.h>
 #include <QtGui/QScreen>
 
-#include <GreenIsland/Platform/EglFSCursor>
-#include <GreenIsland/Platform/EglFSWindow>
-#include <GreenIsland/Platform/Udev>
-#include <GreenIsland/Platform/UdevEnumerate>
+#include <Liri/Platform/EglFSCursor>
+#include <Liri/Platform/EglFSWindow>
+#include <Liri/Platform/Udev>
+#include <Liri/Platform/UdevEnumerate>
 
 #include "eglfskmsintegration.h"
 #include "eglfskmsdevice.h"
@@ -58,11 +58,11 @@
 #include <xf86drmMode.h>
 #include <gbm.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
-Q_LOGGING_CATEGORY(lcKms, "greenisland.qpa.kms")
+Q_LOGGING_CATEGORY(lcKms, "liri.qpa.kms")
 
 QMutex EglFSKmsScreen::m_waitForFlipMutex;
 
@@ -369,4 +369,4 @@ QMap<QString, QVariantMap> EglFSKmsIntegration::outputSettings() const
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

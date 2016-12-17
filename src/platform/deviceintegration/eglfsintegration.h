@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -30,19 +30,19 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSINTEGRATION_H
-#define GREENISLAND_EGLFSINTEGRATION_H
+#ifndef LIRI_EGLFSINTEGRATION_H
+#define LIRI_EGLFSINTEGRATION_H
 
 #include <QtCore/QVariant>
 #include <QtGui/qpa/qplatformintegration.h>
 #include <QtGui/qpa/qplatformnativeinterface.h>
 #include <QtGui/qpa/qplatformscreen.h>
 
-#include <GreenIsland/Platform/EglFSGlobal>
-#include <GreenIsland/Platform/EglFSNativeInterface>
-#include <GreenIsland/Platform/VtHandler>
+#include <Liri/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSNativeInterface>
+#include <Liri/Platform/VtHandler>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -50,7 +50,7 @@ class EglFSContext;
 class EglFSWindow;
 class LibInputManager;
 
-class GREENISLANDPLATFORM_EXPORT EglFSIntegration : public QObject, public QPlatformIntegration
+class LIRIPLATFORM_EXPORT EglFSIntegration : public QObject, public QPlatformIntegration
 {
     Q_OBJECT
 public:
@@ -101,6 +101,6 @@ private Q_SLOTS:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSINTEGRATION_H
+#endif // LIRI_EGLFSINTEGRATION_H

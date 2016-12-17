@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -43,7 +43,7 @@
 
 #include <libinput.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -226,6 +226,6 @@ void LibInputKeyboard::handleKey(libinput_event_keyboard *event)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_libinputkeyboard.cpp"

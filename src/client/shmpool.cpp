@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2013 Martin Gräßlin
@@ -36,11 +36,11 @@
 #include "shmpool.h"
 #include "shmpool_p.h"
 
-Q_LOGGING_CATEGORY(WLSHMPOOL, "greenisland.client.shmpool")
+Q_LOGGING_CATEGORY(WLSHMPOOL, "liri.wlclient.shmpool")
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * ShmPoolPrivate
@@ -54,7 +54,7 @@ ShmPoolPrivate::ShmPoolPrivate()
     , size(1024)
     , offset(0)
 {
-    file->setFileTemplate(QStringLiteral("greenisland-shm-XXXXXX"));
+    file->setFileTemplate(QStringLiteral("liri-shm-XXXXXX"));
 }
 
 ShmPoolPrivate::~ShmPoolPrivate()
@@ -245,8 +245,8 @@ QByteArray ShmPool::interfaceName()
     return QByteArrayLiteral("wl_shm_pool");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_shmpool.cpp"

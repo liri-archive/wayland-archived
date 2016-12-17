@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_CURSORTHEME_P_H
-#define GREENISLANDCLIENT_CURSORTHEME_P_H
+#ifndef LIRIWAYLANDCLIENT_CURSORTHEME_P_H
+#define LIRIWAYLANDCLIENT_CURSORTHEME_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/CursorTheme>
-#include <GreenIsland/Client/Surface>
+#include <Liri/WaylandClient/CursorTheme>
+#include <Liri/WaylandClient/Surface>
 
 #include <wayland-client.h>
 #include <wayland-cursor.h>
@@ -50,11 +50,11 @@
 
 Q_DECLARE_LOGGING_CATEGORY(WLCURSORTHEME)
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT CursorThemePrivate : public QObjectPrivate
+class LIRIWAYLANDCLIENT_EXPORT CursorThemePrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(CursorTheme)
 public:
@@ -80,8 +80,8 @@ public:
     QMap<CursorTheme::CursorShape, wl_cursor *> cursors;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_CURSORTHEME_P_H
+#endif // LIRIWAYLANDCLIENT_CURSORTHEME_P_H

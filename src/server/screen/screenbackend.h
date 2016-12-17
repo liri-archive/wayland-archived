@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,27 +25,27 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENBACKEND_H
-#define GREENISLAND_SCREENBACKEND_H
+#ifndef LIRI_SCREENBACKEND_H
+#define LIRI_SCREENBACKEND_H
 
 #include <QtCore/QObject>
 #include <QtCore/QSize>
 
 #include <QtWaylandCompositor/QWaylandOutput>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 class QScreen;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class OutputChangeset;
 class ScreenPrivate;
 class ScreenBackendPrivate;
 
-class GREENISLANDSERVER_EXPORT Screen : public QObject
+class LIRIWAYLANDSERVER_EXPORT Screen : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Screen)
@@ -90,8 +90,8 @@ public:
     int preferredMode() const;
     QList<Mode> modes() const;
 
-    Q_INVOKABLE bool applyChangeset(GreenIsland::Server::OutputChangeset *changeset);
-    Q_INVOKABLE void discardChangeset(GreenIsland::Server::OutputChangeset *changeset);
+    Q_INVOKABLE bool applyChangeset(Liri::WaylandServer::OutputChangeset *changeset);
+    Q_INVOKABLE void discardChangeset(Liri::WaylandServer::OutputChangeset *changeset);
 
     static ScreenPrivate *get(Screen *screen) { return screen->d_func(); }
 
@@ -108,7 +108,7 @@ Q_SIGNALS:
     void modesChanged();
 };
 
-class GREENISLANDSERVER_EXPORT ScreenBackend : public QObject
+class LIRIWAYLANDSERVER_EXPORT ScreenBackend : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(ScreenBackend)
@@ -128,8 +128,8 @@ Q_SIGNALS:
     void primaryScreenChanged(Screen *screen);
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENBACKEND_H
+#endif // LIRI_SCREENBACKEND_H

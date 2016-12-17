@@ -1,6 +1,5 @@
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../../headers"
-    "${CMAKE_CURRENT_BINARY_DIR}/../../../headers/GreenIsland"
     ${Qt5PlatformSupport_INCLUDE_DIR}
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
@@ -21,17 +20,17 @@ set(SOURCES
 include(ECMQtDeclareLoggingCategory)
 ecm_qt_declare_logging_category(SOURCES
     HEADER eglfswaylandlogging.h
-    IDENTIFIER GreenIsland::Platform::gLcEglFSWayland
-    CATEGORY_NAME greenisland.qpa.wayland
+    IDENTIFIER Liri::Platform::gLcEglFSWayland
+    CATEGORY_NAME liri.qpa.wayland
     DEFAULT_SEVERITY Debug
 )
 
 add_library(wayland MODULE ${SOURCES})
 target_link_libraries(wayland
-    GreenIsland::Platform
-    GreenIsland::Client
-    Wayland::Egl
+                      Liri::Platform
+                      Liri::WaylandClient
+                      Wayland::Egl
 )
 
 install(TARGETS wayland
-        DESTINATION ${PLUGIN_INSTALL_DIR}/greenisland/egldeviceintegration)
+        DESTINATION ${PLUGIN_INSTALL_DIR}/liri/egldeviceintegration)

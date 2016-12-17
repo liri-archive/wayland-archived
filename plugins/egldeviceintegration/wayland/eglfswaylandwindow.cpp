@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -28,9 +28,9 @@
 #include <QtGui/QGuiApplication>
 #include <QtGui/QOpenGLFramebufferObject>
 
-#include <GreenIsland/Platform/EglFSIntegration>
+#include <Liri/Platform/EglFSIntegration>
 
-#include <GreenIsland/client/private/surface_p.h>
+#include <Liri/waylandclient/private/surface_p.h>
 
 #include "eglfswaylandlogging.h"
 #include "eglfswaylandscreen.h"
@@ -38,9 +38,9 @@
 
 #include <wayland-egl.h>
 
-using namespace GreenIsland::Client;
+using namespace Liri::WaylandClient;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -161,7 +161,7 @@ void EglFSWaylandWindow::destroy()
 void EglFSWaylandWindow::unmap()
 {
     m_surface->attach(BufferPtr(), QPoint(0, 0));
-    m_surface->commit(Client::Surface::NoCommitMode);
+    m_surface->commit(WaylandClient::Surface::NoCommitMode);
 }
 
 void EglFSWaylandWindow::invalidateSurface()
@@ -284,7 +284,7 @@ void EglFSWaylandWindow::handleContentOrientationChange(Qt::ScreenOrientation or
     m_surface->commit();
 }
 
-EglFSWaylandWindow *EglFSWaylandWindow::fromSurface(Client::Surface *surface)
+EglFSWaylandWindow *EglFSWaylandWindow::fromSurface(WaylandClient::Surface *surface)
 {
     Q_FOREACH (QWindow *window, QGuiApplication::topLevelWindows()) {
         EglFSWaylandWindow *w =
@@ -297,6 +297,6 @@ EglFSWaylandWindow *EglFSWaylandWindow::fromSurface(Client::Surface *surface)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_eglfswaylandwindow.cpp"

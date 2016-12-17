@@ -27,11 +27,11 @@
 
 #include <QtTest/QtTest>
 
-#include <GreenIsland/Platform/Logind>
+#include <Liri/Platform/Logind>
 
 #include "fakelogind.h"
 
-using namespace GreenIsland::Platform;
+using namespace Liri::Platform;
 
 class CustomLogind : public Logind
 {

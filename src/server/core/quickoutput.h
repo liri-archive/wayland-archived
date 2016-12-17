@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2014-2016 Pier Luigi Fiorini
  *
@@ -25,24 +25,24 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_QUICKOUTPUT_H
-#define GREENISLAND_QUICKOUTPUT_H
+#ifndef LIRI_QUICKOUTPUT_H
+#define LIRI_QUICKOUTPUT_H
 
 #include <QtQml/QQmlListProperty>
 
 #include <QtWaylandCompositor/QWaylandQuickOutput>
-#include <GreenIsland/Server/Screen>
+#include <Liri/WaylandServer/Screen>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class Screen;
 class QuickOutputPrivate;
 
-class GREENISLANDSERVER_EXPORT QuickOutput : public QWaylandQuickOutput
+class LIRIWAYLANDSERVER_EXPORT QuickOutput : public QWaylandQuickOutput
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QuickOutput)
@@ -115,8 +115,8 @@ private Q_SLOTS:
     void readContent();
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_QUICKOUTPUT_H
+#endif // LIRI_QUICKOUTPUT_H

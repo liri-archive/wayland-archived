@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,22 +25,22 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENMANAGER_P_H
-#define GREENISLAND_SCREENMANAGER_P_H
+#ifndef LIRI_SCREENMANAGER_P_H
+#define LIRI_SCREENMANAGER_P_H
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Server/ScreenManager>
+#include <Liri/WaylandServer/ScreenManager>
 
 #include "screen/fakescreenbackend.h"
 #include "screen/nativescreenbackend.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT ScreenManagerPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT ScreenManagerPrivate : public QObjectPrivate
 {
 public:
     ScreenManagerPrivate()
@@ -48,8 +48,8 @@ public:
         , primaryScreen(Q_NULLPTR)
     {
         // Determine the backend to use from the application
-        const QString backendName = QCoreApplication::instance()->property("__greenisland_screen_backend").toString();
-        const QString fileName = QCoreApplication::instance()->property("__greenisland_screen_configuration").toString();
+        const QString backendName = QCoreApplication::instance()->property("__liri_screen_backend").toString();
+        const QString fileName = QCoreApplication::instance()->property("__liri_screen_configuration").toString();
         if (backendName == QLatin1String("fake") && !fileName.isEmpty()) {
             backend = new FakeScreenBackend();
             static_cast<FakeScreenBackend *>(backend)->setConfiguration(fileName);
@@ -67,9 +67,9 @@ public:
     Screen *primaryScreen;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENMANAGER_P_H
+#endif // LIRI_SCREENMANAGER_P_H
 

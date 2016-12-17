@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -39,9 +39,9 @@
 #include "serverlogging_p.h"
 #include "extensions/applicationmanager_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * ClientWindowPrivate
@@ -756,8 +756,8 @@ void ClientWindow::close()
         d->surface->destroy();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_clientwindow.cpp"

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_REGISTRY_P_H
-#define GREENISLANDCLIENT_REGISTRY_P_H
+#ifndef LIRIWAYLANDCLIENT_REGISTRY_P_H
+#define LIRIWAYLANDCLIENT_REGISTRY_P_H
 
 #include <QtCore/QLoggingCategory>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Registry>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/Registry>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G
@@ -47,11 +47,11 @@
 
 Q_DECLARE_LOGGING_CATEGORY(WLREGISTRY)
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT RegistryPrivate : public QObjectPrivate
+class LIRIWAYLANDCLIENT_EXPORT RegistryPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(Registry)
 public:
@@ -91,9 +91,9 @@ private:
 
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_REGISTRY_P_H
+#endif // LIRIWAYLANDCLIENT_REGISTRY_P_H
 

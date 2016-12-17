@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -38,9 +38,9 @@
 
 #define SCREENSHOT_FORMAT WL_SHM_FORMAT_ARGB8888
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * ScreenshooterPrivate
@@ -48,7 +48,7 @@ namespace Server {
 
 ScreenshooterPrivate::ScreenshooterPrivate()
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_screenshooter()
+    , QtWaylandServer::liri_screenshooter()
 {
 }
 
@@ -144,7 +144,7 @@ void ScreenshooterPrivate::screenshooter_capture_area(Resource *resource,
 
 ScreenshotPrivate::ScreenshotPrivate()
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_screenshot()
+    , QtWaylandServer::liri_screenshot()
     , output(Q_NULLPTR)
     , selectedSurface(Q_NULLPTR)
     , selectedArea(Q_NULLPTR)
@@ -376,8 +376,8 @@ QByteArray Screenshot::interfaceName()
     return ScreenshotPrivate::interfaceName();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_screenshooter.cpp"

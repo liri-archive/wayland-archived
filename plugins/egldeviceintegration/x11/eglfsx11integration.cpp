@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 The Qt Company Ltd.
  *
@@ -38,7 +38,7 @@
    This here is barely an extremely useful tool for developing eglfs itself because
    it allows to do so without any requirements for devices or drivers. */
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -300,4 +300,4 @@ bool EglFSX11Integration::hasCapability(QPlatformIntegration::Capability cap) co
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri

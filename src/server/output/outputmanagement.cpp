@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -34,9 +34,9 @@
 #include "outputmanagement_p.h"
 #include "serverlogging_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * OutputManagementPrivate
@@ -44,7 +44,7 @@ namespace Server {
 
 OutputManagementPrivate::OutputManagementPrivate()
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_outputmanagement()
+    , QtWaylandServer::liri_outputmanagement()
 {
 }
 
@@ -59,7 +59,7 @@ void OutputManagementPrivate::outputmanagement_create_configuration(Resource *re
 
     QWaylandResource configurationResource(
                 wl_resource_create(resource->client(),
-                                   &greenisland_outputconfiguration_interface,
+                                   &liri_outputconfiguration_interface,
                                    wl_resource_get_version(resource->handle),
                                    id));
 
@@ -114,8 +114,8 @@ QByteArray OutputManagement::interfaceName()
     return OutputManagementPrivate::interfaceName();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_outputmanagement.cpp"

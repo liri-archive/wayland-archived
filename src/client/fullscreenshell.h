@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2014-2016 Pier Luigi Fiorini
  *
@@ -25,23 +25,23 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_FULLSCREENSHELL_H
-#define GREENISLANDCLIENT_FULLSCREENSHELL_H
+#ifndef LIRIWAYLANDCLIENT_FULLSCREENSHELL_H
+#define LIRIWAYLANDCLIENT_FULLSCREENSHELL_H
 
 #include <QtCore/QObject>
 
-#include <GreenIsland/client/greenislandclient_export.h>
+#include <Liri/waylandclient/liriwaylandclient_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 class FullScreenShellPrivate;
 class Output;
 class Registry;
 class Surface;
 
-class GREENISLANDCLIENT_EXPORT FullScreenShell : public QObject
+class LIRIWAYLANDCLIENT_EXPORT FullScreenShell : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(FullScreenShell)
@@ -79,8 +79,8 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(FullScreenShell::Capabilities)
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_FULLSCREENSHELL_H
+#endif // LIRIWAYLANDCLIENT_FULLSCREENSHELL_H

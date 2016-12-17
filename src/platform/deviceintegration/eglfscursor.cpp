@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -48,7 +48,7 @@
 #define GL_VERTEX_ARRAY_BINDING 0x85B5
 #endif
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -60,7 +60,7 @@ EglFSCursor::EglFSCursor(QPlatformScreen *screen)
       m_deviceListener(0),
       m_updateRequested(false)
 {
-    QByteArray hideCursorVal = qgetenv("GREENISLAND_QPA_HIDECURSOR");
+    QByteArray hideCursorVal = qgetenv("LIRI_QPA_HIDECURSOR");
     if (!hideCursorVal.isEmpty())
         m_visible = hideCursorVal.toInt() == 0;
     if (!m_visible)
@@ -161,7 +161,7 @@ void EglFSCursor::createCursorTexture(uint *texture, const QImage &image)
 
 void EglFSCursor::initCursorAtlas()
 {
-    static QByteArray json = qgetenv("GREENISLAND_QPA_CURSOR");
+    static QByteArray json = qgetenv("LIRI_QPA_CURSOR");
     if (json.isEmpty())
         json = ":/cursor.json";
 
@@ -502,6 +502,6 @@ void EglFSCursor::draw(const QRectF &r)
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_eglfscursor.cpp"

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SHM_P_H
-#define GREENISLANDCLIENT_SHM_P_H
+#ifndef LIRIWAYLANDCLIENT_SHM_P_H
+#define LIRIWAYLANDCLIENT_SHM_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/Shm>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/Shm>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G
@@ -44,11 +44,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT ShmPrivate
+class LIRIWAYLANDCLIENT_EXPORT ShmPrivate
         : public QObjectPrivate
         , public QtWayland::wl_shm
 {
@@ -64,8 +64,8 @@ protected:
     void shm_format(uint32_t format) Q_DECL_OVERRIDE;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SHM_P_H
+#endif // LIRIWAYLANDCLIENT_SHM_P_H

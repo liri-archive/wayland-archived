@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SERVERLOGGING_H
-#define GREENISLAND_SERVERLOGGING_H
+#ifndef LIRI_SERVERLOGGING_H
+#define LIRI_SERVERLOGGING_H
 
 #include <QtCore/QLoggingCategory>
 
@@ -43,4 +43,4 @@ Q_DECLARE_LOGGING_CATEGORY(gLcScreenBackend)
 Q_DECLARE_LOGGING_CATEGORY(gLcFakeScreenBackend)
 Q_DECLARE_LOGGING_CATEGORY(gLcNativeScreenBackend)
 
-#endif // GREENISLAND_SERVERLOGGING_H
+#endif // LIRI_SERVERLOGGING_H

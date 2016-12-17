@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2016 The Qt Company Ltd.
@@ -31,8 +31,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_EGLFSKMSCURSOR_H
-#define GREENISLAND_EGLFSKMSCURSOR_H
+#ifndef LIRI_EGLFSKMSCURSOR_H
+#define LIRI_EGLFSKMSCURSOR_H
 
 #include <QtCore/QList>
 #include <QtGui/QImage>
@@ -40,7 +40,7 @@
 
 #include <gbm.h>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -84,6 +84,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_EGLFSKMSCURSOR_H
+#endif // LIRI_EGLFSKMSCURSOR_H

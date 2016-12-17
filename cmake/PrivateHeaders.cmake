@@ -45,7 +45,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the License for more information.
 #=============================================================================
-# (To distribute this file outside of greenisland, substitute the full
+# (To distribute this file outside of liri-wayland, substitute the full
 #  License text for the above reference.)
 
 include(CMakeParseArguments)

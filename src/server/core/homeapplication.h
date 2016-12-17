@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,20 +25,20 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_HOMEAPPLICATION_H
-#define GREENISLAND_HOMEAPPLICATION_H
+#ifndef LIRI_HOMEAPPLICATION_H
+#define LIRI_HOMEAPPLICATION_H
 
 #include <QtQml/QQmlApplicationEngine>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class HomeApplicationPrivate;
 
-class GREENISLANDSERVER_EXPORT HomeApplication : public QObject
+class LIRIWAYLANDSERVER_EXPORT HomeApplication : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(HomeApplication)
@@ -70,9 +70,9 @@ Q_SIGNALS:
     void objectCreated(QObject *object, const QUrl &url);
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_HOMEAPPLICATION_H
+#endif // LIRI_HOMEAPPLICATION_H
 

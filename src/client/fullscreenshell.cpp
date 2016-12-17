@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2014-2016 Pier Luigi Fiorini
  *
@@ -32,11 +32,11 @@
 #include "surface.h"
 #include "surface_p.h"
 
-Q_LOGGING_CATEGORY(FSH_CLIENT_PROTOCOL, "greenisland.protocols.fullscreenshell.client")
+Q_LOGGING_CATEGORY(FSH_CLIENT_PROTOCOL, "liri.wlclient.fullscreenshell")
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * FullScreenShellPrivate
@@ -95,8 +95,8 @@ void FullScreenShell::hideOutput(Output *output)
                        OutputPrivate::get(output)->object());
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_fullscreenshell.cpp"

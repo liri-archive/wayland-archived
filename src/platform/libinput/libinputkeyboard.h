@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -30,8 +30,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LIBINPUTKEYBOARD_H
-#define GREENISLAND_LIBINPUTKEYBOARD_H
+#ifndef LIRI_LIBINPUTKEYBOARD_H
+#define LIRI_LIBINPUTKEYBOARD_H
 
 #include <QtCore/QObject>
 
@@ -48,7 +48,7 @@
 
 struct libinput_event_keyboard;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -70,6 +70,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_LIBINPUTKEYBOARD_H
+#endif // LIRI_LIBINPUTKEYBOARD_H

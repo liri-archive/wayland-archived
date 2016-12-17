@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -31,9 +31,9 @@
 #include "taskmanager.h"
 #include "taskmanager_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 /*
  * TaskManagerPrivate
@@ -41,7 +41,7 @@ namespace Server {
 
 TaskManagerPrivate::TaskManagerPrivate()
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_windows()
+    , QtWaylandServer::liri_windows()
     , initialized(false)
     , boundResource(Q_NULLPTR)
 {
@@ -89,7 +89,7 @@ void TaskManagerPrivate::windows_bind_resource(Resource *resource)
 {
     if (boundResource) {
         wl_resource_post_error(resource->handle, WL_DISPLAY_ERROR_INVALID_OBJECT,
-                               "greenisland_windows can only be bound once");
+                               "liri_windows can only be bound once");
         return;
     }
 
@@ -102,7 +102,7 @@ void TaskManagerPrivate::windows_bind_resource(Resource *resource)
 
 TaskItemPrivate::TaskItemPrivate(ClientWindow *w)
     : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::greenisland_window()
+    , QtWaylandServer::liri_window()
     , window(w)
 {
     determineType();
@@ -139,29 +139,29 @@ void TaskItemPrivate::determineType()
 {
     switch (window->type()) {
     case ClientWindow::Popup:
-        windowType = QtWaylandServer::greenisland_windows::type_popup;
+        windowType = QtWaylandServer::liri_windows::type_popup;
         break;
     case ClientWindow::Transient:
-        windowType = QtWaylandServer::greenisland_windows::type_transient;
+        windowType = QtWaylandServer::liri_windows::type_transient;
         break;
     default:
-        windowType = QtWaylandServer::greenisland_windows::type_toplevel;
+        windowType = QtWaylandServer::liri_windows::type_toplevel;
         break;
     }
 }
 
 void TaskItemPrivate::determineState()
 {
-    uint32_t s = QtWaylandServer::greenisland_windows::state_inactive;
+    uint32_t s = QtWaylandServer::liri_windows::state_inactive;
 
     if (window->isActive())
-        s |= QtWaylandServer::greenisland_windows::state_active;
+        s |= QtWaylandServer::liri_windows::state_active;
     if (window->isMinimized())
-        s |= QtWaylandServer::greenisland_windows::state_minimized;
+        s |= QtWaylandServer::liri_windows::state_minimized;
     if (window->isMaximized())
-        s |= QtWaylandServer::greenisland_windows::state_maximized;
+        s |= QtWaylandServer::liri_windows::state_maximized;
     if (window->isFullScreen())
-        s |= QtWaylandServer::greenisland_windows::state_fullscreen;
+        s |= QtWaylandServer::liri_windows::state_fullscreen;
 
     windowState = s;
 }
@@ -221,8 +221,8 @@ QByteArray TaskItem::interfaceName()
     return TaskItemPrivate::interfaceName();
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_taskmanager.cpp"

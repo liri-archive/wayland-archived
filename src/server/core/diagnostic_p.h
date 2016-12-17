@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -24,15 +24,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_DIAGNOSTIC_P_H
-#define GREENISLAND_DIAGNOSTIC_P_H
+#ifndef LIRI_DIAGNOSTIC_P_H
+#define LIRI_DIAGNOSTIC_P_H
 
 #include <QtCore/QString>
 
 #include <iostream>
 #include <string>
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace DiagnosticOutput {
 
@@ -43,6 +43,6 @@ QString environment();
 
 } // namespace DiagnosticOutput
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_DIAGNOSTIC_P_H
+#endif // LIRI_DIAGNOSTIC_P_H

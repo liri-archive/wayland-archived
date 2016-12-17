@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="greenisland_screenshooter">
+<protocol name="liri_screenshooter">
   <copyright><![CDATA[
     Copyright (C) 2015-2016 Pier Luigi Fiorini
 
@@ -17,17 +17,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
 
-  <interface name="greenisland_screenshooter" version="1">
+  <interface name="liri_screenshooter" version="1">
     <description summary="dump the contents of an output, a surface or an area to a buffer">
       This interface is used by programs to take a screenshot of an entire
       output, a user-selected area or a specific surface.
 
       The client asks the compositor to capture with one of the capture
-      requests. As a result, a greenisland_screenshot object will be created
-      and the greenisland_screenshot.setup event will be sent as soon as the
+      requests. As a result, a liri_screenshot object will be created
+      and the liri_screenshot.setup event will be sent as soon as the
       client binds to the interface.
 
-      See the documentation of greenisland_screencast for more details.
+      See the documentation of liri_screencast for more details.
     </description>
 
     <enum name="effects">
@@ -42,7 +42,7 @@
 
         The current reserved ranges are:
 
-        0x0000 - 0x0FFF: greenisland-screenshooter core values, documented below.
+        0x0000 - 0x0FFF: liri-screenshooter core values, documented below.
       </description>
       <entry name="pointer" value="1" summary="include the pointer">
         Include the mouse pointer in the screenshot when capturing an output
@@ -58,7 +58,7 @@
       <description summary="take a screenshot of an entire output">
         Asks the compositor to capture an entire output.
       </description>
-      <arg name="id" type="new_id" interface="greenisland_screenshot"/>
+      <arg name="id" type="new_id" interface="liri_screenshot"/>
       <arg name="output" type="object" interface="wl_output"/>
       <arg name="effects" type="array" summary="effects to apply for this capture"/>
     </request>
@@ -67,7 +67,7 @@
       <description summary="take a screenshot of the active window">
         Asks the compositor to take a screenshot of the active window.
       </description>
-      <arg name="id" type="new_id" interface="greenisland_screenshot"/>
+      <arg name="id" type="new_id" interface="liri_screenshot"/>
       <arg name="effects" type="array" summary="effects to apply for this capture"/>
     </request>
 
@@ -76,7 +76,7 @@
         Asks the compositor to take a screenshot of a surface of a window
         selected by the user.
       </description>
-      <arg name="id" type="new_id" interface="greenisland_screenshot"/>
+      <arg name="id" type="new_id" interface="liri_screenshot"/>
       <arg name="effects" type="array" summary="effects to apply for this capture"/>
     </request>
 
@@ -86,17 +86,17 @@
         This request starts a user-driven selection of the area that will
         be captured.
       </description>
-      <arg name="id" type="new_id" interface="greenisland_screenshot"/>
+      <arg name="id" type="new_id" interface="liri_screenshot"/>
       <arg name="effects" type="array" summary="effects to apply for this capture"/>
     </request>
   </interface>
 
-  <interface name="greenisland_screenshot" version="1">
+  <interface name="liri_screenshot" version="1">
     <description summary="screenshot">
       A screenshot allows a client to perform a capture of an entire output,
       an area selected by a user-driven operation, the active window or a
       specific surface.  Whatever is to be captured is decided by the capture
-      request that was called from the greenisland_screenshooter interface.
+      request that was called from the liri_screenshooter interface.
 
       The 'setup' event is sent as soon as the client binds to this interface
       and indicates the size of the buffer that needs to be allocated.
@@ -108,7 +108,7 @@
     </description>
 
     <enum name="error">
-      <description summary="greenisland_screenshot error values">
+      <description summary="liri_screenshot error values">
         These errors are emitted with the 'failed' event when a
         capture request fails.
       </description>
@@ -116,8 +116,8 @@
     </enum>
 
     <request name="destroy" type="destructor">
-      <description summary="destroy greenisland_screenshot">
-        Destroy this greenisland_screenshot object.
+      <description summary="destroy liri_screenshot">
+        Destroy this liri_screenshot object.
       </description>
     </request>
 
@@ -126,7 +126,7 @@
         Ask the compositor to take a screenshot and save the contents into
         the buffer.  What is being capture can be either an output, a surface
         or an area that was selected with user interaction, depending on the
-        greenisland_screenshooter request that was invoked.
+        liri_screenshooter request that was invoked.
       </description>
       <arg name="buffer" type="object" interface="wl_buffer" summary="client buffer that will hold data"/>
     </request>
@@ -134,7 +134,7 @@
     <event name="setup">
       <description summary="notify buffer size requirements">
         This event will be sent immediately after creating the
-        greenisland_screenshot object.
+        liri_screenshot object.
 
         The wl_buffer passed to the 'record' request must be big enough to
         accomodate an image with the given width, height and format.

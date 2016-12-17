@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,14 +25,14 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_FULLSCREENSHELL_P_H
-#define GREENISLAND_FULLSCREENSHELL_P_H
+#ifndef LIRI_FULLSCREENSHELL_P_H
+#define LIRI_FULLSCREENSHELL_P_H
 
 #include <QtCore/QLoggingCategory>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/FullScreenShell>
-#include <GreenIsland/client/private/qwayland-fullscreen-shell-unstable-v1.h>
+#include <Liri/WaylandClient/FullScreenShell>
+#include <Liri/waylandclient/private/qwayland-fullscreen-shell-unstable-v1.h>
 
 //
 //  W A R N I N G
@@ -47,11 +47,11 @@
 
 Q_DECLARE_LOGGING_CATEGORY(FSH_CLIENT_PROTOCOL)
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT FullScreenShellPrivate
+class LIRIWAYLANDCLIENT_EXPORT FullScreenShellPrivate
         : public QObjectPrivate
         , public QtWayland::zwp_fullscreen_shell_v1
 {
@@ -67,8 +67,8 @@ protected:
     void fullscreen_shell_v1_capability(uint32_t capabilty) Q_DECL_OVERRIDE;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_FULLSCREENSHELL_P_H
+#endif // LIRI_FULLSCREENSHELL_P_H

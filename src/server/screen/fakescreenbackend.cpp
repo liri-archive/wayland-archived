@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -37,9 +37,9 @@
 #include "screenbackend_p.h"
 #include "serverlogging_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 FakeScreenBackend::FakeScreenBackend(QObject *parent)
     : ScreenBackend(parent)
@@ -165,8 +165,8 @@ void FakeScreenBackend::acquireConfiguration()
         Q_EMIT primaryScreenChanged(ScreenBackend::get(this)->screens.at(0));
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_fakescreenbackend.cpp"

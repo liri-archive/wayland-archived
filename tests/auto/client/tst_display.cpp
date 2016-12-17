@@ -27,19 +27,18 @@
 
 #include <QtCore/QThread>
 #include <QtTest/QtTest>
-
-#include <GreenIsland/Client/ClientConnection>
-
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/private/qwaylandcompositor_p.h>
+
+#include <Liri/WaylandClient/ClientConnection>
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
-using namespace GreenIsland::Client;
+using namespace Liri::WaylandClient;
 
-static const QString s_socketName = QStringLiteral("greenisland-test-0");
+static const QString s_socketName = QStringLiteral("liri-test-0");
 
 class TestDisplay : public QObject
 {
@@ -93,7 +92,7 @@ private Q_SLOTS:
     void testFailure()
     {
         QScopedPointer<ClientConnection> display(new ClientConnection());
-        display->setSocketName(QStringLiteral("greenisland-test-bad-socket-name"));
+        display->setSocketName(QStringLiteral("liri-test-bad-socket-name"));
 
         QSignalSpy connectedSpy(display.data(), SIGNAL(connected()));
         QSignalSpy failedSpy(display.data(), SIGNAL(failed()));

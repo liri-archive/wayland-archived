@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2016 Pier Luigi Fiorini
  *
@@ -25,13 +25,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_OUTPUTCHANGESET_P_H
-#define GREENISLAND_OUTPUTCHANGESET_P_H
+#ifndef LIRI_OUTPUTCHANGESET_P_H
+#define LIRI_OUTPUTCHANGESET_P_H
 
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Server/OutputChangeset>
-#include <GreenIsland/server/private/qwayland-server-greenisland-outputmanagement.h>
+#include <Liri/WaylandServer/OutputChangeset>
+#include <Liri/waylandserver/private/qwayland-server-liri-outputmanagement.h>
 
 //
 //  W A R N I N G
@@ -44,11 +44,11 @@
 // We mean it.
 //
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
-class GREENISLANDSERVER_EXPORT OutputChangesetPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT OutputChangesetPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(OutputChangeset)
 public:
@@ -65,8 +65,8 @@ public:
     static OutputChangesetPrivate *get(OutputChangeset *changeset) { return changeset->d_func(); }
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_OUTPUTCHANGESET_P_H
+#endif // LIRI_OUTPUTCHANGESET_P_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  * Copyright (C) 2013 Martin Gräßlin
@@ -51,11 +51,11 @@
 #include <wayland-client.h>
 #include <wayland-server.h>
 
-Q_LOGGING_CATEGORY(WLREGISTRY, "greenisland.client.registry")
+Q_LOGGING_CATEGORY(WLREGISTRY, "liri.wlclient.registry")
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
 /*
  * RegistryPrivate
@@ -92,11 +92,11 @@ static const wl_interface *wlInterface(Registry::Interface interface)
     case Registry::FullscreenShellInterface:
         return &zwp_fullscreen_shell_v1_interface;
     case Registry::OutputManagementInterface:
-        return &greenisland_outputmanagement_interface;
+        return &liri_outputmanagement_interface;
     case Registry::ScreencasterInterface:
-        return &greenisland_screencaster_interface;
+        return &liri_screencaster_interface;
     case Registry::ScreenshooterInterface:
-        return &greenisland_screenshooter_interface;
+        return &liri_screenshooter_interface;
     case Registry::SeatInterface:
         return &wl_seat_interface;
     case Registry::ShmInterface:
@@ -389,8 +389,8 @@ QByteArray Registry::interfaceName()
     return QByteArrayLiteral("wl_registry");
 }
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_registry.cpp"

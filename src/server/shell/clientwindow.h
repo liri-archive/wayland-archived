@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,8 +25,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_CLIENTWINDOW_H
-#define GREENISLAND_CLIENTWINDOW_H
+#ifndef LIRI_CLIENTWINDOW_H
+#define LIRI_CLIENTWINDOW_H
 
 #include <QtCore/QObject>
 
@@ -34,27 +34,27 @@
 #include <QtWaylandCompositor/QWaylandSurface>
 #include <QtWaylandCompositor/QWaylandQuickItem>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 class QWaylandWlShellSurface;
 class QWaylandXdgSurfaceV5;
 class QWaylandXdgPopupV5;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class ApplicationManager;
 class ClientWindowPrivate;
 class GtkSurface;
 
-class GREENISLANDSERVER_EXPORT ClientWindow : public QObject
+class LIRIWAYLANDSERVER_EXPORT ClientWindow : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(ClientWindow)
     Q_PROPERTY(QWaylandSurface *surface READ surface NOTIFY surfaceChanged)
     Q_PROPERTY(Type type READ type NOTIFY typeChanged)
-    Q_PROPERTY(GreenIsland::Server::ClientWindow *parentWindow READ parentWindow NOTIFY parentWindowChanged)
+    Q_PROPERTY(Liri::WaylandServer::ClientWindow *parentWindow READ parentWindow NOTIFY parentWindowChanged)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(QString appId READ appId NOTIFY appIdChanged)
     Q_PROPERTY(qint64 processId READ processId NOTIFY processIdChanged)
@@ -162,8 +162,8 @@ private:
     friend class ApplicationManager;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_CLIENTWINDOW_H
+#endif // LIRI_CLIENTWINDOW_H

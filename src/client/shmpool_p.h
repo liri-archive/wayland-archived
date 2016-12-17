@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,15 +25,15 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLANDCLIENT_SHMPOOL_P_H
-#define GREENISLANDCLIENT_SHMPOOL_P_H
+#ifndef LIRIWAYLANDCLIENT_SHMPOOL_P_H
+#define LIRIWAYLANDCLIENT_SHMPOOL_P_H
 
 #include <QtCore/QLoggingCategory>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/private/qobject_p.h>
 
-#include <GreenIsland/Client/ShmPool>
-#include <GreenIsland/client/private/qwayland-wayland.h>
+#include <Liri/WaylandClient/ShmPool>
+#include <Liri/waylandclient/private/qwayland-wayland.h>
 
 #include <unistd.h>
 #include <sys/mman.h>
@@ -51,11 +51,11 @@
 
 Q_DECLARE_LOGGING_CATEGORY(WLSHMPOOL)
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Client {
+namespace WaylandClient {
 
-class GREENISLANDCLIENT_EXPORT ShmPoolPrivate
+class LIRIWAYLANDCLIENT_EXPORT ShmPoolPrivate
         : public QObjectPrivate
         , public QtWayland::wl_shm_pool
 {
@@ -79,8 +79,8 @@ public:
     QVector<BufferSharedPtr> buffers;
 };
 
-} // namespace Client
+} // namespace WaylandClient
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLANDCLIENT_SHMPOOL_P_H
+#endif // LIRIWAYLANDCLIENT_SHMPOOL_P_H

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -25,25 +25,25 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_SCREENSHOOTER_H
-#define GREENISLAND_SCREENSHOOTER_H
+#ifndef LIRI_SCREENSHOOTER_H
+#define LIRI_SCREENSHOOTER_H
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 
-#include <GreenIsland/server/greenislandserver_export.h>
+#include <Liri/waylandserver/liriwaylandserver_export.h>
 
 class QWaylandOutput;
 class QWaylandSurface;
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 class Screenshot;
 class ScreenshotPrivate;
 class ScreenshooterPrivate;
 
-class GREENISLANDSERVER_EXPORT Screenshooter : public QWaylandCompositorExtensionTemplate<Screenshooter>
+class LIRIWAYLANDSERVER_EXPORT Screenshooter : public QWaylandCompositorExtensionTemplate<Screenshooter>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Screenshooter)
@@ -67,7 +67,7 @@ Q_SIGNALS:
     void captureRequested(Screenshot *screenshot);
 };
 
-class GREENISLANDSERVER_EXPORT Screenshot : public QWaylandCompositorExtensionTemplate<Screenshot>
+class LIRIWAYLANDSERVER_EXPORT Screenshot : public QWaylandCompositorExtensionTemplate<Screenshot>
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Screenshot)
@@ -107,8 +107,8 @@ private:
     friend class ScreenshooterPrivate;
 };
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_SCREENSHOOTER_H
+#endif // LIRI_SCREENSHOOTER_H

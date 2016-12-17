@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -31,16 +31,16 @@
 #include <QtGui/QScreen>
 #include <QtGui/qpa/qplatformscreen.h>
 
-#include <GreenIsland/Platform/EglFSGlobal>
-#include <GreenIsland/Platform/EglFSScreen>
+#include <Liri/Platform/EglFSGlobal>
+#include <Liri/Platform/EglFSScreen>
 
 #include "nativescreenbackend.h"
 #include "screenbackend_p.h"
 #include "serverlogging_p.h"
 
-namespace GreenIsland {
+namespace Liri {
 
-namespace Server {
+namespace WaylandServer {
 
 NativeScreenBackend::NativeScreenBackend(QObject *parent)
     : ScreenBackend(parent)
@@ -80,7 +80,7 @@ void NativeScreenBackend::handleScreenAdded(QScreen *qscreen)
 
     Platform::EglFSScreen *eglfsScreen =
             static_cast<Platform::EglFSScreen *>(qscreen->handle());
-    if (QGuiApplication::platformName() == QLatin1String("greenisland") && eglfsScreen) {
+    if (QGuiApplication::platformName() == QLatin1String("liri") && eglfsScreen) {
         screenPrivate->m_manufacturer = eglfsScreen->manufacturer();
         if (screenPrivate->m_manufacturer.isEmpty())
             screenPrivate->m_manufacturer = QLatin1String("Unknown");
@@ -155,7 +155,7 @@ void NativeScreenBackend::handleScreenChanged(QScreen *qscreen, Screen *screen)
 
     Platform::EglFSScreen *eglfsScreen =
             static_cast<Platform::EglFSScreen *>(qscreen->handle());
-    if (QGuiApplication::platformName() == QLatin1String("greenisland") && eglfsScreen) {
+    if (QGuiApplication::platformName() == QLatin1String("liri") && eglfsScreen) {
         QList<Screen::Mode> modes;
         Q_FOREACH (const Platform::EglFSScreen::Mode &mode, eglfsScreen->modes())
             modes.append({mode.size, mode.refreshRate});
@@ -207,8 +207,8 @@ void NativeScreenBackend::handleScreenChanged(QScreen *qscreen, Screen *screen)
     }
 }
 
-} // namespace Server
+} // namespace WaylandServer
 
-} // namespace GreenIsland
+} // namespace Liri
 
 #include "moc_nativescreenbackend.cpp"

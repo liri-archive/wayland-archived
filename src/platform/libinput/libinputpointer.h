@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -30,8 +30,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef GREENISLAND_LIBINPUTPOINTER_H
-#define GREENISLAND_LIBINPUTPOINTER_H
+#ifndef LIRI_LIBINPUTPOINTER_H
+#define LIRI_LIBINPUTPOINTER_H
 
 #include <QtCore/QPoint>
 
@@ -48,7 +48,7 @@
 
 struct libinput_event_pointer;
 
-namespace GreenIsland {
+namespace Liri {
 
 namespace Platform {
 
@@ -76,6 +76,6 @@ private:
 
 } // namespace Platform
 
-} // namespace GreenIsland
+} // namespace Liri
 
-#endif // GREENISLAND_LIBINPUTPOINTER_H
+#endif // LIRI_LIBINPUTPOINTER_H

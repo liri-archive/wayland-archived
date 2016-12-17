@@ -1,5 +1,5 @@
 /****************************************************************************
- * This file is part of Hawaii.
+ * This file is part of Liri.
  *
  * Copyright (C) 2015-2016 Pier Luigi Fiorini
  *
@@ -27,12 +27,12 @@
 
 #include <QtGui/qpa/qplatformintegrationplugin.h>
 
-#include <GreenIsland/Platform/EglFSIntegration>
+#include <Liri/Platform/EglFSIntegration>
 
-class GreenIslandIntegrationPlugin : public QPlatformIntegrationPlugin
+class LiriIntegrationPlugin : public QPlatformIntegrationPlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QPlatformIntegrationFactoryInterface_iid FILE "greenisland.json")
+    Q_PLUGIN_METADATA(IID QPlatformIntegrationFactoryInterface_iid FILE "liri.json")
 public:
     QPlatformIntegration *create(const QString &system,
                                  const QStringList &paramList) Q_DECL_OVERRIDE;
@@ -41,18 +41,18 @@ public:
                                  int &argc, char **argv) Q_DECL_OVERRIDE;
 };
 
-QPlatformIntegration *GreenIslandIntegrationPlugin::create(const QString &system,
+QPlatformIntegration *LiriIntegrationPlugin::create(const QString &system,
                                                            const QStringList &paramList)
 {
     Q_UNUSED(paramList);
 
-    if (system.compare(QLatin1String("greenisland"), Qt::CaseInsensitive) == 0)
-        return new GreenIsland::Platform::EglFSIntegration;
+    if (system.compare(QLatin1String("liri"), Qt::CaseInsensitive) == 0)
+        return new Liri::Platform::EglFSIntegration;
 
     return Q_NULLPTR;
 }
 
-QPlatformIntegration *GreenIslandIntegrationPlugin::create(const QString &system,
+QPlatformIntegration *LiriIntegrationPlugin::create(const QString &system,
                                                            const QStringList &paramList,
                                                            int &argc, char **argv)
 {
@@ -60,8 +60,8 @@ QPlatformIntegration *GreenIslandIntegrationPlugin::create(const QString &system
     Q_UNUSED(argc);
     Q_UNUSED(argv);
 
-    if (system.compare(QLatin1String("greenisland"), Qt::CaseInsensitive) == 0)
-        return new GreenIsland::Platform::EglFSIntegration;
+    if (system.compare(QLatin1String("liri"), Qt::CaseInsensitive) == 0)
+        return new Liri::Platform::EglFSIntegration;
 
     return Q_NULLPTR;
 }
