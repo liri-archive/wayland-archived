@@ -40,7 +40,6 @@ add_definitions(
 
 set(SOURCES
     serverlogging_p.cpp
-    core/abstractplugin.cpp
     core/compositorsettings.cpp
     core/diagnostic_p.cpp
     core/homeapplication.cpp
@@ -139,7 +138,6 @@ set_target_properties(GreenIslandServer PROPERTIES
 
 ecm_generate_headers(GreenIslandServer_CamelCase_HEADERS
     HEADER_NAMES
-        AbstractPlugin
         CompositorSettings
         HomeApplication
         QuickOutput
