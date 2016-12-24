@@ -95,7 +95,6 @@ target_link_libraries(LiriPlatform
         ${UDEV_LIBS}
         ${xkbcommon_LIBRARIES}
         ${gio_LIBRARIES}
-        Libdl::Libdl
         Qt5FontDatabaseSupport::Qt5FontDatabaseSupport
         Qt5ThemeSupport::Qt5ThemeSupport
         Qt5ServiceSupport::Qt5ServiceSupport
@@ -103,6 +102,7 @@ target_link_libraries(LiriPlatform
         Qt5PlatformCompositorSupport::Qt5PlatformCompositorSupport
         Qt5EglSupport::Qt5EglSupport
     PRIVATE
+        Libdl::Libdl
         Libinput::Libinput
         ${FONTCONFIG_LIBRARIES}
         ${FREETYPE_LIBRARIES}

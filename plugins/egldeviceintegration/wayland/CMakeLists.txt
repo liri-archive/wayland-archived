@@ -1,3 +1,9 @@
+# libdl
+find_package(Libdl REQUIRED)
+set_package_properties(Libdl PROPERTIES
+    TYPE REQUIRED
+    PURPOSE "Required to load GL functions")
+
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../../headers"
     ${Qt5PlatformSupport_INCLUDE_DIR}
@@ -29,6 +35,7 @@ add_library(wayland MODULE ${SOURCES})
 target_link_libraries(wayland
                       Liri::Platform
                       Liri::WaylandClient
+                      Libdl::Libdl
                       Wayland::Egl
 )
 
