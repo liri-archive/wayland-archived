@@ -103,7 +103,6 @@ target_link_libraries(LiriWaylandServer
         Qt5::WaylandCompositor
         Wayland::Server
     PRIVATE
-        Wayland::Cursor
         EGL::EGL
         Liri::Platform
 )
