@@ -30,11 +30,9 @@
 #include <QtCore/QElapsedTimer>
 #include <QtCore/private/qobject_p.h>
 #include <QtGui/QScreen>
-
+#include <QtGui/qpa/qplatformscreen.h>
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/QWaylandOutputMode>
-
-#include <Liri/Platform/EglFSScreen>
 
 #include "quickoutput.h"
 #include "serverlogging_p.h"
@@ -252,9 +250,9 @@ QuickOutput::PowerState QuickOutput::powerState() const
     Q_D(const QuickOutput);
 
     // Power state is supported only with native screens and our QPA
-    Platform::EglFSScreen *screen = Q_NULLPTR;
+    QPlatformScreen *screen = Q_NULLPTR;
     if (d->nativeScreen && d->nativeScreen->screen())
-        screen = static_cast<Platform::EglFSScreen *>(
+        screen = static_cast<QPlatformScreen *>(
                     d->nativeScreen->screen()->handle());
     if (!screen)
         return PowerStateOn;
@@ -267,15 +265,15 @@ void QuickOutput::setPowerState(PowerState state)
     Q_D(QuickOutput);
 
     // Power state is supported only with native screens and our QPA
-    Platform::EglFSScreen *screen = Q_NULLPTR;
+    QPlatformScreen *screen = Q_NULLPTR;
     if (d->nativeScreen && d->nativeScreen->screen())
-        screen = static_cast<Platform::EglFSScreen *>(
+        screen = static_cast<QPlatformScreen *>(
                     d->nativeScreen->screen()->handle());
     if (!screen)
         return;
 
-    Platform::EglFSScreen::PowerState pstate =
-            static_cast<Platform::EglFSScreen::PowerState>(state);
+    QPlatformScreen::PowerState pstate =
+            static_cast<QPlatformScreen::PowerState>(state);
     if (screen->powerState() != pstate) {
         screen->setPowerState(pstate);
         Q_EMIT powerStateChanged();
