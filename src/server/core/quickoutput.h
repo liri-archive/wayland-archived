@@ -39,14 +39,13 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class Screen;
 class QuickOutputPrivate;
 
 class LIRIWAYLANDSERVER_EXPORT QuickOutput : public QWaylandQuickOutput
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QuickOutput)
-    Q_PROPERTY(Screen *nativeScreen READ nativeScreen WRITE setNativeScreen NOTIFY nativeScreenChanged DESIGNABLE false)
+    Q_PROPERTY(Liri::WaylandServer::Screen *nativeScreen READ nativeScreen WRITE setNativeScreen NOTIFY nativeScreenChanged DESIGNABLE false)
     Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(PowerState powerState READ powerState WRITE setPowerState NOTIFY powerStateChanged)
     Q_PROPERTY(QSize hotSpotSize READ hotSpotSize WRITE setHotSpotSize NOTIFY hotSpotSizeChanged)
@@ -76,7 +75,7 @@ public:
 
     QQmlListProperty<QObject> data();
 
-    Screen *nativeScreen() const;
+    Liri::WaylandServer::Screen *nativeScreen() const;
     void setNativeScreen(Screen *screen);
 
     bool isEnabled() const;
