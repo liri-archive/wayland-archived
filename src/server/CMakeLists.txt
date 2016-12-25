@@ -102,10 +102,10 @@ target_link_libraries(LiriWaylandServer
         Qt5::Quick
         Qt5::WaylandCompositor
         Wayland::Server
-        Liri::Platform
     PRIVATE
         Wayland::Cursor
         EGL::EGL
+        Liri::Platform
 )
 
 if(EGL_FOUND)
