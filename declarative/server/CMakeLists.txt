@@ -4,6 +4,7 @@ include_directories(
 
 set(SOURCES
     plugin.cpp
+    chromeitem.cpp
     fpscounter.cpp
     keyeventfilter.cpp
 )

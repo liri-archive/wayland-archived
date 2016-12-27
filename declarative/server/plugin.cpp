@@ -41,6 +41,7 @@
 //#include <Liri/WaylandServer/TaskManager>
 #include <Liri/WaylandServer/QuickScreenManager>
 
+#include "chromeitem.h"
 #include "fpscounter.h"
 #include "keyeventfilter.h"
 
@@ -67,6 +68,9 @@ void LiriWaylandServerPlugin::registerTypes(const char *uri)
 
     // More specialized output
     qmlRegisterType<QuickOutput>(uri, 1, 0, "ExtendedOutput");
+
+    // Chrome container
+    qmlRegisterType<ChromeItem>(uri, 1, 0, "ChromeItem");
 
     // gtk-shell
     qmlRegisterType<GtkShellQuickExtension>(uri, 1, 0, "GtkShell");
