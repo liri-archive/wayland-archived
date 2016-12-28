@@ -21,7 +21,6 @@ install(TARGETS liriwaylandserverplugin LIBRARY
 
 set(MODULE_FILES
     qmldir
-    WaylandOutputWindow.qml
     WindowChrome.qml
 )
 install(FILES ${MODULE_FILES}

@@ -1,5 +1,4 @@
 module Liri.WaylandServer
 plugin liriwaylandserverplugin
 classname LiriWaylandServerPlugin
-WaylandOutputWindow 1.0 WaylandOutputWindow.qml
 WindowChrome 1.0 WindowChrome.qml
