@@ -210,10 +210,7 @@ plugin:
   integration plugin file name without path and extension (for example
   "kms" for the DRM/KMS integration, "brcm" for Broadcom etc...).
 
-* **LIRI_QPA_SHOW_CURSOR:** By default the mouse cursor is not
-  drawed because a compositor is expected to render the Wayland cursor
-  surface, set this variable to 1 if you want to draw the Green Island
-  cursor.
+* **LIRI_QPA_HIDECURSOR:** Set to 1 in order to hide the hardware cursor.
 
 ### Logging categories
 
