@@ -116,11 +116,13 @@ endif()
 find_package(BcmHost)
 
 # X11
-find_package(X11)
-set_package_properties(X11 PROPERTIES
-    TYPE REQUIRED
-    PURPOSE "Required for X11 EGL device integration and XWayland")
-add_feature_info("Xcomposite" X11_Xcomposite_FOUND "Required for xcomposite-egl and xcomposite-glx")
+if(ENABLE_XWAYLAND OR ENABLE_EGLDEVICEINTEGRATION_X11)
+    find_package(X11)
+    set_package_properties(X11 PROPERTIES
+        TYPE REQUIRED
+        PURPOSE "Required for X11 EGL device integration and XWayland")
+    add_feature_info("Xcomposite" X11_Xcomposite_FOUND "Required for xcomposite-egl and xcomposite-glx")
+endif()
 
 # Wayland
 if(NOT ENABLE_ONLY_EGLDEVICEINTEGRATION)
