@@ -31,6 +31,7 @@ arch:
     #- sudo make install
     #- xvfb-run -a -s "-screen 0 800x600x24" make test
     - if [ "$CC" = "gcc" -a "$TRAVIS_BRANCH" = "develop" ]; then ./.travis/bintray.sh; fi
+    - ./.travis/bintray-wrapper.sh
 
 script:
   - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
@@ -42,20 +43,10 @@ deploy:
     condition: "$CC = gcc"
   file: cibuild/bintray.json
   user:
-    secure: "WJkW/9+BxAXCRQf3BHmvzz4YRe2mzh6Ej0uBY7NV73zmkd7rZnuIuT5ajjBF+ndsUCxo51usRyvPkZccpGXU1+NiiWdOStd/ctHn0PJeiAL+JkzXqN+eMDPns/+E8gu/yELqqSHQBn4U5KyPmeHgqs+oybiHHJKSX1wVdqwcGgY="
+    secure: "CNhU95jyaVk/zgKy3D0wdjDUDxKt+lT3AbgC9HOHSyyzN9FjPzK/O7MWnHqpR7W1aeoG5o4PZ+RakRLmW5NZxOKDg/K+mVq1s6cMwwZu8YcaHLafifC3GZI/c+0mnCpJY2K5mWqVp/TSIRkn6RJV7xIJR8Ksds/1BSvCVhLWsTGDxWqzeij1VpptvFU+th1h5vpOhdkqkrDOrLFFvTODt1fRcyU+V6mn/VHzCDSDAmyokmbtEkiRXT1usuZ6wdUyIauOL15MVcHQmqSjuwqBB9Xta6S/cKDfMnQkfQ+Zs9KOH2hf0pkJZKxUl0sQiwRl7aXcaZJhhHQMXEdvNUWiuLz4SHEGqYiAm1rFhoAu+0jzK3uOymKIjvMSwfh1e27wLP+MSYUS510XldoI60aBwtCfef6LhV2Lh3zLILmR/m9551wn9W3m/hLPXStNCSMDsFmJMiv33Wl+2nQudJS44rLXgohSqGQmJxkI5aqwQajej1LqA9FzyrH7dfgym3MtRQYvKynBJxvSqfcFUinjUYL1q8pEXOI6mRRhxpH8+N8Xu9AsKvRDBlgjhKzDF1jsIyJ/qKoiaJHQSrN9uLj3jrt9efR5oT2VcuMldaMpuUY/7b5k6n6CWT5LUryox+hw7XVyc5FZfrHfkPkRx+nUmtG+F6pH7DzaantPnOJI+rA="
   key:
-    secure: "AXgDeE2nJmBEMSU0zegjeesXkRE5Z5t3bW9w7tVxdwhlqiLv3UXLHiPazdkmxGWQDFhIIwSMz+BolpaTMRwYMOgPhzBahxYyHV5Q1yN4yn4XbwHqXegcpRzPuhHBidDaWJGJZJu6Wi2+CTTZ1WwEl8iXrHxqXs/4fy1GayUQEfg="
+    secure: "hGuLSiuPkgs5/7lspblR353f1Lioe8FOUDiGrvF2mGg9mBok6bSXbVJ+RUadfLQ3olwOM0g8tE/38fCHkdoH2QYFAXKlyJEFOYoM9MeI8ZQ+6uz1v1P4XHrY3GFICN/V7Q6JjImxhQ6NKWwWQgAKuZmKbtfZLZU897ArQW5mQCIMdkcyJLWhkrFCy1/hD5ihmB6DycAaqB0TWK5hGHYGNX3bPNLLlV7DFMuPXLbE8GljpHHlyBqgj2EPK4CpMSaVSC7uo73WKJ7sWyTXPFVU+AD7zXxxNBZ5WIueGR2OB+FyX6jh687//XlJq07bw7vkKj4KxrwtDcMfFIG0hjhFJ2njVIRC93STd/TkoLc6yH4aSLZEIWYjPA+HcCU6XXfGdi/U7kuTNmYlGPq87OwA3pBWEVeEQpbERohKBpTYpPNF9H8PMMQiPsKhNwfzuKLDK7+aM9mxLbrPv1/G6Uatw2lMSlfhHJLnxpcVdP2xJJ/leHPXbRbkPAASvSWTqFjrQxAUK5bzpb/zpourCPw1Rhl2naiyohiYUmJt223x9UYiVh6Y+/TmMc8QL68R/uWVY2bBwTvqvuf8kr0QLeldblETMlmDu4r++HLkv+Cz+3ktO13e9e4oRiSKACRYWnZ+Cosg2Fj5u75cfkUYlumL4QWtanakw82deC75b/b7VS0="
 
 notifications:
   email: false
-  irc:
-    channels:
-    - chat.freenode.net#hawaii-desktop
-    use_notice: true
-    skip_join: true
-    on_success: always
-    on_failure: change
-  slack:
-    secure: "EGWF118PTfBj/Oktmr20fc17JTM5gt7/j24k6HkiOI1J8S+sJyxhhtSjV54cgmsaEURJ7zUD/xi2wSSigi82k2F29wpELInfty/+j95vuY+7QO7nyVIINHjKranLUogKai9evHU2cvlNTq6e27pjkDbRO2HNKyzTb+Lb6D3VEOk="
-    on_success: always
-    on_failure: change
+  slack: lirios:fdUqVmPzqPskEL1UBhqapZ0w
