@@ -45,6 +45,7 @@ class XWaylandQuickShellSurfaceItem;
 class XWaylandShellSurface : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(Qt::WindowType windowType READ windowType NOTIFY windowTypeChanged)
     Q_PROPERTY(QWaylandSurface *surface READ surface NOTIFY surfaceChanged)
     Q_PROPERTY(int x READ x NOTIFY xChanged)
     Q_PROPERTY(int y READ y NOTIFY yChanged)
@@ -76,6 +77,8 @@ public:
     XWaylandShellSurface(xcb_window_t window, const QRect &geometry,
                          bool overrideRedirect, XWaylandManager *parent);
     ~XWaylandShellSurface();
+
+    Qt::WindowType windowType() const;
 
     inline bool isMaximized() const {
         return m_properties.maximizedHorizontally || m_properties.maximizedVertically;
@@ -141,6 +144,7 @@ public:
     xcb_window_t window() const;
 
 Q_SIGNALS:
+    void windowTypeChanged();
     void surfaceChanged();
     void surfaceDestroyed();
     void mapped();
@@ -163,6 +167,7 @@ private:
     bool m_overrideRedirect;
     bool m_hasAlpha;
     XWaylandShellSurface *m_transientFor;
+    Qt::WindowType m_windowType;
     quint32 m_surfaceId;
     QWaylandSurface *m_surface;
     WmState m_wmState;

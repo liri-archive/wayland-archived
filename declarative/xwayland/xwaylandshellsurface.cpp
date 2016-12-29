@@ -72,6 +72,7 @@ XWaylandShellSurface::XWaylandShellSurface(xcb_window_t window, const QRect &geo
     , m_propsDirty(true)
     , m_overrideRedirect(overrideRedirect)
     , m_transientFor(Q_NULLPTR)
+    , m_windowType(Qt::WindowType::Window)
     , m_surfaceId(0)
     , m_surface(Q_NULLPTR)
     , m_wmState(WithdrawnState)
@@ -125,6 +126,11 @@ XWaylandShellSurface::~XWaylandShellSurface()
     setSurface(Q_NULLPTR);
 
     m_wm->removeWindow(m_window);
+}
+
+Qt::WindowType XWaylandShellSurface::windowType() const
+{
+    return m_windowType;
 }
 
 quint32 XWaylandShellSurface::surfaceId() const
