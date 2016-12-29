@@ -47,10 +47,8 @@ class XWaylandShellSurface : public QObject
     Q_OBJECT
     Q_PROPERTY(Qt::WindowType windowType READ windowType NOTIFY windowTypeChanged)
     Q_PROPERTY(QWaylandSurface *surface READ surface NOTIFY surfaceChanged)
-    Q_PROPERTY(int x READ x NOTIFY xChanged)
-    Q_PROPERTY(int y READ y NOTIFY yChanged)
-    Q_PROPERTY(int width READ width NOTIFY widthChanged)
-    Q_PROPERTY(int height READ height NOTIFY heightChanged)
+    Q_PROPERTY(QString appId READ appId NOTIFY appIdChanged)
+    Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(bool activated READ activated NOTIFY activatedChanged)
     Q_PROPERTY(bool maximized READ maximized NOTIFY maximizedChanged)
     Q_PROPERTY(bool fullscreen READ fullscreen NOTIFY fullscreenChanged)
@@ -66,7 +64,7 @@ public:
         TopRightEdge    =  9,
         BottomRightEdge = 10
     };
-    Q_ENUM(ResizeEdge);
+    Q_ENUM(ResizeEdge)
 
     enum WmState {
         WithdrawnState = 0,
@@ -80,35 +78,18 @@ public:
 
     Qt::WindowType windowType() const;
 
-    inline bool isMaximized() const {
-        return m_properties.maximizedHorizontally || m_properties.maximizedVertically;
-    }
-
     quint32 surfaceId() const;
     void setSurfaceId(quint32 id);
 
     QWaylandSurface *surface() const;
     void setSurface(QWaylandSurface *surface);
 
-    int x() const;
-    void setX(int x);
-
-    int y() const;
-    void setY(int y);
-
-    int width() const;
-    void setWidth(int width);
-
-    int height() const;
-    void setHeight(int height);
+    QString appId() const;
+    QString title() const;
 
     bool activated() const;
-
     bool maximized() const;
-    void setMaximized(bool maximized);
-
     bool fullscreen() const;
-    void setFullscreen(bool fullscreen);
 
     inline WmState wmState() const {
         return m_wmState;
@@ -129,7 +110,6 @@ public:
 
     void readAndDumpProperty(xcb_atom_t atom);
 
-    void requestResize(const QSize &size);
     void resizeFrame(const QSize &size, quint32 mask, quint32 *values);
 
     QSize sizeForResize(const QSizeF &initialSize, const QPointF &delta, ResizeEdge edges);
@@ -137,6 +117,9 @@ public:
 
     void map();
     void unmap();
+
+    void moveTo(const QPoint &pos);
+    void resize(const QSize &size);
 
     XWaylandQuickShellIntegration *createIntegration(XWaylandQuickShellSurfaceItem *item);
 
@@ -147,12 +130,11 @@ Q_SIGNALS:
     void windowTypeChanged();
     void surfaceChanged();
     void surfaceDestroyed();
+    void appIdChanged();
+    void titleChanged();
     void mapped();
     void unmapped();
-    void xChanged();
-    void yChanged();
-    void widthChanged();
-    void heightChanged();
+    void setGeometry(const QRect &geometry);
     void activatedChanged();
     void maximizedChanged();
     void fullscreenChanged();
@@ -178,19 +160,9 @@ private:
     struct {
         QString title;
         QString appId;
-        QPoint pos;
-        QSize size;
         QSize savedSize;
-        int fullscreen;
-        int maximizedHorizontally;
-        int maximizedVertically;
         int deleteWindow;
     } m_properties;
-
-    int m_x;
-    int m_y;
-    int m_width;
-    int m_height;
 
     bool m_activated;
     bool m_maximized;

@@ -160,7 +160,6 @@ void XWaylandManager::start(int fd)
 void XWaylandManager::addWindow(xcb_window_t id, XWaylandShellSurface *shellSurface)
 {
     m_windowsMap[id] = shellSurface;
-    Q_EMIT shellSurfaceAdded(shellSurface);
 }
 
 void XWaylandManager::removeWindow(xcb_window_t id)
@@ -346,9 +345,8 @@ void XWaylandManager::handleMotion(xcb_motion_notify_event_t *event)
     if (!m_windowsMap.contains(event->event))
         return;
 
-    XWaylandShellSurface *window = m_windowsMap[event->event];
-    window->setX(event->event_x);
-    window->setY(event->event_y);
+    XWaylandShellSurface *shellSurface = m_windowsMap[event->event];
+    shellSurface->moveTo(QPoint(event->event_x, event->event_y));
 }
 
 void XWaylandManager::handleCreateNotify(xcb_create_notify_event_t *event)
@@ -506,10 +504,8 @@ void XWaylandManager::handleConfigureNotify(xcb_configure_notify_event_t *event)
         return;
 
     XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
-    shellSurface->setX(event->x);
-    shellSurface->setY(event->y);
-    shellSurface->setWidth(event->width);
-    shellSurface->setHeight(event->height);
+    shellSurface->moveTo(QPoint(event->x, event->y));
+    shellSurface->resize(QSize(event->width, event->height));
 }
 
 void XWaylandManager::handleDestroyNotify(xcb_destroy_notify_event_t *event)
@@ -716,23 +712,22 @@ void XWaylandManager::handleState(XWaylandShellSurface *window, xcb_client_messa
 #endif
 }
 
-void XWaylandManager::handleSurfaceId(XWaylandShellSurface *window, xcb_client_message_event_t *event)
+void XWaylandManager::handleSurfaceId(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)
 {
-    if (window->surface()) {
-        qCWarning(XWAYLAND_TRACE) << "Window" << window->window() << "already has a surface id";
+    if (shellSurface->surface()) {
+        qCWarning(XWAYLAND_TRACE) << "Window" << shellSurface->window() << "already has a surface id";
         return;
     }
 
     quint32 id = event->data.data32[0];
-    window->setSurfaceId(id);
+    shellSurface->setSurfaceId(id);
 
     wl_resource *resource = wl_client_get_object(m_server->client(), id);
-    if (resource) {
-        window->setSurface(QWaylandSurface::fromResource(resource));
-    } else {
-        window->setSurface(Q_NULLPTR);
-        m_unpairedWindows.append(window);
-    }
+    QWaylandSurface *surface = resource ? QWaylandSurface::fromResource(resource) : nullptr;
+    if (surface)
+        shellSurface->setSurface(surface);
+    else
+        m_unpairedWindows.append(shellSurface);
 }
 
 void XWaylandManager::wmEvents()

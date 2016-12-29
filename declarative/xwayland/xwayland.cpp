@@ -155,7 +155,8 @@ void XWayland::handleSurfaceCreated(QWaylandSurface *surface)
 void XWayland::handleShellSurfaceAdded(XWaylandShellSurface *shellSurface)
 {
     connect(shellSurface, &XWaylandShellSurface::surfaceChanged, this, [this, shellSurface] {
-        Q_EMIT shellSurfaceCreated(shellSurface);
+        if (shellSurface->surface())
+            Q_EMIT shellSurfaceCreated(shellSurface);
     });
 }
 
