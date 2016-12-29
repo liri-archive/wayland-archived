@@ -44,15 +44,11 @@ class LIRIWAYLANDSERVER_EXPORT HomeApplication : public QObject
     Q_DISABLE_COPY(HomeApplication)
     Q_DECLARE_PRIVATE(HomeApplication)
     Q_PROPERTY(QString screenConfiguration READ screenConfiguration WRITE setScreenConfiguration NOTIFY screenConfigurationChanged)
-    Q_PROPERTY(bool notificationEnabled READ isNotificationEnabled WRITE setNotificationEnabled NOTIFY notificationEnabledChanged)
 public:
     HomeApplication(QObject *parent = Q_NULLPTR);
 
     QString screenConfiguration() const;
     void setScreenConfiguration(const QString &fileName);
-
-    bool isNotificationEnabled() const;
-    void setNotificationEnabled(bool notify);
 
     QList<QObject *> rootObjects() const;
 
@@ -63,7 +59,6 @@ public:
 
 Q_SIGNALS:
     void screenConfigurationChanged(const QString &fileName);
-    void notificationEnabledChanged(bool enabled);
     void contextPropertyChanged(const QString &name, const QVariant &value);
     void contextPropertyChanged(const QString &name, QObject *object);
     void objectCreated(QObject *object, const QUrl &url);

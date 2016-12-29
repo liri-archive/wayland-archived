@@ -37,10 +37,6 @@
 #include "homeapplication_p.h"
 #include "serverlogging_p.h"
 
-#if HAVE_SYSTEMD
-#  include <systemd/sd-daemon.h>
-#endif
-
 #include <unistd.h>
 #include <sys/types.h>
 
@@ -161,27 +157,6 @@ void HomeApplication::setContextProperty(const QString &name, QObject *object)
     Q_EMIT contextPropertyChanged(name, object);
 }
 
-bool HomeApplication::isNotificationEnabled() const
-{
-    Q_D(const HomeApplication);
-    return d->notify;
-}
-
-void HomeApplication::setNotificationEnabled(bool notify)
-{
-    Q_D(HomeApplication);
-
-    if (d->notify == notify)
-        return;
-
-    d->notify = notify;
-    Q_EMIT notificationEnabledChanged(notify);
-
-#if !HAVE_SYSTEMD
-    qCWarning(gLcCore) << "Toggling notification has no effect when Green Island is not built with systemd support";
-#endif
-}
-
 bool HomeApplication::loadUrl(const QUrl &url)
 {
     Q_D(HomeApplication);
@@ -199,14 +174,6 @@ bool HomeApplication::loadUrl(const QUrl &url)
 
     d->engine->load(url);
     d->running = true;
-
-#if HAVE_SYSTEMD
-    // Notify systemd when the screen configuration is ready
-    if (d->notify) {
-        qCDebug(gLcCore) << "Compositor ready, notify systemd on" << qgetenv("NOTIFY_SOCKET");
-        sd_notify(0, "READY=1");
-    }
-#endif
 
     return true;
 }

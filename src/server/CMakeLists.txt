@@ -28,10 +28,6 @@ include_directories(
     ${Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS}
 )
 
-if(systemd_FOUND)
-    include_directories(${systemd_INCLUDE_DIRS})
-endif()
-
 add_definitions(
     -Wno-deprecated-declarations
     -DQT_WAYLAND_COMPOSITOR_QUICK
@@ -113,10 +109,6 @@ if(EGL_FOUND)
     else()
         target_link_libraries(LiriWaylandServer PRIVATE ${OPENGLES_LIBRARIES})
     endif()
-endif()
-
-if(systemd_FOUND)
-    target_link_libraries(LiriWaylandServer PRIVATE ${systemd_LIBRARIES})
 endif()
 
 target_include_directories(
