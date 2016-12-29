@@ -59,7 +59,6 @@ public:
     void setContextProperty(const QString &name, const QVariant &value);
     void setContextProperty(const QString &name, QObject *object);
 
-    bool load(const QString &shell);
     bool loadUrl(const QUrl &url);
 
 Q_SIGNALS:

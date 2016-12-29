@@ -182,60 +182,6 @@ void HomeApplication::setNotificationEnabled(bool notify)
 #endif
 }
 
-bool HomeApplication::load(const QString &shell)
-{
-    Q_D(HomeApplication);
-
-    // Do not run if already running
-    if (d->running) {
-        qCWarning(gLcCore) << "Compositor already running";
-        return false;
-    }
-
-    // Check whether XDG_RUNTIME_DIR is ok or not
-    d->verifyXdgRuntimeDir();
-
-    // Load the shell
-    QStringList files =
-            QStandardPaths::locateAll(
-                QStandardPaths::GenericDataLocation,
-                QStringLiteral("/liri/shells/%1/metadata.desktop").arg(shell));
-    Q_FOREACH (const QString &file, files) {
-        QSettings metadata(file, QSettings::IniFormat);
-        metadata.setIniCodec("UTF-8");
-        metadata.beginGroup(QStringLiteral("Shell"));
-
-        const QString fileName = metadata.value(
-                    QStringLiteral("MainScript"),
-                    QStringLiteral("Compositor.qml")).toString();
-
-        QFileInfo info(file);
-        const QString fullPath = info.absoluteDir().absoluteFilePath(fileName);
-        qCDebug(gLcCore) << "Loading" << fullPath;
-
-        d->engine->load(fullPath);
-        d->running = true;
-
-#if HAVE_SYSTEMD
-        // Notify systemd when the screen configuration is ready
-        if (d->notify) {
-            qCDebug(gLcCore) << "Compositor ready, notify systemd on" << qgetenv("NOTIFY_SOCKET");
-            sd_notify(0, "READY=1");
-        }
-#endif
-
-        return true;
-    }
-
-    qCWarning(gLcCore) << "Couldn't find shell" << shell;
-#if HAVE_SYSTEMD
-    if (d->notify)
-        sd_notifyf(0, "STATUS=Unable to find %s", qPrintable(shell));
-#endif
-
-    return false;
-}
-
 bool HomeApplication::loadUrl(const QUrl &url)
 {
     Q_D(HomeApplication);
