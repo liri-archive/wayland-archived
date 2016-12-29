@@ -59,8 +59,8 @@ public:
     static QByteArray interfaceName();
 
 Q_SIGNALS:
-    void createGtkSurface(QWaylandSurface *surface,
-                          const QWaylandResource &resource);
+    void gtkSurfaceRequested(QWaylandSurface *surface,
+                             const QWaylandResource &resource);
     void gtkSurfaceCreated(GtkSurface *gtkSurface);
 };
 
