@@ -74,7 +74,6 @@ install(TARGETS lirixwaylandplugin LIBRARY
 
 set(MODULE_FILES
     qmldir
-    XWaylandWindowChrome.qml
 )
 install(FILES ${MODULE_FILES}
         DESTINATION ${QML_INSTALL_DIR}/Liri/XWayland)
