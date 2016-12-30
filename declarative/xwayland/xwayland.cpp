@@ -72,9 +72,6 @@ void XWayland::setCompositor(QWaylandCompositor *compositor)
 
     m_compositor = compositor;
     Q_EMIT compositorChanged();
-
-    connect(m_compositor, &QWaylandCompositor::surfaceCreated,
-            this, &XWayland::handleSurfaceCreated);
 }
 
 bool XWayland::isEnabled() const
@@ -84,14 +81,16 @@ bool XWayland::isEnabled() const
 
 void XWayland::setEnabled(bool enabled)
 {
+    if (m_initialized) {
+        qCWarning(XWAYLAND, "Cannot enable or disable XWayland after initialization");
+        return;
+    }
+
     if (m_enabled == enabled)
         return;
 
     m_enabled = enabled;
     Q_EMIT enabledChanged();
-
-    if (m_enabled && !m_initialized)
-        initialize();
 }
 
 void XWayland::initialize()
@@ -112,11 +111,17 @@ void XWayland::initialize()
         return;
     }
 
+    m_initialized = true;
+
     // Do not continue unless enabled
     if (!m_enabled) {
         qCWarning(XWAYLAND, "XWayland is disabled");
         return;
     }
+
+    // Handle surface cration
+    connect(m_compositor, &QWaylandCompositor::surfaceCreated,
+            this, &XWayland::handleSurfaceCreated);
 
     // Instantiate the server
     m_server = new XWaylandServer(m_compositor, this);
@@ -134,8 +139,6 @@ void XWayland::initialize()
     // Setup server
     if (!m_server->setup())
         qCWarning(XWAYLAND) << "Failed to setup XWayland";
-
-    m_initialized = true;
 }
 
 void XWayland::serverStarted()

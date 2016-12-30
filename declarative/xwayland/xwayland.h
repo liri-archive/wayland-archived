@@ -60,8 +60,6 @@ public:
     void classBegin() Q_DECL_OVERRIDE {}
     void componentComplete() Q_DECL_OVERRIDE { initialize(); }
 
-    void initialize();
-
 Q_SIGNALS:
     void compositorChanged();
     void enabledChanged();
@@ -80,6 +78,8 @@ private:
     XWaylandServer *m_server;
     QThread *m_serverThread;
     XWaylandManager *m_manager;
+
+    void initialize();
 };
 
 #endif // XWAYLAND_H
