@@ -29,6 +29,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QLoggingCategory>
+#include <QtCore/QThread>
 #include <QtQml/QQmlParserStatus>
 
 #include <QtWaylandCompositor/QWaylandSurface>
@@ -77,6 +78,7 @@ private:
     bool m_enabled;
     bool m_initialized;
     XWaylandServer *m_server;
+    QThread *m_serverThread;
     XWaylandManager *m_manager;
 };
 

@@ -44,6 +44,7 @@ XWayland::XWayland(QObject *parent)
     , m_enabled(false)
     , m_initialized(false)
     , m_server(Q_NULLPTR)
+    , m_serverThread(new QThread())
     , m_manager(Q_NULLPTR)
 {
 }
@@ -51,6 +52,10 @@ XWayland::XWayland(QObject *parent)
 XWayland::~XWayland()
 {
     delete m_server;
+
+    m_serverThread->quit();
+    m_serverThread->wait();
+    delete m_serverThread;
 }
 
 QWaylandCompositor *XWayland::compositor() const
@@ -107,6 +112,7 @@ void XWayland::initialize()
     m_server = new XWaylandServer(m_compositor, this);
     connect(m_server, &XWaylandServer::started,
             this, &XWayland::serverStarted);
+    m_server->moveToThread(m_serverThread);
 
     // Window manager
     m_manager = new XWaylandManager(m_server, this);
@@ -115,13 +121,9 @@ void XWayland::initialize()
     connect(m_manager, &XWaylandManager::shellSurfaceRemoved,
             this, &XWayland::shellSurfaceClosed);
 
-    // FIXME: Start after 2,5s to avoid blocking the event loop,
-    // it should probably be started once all QQuickViews
-    // has loaded the scene
-    QTimer::singleShot(2500, [&] {
-        if (!m_server->setup())
-            qCWarning(XWAYLAND) << "Failed to setup XWayland";
-    });
+    // Setup server
+    if (!m_server->setup())
+        qCWarning(XWAYLAND) << "Failed to setup XWayland";
 
     m_initialized = true;
 }
