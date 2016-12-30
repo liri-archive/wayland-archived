@@ -96,6 +96,16 @@ void XWayland::setEnabled(bool enabled)
 
 void XWayland::initialize()
 {
+    // Try to find a compositor among parents
+    if (!m_compositor) {
+        for (QObject *p = parent(); p != nullptr; p = p->parent()) {
+            if (auto c = qobject_cast<QWaylandCompositor *>(p)) {
+                setCompositor(c);
+                break;
+            }
+        }
+    }
+
     // Check whether we have a compositor assigned
     if (!m_compositor) {
         qCWarning(XWAYLAND, "Please assign a compositor to XWayland");
