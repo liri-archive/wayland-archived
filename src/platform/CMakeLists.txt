@@ -14,6 +14,7 @@ set_package_properties(Libinput PROPERTIES
 
 # gio
 pkg_check_modules(gio gio-2.0 REQUIRED)
+pkg_check_modules(glib glib-2.0 REQUIRED)
 
 # libdl
 find_package(Libdl REQUIRED)
@@ -95,6 +96,7 @@ target_link_libraries(LiriPlatform
         ${UDEV_LIBS}
         ${xkbcommon_LIBRARIES}
         ${gio_LIBRARIES}
+        ${glib_LIBRARIES}
         Qt5FontDatabaseSupport::Qt5FontDatabaseSupport
         Qt5ThemeSupport::Qt5ThemeSupport
         Qt5ServiceSupport::Qt5ServiceSupport
