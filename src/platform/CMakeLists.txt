@@ -12,9 +12,9 @@ set_package_properties(Libinput PROPERTIES
     TYPE REQUIRED
     PURPOSE "Required for input handling from the QPA plugin")
 
-# gio
-pkg_check_modules(gio gio-2.0 REQUIRED)
-pkg_check_modules(glib glib-2.0 REQUIRED)
+# glib
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(glib glib-2.0 gthread-2.0 REQUIRED)
 
 # libdl
 find_package(Libdl REQUIRED)
@@ -95,7 +95,6 @@ target_link_libraries(LiriPlatform
         EGL::EGL
         ${UDEV_LIBS}
         ${xkbcommon_LIBRARIES}
-        ${gio_LIBRARIES}
         ${glib_LIBRARIES}
         Qt5FontDatabaseSupport::Qt5FontDatabaseSupport
         Qt5ThemeSupport::Qt5ThemeSupport
