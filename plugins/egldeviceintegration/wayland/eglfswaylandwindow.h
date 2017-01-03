@@ -99,6 +99,7 @@ private:
 
     bool m_created;
     mutable bool m_resize;
+    bool m_presented;
 };
 
 } // namespace Platform

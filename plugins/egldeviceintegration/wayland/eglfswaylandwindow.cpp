@@ -67,6 +67,7 @@ EglFSWaylandWindow::EglFSWaylandWindow(EglFSWaylandIntegration *integration,
     , m_contentFBO(Q_NULLPTR)
     , m_created(false)
     , m_resize(false)
+    , m_presented(false)
 {
     m_surface = m_integration->compositor()->createSurface(this);
 
@@ -243,12 +244,14 @@ void EglFSWaylandWindow::setVisible(bool visible)
 void EglFSWaylandWindow::windowEvent(QEvent *event)
 {
     if (QEvent::Expose) {
-        if (isExposed()) {
+        if (isExposed() && !m_presented) {
             if (m_integration->fullScreenShell())
                 m_integration->fullScreenShell()->presentSurface(m_surface, m_output);
-        } else {
+            m_presented = true;
+        } else if (!isExposed() && m_presented) {
             if (m_integration->fullScreenShell())
                 m_integration->fullScreenShell()->hideOutput(m_output);
+            m_presented = false;
         }
     }
 
