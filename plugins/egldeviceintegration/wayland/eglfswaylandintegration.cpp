@@ -29,6 +29,7 @@
 #include <QtGui/QSurface>
 #include <QtGui/private/qguiapplication_p.h>
 #include <QtGui/qpa/qplatformintegration.h>
+#include <QtEglSupport/private/qt_egl_p.h>
 #include <QtPlatformHeaders/QEGLNativeContext>
 
 #include <Liri/Platform/EglFSIntegration>
