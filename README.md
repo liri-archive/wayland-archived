@@ -22,9 +22,8 @@ This project includes:
 * Screen configuration
 * Qt-style API for udev, logind and libinput
 * QPA plugin
+* QtWaylandClient fullscreen shell integration
 * Pluggable hardware abstraction with support for:
-  * X11
-  * Wayland
   * DRM/KMS
   * All Raspberry Pi boards
   * Mali
@@ -249,4 +248,3 @@ to learn how to enable them.
 
 * EGL Device Integrations:
   * **liri.qpa.kms:** KMS/DRM EGL device integration
-  * **liri.qpa.wayland:** Wayland EGL device integration

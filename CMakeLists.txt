@@ -30,7 +30,6 @@ endif()
 # Options
 option(ENABLE_XWAYLAND "Enables XWayland support" ON)
 option(ENABLE_EGLDEVICEINTEGRATION_KMS "Enables DRM/KMS device integration" ON)
-option(ENABLE_EGLDEVICEINTEGRATION_X11 "Enables X11 device integration" ON)
 option(ENABLE_EGLDEVICEINTEGRATION_BRCM "Enables Broadcom device integration" ON)
 option(ENABLE_EGLDEVICEINTEGRATION_MALI "Enables Mali device integration" OFF)
 option(ENABLE_EGLDEVICEINTEGRATION_VIV "Enables Vivante device integration" OFF)
@@ -116,7 +115,7 @@ endif()
 find_package(BcmHost)
 
 # X11
-if(ENABLE_XWAYLAND OR ENABLE_EGLDEVICEINTEGRATION_X11)
+if(ENABLE_XWAYLAND)
     find_package(X11)
     set_package_properties(X11 PROPERTIES
         TYPE REQUIRED
