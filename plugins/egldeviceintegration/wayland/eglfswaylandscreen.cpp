@@ -95,7 +95,7 @@ QPlatformCursor *EglFSWaylandScreen::cursor() const
 
 qreal EglFSWaylandScreen::refreshRate() const
 {
-    return m_output->refreshRate();
+    return m_output->refreshRate() / 1000;
 }
 
 } // namespace Platform
