@@ -79,7 +79,7 @@ endif()
 # Find Qt5
 set(REQUIRED_QT_VERSION "5.8.0")
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED
-             Core DBus Gui Qml Quick WaylandCompositor)
+             Core DBus Gui Qml Quick WaylandClient WaylandCompositor)
 
 # Find QtWaylandScanner
 find_package(QtWaylandScanner REQUIRED)

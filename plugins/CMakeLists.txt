@@ -4,3 +4,4 @@ if(ENABLE_ONLY_EGLDEVICEINTEGRATION)
 endif()
 
 add_subdirectory(egldeviceintegration)
+add_subdirectory(shellintegrations)
