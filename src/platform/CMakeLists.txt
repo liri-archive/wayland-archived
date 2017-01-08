@@ -78,7 +78,7 @@ target_include_directories(LiriPlatform
     PUBLIC
         ${UDEV_INCLUDE_DIR}
         ${xkbcommon_INCLUDE_DIRS}
-        ${gio_INCLUDE_DIR}
+        ${glib_INCLUDE_DIR}
     PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
         "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
