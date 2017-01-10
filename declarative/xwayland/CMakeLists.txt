@@ -36,6 +36,8 @@ include_directories(
     ${Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS}
 )
 
+add_definitions(-DQT_WAYLAND_COMPOSITOR_QUICK)
+
 set(SOURCES
     plugin.cpp
     xcbatom.cpp

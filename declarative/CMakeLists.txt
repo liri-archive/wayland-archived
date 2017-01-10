@@ -1,4 +1,5 @@
 add_subdirectory(server)
+add_subdirectory(server-private)
 if(ENABLE_XWAYLAND)
     add_subdirectory(xwayland)
 endif()
