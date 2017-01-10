@@ -2,6 +2,8 @@ include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
 )
 
+add_definitions(-DQT_WAYLAND_COMPOSITOR_QUICK)
+
 set(SOURCES
     plugin.cpp
     chromeitem.cpp
