@@ -43,6 +43,8 @@
 #include "eglfskmsdevice.h"
 #include "eglfskmscursor.h"
 
+#include <math.h>
+
 namespace Liri {
 
 namespace Platform {
@@ -249,7 +251,10 @@ QDpi EglFSKmsScreen::logicalDpi() const
 
 qreal EglFSKmsScreen::pixelDensity() const
 {
-    return qRound(logicalDpi().first / qreal(100));
+    qreal density = floor(logicalDpi().first / qreal(100));
+    if (density < 1.0)
+        density = 1.0;
+    return density;
 }
 
 Qt::ScreenOrientation EglFSKmsScreen::nativeOrientation() const
