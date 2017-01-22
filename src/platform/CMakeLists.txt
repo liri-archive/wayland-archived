@@ -35,7 +35,6 @@ set_package_properties(Freetype PROPERTIES
     PURPOSE "Required by the QPA plugin")
 find_package(Fontconfig REQUIRED)
 set_package_properties(Fontconfig PROPERTIES
-    DESCRIPTION "Font access configuration library"
     URL "http://www.freedesktop.org/wiki/Software/fontconfig"
     TYPE REQUIRED
     PURPOSE "Required by the QPA plugin")
@@ -98,7 +97,7 @@ target_link_libraries(LiriPlatform
                       ${glib_LIBRARIES}
                       Libdl::Libdl
                       Libinput::Libinput
-                      ${FONTCONFIG_LIBRARIES}
+                      Fontconfig::Fontconfig
                       ${FREETYPE_LIBRARIES}
 )
 
