@@ -35,11 +35,6 @@ set(SOURCES
 )
 
 ecm_add_qtwayland_server_protocol(SOURCES
-    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/wayland/wayland.xml"
-    BASENAME wayland
-    PREFIX wl_
-)
-ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/liri/liri.xml"
     BASENAME liri
     PREFIX liri_
