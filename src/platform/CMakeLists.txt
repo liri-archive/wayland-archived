@@ -1,10 +1,8 @@
 # udev
 find_package(UDev)
 set_package_properties(UDev PROPERTIES
-    DESCRIPTION "Linux device library"
-    URL "http://www.freedesktop.org/software/systemd/libudev/"
     TYPE REQUIRED
-    PURPOSE "Required to access devices from the QPA plugin")
+    PURPOSE "Required for input handling from the QPA plugin")
 
 # libinput
 find_package(Libinput 0.12)
@@ -77,7 +75,6 @@ add_library(Liri::Platform ALIAS LiriPlatform)
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
-    ${UDEV_INCLUDE_DIR}
     ${xkbcommon_INCLUDE_DIRS}
     ${glib_INCLUDE_DIR}
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
@@ -90,7 +87,7 @@ target_link_libraries(LiriPlatform
                       Qt5::DBus
                       Qt5::Gui
                       EGL::EGL
-                      ${UDEV_LIBS}
+                      UDev::UDev
                       ${xkbcommon_LIBRARIES}
                       Qt5FontDatabaseSupport::Qt5FontDatabaseSupport
                       Qt5ThemeSupport::Qt5ThemeSupport
