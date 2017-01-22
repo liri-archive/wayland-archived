@@ -86,23 +86,23 @@ include_directories(
 )
 
 target_link_libraries(LiriPlatform
-        Qt5::Core
-        Qt5::DBus
-        Qt5::Gui
-        EGL::EGL
-        ${UDEV_LIBS}
-        ${xkbcommon_LIBRARIES}
-        ${glib_LIBRARIES}
-        Qt5FontDatabaseSupport::Qt5FontDatabaseSupport
-        Qt5ThemeSupport::Qt5ThemeSupport
-        Qt5ServiceSupport::Qt5ServiceSupport
-        Qt5EventDispatcherSupport::Qt5EventDispatcherSupport
-        Qt5PlatformCompositorSupport::Qt5PlatformCompositorSupport
-        Qt5EglSupport::Qt5EglSupport
-        Libdl::Libdl
-        Libinput::Libinput
-        ${FONTCONFIG_LIBRARIES}
-        ${FREETYPE_LIBRARIES}
+                      Qt5::Core
+                      Qt5::DBus
+                      Qt5::Gui
+                      EGL::EGL
+                      ${UDEV_LIBS}
+                      ${xkbcommon_LIBRARIES}
+                      Qt5FontDatabaseSupport::Qt5FontDatabaseSupport
+                      Qt5ThemeSupport::Qt5ThemeSupport
+                      Qt5ServiceSupport::Qt5ServiceSupport
+                      Qt5EventDispatcherSupport::Qt5EventDispatcherSupport
+                      Qt5PlatformCompositorSupport::Qt5PlatformCompositorSupport
+                      Qt5EglSupport::Qt5EglSupport
+                      ${glib_LIBRARIES}
+                      Libdl::Libdl
+                      Libinput::Libinput
+                      ${FONTCONFIG_LIBRARIES}
+                      ${FREETYPE_LIBRARIES}
 )
 
 if(${Qt5Gui_OPENGL_IMPLEMENTATION} STREQUAL "GL")
