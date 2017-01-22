@@ -74,21 +74,18 @@ add_library(LiriPlatform SHARED ${SOURCES})
 generate_export_header(LiriPlatform EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/platform/liriplatform_export.h")
 add_library(Liri::Platform ALIAS LiriPlatform)
 
-target_include_directories(LiriPlatform
-    PUBLIC
-        ${UDEV_INCLUDE_DIR}
-        ${xkbcommon_INCLUDE_DIRS}
-        ${glib_INCLUDE_DIR}
-    PRIVATE
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
-        ${Qt5Core_PRIVATE_INCLUDE_DIRS}
-        ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
-        ${Libdl_INCLUDE_DIR}
+include_directories(
+    "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
+    "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
+    ${UDEV_INCLUDE_DIR}
+    ${xkbcommon_INCLUDE_DIRS}
+    ${glib_INCLUDE_DIR}
+    ${Qt5Core_PRIVATE_INCLUDE_DIRS}
+    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+    ${Libdl_INCLUDE_DIR}
 )
 
 target_link_libraries(LiriPlatform
-    PUBLIC
         Qt5::Core
         Qt5::DBus
         Qt5::Gui
@@ -102,7 +99,6 @@ target_link_libraries(LiriPlatform
         Qt5EventDispatcherSupport::Qt5EventDispatcherSupport
         Qt5PlatformCompositorSupport::Qt5PlatformCompositorSupport
         Qt5EglSupport::Qt5EglSupport
-    PRIVATE
         Libdl::Libdl
         Libinput::Libinput
         ${FONTCONFIG_LIBRARIES}
@@ -110,9 +106,9 @@ target_link_libraries(LiriPlatform
 )
 
 if(${Qt5Gui_OPENGL_IMPLEMENTATION} STREQUAL "GL")
-    target_link_libraries(LiriPlatform PUBLIC ${OPENGL_LIBRARIES})
+    target_link_libraries(LiriPlatform ${OPENGL_LIBRARIES})
 else()
-    target_link_libraries(LiriPlatform PUBLIC ${OPENGLES_LIBRARIES})
+    target_link_libraries(LiriPlatform ${OPENGLES_LIBRARIES})
 endif()
 
 target_include_directories(
