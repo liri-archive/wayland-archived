@@ -44,7 +44,9 @@
         QList<QObject *> m_objects; \
     };
 
+Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(QWaylandWlShell)
 LIRI_DECLARE_QUICK_EXTENSION_CHILDREN_CLASS(QWaylandWlShellSurface)
+Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(QWaylandXdgShellV5)
 LIRI_DECLARE_QUICK_EXTENSION_CHILDREN_CLASS(QWaylandXdgSurfaceV5)
 LIRI_DECLARE_QUICK_EXTENSION_CHILDREN_CLASS(QWaylandXdgPopupV5)
 
@@ -61,7 +63,9 @@ void LiriWaylandServerPrivatePlugin::registerTypes(const char *uri)
     // @uri Liri.WaylandServer.Private
     Q_ASSERT(QLatin1String(uri) == QLatin1String("Liri.WaylandServer.Private"));
 
+    qmlRegisterType<QWaylandWlShellQuickExtension>(uri, 1, 0, "WlShell");
     qmlRegisterType<QWaylandWlShellSurfaceQuickExtensionChildren>(uri, 1, 0, "WlShellSurface");
+    qmlRegisterType<QWaylandXdgShellV5QuickExtension>(uri, 1, 0, "XdgShellV5");
     qmlRegisterUncreatableType<QWaylandXdgShellV5>(uri, 1, 0, "XdgShellV5Base", QObject::tr("Cannot create instance of XdgShellV5Base"));
     qmlRegisterType<QWaylandXdgSurfaceV5QuickExtensionChildren>(uri, 1, 0, "XdgSurfaceV5");
     qmlRegisterType<QWaylandXdgPopupV5QuickExtensionChildren>(uri, 1, 0, "XdgPopupV5");
