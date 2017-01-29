@@ -108,6 +108,10 @@ if(BUILD_HACK)
         "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}"
         "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}/QtWaylandCompositor"
     )
+    set(Qt5Quick_PRIVATE_INCLUDE_DIRS
+        "${_qt5Quick_install_prefix}/include/qt/QtQuick/${Qt5Quick_VERSION}"
+        "${_qt5Quick_install_prefix}/include/qt/QtQuick/${Qt5Quick_VERSION}/QtQuick"
+    )
 endif()
 
 # OpenGL
