@@ -35,6 +35,7 @@ option(ENABLE_EGLDEVICEINTEGRATION_MALI "Enables Mali device integration" OFF)
 option(ENABLE_EGLDEVICEINTEGRATION_VIV "Enables Vivante device integration" OFF)
 option(ENABLE_ONLY_EGLDEVICEINTEGRATION "Build and install only device integration plugins" OFF)
 option(USE_LOCAL_WAYLAND_PROTOCOLS "Use a local copy of Wayland protocol" OFF)
+option(BUILD_HACK "Build hack for Arch Linux" OFF)
 
 # Enable QML debugger for debug or release with debug info builds
 if(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb]")
@@ -91,6 +92,18 @@ if(Qt5WaylandClient_PRIVATE_INCLUDE_DIRS STREQUAL "")
     )
 endif()
 if(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS STREQUAL "")
+    set(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS
+        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}"
+        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}/QtWaylandCompositor"
+    )
+endif()
+
+# Hack for Arch Linux where private include dirs are badly defined
+if(BUILD_HACK)
+    set(Qt5WaylandClient_PRIVATE_INCLUDE_DIRS
+        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}"
+        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}/QtWaylandClient"
+    )
     set(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS
         "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}"
         "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}/QtWaylandCompositor"
