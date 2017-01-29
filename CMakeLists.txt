@@ -83,6 +83,20 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED
 # Find QtWaylandScanner
 find_package(QtWaylandScanner REQUIRED)
 
+# Hack because QtWayland doesn't set this at all
+if(Qt5WaylandClient_PRIVATE_INCLUDE_DIRS STREQUAL "")
+    set(Qt5WaylandClient_PRIVATE_INCLUDE_DIRS
+        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}"
+        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}/QtWaylandClient"
+    )
+endif()
+if(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS STREQUAL "")
+    set(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS
+        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}"
+        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}/QtWaylandCompositor"
+    )
+endif()
+
 # OpenGL
 find_package(OpenGL)
 set_package_properties(OpenGL PROPERTIES
