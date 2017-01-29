@@ -1,5 +1,6 @@
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../../headers"
+    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
     ${Qt5WaylandClient_PRIVATE_INCLUDE_DIRS}
 )
 
