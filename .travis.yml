@@ -30,7 +30,6 @@ arch:
     - make
     #- sudo make install
     #- xvfb-run -a -s "-screen 0 800x600x24" make test
-    - if [ "$CC" = "gcc" -a "$TRAVIS_BRANCH" = "develop" ]; then ./.travis/bintray.sh; fi
     - ./.travis/bintray-wrapper.sh
 
 script:
