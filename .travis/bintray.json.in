@@ -23,7 +23,7 @@
   },
   "files": [
     {"includePattern": "cibuild/(liri-wayland-git-.*.pkg.tar.xz)", "uploadPattern": "@ARCH@/$1", "matrixParams": {"override": 1}},
-    {"includePattern": "cibuild/(liri-wayland.db.tar.gz)", "uploadPattern": "@ARCH@/liri-wayland.db", "matrixParams": {"override": 1}}
+    {"includePattern": "cibuild/(wayland.db.tar.gz)", "uploadPattern": "@ARCH@/wayland.db", "matrixParams": {"override": 1}}
   ],
   "publish": true
 }
