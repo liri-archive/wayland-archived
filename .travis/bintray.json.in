@@ -2,7 +2,7 @@
   "package": {
     "name": "liri-wayland",
     "repo": "archlinux-@GITBRANCH@",
-    "subject": "liri-wayland",
+    "subject": "liri",
     "desc": "Wayland client and server library for QtQuick",
     "website_url": "https://liri.io",
     "issue_tracker_url": "https://github.com/lirios/wayland",
