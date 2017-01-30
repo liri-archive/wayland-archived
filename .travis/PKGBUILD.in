@@ -3,21 +3,21 @@
 pkgname=liri-wayland-git
 pkgver=@PKGVER@
 pkgrel=1
-pkgdesc="Wayland client and server libraries for QtQuick"
+pkgdesc="QtWayland additions and QPA plugin"
 arch=('i686' 'x86_64' 'armv6h' 'armv7h')
 url='https://liri.io'
-license=('GPL2' 'GPL3' 'LGPL3')
+license=('GPL3')
 depends=('systemd' 'wayland-protocols' 'libdrm' 'libinput' 'qt5-declarative' 'qt5-wayland'
-         'xkeyboard-config' 'libxkbcommon' 'fontconfig' 'freetype2')
+         'xkeyboard-config' 'libxkbcommon' 'glib2' 'fontconfig' 'freetype2')
 makedepends=('git' 'extra-cmake-modules' 'xcb-util-cursor' 'libxcursor')
+provides=('liri-wayland')
 conflicts=('greenisland' 'greenisland-git' 'liri-wayland')
 replaces=('greenisland' 'greenisland-git' 'liri-wayland')
-provides=('liri-wayland')
 groups=('liri-git')
 
 _gitroot="git://github.com/lirios/wayland.git"
 _gitbranch=@GITBRANCH@
-_gitname=liri-wayland
+_gitname=wayland
 source=(${_gitname}::${_gitroot}#branch=${_gitbranch})
 md5sums=('SKIP')
 
@@ -34,11 +34,10 @@ build() {
 	cd build
 	cmake ../${_gitname} \
 		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DLIB_INSTALL_DIR=lib \
-		-DLIBEXEC_INSTALL_DIR=lib \
-		-DQML_INSTALL_DIR=lib/qt/qml \
-		-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-		-DCMAKE_BUILD_TYPE=RelWithDebInfo
+		-DCMAKE_BUILD_TYPE=Release \
+		-DKDE_INSTALL_LIBDIR=lib \
+		-DKDE_INSTALL_LIBEXECDIR=lib \
+		-DBUILD_HACK=ON
 	make
 }
 
