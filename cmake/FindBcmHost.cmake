@@ -78,6 +78,20 @@ find_library(BcmHost_LIBRARY
         "${BcmHost_PREFIX}/lib"
 )
 
+find_library(GLESv2_LIBRARY
+    NAMES
+        GLESv2
+    HINTS
+        "${BcmHost_PREFIX}/lib"
+)
+
+find_library(EGL_LIBRARY
+    NAMES
+        EGL
+    HINTS
+        "${BcmHost_PREFIX}/lib"
+)
+
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(BcmHost
     FOUND_VAR
@@ -98,7 +112,7 @@ if(BcmHost_FOUND)
     if(NOT TARGET BcmHost::BcmHost)
         add_library(BcmHost::BcmHost UNKNOWN IMPORTED)
         set_target_properties(BcmHost::BcmHost PROPERTIES
-            IMPORTED_LOCATION "-L${BcmHost_LIBRARY_DIRS} ${BcmHost_LIBRARY}"
+            IMPORTED_LOCATION "${BcmHost_LIBRARY}"
             INTERFACE_INCLUDE_DIRECTORIES "${BcmHost_INCLUDE_DIR}"
         )
     endif()
@@ -106,7 +120,7 @@ if(BcmHost_FOUND)
     if(NOT TARGET BcmHost::GLESv2)
         add_library(BcmHost::GLESv2 UNKNOWN IMPORTED)
         set_target_properties(BcmHost::GLESv2 PROPERTIES
-            IMPORTED_LOCATION "-L${BcmHost_LIBRARY_DIRS} -lGLESv2"
+            IMPORTED_LOCATION "${GLESv2_LIBRARY}"
             INTERFACE_INCLUDE_DIRECTORIES "${BcmHost_INCLUDE_DIR}"
         )
     endif()
@@ -114,7 +128,7 @@ if(BcmHost_FOUND)
     if(NOT TARGET BcmHost::EGL)
         add_library(BcmHost::EGL UNKNOWN IMPORTED)
         set_target_properties(BcmHost::EGL PROPERTIES
-            IMPORTED_LOCATION "-L${BcmHost_LIBRARY_DIRS} -lEGL"
+            IMPORTED_LOCATION "${EGL_LIBRARY}"
             INTERFACE_INCLUDE_DIRECTORIES "${BcmHost_INCLUDE_DIR}"
         )
     endif()
@@ -123,7 +137,7 @@ endif()
 mark_as_advanced(BcmHost_LIBRARY BcmHost_INCLUDE_DIR)
 
 # Compatibility variables
-set(BcmHost_LIBRARIES "-L${BcmHost_LIBRARY_DIRS} -lGLESv2 -lEGL -lm -lbcm_host")
+set(BcmHost_LIBRARIES ${BcmHost_LIBRARY} ${GLESv2_LIBRARY} ${EGL_LIBRARY})
 set(BcmHost_INCLUDE_DIRS ${BcmHost_INCLUDE_DIR})
 
 include(FeatureSummary)
