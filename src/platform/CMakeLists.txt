@@ -11,8 +11,7 @@ set_package_properties(Libinput PROPERTIES
     PURPOSE "Required for input handling from the QPA plugin")
 
 # glib
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(glib glib-2.0 gthread-2.0 REQUIRED)
+find_package(GLib REQUIRED)
 
 # libdl
 find_package(Libdl REQUIRED)
@@ -75,7 +74,6 @@ include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
     ${xkbcommon_INCLUDE_DIRS}
-    ${glib_INCLUDE_DIR}
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
     ${Libdl_INCLUDE_DIR}
@@ -94,7 +92,8 @@ target_link_libraries(LiriPlatform
                       Qt5EventDispatcherSupport::Qt5EventDispatcherSupport
                       Qt5PlatformCompositorSupport::Qt5PlatformCompositorSupport
                       Qt5EglSupport::Qt5EglSupport
-                      ${glib_LIBRARIES}
+                      GLib::GLib
+                      GLib::GThread
                       Libdl::Libdl
                       Libinput::Libinput
                       Fontconfig::Fontconfig
