@@ -38,6 +38,13 @@
 
 #define SCREENSHOT_FORMAT WL_SHM_FORMAT_ARGB8888
 
+// C11 compatible variant, stolen from OpenMandriva and further improved:
+// https://github.com/OpenMandrivaAssociation/wayland/blob/master/wayland-1.10.0-wl_array_for_each-clang%2B%2B.patch
+#define wl_array_for_each_c11(pos, array)				\
+    for (pos = (uintptr_t) (array)->data;					\
+         (uintptr_t) pos < ((uintptr_t) (array)->data + (array)->size); \
+         (pos)++)
+
 namespace Liri {
 
 namespace WaylandServer {
@@ -61,8 +68,8 @@ void ScreenshooterPrivate::screenshooter_capture_output(Resource *resource,
 
     Screenshooter::Effects effects = 0;
 
-    void *pos;
-    wl_array_for_each(pos, e) {
+    uintptr_t pos;
+    wl_array_for_each_c11(pos, e) {
         effects &= static_cast<Screenshooter::Effect>(*reinterpret_cast<quint32 *>(pos));
     }
 
@@ -83,8 +90,8 @@ void ScreenshooterPrivate::screenshooter_capture_active(Resource *resource,
 
     Screenshooter::Effects effects = 0;
 
-    void *pos;
-    wl_array_for_each(pos, e) {
+    uintptr_t pos;
+    wl_array_for_each_c11(pos, e) {
         effects &= static_cast<Screenshooter::Effect>(*reinterpret_cast<quint32 *>(pos));
     }
 
@@ -104,8 +111,8 @@ void ScreenshooterPrivate::screenshooter_capture_surface(Resource *resource,
 
     Screenshooter::Effects effects = 0;
 
-    void *pos;
-    wl_array_for_each(pos, e) {
+    uintptr_t pos;
+    wl_array_for_each_c11(pos, e) {
         effects &= static_cast<Screenshooter::Effect>(*reinterpret_cast<quint32 *>(pos));
     }
 
@@ -125,8 +132,8 @@ void ScreenshooterPrivate::screenshooter_capture_area(Resource *resource,
 
     Screenshooter::Effects effects = 0;
 
-    void *pos;
-    wl_array_for_each(pos, e) {
+    uintptr_t pos;
+    wl_array_for_each_c11(pos, e) {
         effects &= static_cast<Screenshooter::Effect>(*reinterpret_cast<quint32 *>(pos));
     }
 
