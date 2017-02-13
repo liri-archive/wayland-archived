@@ -246,8 +246,6 @@ void ScreencastPrivate::screencast_setup(int32_t width, int32_t height,
 void ScreencastPrivate::screencast_frame(struct ::wl_buffer *buffer,
                                          uint32_t time, int32_t transform)
 {
-    Q_Q(Screencast);
-
     // Serialize frame recording
     QMutexLocker locker(&recordMutex);
     recordFrame();

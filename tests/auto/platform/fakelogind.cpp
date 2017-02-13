@@ -121,12 +121,15 @@ QDBusObjectPath FakeLogind::GetSessionByPID(quint32 pid)
 
 int FakeLogind::TakeDevice(int maj, int min)
 {
-return -1;
+    Q_UNUSED(maj);
+    Q_UNUSED(min);
+    return -1;
 }
 
 void FakeLogind::ReleaseDevice(int maj, int min)
 {
-
+    Q_UNUSED(maj);
+    Q_UNUSED(min);
 }
 
 #include "moc_fakelogind.cpp"

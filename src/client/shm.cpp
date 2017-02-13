@@ -69,7 +69,6 @@ QList<Shm::Format> Shm::formats() const
 
 ShmPool *Shm::createPool(size_t size)
 {
-    Q_D(Shm);
     ShmPool *pool = new ShmPool(this);
     ShmPoolPrivate *dPool = ShmPoolPrivate::get(pool);
     if (!dPool->createPool(this, size)) {
