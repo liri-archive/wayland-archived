@@ -35,7 +35,6 @@ option(ENABLE_EGLDEVICEINTEGRATION_MALI "Enables Mali device integration" OFF)
 option(ENABLE_EGLDEVICEINTEGRATION_VIV "Enables Vivante device integration" OFF)
 option(ENABLE_ONLY_EGLDEVICEINTEGRATION "Build and install only device integration plugins" OFF)
 option(USE_LOCAL_WAYLAND_PROTOCOLS "Use a local copy of Wayland protocol" OFF)
-option(BUILD_HACK "Build hack for Arch Linux" OFF)
 
 # Enable QML debugger for debug or release with debug info builds
 if(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb]")
@@ -85,38 +84,24 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED
 find_package(QtWaylandScanner REQUIRED)
 
 # Hack because QtWayland doesn't set this at all
-if(Qt5WaylandClient_PRIVATE_INCLUDE_DIRS STREQUAL "")
-    set(Qt5WaylandClient_PRIVATE_INCLUDE_DIRS
-        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}"
-        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}/QtWaylandClient"
-    )
-endif()
-if(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS STREQUAL "")
-    set(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS
-        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}"
-        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}/QtWaylandCompositor"
-    )
-endif()
+foreach(_dir ${_Qt5WaylandClient_OWN_INCLUDE_DIRS})
+    list(APPEND Qt5WaylandClient_PRIVATE_INCLUDE_DIRS "${_dir}/QtWaylandClient/${Qt5WaylandClient_VERSION}")
+    list(APPEND Qt5WaylandClient_PRIVATE_INCLUDE_DIRS "${_dir}/QtWaylandClient/${Qt5WaylandClient_VERSION}/QtWaylandClient")
+endforeach()
+foreach(_dir ${_Qt5WaylandCompositor_OWN_INCLUDE_DIRS})
+    list(APPEND Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS "${_dir}/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}")
+    list(APPEND Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS "${_dir}/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}/QtWaylandCompositor")
+endforeach()
 
-# Hack for Arch Linux where private include dirs are badly defined
-if(BUILD_HACK)
-    set(Qt5WaylandClient_PRIVATE_INCLUDE_DIRS
-        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}"
-        "${_qt5WaylandClient_install_prefix}/include/qt/QtWaylandClient/${Qt5WaylandClient_VERSION}/QtWaylandClient"
-    )
-    set(Qt5WaylandCompositor_PRIVATE_INCLUDE_DIRS
-        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}"
-        "${_qt5WaylandCompositor_install_prefix}/include/qt/QtWaylandCompositor/${Qt5WaylandCompositor_VERSION}/QtWaylandCompositor"
-    )
-    set(Qt5Qml_PRIVATE_INCLUDE_DIRS
-        "${_qt5Qml_install_prefix}/include/qt/QtQml/${Qt5Qml_VERSION}"
-        "${_qt5Qml_install_prefix}/include/qt/QtQml/${Qt5Qml_VERSION}/QtQml"
-    )
-    set(Qt5Quick_PRIVATE_INCLUDE_DIRS
-        "${_qt5Quick_install_prefix}/include/qt/QtQuick/${Qt5Quick_VERSION}"
-        "${_qt5Quick_install_prefix}/include/qt/QtQuick/${Qt5Quick_VERSION}/QtQuick"
-    )
-endif()
+# Hack because QtQml and QtQuick don't set this at all
+foreach(_dir ${_Qt5Qml_OWN_INCLUDE_DIRS})
+    list(APPEND Qt5Qml_PRIVATE_INCLUDE_DIRS "${_dir}/QtQml/${Qt5Qml_VERSION}")
+    list(APPEND Qt5Qml_PRIVATE_INCLUDE_DIRS "${_dir}/QtQml/${Qt5Qml_VERSION}/QtQml")
+endforeach()
+foreach(_dir ${_Qt5Quick_OWN_INCLUDE_DIRS})
+    list(APPEND Qt5Quick_PRIVATE_INCLUDE_DIRS "${_dir}/QtQuick/${Qt5Quick_VERSION}")
+    list(APPEND Qt5Quick_PRIVATE_INCLUDE_DIRS "${_dir}/QtQuick/${Qt5Quick_VERSION}/QtQuick")
+endforeach()
 
 # OpenGL
 find_package(OpenGL)

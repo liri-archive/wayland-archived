@@ -26,7 +26,7 @@ arch:
     - libxcursor
     - xorg-server-xvfb
   script:
-    - cmake . -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_HACK=ON
+    - cmake . -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DCMAKE_INSTALL_PREFIX=/usr
     - make
     #- sudo make install
     #- xvfb-run -a -s "-screen 0 800x600x24" make test
