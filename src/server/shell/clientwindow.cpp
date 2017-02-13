@@ -362,8 +362,6 @@ void ClientWindowPrivate::_q_xdgSurfaceCreated(QWaylandXdgSurfaceV5 *xdgSurface)
 
 void ClientWindowPrivate::_q_xdgPopupCreated(QWaylandXdgPopupV5 *xdgPopup)
 {
-    Q_Q(ClientWindow);
-
     if (xdgPopup->surface() != surface)
         return;
 

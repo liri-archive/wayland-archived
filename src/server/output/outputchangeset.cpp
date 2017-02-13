@@ -68,7 +68,6 @@ QWaylandOutput *OutputChangeset::output() const
 
 bool OutputChangeset::isEnabledChanged() const
 {
-    Q_D(const OutputChangeset);
     // TODO: Uncomment when enabled is implemented
     return false;
     //return d->enabled != d->output->isEnabled();

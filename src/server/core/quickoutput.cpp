@@ -380,8 +380,6 @@ void QuickOutput::initialize()
 
 void QuickOutput::readContent()
 {
-    Q_D(QuickOutput);
-
     QQuickWindow *quickWindow = qobject_cast<QQuickWindow *>(window());
     if (!quickWindow)
         return;
