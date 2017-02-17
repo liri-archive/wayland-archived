@@ -1,3 +1,5 @@
+find_package(BcmHost REQUIRED)
+
 include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}/../../headers"
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}

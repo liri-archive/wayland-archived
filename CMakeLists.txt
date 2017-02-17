@@ -30,7 +30,7 @@ endif()
 # Options
 option(ENABLE_XWAYLAND "Enables XWayland support" ON)
 option(ENABLE_EGLDEVICEINTEGRATION_KMS "Enables DRM/KMS device integration" ON)
-option(ENABLE_EGLDEVICEINTEGRATION_BRCM "Enables Broadcom device integration" ON)
+option(ENABLE_EGLDEVICEINTEGRATION_BRCM "Enables Broadcom device integration" OFF)
 option(ENABLE_EGLDEVICEINTEGRATION_MALI "Enables Mali device integration" OFF)
 option(ENABLE_EGLDEVICEINTEGRATION_VIV "Enables Vivante device integration" OFF)
 option(ENABLE_ONLY_EGLDEVICEINTEGRATION "Build and install only device integration plugins" OFF)
@@ -122,9 +122,6 @@ else()
         message(FATAL_ERROR "OpenGL ES is required")
     endif()
 endif()
-
-# brcm
-find_package(BcmHost)
 
 # X11
 if(ENABLE_XWAYLAND)
