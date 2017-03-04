@@ -34,7 +34,6 @@ option(ENABLE_EGLDEVICEINTEGRATION_BRCM "Enables Broadcom device integration" OF
 option(ENABLE_EGLDEVICEINTEGRATION_MALI "Enables Mali device integration" OFF)
 option(ENABLE_EGLDEVICEINTEGRATION_VIV "Enables Vivante device integration" OFF)
 option(ENABLE_ONLY_EGLDEVICEINTEGRATION "Build and install only device integration plugins" OFF)
-option(USE_LOCAL_WAYLAND_PROTOCOLS "Use a local copy of Wayland protocol" OFF)
 
 # Enable QML debugger for debug or release with debug info builds
 if(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb]")
@@ -141,16 +140,6 @@ if(NOT ENABLE_ONLY_EGLDEVICEINTEGRATION)
     add_feature_info("Wayland-Client" Wayland_Client_FOUND "Required for protocols")
     add_feature_info("Wayland-Server" Wayland_Server_FOUND "Required for protocols")
     add_feature_info("Wayland-Cursor" Wayland_Cursor_FOUND "Required for changing cursors")
-endif()
-
-# Wayland protocols
-if(USE_LOCAL_WAYLAND_PROTOCOLS)
-    set(WAYLAND_PROTOCOLS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data/wayland-protocols")
-else()
-    pkg_check_modules(Wayland_Protocols REQUIRED wayland-protocols)
-    add_feature_info("Wayland-Protocols" Wayland_Protocols_FOUND "Required for protocols")
-    execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=pkgdatadir wayland-protocols OUTPUT_VARIABLE WAYLAND_PROTOCOLS_DIR)
-    string(REGEX REPLACE "[ \t\n]+" "" WAYLAND_PROTOCOLS_DIR ${WAYLAND_PROTOCOLS_DIR})
 endif()
 
 # systemd

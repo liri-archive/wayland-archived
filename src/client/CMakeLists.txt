@@ -37,7 +37,7 @@ ecm_add_qtwayland_client_protocol(SOURCES
     PREFIX wl_
 )
 ecm_add_qtwayland_client_protocol(SOURCES
-    PROTOCOL "${WAYLAND_PROTOCOLS_DIR}/unstable/fullscreen-shell/fullscreen-shell-unstable-v1.xml"
+    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/wayland/fullscreen-shell-unstable-v1.xml"
     BASENAME fullscreen-shell-unstable-v1
     PREFIX zwp_
 )
