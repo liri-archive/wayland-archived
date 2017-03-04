@@ -141,7 +141,6 @@ if(NOT ENABLE_ONLY_EGLDEVICEINTEGRATION)
     add_feature_info("Wayland-Client" Wayland_Client_FOUND "Required for protocols")
     add_feature_info("Wayland-Server" Wayland_Server_FOUND "Required for protocols")
     add_feature_info("Wayland-Cursor" Wayland_Cursor_FOUND "Required for changing cursors")
-    add_feature_info("Wayland-Egl" Wayland_Egl_FOUND "Required for hardware integration")
 endif()
 
 # Wayland protocols
