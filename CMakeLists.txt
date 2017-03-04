@@ -128,7 +128,7 @@ if(ENABLE_XWAYLAND)
     find_package(X11)
     set_package_properties(X11 PROPERTIES
         TYPE REQUIRED
-        PURPOSE "Required for X11 EGL device integration and XWayland")
+        PURPOSE "Required for XWayland")
 endif()
 
 # Wayland
@@ -137,7 +137,7 @@ if(NOT ENABLE_ONLY_EGLDEVICEINTEGRATION)
     find_package(Wayland ${REQUIRED_WAYLAND_VERSION} COMPONENTS Client Server Cursor Egl)
     set_package_properties(Wayland PROPERTIES
         TYPE REQUIRED
-        PURPOSE "Required to build Green Island")
+        PURPOSE "Required to build Liri Wayland")
     add_feature_info("Wayland-Client" Wayland_Client_FOUND "Required for protocols")
     add_feature_info("Wayland-Server" Wayland_Server_FOUND "Required for protocols")
     add_feature_info("Wayland-Cursor" Wayland_Cursor_FOUND "Required for changing cursors")
