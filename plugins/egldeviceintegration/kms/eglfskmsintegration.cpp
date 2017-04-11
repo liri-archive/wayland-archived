@@ -76,6 +76,10 @@ EglFSKmsIntegration::EglFSKmsIntegration()
 
 void EglFSKmsIntegration::platformInit()
 {
+    // libglvnd platform detectiong bug workaround: set to EGL_PLATFORM_GBM_KHR
+    // see https://github.com/libretro/RetroArch/issues/4790
+    qputenv("EGL_PLATFORM", "0x31D7");
+
     // Autodetect DRM device unless it's specified by the configuration
     if (m_devicePath.isEmpty()) {
         Udev *udev = new Udev;
