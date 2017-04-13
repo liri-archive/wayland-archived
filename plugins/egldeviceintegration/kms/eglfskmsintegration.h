@@ -45,8 +45,9 @@ namespace Platform {
 
 class EglFSKmsDevice;
 
-class EglFSKmsIntegration : public EGLDeviceIntegration
+class EglFSKmsIntegration : public QObject, public EGLDeviceIntegration
 {
+    Q_OBJECT
 public:
     EglFSKmsIntegration();
 

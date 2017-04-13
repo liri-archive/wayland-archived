@@ -437,29 +437,63 @@ void EglFSKmsDevice::createScreens()
     }
 
     EglFSKmsScreen *primaryScreen = Q_NULLPTR;
+    QList<QScreen *> qscreens = QGuiApplication::screens();
+    QList<QPlatformScreen *> connectedScreens;
     QList<QPlatformScreen *> siblings;
     QPoint pos(0, 0);
     EglFSIntegration *integration = static_cast<EglFSIntegration *>(QGuiApplicationPrivate::platformIntegration());
+
+    // Add new screens to the right of existing screens
+    if (qscreens.count() > 0)
+        pos.rx() += qscreens.at(0)->virtualGeometry().width();
 
     for (int i = 0; i < resources->count_connectors; i++) {
         drmModeConnectorPtr connector = drmModeGetConnector(m_dri_fd, resources->connectors[i]);
         if (!connector)
             continue;
 
-        EglFSKmsScreen *screen = screenForConnector(resources, connector, pos);
+        EglFSKmsScreen *screen = nullptr;
+
+        // Was this screen already added?
+        QList<QScreen *> qscreens = QGuiApplication::screens();
+        for (QScreen *qscreen : qscreens) {
+            if (qscreen->name() == QString::fromUtf8(nameForConnector(connector))) {
+                screen = static_cast<EglFSKmsScreen *>(qscreen->handle());
+                break;
+            }
+        }
+
+        // If not we can create a new screen for the connector
+        if (!screen) {
+            screen = screenForConnector(resources, connector, pos);
+            if (screen) {
+                qCInfo(lcKms, "Add screen \"%s\" at %dx%d", screen->name().toLatin1().constData(), pos.x(), pos.y());
+                integration->addScreen(screen);
+            }
+        }
+
         if (screen) {
-            integration->addScreen(screen);
             pos.rx() += screen->geometry().width();
             siblings << screen;
-
-            if (!primaryScreen)
-                primaryScreen = screen;
+            connectedScreens.append(screen);
         }
+
+        if (!primaryScreen)
+            primaryScreen = screen;
 
         drmModeFreeConnector(connector);
     }
 
     drmModeFreeResources(resources);
+
+    // Remove disconnected screens
+    for (QScreen *qscreen : qscreens) {
+        if (!connectedScreens.contains(qscreen->handle())) {
+            qCInfo(lcKms) << "Remove disconnected screen" << qscreen->name();
+            integration->removeScreen(qscreen->handle());
+            delete qscreen;
+        }
+    }
 
     if (!m_integration->separateScreens()) {
         Q_FOREACH (QPlatformScreen *screen, siblings)
@@ -470,8 +504,12 @@ void EglFSKmsDevice::createScreens()
         if (!hideCursorVal.isEmpty())
             visible = hideCursorVal.toInt() == 0;
 
-        if (primaryScreen && visible)
-            m_globalCursor = new EglFSKmsCursor(primaryScreen);
+        if (primaryScreen && visible) {
+            if (m_globalCursor)
+                m_globalCursor->update();
+            else
+                m_globalCursor = new EglFSKmsCursor(primaryScreen);
+        }
     }
 }
 

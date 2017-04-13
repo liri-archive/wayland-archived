@@ -186,6 +186,19 @@ void EglFSKmsCursor::setPos(const QPoint &pos)
     }
 }
 
+void EglFSKmsCursor::update()
+{
+    if (m_bo)
+        initCursorAtlas();
+
+#ifndef QT_NO_CURSOR
+    QCursor cursor(Qt::ArrowCursor);
+    changeCursor(&cursor, 0);
+#endif
+
+    setPos(pos());
+}
+
 void EglFSKmsCursor::initCursorAtlas()
 {
     static QByteArray json = qgetenv("LIRI_QPA_CURSOR");

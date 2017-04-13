@@ -47,6 +47,7 @@
 #include <Liri/Platform/EglFSWindow>
 #include <Liri/Platform/Udev>
 #include <Liri/Platform/UdevEnumerate>
+#include <Liri/Platform/UdevMonitor>
 
 #include "eglfskmsintegration.h"
 #include "eglfskmsdevice.h"
@@ -80,9 +81,10 @@ void EglFSKmsIntegration::platformInit()
     // see https://github.com/libretro/RetroArch/issues/4790
     qputenv("EGL_PLATFORM", "0x31D7");
 
+    Udev *udev = new Udev;
+
     // Autodetect DRM device unless it's specified by the configuration
     if (m_devicePath.isEmpty()) {
-        Udev *udev = new Udev;
         UdevEnumerate *udevEnumerate = new UdevEnumerate(UdevDevice::PrimaryVideoDevice |
                                                          UdevDevice::GenericVideoDevice, udev);
         QList<UdevDevice *> devices = udevEnumerate->scan();
@@ -101,6 +103,20 @@ void EglFSKmsIntegration::platformInit()
     } else {
         qCInfo(lcKms) << "Using" << m_devicePath << "from configuration";
     }
+
+    // Monitor for hotplug events
+    UdevMonitor *udevMonitor = new UdevMonitor(udev, this);
+    connect(udevMonitor, &UdevMonitor::deviceChanged, this, [this](UdevDevice *device) {
+        // We are interested only on the DRM device
+        if (device->deviceNode() != m_devicePath)
+            return;
+
+        // Create a new output when a new screen is attached
+        if (device->property(QLatin1String("HOTPLUG")) == QLatin1String("1")) {
+            qCDebug(lcKms) << "Device" << device->deviceNode() << "has changed, reinitialize screens...";
+            screenInit();
+        }
+    });
 
     m_device = new EglFSKmsDevice(this, m_devicePath);
     if (!m_device->open())

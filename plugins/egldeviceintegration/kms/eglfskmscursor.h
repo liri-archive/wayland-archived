@@ -61,6 +61,8 @@ public:
     QPoint pos() const Q_DECL_OVERRIDE;
     void setPos(const QPoint &pos) Q_DECL_OVERRIDE;
 
+    void update();
+
 private:
     void initCursorAtlas();
 
