@@ -176,6 +176,18 @@ int UdevDevice::sysfsNumber() const
     return QByteArray(udev_device_get_sysnum(d->device)).toInt();
 }
 
+QString UdevDevice::property(const QString &name) const
+{
+    Q_D(const UdevDevice);
+    return QString::fromLatin1(udev_device_get_property_value(d->device, name.toLatin1().constData()));
+}
+
+bool UdevDevice::hasProperty(const QString &name) const
+{
+    Q_D(const UdevDevice);
+    return udev_device_get_property_value(d->device, name.toLatin1().constData()) != nullptr;
+}
+
 QStringList UdevDevice::deviceProperties() const
 {
     Q_D(const UdevDevice);

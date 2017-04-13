@@ -78,6 +78,9 @@ public:
     QString sysfsPath() const;
     int sysfsNumber() const;
 
+    QString property(const QString &name) const;
+    bool hasProperty(const QString &name) const;
+
     QStringList deviceProperties() const;
     QStringList sysfsProperties() const;
 
