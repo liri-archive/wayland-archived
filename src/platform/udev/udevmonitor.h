@@ -42,6 +42,7 @@ class UdevMonitorPrivate;
 
 class LIRIPLATFORM_EXPORT UdevMonitor : public QObject
 {
+    Q_OBJECT
     Q_DECLARE_PRIVATE(UdevMonitor)
 public:
     UdevMonitor(Udev *udev, QObject *parent = 0);

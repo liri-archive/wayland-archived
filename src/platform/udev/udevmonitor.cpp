@@ -141,3 +141,5 @@ void UdevMonitor::filterTag(const QString &tag)
 } // namespace Platform
 
 } // namespace Liri
+
+#include "moc_udevmonitor.cpp"
