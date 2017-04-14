@@ -499,12 +499,7 @@ void EglFSKmsDevice::createScreens()
         Q_FOREACH (QPlatformScreen *screen, siblings)
             static_cast<EglFSKmsScreen *>(screen)->setVirtualSiblings(siblings);
 
-        bool visible = true;
-        QByteArray hideCursorVal = qgetenv("LIRI_QPA_HIDECURSOR");
-        if (!hideCursorVal.isEmpty())
-            visible = hideCursorVal.toInt() == 0;
-
-        if (primaryScreen && visible) {
+        if (primaryScreen) {
             if (m_globalCursor)
                 m_globalCursor->update();
             else
