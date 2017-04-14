@@ -58,7 +58,7 @@ void LibInputPointer::setPosition(const QPoint &pos)
     QScreen *const primaryScreen = QGuiApplication::primaryScreen();
     const QRect geometry = QHighDpi::toNativePixels(primaryScreen->virtualGeometry(), primaryScreen);
     m_pt.setX(qBound(geometry.left(), pos.x(), geometry.right()));
-    m_pt.setX(qBound(geometry.top(), pos.x(), geometry.bottom()));
+    m_pt.setY(qBound(geometry.top(), pos.y(), geometry.bottom()));
 }
 
 void LibInputPointer::handleButton(libinput_event_pointer *e)
@@ -107,9 +107,8 @@ void LibInputPointer::handleButton(libinput_event_pointer *e)
 
 void LibInputPointer::handleMotion(libinput_event_pointer *e)
 {
-    QPointF delta(libinput_event_pointer_get_dx(e),
-                  libinput_event_pointer_get_dy(e));
-    QPoint pos = m_pt + delta.toPoint();
+    QPoint pos(qRound(m_pt.x() + libinput_event_pointer_get_dx(e)),
+               qRound(m_pt.y() + libinput_event_pointer_get_dy(e)));
     processMotion(pos);
 }
 
@@ -153,10 +152,7 @@ void LibInputPointer::handleAxis(libinput_event_pointer *e)
 
 void LibInputPointer::processMotion(const QPoint &pos)
 {
-    QScreen *const primaryScreen = QGuiApplication::primaryScreen();
-    const QRect geometry = QHighDpi::toNativePixels(primaryScreen->virtualGeometry(), primaryScreen);
-    m_pt.setX(qBound(geometry.left(), pos.x(), geometry.right()));
-    m_pt.setY(qBound(geometry.top(), pos.y(), geometry.bottom()));
+    setPosition(pos);
 
     LibInputMouseEvent event;
     event.pos = m_pt;
