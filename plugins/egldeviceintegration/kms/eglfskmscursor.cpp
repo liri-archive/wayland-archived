@@ -183,6 +183,8 @@ void EglFSKmsCursor::setPos(const QPoint &pos)
             m_pos = pos;
         else
             qCWarning(lcKms, "Failed to move cursor on screen %s: %d", kmsScreen->name().toLatin1().constData(), ret);
+
+        kmsScreen->handleCursorMove(pos);
     }
 }
 
