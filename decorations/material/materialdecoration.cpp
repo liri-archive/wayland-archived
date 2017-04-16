@@ -38,7 +38,8 @@ namespace QtWaylandClient
 
 #define BUTTON_WIDTH dp(24)
 #define BUTTON_SPACING dp(12)
-#define WINDOW_BORDER 0
+#define TITLE_BAR_HEIGHT dp(32)
+#define WINDOW_BORDER 4 // big enough to resize
 
 QWaylandMaterialDecoration::QWaylandMaterialDecoration()
     : QWaylandAbstractDecoration()
@@ -75,7 +76,7 @@ QRectF QWaylandMaterialDecoration::minimizeButtonRect() const
 QMargins QWaylandMaterialDecoration::margins() const
 {
     // Title bar is 32dp plus borders
-    return QMargins(WINDOW_BORDER, dp(32), WINDOW_BORDER, WINDOW_BORDER);
+    return QMargins(WINDOW_BORDER, TITLE_BAR_HEIGHT + WINDOW_BORDER, WINDOW_BORDER, WINDOW_BORDER);
 }
 
 void QWaylandMaterialDecoration::paint(QPaintDevice *device)
@@ -89,16 +90,17 @@ void QWaylandMaterialDecoration::paint(QPaintDevice *device)
     // Title bar
     int radius = waylandWindow()->isMaximized() ? 0 : dp(3);
     QPainterPath roundedRect;
-    roundedRect.addRoundedRect(0, 0, frameGeometry.width(), margins().top() * 1.5,
+    roundedRect.addRoundedRect(margins().left(), margins().top() - TITLE_BAR_HEIGHT,
+                               frameGeometry.width() - margins().left() - margins().right(), TITLE_BAR_HEIGHT + radius * 2,
                                radius, radius);
     p.fillPath(roundedRect.simplified(), m_backgroundColor);
 
-    // Borders
+    // Borders (transparent so the border is not noticeable)
     QPainterPath borderPath;
     borderPath.addRect(0, margins().top(), margins().left(), frameGeometry.height() - margins().top());
     borderPath.addRect(0, frameGeometry.height() - margins().bottom(), frameGeometry.width(), margins().bottom());
     borderPath.addRect(frameGeometry.width() - margins().right(), margins().top(), margins().right(), frameGeometry.height() - margins().bottom());
-    p.fillPath(borderPath, m_backgroundColor);
+    p.fillPath(borderPath, Qt::transparent);
 
     // Window title
     QString windowTitleText = window()->title();
@@ -122,7 +124,7 @@ void QWaylandMaterialDecoration::paint(QPaintDevice *device)
         font.setBold(true);
         font.setFamily("Roboto");
         p.setFont(font);
-        QPoint windowTitlePoint(top.topLeft().x() + dx, top.topLeft().y() + dy);
+        QPoint windowTitlePoint(top.topLeft().x() + dx, top.topLeft().y() + dy - WINDOW_BORDER / 2);
         p.drawStaticText(windowTitlePoint, m_windowTitle);
         p.restore();
     }
