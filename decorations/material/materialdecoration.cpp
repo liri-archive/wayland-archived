@@ -76,7 +76,11 @@ QRectF QWaylandMaterialDecoration::minimizeButtonRect() const
 QMargins QWaylandMaterialDecoration::margins() const
 {
     // Title bar is 32dp plus borders
-    return QMargins(WINDOW_BORDER, TITLE_BAR_HEIGHT + WINDOW_BORDER, WINDOW_BORDER, WINDOW_BORDER);
+    if (window() && window()->type() == Qt::Popup)
+        return QMargins(0, 0, 0, 0);
+    if (waylandWindow() && (waylandWindow()->isMaximized() || waylandWindow()->isFullscreen()))
+        return QMargins(0, TITLE_BAR_HEIGHT, 0, 0);
+    return QMargins(WINDOW_BORDER, TITLE_BAR_HEIGHT, WINDOW_BORDER, WINDOW_BORDER);
 }
 
 void QWaylandMaterialDecoration::paint(QPaintDevice *device)
