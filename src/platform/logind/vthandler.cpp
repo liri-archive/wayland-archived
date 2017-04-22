@@ -39,6 +39,7 @@ extern "C" {
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
+#include <sys/sysmacros.h>
 #include <linux/major.h>
 #include <linux/kd.h>
 #include <linux/vt.h>

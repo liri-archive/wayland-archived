@@ -38,6 +38,8 @@
 
 #include <qplatformdefs.h>
 
+#include <sys/sysmacros.h>
+
 const static QString login1Service = QLatin1String("org.freedesktop.login1");
 const static QString login1Object = QLatin1String("/org/freedesktop/login1");
 const static QString login1ManagerInterface = QLatin1String("org.freedesktop.login1.Manager");
