@@ -54,8 +54,6 @@
 
 #include <QtWaylandCompositor/QWaylandSurface>
 
-#include <Liri/WaylandServer/ClientWindow>
-
 #include "xcbcursors.h"
 #include "xcbwindow.h"
 #include "xcbwrapper.h"

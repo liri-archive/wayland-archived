@@ -26,9 +26,6 @@
 #include <QtQml/QQmlComponent>
 #include <QtWaylandCompositor/QWaylandQuickExtension>
 
-#include <Liri/WaylandServer/ApplicationManager>
-#include <Liri/WaylandServer/ClientWindow>
-#include <Liri/WaylandServer/ClientWindowQuickItem>
 #include <Liri/WaylandServer/CompositorSettings>
 #include <Liri/WaylandServer/OutputChangeset>
 #include <Liri/WaylandServer/OutputManagement>
@@ -47,7 +44,6 @@
 
 using namespace Liri::WaylandServer;
 
-Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(ApplicationManager)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(GtkShell)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(OutputManagement)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(Screencaster)
@@ -88,14 +84,6 @@ void LiriWaylandServerPlugin::registerTypes(const char *uri)
     qmlRegisterType<OutputManagementQuickExtension>(uri, 1, 0, "OutputManagement");
     qmlRegisterUncreatableType<OutputChangeset>(uri, 1, 0, "OutputChangeset",
                                                 QObject::tr("Cannot create instance of OutputChangeset"));
-
-    // Application manager
-    qmlRegisterUncreatableType<ApplicationManager>(uri, 1, 0, "ApplicationManagerBase",
-                                                   QObject::tr("Cannot create instance of ApplicationManagerBase, use ApplicationManager instead"));
-    qmlRegisterType<ApplicationManagerQuickExtension>(uri, 1, 0, "ApplicationManager");
-    qmlRegisterUncreatableType<ClientWindow>(uri, 1, 0, "ClientWindow",
-                                             QObject::tr("Cannot create instance of ClientWindow"));
-    qmlRegisterType<ClientWindowQuickItem>(uri, 1, 0, "ClientWindowItem");
 
     // Task manager
     //qmlRegisterType<TaskManager>(uri, 1, 0, "TaskManager");

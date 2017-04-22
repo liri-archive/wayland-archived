@@ -28,19 +28,11 @@ set(SOURCES
     screen/quickscreenmanager.cpp
     screen/screenbackend.cpp
     screen/screenmanager.cpp
-    shell/clientwindow.cpp
-    shell/clientwindowquickitem.cpp
-    extensions/applicationmanager.cpp
     extensions/gtkshell.cpp
     extensions/screencaster.cpp
     extensions/screenshooter.cpp
 )
 
-ecm_add_qtwayland_server_protocol(SOURCES
-    PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/liri/liri.xml"
-    BASENAME liri
-    PREFIX liri_
-)
 ecm_add_qtwayland_server_protocol(SOURCES
     PROTOCOL "${CMAKE_CURRENT_SOURCE_DIR}/../../data/protocols/liri/liri-screencaster.xml"
     BASENAME liri-screencaster
@@ -133,7 +125,6 @@ ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
 
 ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
     HEADER_NAMES
-        ApplicationManager
         GtkShell,GtkSurface
         Screencaster,Screencast
         Screenshooter,Screenshot
@@ -163,23 +154,8 @@ ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
         screen
 )
 
-ecm_generate_headers(LiriWaylandServer_CamelCase_HEADERS
-    HEADER_NAMES
-        ClientWindow
-        ClientWindowQuickItem
-    PREFIX
-        WaylandServer
-    OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri"
-    REQUIRED_HEADERS
-        LiriWaylandServer_HEADERS
-    RELATIVE
-        shell
-)
-
 private_headers(LiriWaylandServer_PRIVATE_HEADERS
     HEADERS
-        "${CMAKE_CURRENT_SOURCE_DIR}/extensions/applicationmanager_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/extensions/screencaster_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/extensions/screenshooter_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/output/outputchangeset_p.h"
@@ -188,8 +164,6 @@ private_headers(LiriWaylandServer_PRIVATE_HEADERS
         "${CMAKE_CURRENT_SOURCE_DIR}/output/quickoutputconfiguration_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/screen/screenbackend_p.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/screen/screenmanager_p.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/shell/clientwindow_p.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/shell/clientwindowquickitem_p.h"
         "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-liri-outputmanagement.h"
         "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-liri-screencaster.h"
         "${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-liri-screenshooter.h"
