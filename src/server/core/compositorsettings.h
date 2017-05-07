@@ -31,7 +31,7 @@
 #include <QtCore/QObject>
 #include <QtQml/QQmlParserStatus>
 
-#include <Liri/waylandserver/liriwaylandserver_export.h>
+#include <LiriWaylandServer/liriwaylandserverglobal.h>
 
 class QWaylandCompositor;
 

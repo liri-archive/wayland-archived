@@ -55,7 +55,7 @@ ecm_add_qtwayland_server_protocol(SOURCES
 )
 
 add_library(LiriWaylandServer SHARED ${SOURCES})
-generate_export_header(LiriWaylandServer EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/waylandserver/liriwaylandserver_export.h")
+generate_export_header(LiriWaylandServer EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/../../headers/LiriWaylandServer/liriwaylandserverglobal.h")
 add_library(Liri::WaylandServer ALIAS LiriWaylandServer)
 
 target_link_libraries(LiriWaylandServer
@@ -174,7 +174,7 @@ private_headers(LiriWaylandServer_PRIVATE_HEADERS
         "${CMAKE_CURRENT_BINARY_DIR}/wayland-liri-screenshooter-server-protocol.h"
         "${CMAKE_CURRENT_BINARY_DIR}/wayland-gtk-shell-server-protocol.h"
     OUTPUT_DIR
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/waylandserver"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/LiriWaylandServer"
 )
 
 install(TARGETS LiriWaylandServer
@@ -186,7 +186,7 @@ install(FILES ${LiriWaylandServer_CamelCase_HEADERS}
 
 install(
     FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/Liri/waylandserver/liriwaylandserver_export.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/../../headers/LiriWaylandServer/liriwaylandserverglobal.h"
         ${LiriWaylandServer_HEADERS}
     DESTINATION
         ${LIRI_INCLUDEDIR}/waylandserver

@@ -31,7 +31,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandServer/HomeApplication>
+#include <LiriWaylandServer/HomeApplication>
 
 namespace Liri {
 

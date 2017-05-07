@@ -35,7 +35,7 @@
 
 #include "screencaster.h"
 #include "screencaster_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 #define SCREENCASTER_FORMAT WL_SHM_FORMAT_XRGB8888
 
@@ -107,20 +107,20 @@ void ScreencasterPrivate::removeRequest(QQuickWindow *window, Screencast *screen
     }
 }
 
-void ScreencasterPrivate::screencaster_bind_resource(Resource *resource)
+void ScreencasterPrivate::liri_screencaster_bind_resource(Resource *resource)
 {
     // TODO: Deny access to unauthorized clients
-    QtWaylandServer::liri_screencaster::screencaster_bind_resource(resource);
+    QtWaylandServer::liri_screencaster::liri_screencaster_bind_resource(resource);
 }
 
-void ScreencasterPrivate::screencaster_destroy_resource(Resource *resource)
+void ScreencasterPrivate::liri_screencaster_destroy_resource(Resource *resource)
 {
     // A client disconnected, invalidate all its screencast requests
-    QtWaylandServer::liri_screencaster::screencaster_destroy_resource(resource);
+    QtWaylandServer::liri_screencaster::liri_screencaster_destroy_resource(resource);
 }
 
-void ScreencasterPrivate::screencaster_capture(Resource *resource, uint32_t id,
-                                               struct ::wl_resource *outputResource)
+void ScreencasterPrivate::liri_screencaster_capture(Resource *resource, uint32_t id,
+                                                    struct ::wl_resource *outputResource)
 {
     Q_Q(Screencaster);
 
@@ -283,7 +283,7 @@ void ScreencastPrivate::frameRecording(Screencast *screencast,
     }
 }
 
-void ScreencastPrivate::screencast_destroy(Resource *resource)
+void ScreencastPrivate::liri_screencast_destroy(Resource *resource)
 {
     Q_UNUSED(resource);
 
@@ -299,8 +299,8 @@ void ScreencastPrivate::screencast_destroy(Resource *resource)
     q->deleteLater();
 }
 
-void ScreencastPrivate::screencast_record(Resource *resource,
-                                          struct ::wl_resource *br)
+void ScreencastPrivate::liri_screencast_record(Resource *resource,
+                                               struct ::wl_resource *br)
 {
     Q_UNUSED(resource);
 

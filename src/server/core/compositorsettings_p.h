@@ -30,7 +30,7 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandServer/CompositorSettings>
+#include <LiriWaylandServer/CompositorSettings>
 
 //
 //  W A R N I N G

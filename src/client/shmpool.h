@@ -33,8 +33,8 @@
 
 #include <QtCore/QObject>
 
-#include <Liri/WaylandClient/Buffer>
-#include <Liri/WaylandClient/Shm>
+#include <LiriWaylandClient/Buffer>
+#include <LiriWaylandClient/Shm>
 
 namespace Liri {
 

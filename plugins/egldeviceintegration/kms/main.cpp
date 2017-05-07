@@ -25,7 +25,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <Liri/Platform/EGLDeviceIntegration>
+#include <LiriEglFS/EglDeviceIntegration>
 
 #include "eglfskmsintegration.h"
 

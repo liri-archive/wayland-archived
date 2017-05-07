@@ -1,4 +1,4 @@
-<protocol name="gtk">
+<protocol name="gtk_shell">
 
   <interface name="gtk_shell" version="2">
     <description summary="gtk specific extensions">

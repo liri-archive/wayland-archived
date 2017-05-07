@@ -30,9 +30,9 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/Pointer>
-#include <Liri/WaylandClient/Surface>
-#include <Liri/waylandclient/private/qwayland-wayland.h>
+#include <LiriWaylandClient/Pointer>
+#include <LiriWaylandClient/Surface>
+#include <LiriWaylandClient/private/qwayland-wayland.h>
 
 #include <wayland-cursor.h>
 

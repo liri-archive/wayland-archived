@@ -37,7 +37,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QVariant>
 
-#include <Liri/Platform/EGLDeviceIntegration>
+#include <LiriEglFS/EglDeviceIntegration>
 
 namespace Liri {
 

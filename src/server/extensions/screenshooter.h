@@ -30,7 +30,7 @@
 
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 
-#include <Liri/waylandserver/liriwaylandserver_export.h>
+#include <LiriWaylandServer/liriwaylandserverglobal.h>
 
 class QWaylandOutput;
 class QWaylandSurface;

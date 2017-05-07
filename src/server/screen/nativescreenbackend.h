@@ -28,7 +28,7 @@
 #ifndef LIRI_NATIVESCREENBACKEND_H
 #define LIRI_NATIVESCREENBACKEND_H
 
-#include <Liri/WaylandServer/ScreenBackend>
+#include <LiriWaylandServer/ScreenBackend>
 
 class QScreen;
 

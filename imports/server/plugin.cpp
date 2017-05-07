@@ -26,17 +26,17 @@
 #include <QtQml/QQmlComponent>
 #include <QtWaylandCompositor/QWaylandQuickExtension>
 
-#include <Liri/WaylandServer/CompositorSettings>
-#include <Liri/WaylandServer/OutputChangeset>
-#include <Liri/WaylandServer/OutputManagement>
-#include <Liri/WaylandServer/QuickOutput>
-#include <Liri/WaylandServer/QuickOutputConfiguration>
-#include <Liri/WaylandServer/GtkShell>
-#include <Liri/WaylandServer/Screen>
-#include <Liri/WaylandServer/Screencaster>
-#include <Liri/WaylandServer/Screenshooter>
-//#include <Liri/WaylandServer/TaskManager>
-#include <Liri/WaylandServer/QuickScreenManager>
+#include <LiriWaylandServer/CompositorSettings>
+#include <LiriWaylandServer/OutputChangeset>
+#include <LiriWaylandServer/OutputManagement>
+#include <LiriWaylandServer/QuickOutput>
+#include <LiriWaylandServer/QuickOutputConfiguration>
+#include <LiriWaylandServer/GtkShell>
+#include <LiriWaylandServer/Screen>
+#include <LiriWaylandServer/Screencaster>
+#include <LiriWaylandServer/Screenshooter>
+//#include <LiriWaylandServer/TaskManager>
+#include <LiriWaylandServer/QuickScreenManager>
 
 #include "chromeitem.h"
 #include "fpscounter.h"

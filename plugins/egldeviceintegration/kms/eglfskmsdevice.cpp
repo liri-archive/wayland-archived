@@ -35,9 +35,9 @@
 #include <QtCore/private/qcore_unix_p.h>
 #include <QtGui/private/qguiapplication_p.h>
 
-#include <Liri/Platform/EGLDeviceIntegration>
-#include <Liri/Platform/EglFSIntegration>
-#include <Liri/Platform/Logind>
+#include <LiriEglFS/EglDeviceIntegration>
+#include <LiriEglFS/EglFSIntegration>
+#include <LiriLogind/Logind>
 
 #include "eglfskmsdevice.h"
 #include "eglfskmsscreen.h"

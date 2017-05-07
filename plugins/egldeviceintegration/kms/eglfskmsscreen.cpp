@@ -35,9 +35,9 @@
 #include <QtGui/private/qguiapplication_p.h>
 #include <QtGui/qpa/qplatformwindow.h>
 
-#include <Liri/Platform/EglFSIntegration>
-#include <Liri/Platform/EglFSWindow>
-#include <Liri/Platform/VtHandler>
+#include <LiriEglFS/EglFSIntegration>
+#include <LiriEglFS/EglFSWindow>
+#include <LiriLogind/VtHandler>
 
 #include "eglfskmsscreen.h"
 #include "eglfskmsdevice.h"

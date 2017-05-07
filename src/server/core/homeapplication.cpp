@@ -31,11 +31,10 @@
 #include <QtGui/QGuiApplication>
 #include <QtQml/QQmlContext>
 
-#include "config.h"
 #include "diagnostic_p.h"
 #include "homeapplication.h"
 #include "homeapplication_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 #include <unistd.h>
 #include <sys/types.h>

@@ -33,7 +33,7 @@
 
 #include <QtCore/QObject>
 
-#include <Liri/WaylandClient/Shm>
+#include <LiriWaylandClient/Shm>
 
 namespace Liri {
 

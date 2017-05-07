@@ -35,7 +35,7 @@
 
 #include "fakescreenbackend.h"
 #include "screenbackend_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 namespace Liri {
 

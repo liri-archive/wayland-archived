@@ -30,9 +30,9 @@
 
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <Liri/WaylandServer/ClientWindow>
-#include <Liri/WaylandServer/TaskManager>
-#include <Liri/waylandserver/private/qwayland-server-liri.h>
+#include <LiriWaylandServer/ClientWindow>
+#include <LiriWaylandServer/TaskManager>
+#include <LiriWaylandServer/private/qwayland-server-liri.h>
 
 //
 //  W A R N I N G

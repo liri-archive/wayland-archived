@@ -48,7 +48,7 @@ FullScreenShellPrivate::FullScreenShellPrivate()
 {
 }
 
-void FullScreenShellPrivate::fullscreen_shell_v1_capability(uint32_t capability)
+void FullScreenShellPrivate::zwp_fullscreen_shell_v1_capability(uint32_t capability)
 {
     Q_Q(FullScreenShell);
 

@@ -27,7 +27,7 @@
 
 #include <QtGui/qpa/qplatformintegrationplugin.h>
 
-#include <Liri/Platform/EglFSIntegration>
+#include <LiriEglFS/EglFSIntegration>
 
 class LiriIntegrationPlugin : public QPlatformIntegrationPlugin
 {

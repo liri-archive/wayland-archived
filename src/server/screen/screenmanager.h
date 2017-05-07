@@ -28,7 +28,7 @@
 #ifndef LIRI_SCREENMANAGER_H
 #define LIRI_SCREENMANAGER_H
 
-#include <Liri/WaylandServer/Screen>
+#include <LiriWaylandServer/Screen>
 
 namespace Liri {
 

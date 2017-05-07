@@ -28,7 +28,7 @@
 #ifndef LIRIWAYLANDCLIENT_SEAT_H
 #define LIRIWAYLANDCLIENT_SEAT_H
 
-#include <Liri/WaylandClient/Registry>
+#include <LiriWaylandClient/Registry>
 
 namespace Liri {
 

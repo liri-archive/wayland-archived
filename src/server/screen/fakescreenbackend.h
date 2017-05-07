@@ -28,7 +28,7 @@
 #ifndef LIRI_FAKESCREENBACKEND_H
 #define LIRI_FAKESCREENBACKEND_H
 
-#include <Liri/WaylandServer/ScreenBackend>
+#include <LiriWaylandServer/ScreenBackend>
 
 namespace Liri {
 

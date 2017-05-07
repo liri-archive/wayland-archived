@@ -31,12 +31,12 @@
 #include <QtGui/QScreen>
 #include <QtGui/qpa/qplatformscreen.h>
 
-#include <Liri/Platform/EglFSGlobal>
-#include <Liri/Platform/EglFSScreen>
+#include <LiriEglFS/EglFSGlobal>
+#include <LiriEglFS/EglFSScreen>
 
 #include "nativescreenbackend.h"
 #include "screenbackend_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 namespace Liri {
 

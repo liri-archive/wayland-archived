@@ -30,8 +30,8 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/CursorTheme>
-#include <Liri/WaylandClient/Surface>
+#include <LiriWaylandClient/CursorTheme>
+#include <LiriWaylandClient/Surface>
 
 #include <wayland-client.h>
 #include <wayland-cursor.h>

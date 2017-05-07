@@ -43,11 +43,11 @@
 #include <QtGui/qpa/qplatformcursor.h>
 #include <QtGui/QScreen>
 
-#include <Liri/Platform/EglFSCursor>
-#include <Liri/Platform/EglFSWindow>
-#include <Liri/Platform/Udev>
-#include <Liri/Platform/UdevEnumerate>
-#include <Liri/Platform/UdevMonitor>
+#include <LiriEglFS/EglFSCursor>
+#include <LiriEglFS/EglFSWindow>
+#include <LiriUDev/Udev>
+#include <LiriUDev/UdevEnumerate>
+#include <LiriUDev/UdevMonitor>
 
 #include "eglfskmsintegration.h"
 #include "eglfskmsdevice.h"

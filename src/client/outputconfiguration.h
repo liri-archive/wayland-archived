@@ -30,7 +30,7 @@
 
 #include <QtCore/QObject>
 
-#include <Liri/WaylandClient/Output>
+#include <LiriWaylandClient/Output>
 
 namespace Liri {
 

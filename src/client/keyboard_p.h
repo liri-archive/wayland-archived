@@ -30,9 +30,9 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/Keyboard>
-#include <Liri/WaylandClient/Surface>
-#include <Liri/waylandclient/private/qwayland-wayland.h>
+#include <LiriWaylandClient/Keyboard>
+#include <LiriWaylandClient/Surface>
+#include <LiriWaylandClient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G

@@ -32,8 +32,8 @@
 #include <QtCore/QTemporaryFile>
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/ShmPool>
-#include <Liri/waylandclient/private/qwayland-wayland.h>
+#include <LiriWaylandClient/ShmPool>
+#include <LiriWaylandClient/private/qwayland-wayland.h>
 
 #include <unistd.h>
 #include <sys/mman.h>

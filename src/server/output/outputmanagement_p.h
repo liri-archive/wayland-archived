@@ -30,8 +30,8 @@
 
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <Liri/WaylandServer/OutputManagement>
-#include <Liri/waylandserver/private/qwayland-server-liri-outputmanagement.h>
+#include <LiriWaylandServer/OutputManagement>
+#include <LiriWaylandServer/private/qwayland-server-liri-outputmanagement.h>
 
 //
 //  W A R N I N G
@@ -63,7 +63,7 @@ public:
     static OutputManagementPrivate *get(OutputManagement *management) { return management->d_func(); }
 
 protected:
-    virtual void outputmanagement_create_configuration(Resource *resource, uint32_t id) Q_DECL_OVERRIDE;
+    virtual void liri_outputmanagement_create_configuration(Resource *resource, uint32_t id) Q_DECL_OVERRIDE;
 };
 
 } // namespace WaylandServer

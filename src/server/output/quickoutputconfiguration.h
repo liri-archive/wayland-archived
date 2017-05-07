@@ -30,7 +30,7 @@
 
 #include <QtQml/QQmlListProperty>
 
-#include <Liri/WaylandServer/OutputConfiguration>
+#include <LiriWaylandServer/OutputConfiguration>
 
 namespace Liri {
 

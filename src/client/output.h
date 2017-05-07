@@ -31,7 +31,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QRect>
 
-#include <Liri/waylandclient/liriwaylandclient_export.h>
+#include <LiriWaylandClient/liriwaylandclientglobal.h>
 
 class QScreen;
 

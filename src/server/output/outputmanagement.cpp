@@ -32,7 +32,7 @@
 #include "outputconfiguration_p.h"
 #include "outputmanagement.h"
 #include "outputmanagement_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 namespace Liri {
 
@@ -53,7 +53,7 @@ void OutputManagementPrivate::removeConfiguration(OutputConfiguration *configura
     configurations.removeOne(configuration);
 }
 
-void OutputManagementPrivate::outputmanagement_create_configuration(Resource *resource, uint32_t id)
+void OutputManagementPrivate::liri_outputmanagement_create_configuration(Resource *resource, uint32_t id)
 {
     Q_Q(OutputManagement);
 

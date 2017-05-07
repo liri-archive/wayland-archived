@@ -30,8 +30,8 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/Shm>
-#include <Liri/waylandclient/private/qwayland-wayland.h>
+#include <LiriWaylandClient/Shm>
+#include <LiriWaylandClient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G

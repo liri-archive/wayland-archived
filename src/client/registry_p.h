@@ -31,8 +31,8 @@
 #include <QtCore/QLoggingCategory>
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/Registry>
-#include <Liri/waylandclient/private/qwayland-wayland.h>
+#include <LiriWaylandClient/Registry>
+#include <LiriWaylandClient/private/qwayland-wayland.h>
 
 //
 //  W A R N I N G

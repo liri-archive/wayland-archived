@@ -32,7 +32,7 @@
 #include <QtCore/QPoint>
 #include <QtCore/QSize>
 
-#include <Liri/WaylandServer/ScreenBackend>
+#include <LiriWaylandServer/ScreenBackend>
 
 //
 //  W A R N I N G

@@ -30,7 +30,7 @@
 
 #include <QtGui/QImage>
 
-#include <Liri/waylandclient/liriwaylandclient_export.h>
+#include <LiriWaylandClient/liriwaylandclientglobal.h>
 
 #include <wayland-client.h>
 

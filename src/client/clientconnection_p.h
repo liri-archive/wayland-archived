@@ -30,7 +30,7 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/ClientConnection>
+#include <LiriWaylandClient/ClientConnection>
 
 //
 //  W A R N I N G

@@ -30,7 +30,7 @@
 
 #include "compositorsettings.h"
 #include "compositorsettings_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 namespace Liri {
 

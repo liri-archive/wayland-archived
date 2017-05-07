@@ -34,7 +34,7 @@
 
 #include "screenshooter.h"
 #include "screenshooter_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 #define SCREENSHOT_FORMAT WL_SHM_FORMAT_ARGB8888
 
@@ -59,10 +59,10 @@ ScreenshooterPrivate::ScreenshooterPrivate()
 {
 }
 
-void ScreenshooterPrivate::screenshooter_capture_output(Resource *resource,
-                                                        uint32_t id,
-                                                        struct ::wl_resource *outputResource,
-                                                        wl_array *e)
+void ScreenshooterPrivate::liri_screenshooter_capture_output(Resource *resource,
+                                                             uint32_t id,
+                                                             struct ::wl_resource *outputResource,
+                                                             wl_array *e)
 {
     Q_Q(Screenshooter);
 
@@ -82,9 +82,9 @@ void ScreenshooterPrivate::screenshooter_capture_output(Resource *resource,
     Q_EMIT q->captureRequested(screenshot);
 }
 
-void ScreenshooterPrivate::screenshooter_capture_active(Resource *resource,
-                                                        uint32_t id,
-                                                        wl_array *e)
+void ScreenshooterPrivate::liri_screenshooter_capture_active(Resource *resource,
+                                                             uint32_t id,
+                                                             wl_array *e)
 {
     Q_Q(Screenshooter);
 
@@ -103,9 +103,9 @@ void ScreenshooterPrivate::screenshooter_capture_active(Resource *resource,
     Q_EMIT q->captureRequested(screenshot);
 }
 
-void ScreenshooterPrivate::screenshooter_capture_surface(Resource *resource,
-                                                         uint32_t id,
-                                                         wl_array *e)
+void ScreenshooterPrivate::liri_screenshooter_capture_surface(Resource *resource,
+                                                              uint32_t id,
+                                                              wl_array *e)
 {
     Q_Q(Screenshooter);
 
@@ -124,9 +124,9 @@ void ScreenshooterPrivate::screenshooter_capture_surface(Resource *resource,
     Q_EMIT q->captureRequested(screenshot);
 }
 
-void ScreenshooterPrivate::screenshooter_capture_area(Resource *resource,
-                                                      uint32_t id,
-                                                      wl_array *e)
+void ScreenshooterPrivate::liri_screenshooter_capture_area(Resource *resource,
+                                                           uint32_t id,
+                                                           wl_array *e)
 {
     Q_Q(Screenshooter);
 
@@ -170,7 +170,7 @@ QImage ScreenshotPrivate::grabItem(QQuickItem *item)
     return result->image();
 }
 
-void ScreenshotPrivate::screenshot_destroy(Resource *resource)
+void ScreenshotPrivate::liri_screenshot_destroy(Resource *resource)
 {
     Q_UNUSED(resource);
 
@@ -178,8 +178,8 @@ void ScreenshotPrivate::screenshot_destroy(Resource *resource)
     q->deleteLater();
 }
 
-void ScreenshotPrivate::screenshot_record(Resource *resource,
-                                          struct ::wl_resource *bufferResource)
+void ScreenshotPrivate::liri_screenshot_record(Resource *resource,
+                                               struct ::wl_resource *bufferResource)
 {
     Q_Q(Screenshot);
 

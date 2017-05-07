@@ -32,7 +32,7 @@
 
 #include <QtWaylandCompositor/QWaylandOutput>
 
-#include <Liri/waylandserver/liriwaylandserver_export.h>
+#include <LiriWaylandServer/liriwaylandserverglobal.h>
 
 namespace Liri {
 

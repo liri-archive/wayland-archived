@@ -30,8 +30,8 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandServer/OutputChangeset>
-#include <Liri/waylandserver/private/qwayland-server-liri-outputmanagement.h>
+#include <LiriWaylandServer/OutputChangeset>
+#include <LiriWaylandServer/private/qwayland-server-liri-outputmanagement.h>
 
 //
 //  W A R N I N G

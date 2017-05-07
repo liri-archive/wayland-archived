@@ -33,7 +33,7 @@
 #ifndef LIRI_EGLFSKMSWINDOW_H
 #define LIRI_EGLFSKMSWINDOW_H
 
-#include <Liri/Platform/EglFSWindow>
+#include <LiriEglFS/EglFSWindow>
 
 namespace Liri {
 

@@ -20,11 +20,11 @@ target_link_libraries(liriwaylandserverplugin
 )
 
 install(TARGETS liriwaylandserverplugin LIBRARY
-        DESTINATION ${QML_INSTALL_DIR}/Liri/WaylandServer)
+        DESTINATION ${QML_INSTALL_DIR}/LiriWaylandServer)
 
 set(MODULE_FILES
     qmldir
     WindowChrome.qml
 )
 install(FILES ${MODULE_FILES}
-        DESTINATION ${QML_INSTALL_DIR}/Liri/WaylandServer)
+        DESTINATION ${QML_INSTALL_DIR}/LiriWaylandServer)

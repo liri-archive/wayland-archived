@@ -31,8 +31,8 @@
 #include <QtCore/QMutexLocker>
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/Screenshooter>
-#include <Liri/waylandclient/private/qwayland-liri-screenshooter.h>
+#include <LiriWaylandClient/Screenshooter>
+#include <LiriWaylandClient/private/qwayland-liri-screenshooter.h>
 
 //
 //  W A R N I N G
@@ -88,10 +88,10 @@ public:
     static ScreenshotPrivate *get(Screenshot *screenshot) { return screenshot->d_func(); }
 
 protected:
-    void screenshot_setup(int32_t width, int32_t height,
-                          int32_t stride, int32_t format) Q_DECL_OVERRIDE;
-    void screenshot_done() Q_DECL_OVERRIDE;
-    void screenshot_failed(int32_t error) Q_DECL_OVERRIDE;
+    void liri_screenshot_setup(int32_t width, int32_t height,
+                               int32_t stride, int32_t format) Q_DECL_OVERRIDE;
+    void liri_screenshot_done() Q_DECL_OVERRIDE;
+    void liri_screenshot_failed(int32_t error) Q_DECL_OVERRIDE;
 };
 
 } // namespace WaylandClient

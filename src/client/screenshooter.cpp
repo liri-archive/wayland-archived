@@ -158,7 +158,7 @@ ScreenshotPrivate::~ScreenshotPrivate()
     destroy();
 }
 
-void ScreenshotPrivate::screenshot_setup(int32_t width, int32_t height, int32_t stride, int32_t f)
+void ScreenshotPrivate::liri_screenshot_setup(int32_t width, int32_t height, int32_t stride, int32_t f)
 {
     Q_Q(Screenshot);
 
@@ -190,13 +190,13 @@ void ScreenshotPrivate::screenshot_setup(int32_t width, int32_t height, int32_t 
     Q_EMIT q->setupDone(QSize(width, height), stride);
 }
 
-void ScreenshotPrivate::screenshot_done()
+void ScreenshotPrivate::liri_screenshot_done()
 {
     Q_Q(Screenshot);
     Q_EMIT q->done(buffer.data());
 }
 
-void ScreenshotPrivate::screenshot_failed(int32_t error)
+void ScreenshotPrivate::liri_screenshot_failed(int32_t error)
 {
     Q_Q(Screenshot);
     Q_EMIT q->failed(static_cast<Screenshot::Error>(error));

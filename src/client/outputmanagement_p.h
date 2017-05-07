@@ -30,8 +30,8 @@
 
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/OutputManagement>
-#include <Liri/waylandclient/private/qwayland-liri-outputmanagement.h>
+#include <LiriWaylandClient/OutputManagement>
+#include <LiriWaylandClient/private/qwayland-liri-outputmanagement.h>
 
 //
 //  W A R N I N G

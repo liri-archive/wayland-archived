@@ -33,7 +33,7 @@
 
 #include <QtCore/QObject>
 
-#include <Liri/waylandclient/liriwaylandclient_export.h>
+#include <LiriWaylandClient/liriwaylandclientglobal.h>
 
 struct wl_display;
 

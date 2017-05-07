@@ -32,8 +32,8 @@
 #include <QtCore/QThread>
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandClient/Screencaster>
-#include <Liri/waylandclient/private/qwayland-liri-screencaster.h>
+#include <LiriWaylandClient/Screencaster>
+#include <LiriWaylandClient/private/qwayland-liri-screencaster.h>
 
 //
 //  W A R N I N G
@@ -92,13 +92,13 @@ public:
     static ScreencastPrivate *get(Screencast *screencast) { return screencast->d_func(); }
 
 protected:
-    void screencast_setup(int32_t width, int32_t height,
-                          int32_t stride, int32_t format) Q_DECL_OVERRIDE;
-    void screencast_frame(struct ::wl_buffer *buffer,
-                          uint32_t time, int32_t transform) Q_DECL_OVERRIDE;
-    void screencast_failed(int32_t error,
-                           struct ::wl_buffer *buffer) Q_DECL_OVERRIDE;
-    void screencast_cancelled(struct ::wl_buffer *buffer) Q_DECL_OVERRIDE;
+    void liri_screencast_setup(int32_t width, int32_t height,
+                               int32_t stride, int32_t format) Q_DECL_OVERRIDE;
+    void liri_screencast_frame(struct ::wl_buffer *buffer,
+                               uint32_t time, int32_t transform) Q_DECL_OVERRIDE;
+    void liri_screencast_failed(int32_t error,
+                                struct ::wl_buffer *buffer) Q_DECL_OVERRIDE;
+    void liri_screencast_cancelled(struct ::wl_buffer *buffer) Q_DECL_OVERRIDE;
 };
 
 } // namespace WaylandClient

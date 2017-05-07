@@ -28,10 +28,10 @@
 #ifndef LIRI_GTKSHELL_P_H
 #define LIRI_GTKSHELL_P_H
 
-#include <Liri/WaylandServer/GtkShell>
+#include <LiriWaylandServer/GtkShell>
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <Liri/waylandserver/private/qwayland-server-gtk.h>
+#include <LiriWaylandServer/private/qwayland-server-gtk-shell.h>
 
 //
 //  W A R N I N G
@@ -59,10 +59,10 @@ public:
     static GtkShellPrivate *get(GtkShell *shell) { return shell->d_func(); }
 
 protected:
-    void shell_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void gtk_shell_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
 
-    void shell_get_gtk_surface(Resource *resource, uint32_t id,
-                               wl_resource *surfaceResource)  Q_DECL_OVERRIDE;
+    void gtk_shell_get_gtk_surface(Resource *resource, uint32_t id,
+                                   wl_resource *surfaceResource)  Q_DECL_OVERRIDE;
 };
 
 class LIRIWAYLANDSERVER_EXPORT GtkSurfacePrivate
@@ -77,9 +77,9 @@ public:
     static GtkSurfacePrivate *get(GtkSurface *surface) { return surface->d_func(); }
 
 protected:
-    void surface_destroy_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void gtk_surface_destroy_resource(Resource *resource) Q_DECL_OVERRIDE;
 
-    void surface_set_dbus_properties(Resource *resource,
+    void gtk_surface_set_dbus_properties(Resource *resource,
                                      const QString &application_id,
                                      const QString &app_menu_path,
                                      const QString &menubar_path,
@@ -87,8 +87,8 @@ protected:
                                      const QString &application_object_path,
                                      const QString &unique_bus_name) Q_DECL_OVERRIDE;
 
-    void surface_set_modal(Resource *resource) Q_DECL_OVERRIDE;
-    void surface_unset_modal(Resource *resource) Q_DECL_OVERRIDE;
+    void gtk_surface_set_modal(Resource *resource) Q_DECL_OVERRIDE;
+    void gtk_surface_unset_modal(Resource *resource) Q_DECL_OVERRIDE;
 
 private:
     GtkShell *m_shell;

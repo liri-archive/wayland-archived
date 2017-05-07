@@ -28,7 +28,7 @@
 #ifndef LIRI_QUICKOUTPUTCONFIGURATION_P_H
 #define LIRI_QUICKOUTPUTCONFIGURATION_P_H
 
-#include <Liri/WaylandServer/QuickOutputConfiguration>
+#include <LiriWaylandServer/QuickOutputConfiguration>
 
 //
 //  W A R N I N G

@@ -30,7 +30,7 @@
 
 #include <QtQml/QQmlParserStatus>
 
-#include <Liri/WaylandServer/ScreenManager>
+#include <LiriWaylandServer/ScreenManager>
 
 namespace Liri {
 

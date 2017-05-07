@@ -31,9 +31,9 @@
 #include <QtQml/QQmlListProperty>
 
 #include <QtWaylandCompositor/QWaylandQuickOutput>
-#include <Liri/WaylandServer/Screen>
+#include <LiriWaylandServer/Screen>
 
-#include <Liri/waylandserver/liriwaylandserver_export.h>
+#include <LiriWaylandServer/liriwaylandserverglobal.h>
 
 namespace Liri {
 

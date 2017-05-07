@@ -44,7 +44,6 @@ Qt >= 5.8.0 with at least the following modules is required:
 
 The following modules and their dependencies are required:
 
-* [ECM >= 1.7.0](http://quickgit.kde.org/?p=extra-cmake-modules.git)
 * [udev](http://www.freedesktop.org/software/systemd/libudev/)
 * [libinput >= 0.12](http://www.freedesktop.org/wiki/Software/libinput/)
 
@@ -67,31 +66,43 @@ If you enable XWayland support you also need:
 
 ## Installation
 
+Qbs is a new build system that is much easier to use compared to qmake or CMake.
+It is the default build system for this project and soon will become the only one.
+
+If you want to learn more, please read the [Qbs manual](http://doc.qt.io/qbs/index.html),
+especially the [setup guide](http://doc.qt.io/qbs/configuring.html) and how to install artifacts
+from the [installation guide](http://doc.qt.io/qbs/installing-files.html).
+
 From the root of the repository, run:
 
 ```sh
-mkdir build; cd build
-cmake .. -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
-make
-make install # use sudo if necessary
+qbs setup-toolchains --type gcc /usr/bin/g++ gcc
+qbs setup-qt /usr/bin/qmake-qt5 qt5
+qbs config profiles.qt5.baseProfile gcc
+qbs -d build -j $(nproc) profile:qt5 # use sudo if necessary
 ```
 
-On the `cmake` line, you can specify additional configuration parameters:
+On the last `qbs` line, you can specify additional configuration parameters at the end:
 
- * `-DCMAKE_INSTALL_PREFIX=/path/to/install` (for example, `/opt/liri` or `/usr`)
- * `-DCMAKE_BUILD_TYPE=<build_type>`, where `<build_type>` is one of:
-   * **Debug:** debug build
-   * **Release:** release build
-   * **RelWithDebInfo:** release build with debugging information
+ * `qbs.installRoot:/path/to/install` (for example `/opt/liri` or `/usr`)
 
-## Licensing
+The following are only needed if `qbs.installRoot` is a system-wide path such as `/usr`
+and the default value doesn't suit your needs. All are relative to `qbs.installRoot`:
 
-Licensed under either of the following licenses:
+ * `lirideployment:libDir=path/to/lib` where libraries are installed (default: `lib`)
+ * `lirideployment:qmlDir=path/to/qml` where QML plugins are installed (default: `lib/qml`)
+ * `lirideployment:pluginsDir=path/to/plugins` where Qt plugins are installed (default: `lib/plugins`)
+ * `lirideployment:qbsModulesDir=path/to/qbs` where Qbs modules are installed (default: `share/qbs/modules`)
 
-* GNU Lesser General Public License version 3.0
-* GNU General Public License version 2.0 or (at your option)
-  version 3.0 or any later version approved by the
-  KDE Free Qt Foundation.
+See `qbs-shared/modules/lirideployment/lirideployment.qbs` for more deployment-related parameters.
+
+You can also specify the following options:
+
+ * `qbsbuildconfig:withKmsPlugin=false` to exclude KMS EGL device integration from the build
+ * `qbsbuildconfig:withXWayland=false` to exclude XWayland support from the build
+
+If you specify `qbs.installRoot` you might need to prefix the entire line with `sudo`,
+depending on whether you have permissions to write there or not.
 
 ## Notes
 
@@ -248,3 +259,12 @@ to learn how to enable them.
 
 * EGL Device Integrations:
   * **liri.qpa.kms:** KMS/DRM EGL device integration
+
+## Licensing
+
+Licensed under either of the following licenses:
+
+* GNU Lesser General Public License version 3.0
+* GNU General Public License version 2.0 or (at your option)
+  version 3.0 or any later version approved by the
+  KDE Free Qt Foundation.

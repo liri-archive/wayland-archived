@@ -31,7 +31,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QPoint>
 
-#include <Liri/waylandclient/liriwaylandclient_export.h>
+#include <LiriWaylandClient/liriwaylandclientglobal.h>
 
 struct wl_cursor_image;
 

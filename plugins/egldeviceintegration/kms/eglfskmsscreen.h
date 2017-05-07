@@ -37,7 +37,7 @@
 #include <QtCore/QList>
 #include <QtCore/QMutex>
 
-#include <Liri/Platform/EglFSScreen>
+#include <LiriEglFS/EglFSScreen>
 
 #include "eglfskmsintegration.h"
 

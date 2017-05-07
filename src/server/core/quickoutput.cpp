@@ -25,7 +25,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <Liri/Platform/EglFSGlobal>
+#include <LiriEglFS/EglFSGlobal>
 
 #include <QtCore/QElapsedTimer>
 #include <QtCore/private/qobject_p.h>
@@ -35,7 +35,7 @@
 #include <QtWaylandCompositor/QWaylandOutputMode>
 
 #include "quickoutput.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 #include "extensions/screencaster.h"
 #include "screen/screenbackend.h"
 

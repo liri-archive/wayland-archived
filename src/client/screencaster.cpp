@@ -206,8 +206,8 @@ void ScreencastPrivate::recordFrame()
     }
 }
 
-void ScreencastPrivate::screencast_setup(int32_t width, int32_t height,
-                                         int32_t stride, int32_t f)
+void ScreencastPrivate::liri_screencast_setup(int32_t width, int32_t height,
+                                              int32_t stride, int32_t f)
 {
     Q_Q(Screencast);
 
@@ -243,8 +243,8 @@ void ScreencastPrivate::screencast_setup(int32_t width, int32_t height,
     Q_EMIT q->setupDone(QSize(width, height), stride);
 }
 
-void ScreencastPrivate::screencast_frame(struct ::wl_buffer *buffer,
-                                         uint32_t time, int32_t transform)
+void ScreencastPrivate::liri_screencast_frame(struct ::wl_buffer *buffer,
+                                              uint32_t time, int32_t transform)
 {
     // Serialize frame recording
     QMutexLocker locker(&recordMutex);
@@ -259,8 +259,8 @@ void ScreencastPrivate::screencast_frame(struct ::wl_buffer *buffer,
     }
 }
 
-void ScreencastPrivate::screencast_failed(int32_t error,
-                                          struct ::wl_buffer *buffer)
+void ScreencastPrivate::liri_screencast_failed(int32_t error,
+                                               struct ::wl_buffer *buffer)
 {
     Q_UNUSED(buffer);
 
@@ -268,7 +268,7 @@ void ScreencastPrivate::screencast_failed(int32_t error,
     Q_EMIT q->failed(static_cast<Screencast::RecordError>(error));
 }
 
-void ScreencastPrivate::screencast_cancelled(struct ::wl_buffer *buffer)
+void ScreencastPrivate::liri_screencast_cancelled(struct ::wl_buffer *buffer)
 {
     Q_Q(Screencast);
 

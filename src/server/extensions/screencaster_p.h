@@ -33,8 +33,8 @@
 #include <QtWaylandCompositor/QWaylandOutput>
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <Liri/WaylandServer/Screencaster>
-#include <Liri/waylandserver/private/qwayland-server-liri-screencaster.h>
+#include <LiriWaylandServer/Screencaster>
+#include <LiriWaylandServer/private/qwayland-server-liri-screencaster.h>
 
 //
 //  W A R N I N G
@@ -68,11 +68,11 @@ public:
     static ScreencasterPrivate *get(Screencaster *screencaster) { return screencaster->d_func(); }
 
 protected:
-    void screencaster_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
-    void screencaster_destroy_resource(Resource *resource) Q_DECL_OVERRIDE;
-    void screencaster_capture(Resource *resource,
-                              uint32_t id,
-                              struct ::wl_resource *outputResource) Q_DECL_OVERRIDE;
+    void liri_screencaster_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void liri_screencaster_destroy_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void liri_screencaster_capture(Resource *resource,
+                                   uint32_t id,
+                                   struct ::wl_resource *outputResource) Q_DECL_OVERRIDE;
 };
 
 class LIRIWAYLANDSERVER_EXPORT ScreencastPrivate
@@ -96,9 +96,9 @@ public:
     static ScreencastPrivate *get(Screencast *screencast) { return screencast->d_func(); }
 
 protected:
-    void screencast_destroy(Resource *resource) Q_DECL_OVERRIDE;
-    void screencast_record(Resource *resource,
-                           struct ::wl_resource *bufferResource) Q_DECL_OVERRIDE;
+    void liri_screencast_destroy(Resource *resource) Q_DECL_OVERRIDE;
+    void liri_screencast_record(Resource *resource,
+                                struct ::wl_resource *bufferResource) Q_DECL_OVERRIDE;
 };
 
 } // namespace WaylandServer

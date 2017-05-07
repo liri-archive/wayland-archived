@@ -30,7 +30,7 @@
 
 #include <QtQml/QQmlApplicationEngine>
 
-#include <Liri/waylandserver/liriwaylandserver_export.h>
+#include <LiriWaylandServer/liriwaylandserverglobal.h>
 
 namespace Liri {
 

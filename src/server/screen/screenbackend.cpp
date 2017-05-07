@@ -30,11 +30,11 @@
 #include <QtGui/qpa/qwindowsysteminterface.h>
 #include <QtWaylandCompositor/QWaylandCompositor>
 
-#include <Liri/Platform/EglFSGlobal>
-#include <Liri/Platform/EglFSScreen>
+#include <LiriEglFS/EglFSGlobal>
+#include <LiriEglFS/EglFSScreen>
 
 #include "output/outputchangeset.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 #include "screenbackend.h"
 #include "screenbackend_p.h"
 

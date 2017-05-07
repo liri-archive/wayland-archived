@@ -31,7 +31,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/private/qobject_p.h>
 
-#include <Liri/WaylandServer/ScreenManager>
+#include <LiriWaylandServer/ScreenManager>
 
 #include "screen/fakescreenbackend.h"
 #include "screen/nativescreenbackend.h"

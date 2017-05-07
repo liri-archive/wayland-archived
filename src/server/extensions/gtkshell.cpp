@@ -30,7 +30,7 @@
 
 #include "gtkshell.h"
 #include "gtkshell_p.h"
-#include "serverlogging_p.h"
+#include "logging_p.h"
 
 namespace Liri {
 
@@ -47,14 +47,14 @@ GtkShellPrivate::GtkShellPrivate()
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 }
 
-void GtkShellPrivate::shell_bind_resource(Resource *resource)
+void GtkShellPrivate::gtk_shell_bind_resource(Resource *resource)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 
     send_capabilities(resource->handle, 0);
 }
 
-void GtkShellPrivate::shell_get_gtk_surface(Resource *resource, uint32_t id, wl_resource *surfaceResource)
+void GtkShellPrivate::gtk_shell_get_gtk_surface(Resource *resource, uint32_t id, wl_resource *surfaceResource)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 
@@ -135,7 +135,7 @@ GtkSurfacePrivate::~GtkSurfacePrivate()
 {
 }
 
-void GtkSurfacePrivate::surface_destroy_resource(Resource *resource)
+void GtkSurfacePrivate::gtk_surface_destroy_resource(Resource *resource)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 
@@ -145,13 +145,13 @@ void GtkSurfacePrivate::surface_destroy_resource(Resource *resource)
     delete q;
 }
 
-void GtkSurfacePrivate::surface_set_dbus_properties(Resource *resource,
-                                                    const QString &application_id,
-                                                    const QString &app_menu_path,
-                                                    const QString &menubar_path,
-                                                    const QString &window_object_path,
-                                                    const QString &application_object_path,
-                                                    const QString &unique_bus_name)
+void GtkSurfacePrivate::gtk_surface_set_dbus_properties(Resource *resource,
+                                                        const QString &application_id,
+                                                        const QString &app_menu_path,
+                                                        const QString &menubar_path,
+                                                        const QString &window_object_path,
+                                                        const QString &application_object_path,
+                                                        const QString &unique_bus_name)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 
@@ -181,7 +181,7 @@ void GtkSurfacePrivate::surface_set_dbus_properties(Resource *resource,
     Q_EMIT q->uniqueBusNameChanged(m_uniqueBusName);
 }
 
-void GtkSurfacePrivate::surface_set_modal(Resource *resource)
+void GtkSurfacePrivate::gtk_surface_set_modal(Resource *resource)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 
@@ -191,7 +191,7 @@ void GtkSurfacePrivate::surface_set_modal(Resource *resource)
     Q_EMIT q->setModal();
 }
 
-void GtkSurfacePrivate::surface_unset_modal(Resource *resource)
+void GtkSurfacePrivate::gtk_surface_unset_modal(Resource *resource)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 
@@ -305,7 +305,7 @@ GtkSurface *GtkSurface::fromResource(wl_resource *resource)
 {
     GtkSurfacePrivate::Resource *res = GtkSurfacePrivate::Resource::fromResource(resource);
     if (res)
-        return static_cast<GtkSurfacePrivate *>(res->surface_object)->q_func();
+        return static_cast<GtkSurfacePrivate *>(res->gtk_surface_object)->q_func();
     return nullptr;
 }
 

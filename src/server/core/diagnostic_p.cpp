@@ -35,7 +35,6 @@
 #include <QtGui/qpa/qplatformnativeinterface.h>
 
 #include "diagnostic_p.h"
-#include "liriwayland_version.h"
 
 #include <wayland-version.h>
 
@@ -190,7 +189,7 @@ QString framework()
 
     str << "Wayland version: " << WAYLAND_VERSION
         << "\nQt version: " << QT_VERSION_STR
-        << "\nLiri Wayland version: " << LIRIWAYLAND_VERSION_STRING
+        << "\nLiri Wayland version: " << LIRIWAYLAND_VERSION
         << '\n';
 
     return result;

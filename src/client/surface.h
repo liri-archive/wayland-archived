@@ -31,8 +31,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QRect>
 
-#include <Liri/WaylandClient/Buffer>
-#include <Liri/WaylandClient/Output>
+#include <LiriWaylandClient/Buffer>
+#include <LiriWaylandClient/Output>
 
 class QWindow;
 
