@@ -1,5 +1,9 @@
 language: c
 
+compiler:
+  - gcc
+  - clang
+
 sudo: required
 
 env:
@@ -13,9 +17,9 @@ env:
 
 arch:
   packages:
+    - qbs
     - qt5-declarative
     - qt5-wayland
-    - extra-cmake-modules
     - libdrm
     - mesa-libgl
     - wayland
@@ -25,11 +29,14 @@ arch:
     - xcb-util-cursor
     - libxcursor
     - xorg-server-xvfb
+    - clang
+    #- clazy-git
   script:
-    - cmake . -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DCMAKE_INSTALL_PREFIX=/usr
-    - make
-    #- sudo make install
-    #- xvfb-run -a -s "-screen 0 800x600x24" make test
+    #- export CLAZY_CHECKS="level1"
+    - qbs-setup-toolchains --detect
+    - qbs-setup-qt /usr/bin/qmake-qt5 qt5
+    - qbs config profiles.qt5.baseProfile ${CC}
+    - eval `dbus-launch --sh-syntax` && xvfb-run -a -s "-screen 0 800x600x24" qbs -d qbs-build -j $(nproc) profile:qt5
     - ./.travis/bintray-wrapper.sh
 
 script:
