@@ -67,7 +67,6 @@ If you enable XWayland support you also need:
 ## Installation
 
 Qbs is a new build system that is much easier to use compared to qmake or CMake.
-It is the default build system for this project and soon will become the only one.
 
 If you want to learn more, please read the [Qbs manual](http://doc.qt.io/qbs/index.html),
 especially the [setup guide](http://doc.qt.io/qbs/configuring.html) and how to install artifacts
@@ -103,59 +102,6 @@ You can also specify the following options:
 
 If you specify `qbs.installRoot` you might need to prefix the entire line with `sudo`,
 depending on whether you have permissions to write there or not.
-
-## Notes
-
-### Configuration arguments
-
-* **ENABLE_EGLDEVICEINTEGRATION_KMS**
-
-  Enabled by default. Pass `-DENABLE_EGLDEVICEINTEGRATION_KMS:BOOL=OFF`
-  to cmake if you don't want to build the DRM/KMS device integration.
-
-  Please note that this way you won't be able to run a compositor
-  on DRM/KMS devices.
-
-* **ENABLE_EGLDEVICEINTEGRATION_BRCM**
-
-  Enabled by default. Pass `-DENABLE_EGLDEVICEINTEGRATION_BRCM:BOOL=OFF`
-  to cmake in order to disable the Broadcom VideoCore device integration.
-
-  You will need Broadcom VideoCore proprietary libraries.
-
-  Notable examples of devices powered by a Broadcom GPU are
-  Raspberry Pi and Raspberry Pi 2.
-
-* **ENABLE_EGLDEVICEINTEGRATION_MALI**
-
-  Disabled by default. Pass `-DENABLE_EGLDEVICEINTEGRATION_MALI:BOOL=ON`
-  to cmake in order to enable Mali device integration.
-
-  You will need Mali proprietary libraries.
-
-* **ENABLE_EGLDEVICEINTEGRATION_VIV**
-
-  Disabled by default. Pass `-DENABLE_EGLDEVICEINTEGRATION_VIV:BOOL=ON`
-  to cmake in order to enable Vivante device integration.
-
-  You will need Freescale proprietary Vivante GPU libraries.
-
-* **ENABLE_XWAYLAND**
-
-  Enabled by default. Pass `-DENABLE_XWAYLAND:BOOL=OFF` to cmake if
-  you don't want to build the XWayland plugin.
-
-  If disabled, compatibility with old X11-only applications will
-  not work.
-
-* **ENABLE_ONLY_EGLDEVICEINTEGRATION**
-
-  Disabled by default. Pass `-DENABLE_ONLY_EGLDEVICEINTEGRATION:BOOL=ON`
-  to cmake in order to build and install device integration plugins.
-
-  This option is meant for packagers. The best way to package liri-wayland
-  for multiple devices is to ship device integration plugins with separate
-  packages.
 
 ### Environment variables
 
