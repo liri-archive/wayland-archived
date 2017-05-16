@@ -93,7 +93,7 @@ and the default value doesn't suit your needs. All are relative to `qbs.installR
  * `lirideployment:pluginsDir=path/to/plugins` where Qt plugins are installed (default: `lib/plugins`)
  * `lirideployment:qbsModulesDir=path/to/qbs` where Qbs modules are installed (default: `share/qbs/modules`)
 
-See `qbs-shared/modules/lirideployment/lirideployment.qbs` for more deployment-related parameters.
+See `qbs/shared/modules/lirideployment/lirideployment.qbs` for more deployment-related parameters.
 
 You can also specify the following options:
 
