@@ -9,6 +9,8 @@ Project {
     property stringList autotestArguments: []
     property stringList autotestWrapper: []
 
+    condition: qbs.targetOS.contains("linux")
+
     minimumQbsVersion: "1.6"
 
     qbsSearchPaths: ["qbs/shared", "qbs/local"]
