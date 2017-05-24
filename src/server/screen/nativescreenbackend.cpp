@@ -157,7 +157,7 @@ void NativeScreenBackend::handleScreenChanged(QScreen *qscreen, Screen *screen)
             static_cast<Platform::EglFSScreen *>(qscreen->handle());
     if (QGuiApplication::platformName() == QLatin1String("liri") && eglfsScreen) {
         QList<Screen::Mode> modes;
-        Q_FOREACH (const Platform::EglFSScreen::Mode &mode, eglfsScreen->modes())
+        for (const auto &mode : eglfsScreen->modes())
             modes.append({mode.size, mode.refreshRate});
         screenPrivate->setModes(modes);
 

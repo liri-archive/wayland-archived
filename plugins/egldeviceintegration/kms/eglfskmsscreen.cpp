@@ -466,9 +466,9 @@ void EglFSKmsScreen::setPowerState(EglFSScreen::PowerState state)
     m_powerState = state;
 }
 
-QList<EglFSScreen::Mode> EglFSKmsScreen::modes() const
+QVector<EglFSScreen::Mode> EglFSKmsScreen::modes() const
 {
-    QList<EglFSScreen::Mode> list;
+    QVector<EglFSScreen::Mode> list;
 
     Q_FOREACH (const drmModeModeInfo &info, m_output.modes)
         list.append({QSize(info.hdisplay, info.vdisplay),
@@ -500,16 +500,6 @@ void EglFSKmsScreen::setCurrentMode(int modeId)
 int EglFSKmsScreen::preferredMode() const
 {
     return m_output.preferred_mode;
-}
-
-void EglFSKmsScreen::setPreferredMode(int modeId)
-{
-    if (modeId < 0 || modeId >= m_output.modes.size()) {
-        qCWarning(lcKms, "Invalid mode passed to EglFSKmsScreen::setPreferredMode()");
-        return;
-    }
-
-    m_output.preferred_mode = modeId;
 }
 
 QString EglFSKmsScreen::identifier() const

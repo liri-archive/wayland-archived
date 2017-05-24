@@ -128,13 +128,12 @@ public:
     EglFSScreen::PowerState powerState() const Q_DECL_OVERRIDE;
     void setPowerState(EglFSScreen::PowerState state) Q_DECL_OVERRIDE;
 
-    QList<EglFSScreen::Mode> modes() const Q_DECL_OVERRIDE;
+    QVector<EglFSScreen::Mode> modes() const Q_DECL_OVERRIDE;
 
     int currentMode() const Q_DECL_OVERRIDE;
     void setCurrentMode(int modeId) Q_DECL_OVERRIDE;
 
     int preferredMode() const Q_DECL_OVERRIDE;
-    void setPreferredMode(int modeId) Q_DECL_OVERRIDE;
 
     QString identifier() const Q_DECL_OVERRIDE;
     QString manufacturer() const Q_DECL_OVERRIDE;

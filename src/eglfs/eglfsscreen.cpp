@@ -228,6 +228,7 @@ QPixmap EglFSScreen::grabWindow(WId wid, int x, int y, int width, int height) co
     return QPixmap();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
 /*!
   Returns the list of modes.
 
@@ -237,9 +238,9 @@ QPixmap EglFSScreen::grabWindow(WId wid, int x, int y, int width, int height) co
   \sa QPlatformScreen::geometry
   \sa QPlatformScreen::refreshRate
 */
-QList<EglFSScreen::Mode> EglFSScreen::modes() const
+QVector<EglFSScreen::Mode> EglFSScreen::modes() const
 {
-    QList<EglFSScreen::Mode> list;
+    QVector<EglFSScreen::Mode> list;
     list.append({geometry().size(), refreshRate()});
     return list;
 }
@@ -255,6 +256,7 @@ int EglFSScreen::currentMode() const
 {
     return 0;
 }
+#endif
 
 /*!
   Sets the index of the current mode from the modes list.
@@ -268,6 +270,7 @@ void EglFSScreen::setCurrentMode(int modeId)
     Q_UNUSED(modeId);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
 /*!
   Returns the index of the preferred mode from the modes list.
 
@@ -279,18 +282,7 @@ int EglFSScreen::preferredMode() const
 {
     return 0;
 }
-
-/*!
-  Sets the index of the preferred mode from the modes list.
-
-  The default implementation does nothing.
-
-  \sa QPlatformScreen::modes
-*/
-void EglFSScreen::setPreferredMode(int modeId)
-{
-    Q_UNUSED(modeId);
-}
+#endif
 
 /*!
   Returns the screen identifier.

@@ -51,10 +51,12 @@ class EglFSWindow;
 class LIRIEGLFS_EXPORT EglFSScreen : public QPlatformScreen
 {
 public:
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
     struct Mode {
         QSize size;
         qreal refreshRate;
     };
+#endif
 
     EglFSScreen(EGLDisplay display);
     ~EglFSScreen();
@@ -84,13 +86,18 @@ public:
 
     void handleCursorMove(const QPoint &pos);
 
-    virtual QList<Mode> modes() const;
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
+    virtual QVector<Mode> modes() const;
+#endif
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
     virtual int currentMode() const;
+#endif
     virtual void setCurrentMode(int modeId);
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
     virtual int preferredMode() const;
-    virtual void setPreferredMode(int modeId);
+#endif
 
     virtual QString identifier() const;
     virtual QString manufacturer() const;
