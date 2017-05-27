@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriDynamicLibrary {
-    name: "Liri.WaylandServer.Private"
+    name: "liriwaylandserverprivateplugin"
     targetName: "liriwaylandserverprivateplugin"
 
     Depends { name: "lirideployment" }

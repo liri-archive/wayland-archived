@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriDynamicLibrary {
-    name: "Liri.Platform"
+    name: "liriplatformplugin"
     targetName: "platformplugin"
 
     Depends { name: "lirideployment" }

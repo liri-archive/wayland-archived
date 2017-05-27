@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriDynamicLibrary {
-    name: "Liri.XWayland"
+    name: "lirixwaylandplugin"
     targetName: "lirixwaylandplugin"
 
     Depends { name: "qbsbuildconfig" }
