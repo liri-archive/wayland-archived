@@ -10,11 +10,15 @@ LiriModule {
     Depends { name: "WaylandScanner" }
 
     condition: {
-        if (!Wayland.client.found)
-            throw "wayland-client is required to build " + targetName;
+        if (!Wayland.client.found) {
+            console.error("wayland-client is required to build " + targetName);
+            return false;
+        }
 
-        if (!Wayland.cursor.found)
-            throw "wayland-cursor is required to build " + targetName;
+        if (!Wayland.cursor.found) {
+            console.error("wayland-cursor is required to build " + targetName);
+            return false;
+        }
 
         return true;
     }

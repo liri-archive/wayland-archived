@@ -16,12 +16,38 @@ LiriDynamicLibrary {
             return false;
         }
 
-        if (!XCB.xcb.found || !XCB.xfixes.found || !XCB.cursor.found || !XCB.composite.found || !XCB.render.found || !XCB.shape.found) {
-            throw "Unable to find at least one of the following dependencies: xcb, " +
-                  "xcb-xfixes, xcb-cursor, xcb-composite, xcb-render, xcb-shape.";
+        if (!XCB.xcb.found) {
+            console.error("xcb is required to build " + targetName);
+            return false;
         }
+        if (!XCB.xfixes.found) {
+            console.error("xcb-xfixes is required to build " + targetName);
+            return false;
+        }
+        if (!XCB.cursor.found) {
+            console.error("xcb-cursor is required to build " + targetName);
+            return false;
+        }
+        if (!XCB.composite.found) {
+            console.error("xcb-composite is required to build " + targetName);
+            return false;
+        }
+        if (!XCB.render.found) {
+            console.error("xcb-render is required to build " + targetName);
+            return false;
+        }
+        if (!XCB.shape.found) {
+            console.error("xcb-shape is required to build " + targetName);
+            return false;
+        }
+
         if (!X11.x11.found || !X11.xcursor.found) {
-            throw "Unable to find at least one of the following dependencies: x11, xcursor.";
+            console.error("x11 is required to build " + targetName);
+            return false;
+        }
+        if (!X11.xcursor.found) {
+            console.error("xcursor is required to build " + targetName);
+            return false;
         }
 
         return true;

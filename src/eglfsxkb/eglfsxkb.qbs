@@ -9,8 +9,10 @@ StaticLibrary {
     Depends { name: "xkbcommon" }
 
     condition: {
-        if (!xkbcommon.found)
-            throw "xkbcommon is required to build " + targetName;
+        if (!xkbcommon.found) {
+            console.error("xkbcommon is required to build " + targetName);
+            return false;
+        }
 
         return true;
     }

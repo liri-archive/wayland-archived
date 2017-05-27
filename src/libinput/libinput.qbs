@@ -13,8 +13,10 @@ LiriModule {
     Depends { name: "eglfsxkb" }
 
     condition: {
-        if (!libinput.found)
-            throw "libinput is required to build " + targetName;
+        if (!libinput.found) {
+            console.error("libinput is required to build " + targetName);
+            return false;
+        }
 
         return true;
     }

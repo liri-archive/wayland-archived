@@ -19,11 +19,15 @@ LiriDynamicLibrary {
             return false;
         }
 
-        if (!gbm.found)
-            throw "gbm is required to build " + targetName;
+        if (!gbm.found) {
+            console.error("gbm is required to build " + targetName);
+            return false;
+        }
 
-        if (!libdrm.found)
-            throw "libdrm is required to build " + targetName;
+        if (!libdrm.found) {
+            console.error("libdrm is required to build " + targetName);
+            return false;
+        }
 
         return true;
     }

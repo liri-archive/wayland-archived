@@ -10,8 +10,10 @@ LiriModule {
     Depends { name: "libudev" }
 
     condition: {
-        if (!libudev.found)
-            throw "libudev is required to build " + targetName;
+        if (!libudev.found) {
+            console.error("libudev is required to build " + targetName);
+            return false;
+        }
 
         return true;
     }
