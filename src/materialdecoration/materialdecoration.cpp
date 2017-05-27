@@ -33,8 +33,7 @@ QT_BEGIN_NAMESPACE
 
 inline void initResources() { Q_INIT_RESOURCE(icons); }
 
-namespace QtWaylandClient
-{
+namespace QtWaylandClient {
 
 #define BUTTON_WIDTH dp(24)
 #define BUTTON_SPACING dp(12)
@@ -320,24 +319,6 @@ qreal QWaylandMaterialDecoration::pixelDensity() const
     return screen->physicalDotsPerInch() / 25.4;
 }
 
-class QWaylandMaterialDecorationPlugin : public QWaylandDecorationPlugin
-{
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID QWaylandDecorationFactoryInterface_iid FILE "material.json")
-public:
-    QWaylandAbstractDecoration *create(const QString &, const QStringList &) Q_DECL_OVERRIDE;
-};
-
-QWaylandAbstractDecoration *QWaylandMaterialDecorationPlugin::create(const QString &system,
-                                                                     const QStringList &paramList)
-{
-    Q_UNUSED(paramList);
-    Q_UNUSED(system);
-
-    return new QWaylandMaterialDecoration();
-}
 }
 
 QT_END_NAMESPACE
-
-#include "materialdecoration.moc"

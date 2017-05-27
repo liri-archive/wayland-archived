@@ -16,11 +16,11 @@ Project {
     qbsSearchPaths: ["qbs/shared", "qbs/local"]
 
     references: [
-        "decorations/material/material.qbs",
         "imports/platform/platform.qbs",
         "imports/server/server.qbs",
         "imports/server-private/server-private.qbs",
         "imports/xwayland/xwayland.qbs",
+        "plugins/decorations/material/material.qbs",
         "plugins/egldeviceintegration/kms/kms.qbs",
         "plugins/shellintegrations/fullscreen-shell/fullscreen-shell.qbs",
         "qpa/qpa.qbs",
@@ -29,6 +29,7 @@ Project {
         "src/eglfsxkb/eglfsxkb.qbs",
         "src/libinput/libinput.qbs",
         "src/logind/logind.qbs",
+        "src/materialdecoration/materialdecoration.qbs",
         "src/server/server.qbs",
         "src/udev/udev.qbs",
         "tests/auto/client/display/display.qbs",
@@ -67,7 +68,7 @@ Project {
         Depends { name: "LiriUDev" }
         Depends { name: "LiriWaylandClient" }
         Depends { name: "LiriWaylandServer" }
-        Depends { name: "Material Decoration" }
+        Depends { name: "materialdecorationplugin" }
         Depends { name: "QPA" }
     }
 }
