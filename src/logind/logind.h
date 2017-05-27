@@ -47,7 +47,6 @@ class LIRILOGIND_EXPORT Logind : public QObject
     Q_PROPERTY(bool sessionActive READ isSessionActive NOTIFY sessionActiveChanged)
     Q_PROPERTY(bool inhibited READ isInhibited NOTIFY inhibitedChanged)
     Q_PROPERTY(int vtNumber READ vtNumber NOTIFY vtNumberChanged)
-    Q_ENUMS(InhibitMode)
     Q_DECLARE_PRIVATE(Logind)
 public:
     enum InhibitFlag {

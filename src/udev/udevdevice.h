@@ -46,7 +46,6 @@ class UdevMonitorPrivate;
 class LIRIUDEV_EXPORT UdevDevice
 {
     Q_DECLARE_PRIVATE(UdevDevice)
-    Q_ENUMS(DeviceType)
 public:
     enum DeviceType {
         UnknownDevice = 0x00,
