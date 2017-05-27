@@ -282,7 +282,6 @@ int EglFSScreen::preferredMode() const
 {
     return 0;
 }
-#endif
 
 /*!
   Returns the screen identifier.
@@ -323,6 +322,7 @@ QString EglFSScreen::serialNumber() const
 {
     return QString();
 }
+#endif
 
 } // namespace Platform
 

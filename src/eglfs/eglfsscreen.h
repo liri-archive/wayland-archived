@@ -88,21 +88,17 @@ public:
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
     virtual QVector<Mode> modes() const;
-#endif
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
     virtual int currentMode() const;
-#endif
-    virtual void setCurrentMode(int modeId);
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
     virtual int preferredMode() const;
-#endif
 
     virtual QString identifier() const;
     virtual QString manufacturer() const;
     virtual QString model() const;
     virtual QString serialNumber() const;
+#endif
+
+    virtual void setCurrentMode(int modeId);
 
 private:
     EGLDisplay m_dpy;
