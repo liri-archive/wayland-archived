@@ -92,7 +92,6 @@ public:
     virtual int currentMode() const;
     virtual int preferredMode() const;
 
-    virtual QString identifier() const;
     virtual QString manufacturer() const;
     virtual QString model() const;
     virtual QString serialNumber() const;

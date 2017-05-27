@@ -135,7 +135,6 @@ public:
 
     int preferredMode() const Q_DECL_OVERRIDE;
 
-    QString identifier() const Q_DECL_OVERRIDE;
     QString manufacturer() const Q_DECL_OVERRIDE;
     QString model() const Q_DECL_OVERRIDE;
     QString serialNumber() const Q_DECL_OVERRIDE;

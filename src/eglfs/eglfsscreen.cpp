@@ -284,16 +284,6 @@ int EglFSScreen::preferredMode() const
 }
 
 /*!
-  Returns the screen identifier.
-
-  The default implementation always returns an empty string.
-*/
-QString EglFSScreen::identifier() const
-{
-    return QString();
-}
-
-/*!
   Returns the screen manufacturer.
 
   The default implementation always returns an empty string.

@@ -502,11 +502,6 @@ int EglFSKmsScreen::preferredMode() const
     return m_output.preferred_mode;
 }
 
-QString EglFSKmsScreen::identifier() const
-{
-    return m_edid.identifier;
-}
-
 QString EglFSKmsScreen::manufacturer() const
 {
     return m_edid.manufacturer;
