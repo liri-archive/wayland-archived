@@ -131,6 +131,7 @@ void XWayland::initialize()
 
     // Window manager
     m_manager = new XWaylandManager(m_server, this);
+    m_manager->moveToThread(m_serverThread);
     connect(m_manager, &XWaylandManager::shellSurfaceAdded,
             this, &XWayland::handleShellSurfaceAdded);
     connect(m_manager, &XWaylandManager::shellSurfaceRemoved,

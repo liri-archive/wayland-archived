@@ -57,6 +57,7 @@
 #include "xcbcursors.h"
 #include "xcbwindow.h"
 #include "xcbwrapper.h"
+#include "xcbproperties.h"
 #include "xcbresources.h"
 #include "xwayland.h"
 #include "xwaylandmanager.h"
@@ -373,16 +374,16 @@ void XWaylandManager::handleMapRequest(xcb_map_request_event_t *event)
     if (!m_windowsMap.contains(event->window))
         return;
 
-    XWaylandShellSurface *window = m_windowsMap[event->window];
-    window->readProperties();
+    XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
+    shellSurface->readProperties();
 
     qCDebug(XWAYLAND_TRACE, "XCB_MAP_REQUEST (window %d, %p)",
-            event->window, window);
+            event->window, shellSurface);
 
-    window->setWmState(XWaylandShellSurface::NormalState);
-    window->setNetWmState();
-    window->setWorkspace(0);
-    window->map();
+    shellSurface->setWmState(XWaylandShellSurface::NormalState);
+    shellSurface->setNetWmState();
+    shellSurface->setWorkspace(0);
+    shellSurface->map();
 }
 
 void XWaylandManager::handleMapNotify(xcb_map_notify_event_t *event)
@@ -528,11 +529,13 @@ void XWaylandManager::handlePropertyNotify(xcb_property_notify_event_t *event)
 
     qCDebug(XWAYLAND_TRACE, "XCB_PROPERTY_NOTIFY (window %d)", event->window);
 
-    XWaylandShellSurface *window = m_windowsMap[event->window];
+    XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
+    shellSurface->dirtyProperties();
+
     if (event->state == XCB_PROPERTY_DELETE)
         qCDebug(XWAYLAND_TRACE, "\tdeleted");
     else
-        window->readAndDumpProperty(event->atom);
+        Xcb::Properties::readAndDumpProperty(event->atom, event->window);
 }
 
 void XWaylandManager::handleClientMessage(xcb_client_message_event_t *event)

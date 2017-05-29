@@ -33,7 +33,11 @@ namespace Xcb {
 
 namespace Properties {
 
+#if 0
 void dump(xcb_atom_t property, xcb_get_property_reply_t *reply);
+#endif
+void dumpProperty(xcb_atom_t property, xcb_get_property_reply_t *reply);
+void readAndDumpProperty(xcb_atom_t atom, xcb_window_t window);
 
 } // namespace Cursors
 

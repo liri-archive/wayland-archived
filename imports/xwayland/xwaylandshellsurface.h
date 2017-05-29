@@ -105,10 +105,9 @@ public:
 
     void setWorkspace(int workspace);
 
+    void dirtyProperties();
     void readProperties();
     void setProperties();
-
-    void readAndDumpProperty(xcb_atom_t atom);
 
     void resizeFrame(const QSize &size, quint32 mask, quint32 *values);
 
@@ -168,7 +167,6 @@ private:
     bool m_maximized;
     bool m_fullscreen;
 
-    void dumpProperty(xcb_atom_t property, xcb_get_property_reply_t *reply);
     void *decodeProperty(xcb_atom_t type, xcb_get_property_reply_t *reply);
 
     friend class XWaylandManager;
