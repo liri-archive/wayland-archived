@@ -72,12 +72,12 @@ public:
 protected:
     void touch_down(uint32_t serial, uint32_t time,
                     struct ::wl_surface *surface, int32_t id,
-                    wl_fixed_t x, wl_fixed_t y) Q_DECL_OVERRIDE;
-    void touch_up(uint32_t serial, uint32_t time, int32_t id) Q_DECL_OVERRIDE;
+                    wl_fixed_t x, wl_fixed_t y) override;
+    void touch_up(uint32_t serial, uint32_t time, int32_t id) override;
     void touch_motion(uint32_t time, int32_t id,
-                      wl_fixed_t x, wl_fixed_t y) Q_DECL_OVERRIDE;
-    void touch_frame() Q_DECL_OVERRIDE;
-    void touch_cancel() Q_DECL_OVERRIDE;
+                      wl_fixed_t x, wl_fixed_t y) override;
+    void touch_frame() override;
+    void touch_cancel() override;
 };
 
 class LIRIWAYLANDCLIENT_EXPORT TouchPointPrivate

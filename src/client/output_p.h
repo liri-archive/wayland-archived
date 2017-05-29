@@ -76,10 +76,10 @@ protected:
     void output_geometry(int32_t x, int32_t y,
                          int32_t physical_width, int32_t physical_height,
                          int32_t subpixel, const QString &make,
-                         const QString &model, int32_t transform) Q_DECL_OVERRIDE;
-    void output_mode(uint32_t flags, int32_t width, int32_t height, int32_t refresh) Q_DECL_OVERRIDE;
-    void output_done() Q_DECL_OVERRIDE;
-    void output_scale(int32_t factor) Q_DECL_OVERRIDE;
+                         const QString &model, int32_t transform) override;
+    void output_mode(uint32_t flags, int32_t width, int32_t height, int32_t refresh) override;
+    void output_done() override;
+    void output_scale(int32_t factor) override;
 };
 
 } // namespace WaylandClient

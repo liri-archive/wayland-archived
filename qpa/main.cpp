@@ -35,10 +35,10 @@ class LiriIntegrationPlugin : public QPlatformIntegrationPlugin
     Q_PLUGIN_METADATA(IID QPlatformIntegrationFactoryInterface_iid FILE "liri.json")
 public:
     QPlatformIntegration *create(const QString &system,
-                                 const QStringList &paramList) Q_DECL_OVERRIDE;
+                                 const QStringList &paramList) override;
     QPlatformIntegration *create(const QString &system,
                                  const QStringList &paramList,
-                                 int &argc, char **argv) Q_DECL_OVERRIDE;
+                                 int &argc, char **argv) override;
 };
 
 QPlatformIntegration *LiriIntegrationPlugin::create(const QString &system,
@@ -49,7 +49,7 @@ QPlatformIntegration *LiriIntegrationPlugin::create(const QString &system,
     if (system.compare(QLatin1String("liri"), Qt::CaseInsensitive) == 0)
         return new Liri::Platform::EglFSIntegration;
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QPlatformIntegration *LiriIntegrationPlugin::create(const QString &system,
@@ -63,7 +63,7 @@ QPlatformIntegration *LiriIntegrationPlugin::create(const QString &system,
     if (system.compare(QLatin1String("liri"), Qt::CaseInsensitive) == 0)
         return new Liri::Platform::EglFSIntegration;
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 #include "main.moc"

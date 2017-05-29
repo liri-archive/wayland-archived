@@ -63,7 +63,7 @@ public:
     static QByteArray interfaceName();
 
 private:
-    Screenshooter(Shm *shm, QObject *parent = Q_NULLPTR);
+    Screenshooter(Shm *shm, QObject *parent = nullptr);
 
     friend class Registry;
 };
@@ -104,7 +104,7 @@ Q_SIGNALS:
 
 private:
     Screenshot(CaptureType type, Screenshooter::Effects effects,
-               QObject *parent = Q_NULLPTR);
+               QObject *parent = nullptr);
 
     friend class Screenshooter;
 };

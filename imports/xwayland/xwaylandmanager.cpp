@@ -71,10 +71,10 @@
 XWaylandManager::XWaylandManager(XWaylandServer *server, QObject *parent)
     : QObject(parent)
     , m_server(server)
-    , m_cursors(Q_NULLPTR)
+    , m_cursors(nullptr)
     , m_lastCursor(CursorUnset)
-    , m_wmWindow(Q_NULLPTR)
-    , m_focusWindow(Q_NULLPTR)
+    , m_wmWindow(nullptr)
+    , m_focusWindow(nullptr)
 {
 }
 
@@ -168,14 +168,14 @@ void XWaylandManager::removeWindow(xcb_window_t id)
 
 XWaylandShellSurface *XWaylandManager::shellSurfaceFromId(xcb_window_t id)
 {
-    return m_windowsMap.value(id, Q_NULLPTR);
+    return m_windowsMap.value(id, nullptr);
 }
 
 void XWaylandManager::setupVisualAndColormap()
 {
     xcb_depth_iterator_t depthIterator =
             xcb_screen_allowed_depths_iterator(Xcb::screen());
-    xcb_visualtype_t *visualType = Q_NULLPTR;
+    xcb_visualtype_t *visualType = nullptr;
     xcb_visualtype_iterator_t visualTypeIterator;
     while (depthIterator.rem > 0) {
         if (depthIterator.data->depth == 32) {
@@ -249,7 +249,7 @@ void XWaylandManager::createWindowManager()
     static const char name[] = "Green Island the Hawaii compositor";
 
     m_wmWindow = new Xcb::Window(QRect(0, 0, 10, 10),
-                                 XCB_WINDOW_CLASS_INPUT_OUTPUT, 0, Q_NULLPTR);
+                                 XCB_WINDOW_CLASS_INPUT_OUTPUT, 0, nullptr);
     xcb_window_t w = m_wmWindow->window();
     m_wmWindow->changeProperty(Xcb::resources()->atoms->net_supporting_wm_check,
                                XCB_ATOM_WINDOW, 32, 1, &w);
@@ -412,8 +412,8 @@ void XWaylandManager::handleUnmapNotify(xcb_unmap_notify_event_t *event)
 #if 0
     XWaylandWindow *window = m_windowsMap[event->window];
     if (m_focusWindow == window)
-        m_focusWindow = Q_NULLPTR;
-    window->setSurface(Q_NULLPTR);
+        m_focusWindow = nullptr;
+    window->setSurface(nullptr);
 
     window->setWmState(XWaylandWindow::WithdrawnState);
     window->setWorkspace(-1);

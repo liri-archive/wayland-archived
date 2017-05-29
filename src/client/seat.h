@@ -64,7 +64,7 @@ Q_SIGNALS:
     void touchRemoved();
 
 private:
-    Seat(QObject *parent = Q_NULLPTR);
+    Seat(QObject *parent = nullptr);
 
     friend class Registry;
 };

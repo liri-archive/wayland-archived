@@ -61,7 +61,7 @@ public:
     static ShmPrivate *get(Shm *shm) { return shm->d_func(); }
 
 protected:
-    void shm_format(uint32_t format) Q_DECL_OVERRIDE;
+    void shm_format(uint32_t format) override;
 };
 
 } // namespace WaylandClient

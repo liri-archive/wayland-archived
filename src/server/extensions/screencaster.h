@@ -54,7 +54,7 @@ public:
     Screencaster();
     Screencaster(QWaylandCompositor *compositor);
 
-    void initialize() Q_DECL_OVERRIDE;
+    void initialize() override;
 
     void recordFrame(QQuickWindow *window);
 
@@ -76,7 +76,7 @@ public:
     static QByteArray interfaceName();
 
 protected:
-    bool event(QEvent *event) Q_DECL_OVERRIDE;
+    bool event(QEvent *event) override;
 
 private:
     explicit Screencast();

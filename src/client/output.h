@@ -104,7 +104,7 @@ public:
     Subpixel subpixel() const;
     Transform transform() const;
 
-    static Output *fromQt(QScreen *screen, QObject *parent = Q_NULLPTR);
+    static Output *fromQt(QScreen *screen, QObject *parent = nullptr);
 
     static QByteArray interfaceName();
 
@@ -124,7 +124,7 @@ Q_SIGNALS:
     void modeChanged(const Liri::WaylandClient::Output::Mode &mode);
 
 private:
-    Output(QObject *parent = Q_NULLPTR);
+    Output(QObject *parent = nullptr);
 
     friend class Registry;
 };

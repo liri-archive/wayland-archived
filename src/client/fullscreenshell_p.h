@@ -64,7 +64,7 @@ public:
     static FullScreenShellPrivate *get(FullScreenShell *fsh) { return fsh->d_func(); }
 
 protected:
-    void zwp_fullscreen_shell_v1_capability(uint32_t capabilty) Q_DECL_OVERRIDE;
+    void zwp_fullscreen_shell_v1_capability(uint32_t capabilty) override;
 };
 
 } // namespace WaylandClient

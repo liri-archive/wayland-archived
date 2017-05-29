@@ -63,7 +63,7 @@ public:
     static OutputManagementPrivate *get(OutputManagement *management) { return management->d_func(); }
 
 protected:
-    virtual void liri_outputmanagement_create_configuration(Resource *resource, uint32_t id) Q_DECL_OVERRIDE;
+    virtual void liri_outputmanagement_create_configuration(Resource *resource, uint32_t id) override;
 };
 
 } // namespace WaylandServer

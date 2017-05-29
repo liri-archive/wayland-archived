@@ -52,7 +52,7 @@ Resources::Resources()
                                      XCB_XFIXES_MAJOR_VERSION,
                                      XCB_XFIXES_MINOR_VERSION);
     xcb_xfixes_query_version_reply_t *xfixesReply =
-            xcb_xfixes_query_version_reply(connection(), xfixesCookie, Q_NULLPTR);
+            xcb_xfixes_query_version_reply(connection(), xfixesCookie, nullptr);
 
     qCDebug(XWAYLAND, "xfixes version: %d.%d",
             xfixesReply->major_version,

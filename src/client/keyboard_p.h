@@ -69,16 +69,16 @@ public:
 
 protected:
     void keyboard_keymap(uint32_t format, int32_t fd,
-                         uint32_t size) Q_DECL_OVERRIDE;
+                         uint32_t size) override;
     void keyboard_enter(uint32_t serial, struct ::wl_surface *surface,
-                        wl_array *keys) Q_DECL_OVERRIDE;
-    void keyboard_leave(uint32_t serial, struct ::wl_surface *surface) Q_DECL_OVERRIDE;
+                        wl_array *keys) override;
+    void keyboard_leave(uint32_t serial, struct ::wl_surface *surface) override;
     void keyboard_key(uint32_t serial, uint32_t time, uint32_t key,
-                      uint32_t state) Q_DECL_OVERRIDE;
+                      uint32_t state) override;
     void keyboard_modifiers(uint32_t serial, uint32_t mods_depressed,
                             uint32_t mods_latched, uint32_t mods_locked,
-                            uint32_t group) Q_DECL_OVERRIDE;
-    void keyboard_repeat_info(int32_t rate, int32_t delay) Q_DECL_OVERRIDE;
+                            uint32_t group) override;
+    void keyboard_repeat_info(int32_t rate, int32_t delay) override;
 };
 
 } // namespace WaylandClient

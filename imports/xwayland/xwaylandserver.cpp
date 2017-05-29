@@ -69,13 +69,13 @@
 class ServerProcess : public QProcess
 {
 public:
-    ServerProcess(QObject *parent = Q_NULLPTR)
+    ServerProcess(QObject *parent = nullptr)
         : QProcess(parent)
     {
     }
 
 protected:
-    void setupChildProcess() Q_DECL_OVERRIDE
+    void setupChildProcess() override
     {
         qCDebug(XWAYLAND) << "Setting up Xwayland process";
 
@@ -97,8 +97,8 @@ XWaylandServer::XWaylandServer(QWaylandCompositor *compositor, QObject *parent)
     , m_unixFd(-1)
     , m_wmFd(-1)
     , m_pid(-1)
-    , m_process(Q_NULLPTR)
-    , m_client(Q_NULLPTR)
+    , m_process(nullptr)
+    , m_client(nullptr)
 {
 }
 
@@ -354,7 +354,7 @@ pid_t XWaylandServer::spawn()
 
         if (m_process) {
             delete m_process;
-            m_process = Q_NULLPTR;
+            m_process = nullptr;
         }
     });
 

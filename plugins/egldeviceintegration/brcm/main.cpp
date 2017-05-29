@@ -36,7 +36,7 @@ class EglFSBrcmIntegrationPlugin : public EGLDeviceIntegrationPlugin
     Q_OBJECT
     Q_PLUGIN_METADATA(IID LiriDeviceIntegrationFactoryInterface_iid FILE "brcm.json")
 public:
-    EGLDeviceIntegration *create() Q_DECL_OVERRIDE;
+    EGLDeviceIntegration *create() override;
 };
 
 EGLDeviceIntegration *EglFSBrcmIntegrationPlugin::create()

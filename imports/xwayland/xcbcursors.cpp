@@ -200,7 +200,7 @@ xcb_cursor_library_load_cursor(const char *file)
     if (!size)
         size = 32;
 
-    images = XcursorLibraryLoadImages(file, Q_NULLPTR, size);
+    images = XcursorLibraryLoadImages(file, nullptr, size);
     if (!images)
         return -1;
 

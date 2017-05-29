@@ -42,7 +42,7 @@ class LIRIWAYLANDSERVER_EXPORT ScreenManager : public QObject
     Q_DECLARE_PRIVATE(ScreenManager)
     Q_PROPERTY(Screen *primaryScreen READ primaryScreen NOTIFY primaryScreenChanged)
 public:
-    ScreenManager(QObject *parent = Q_NULLPTR);
+    ScreenManager(QObject *parent = nullptr);
 
     Screen *primaryScreen() const;
 

@@ -54,12 +54,12 @@ public:
     ~EglFSKmsCursor();
 
     // input methods
-    void pointerEvent(const QMouseEvent & event) Q_DECL_OVERRIDE;
+    void pointerEvent(const QMouseEvent & event) override;
 #ifndef QT_NO_CURSOR
-    void changeCursor(QCursor * windowCursor, QWindow * window) Q_DECL_OVERRIDE;
+    void changeCursor(QCursor * windowCursor, QWindow * window) override;
 #endif
-    QPoint pos() const Q_DECL_OVERRIDE;
-    void setPos(const QPoint &pos) Q_DECL_OVERRIDE;
+    QPoint pos() const override;
+    void setPos(const QPoint &pos) override;
 
     void update();
 

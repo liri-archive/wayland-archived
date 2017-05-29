@@ -152,9 +152,9 @@ void ScreenshooterPrivate::liri_screenshooter_capture_area(Resource *resource,
 ScreenshotPrivate::ScreenshotPrivate()
     : QWaylandCompositorExtensionPrivate()
     , QtWaylandServer::liri_screenshot()
-    , output(Q_NULLPTR)
-    , selectedSurface(Q_NULLPTR)
-    , selectedArea(Q_NULLPTR)
+    , output(nullptr)
+    , selectedSurface(nullptr)
+    , selectedArea(nullptr)
 {
 }
 

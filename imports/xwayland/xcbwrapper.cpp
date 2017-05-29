@@ -31,9 +31,9 @@
 
 namespace Xcb {
 
-static xcb_connection_t *s_connection = Q_NULLPTR;
-static xcb_screen_t *s_screen = Q_NULLPTR;
-Resources *s_resources = Q_NULLPTR;
+static xcb_connection_t *s_connection = nullptr;
+static xcb_screen_t *s_screen = nullptr;
+Resources *s_resources = nullptr;
 
 xcb_connection_t *connection()
 {
@@ -70,7 +70,7 @@ void openConnection(int fd)
 {
     if (s_connection)
         return;
-    s_connection = xcb_connect_to_fd(fd, Q_NULLPTR);
+    s_connection = xcb_connect_to_fd(fd, nullptr);
 
     xcb_screen_iterator_t iter = xcb_setup_roots_iterator(xcb_get_setup(s_connection));
     s_screen = iter.data;
@@ -81,7 +81,7 @@ void closeConnection()
     if (s_connection) {
         delete s_resources;
         xcb_disconnect(s_connection);
-        s_connection = Q_NULLPTR;
+        s_connection = nullptr;
     }
 }
 

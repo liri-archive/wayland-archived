@@ -61,7 +61,7 @@ Q_SIGNALS:
     void captureFailed(CaptureError error);
 
 private:
-    Screencaster(Shm *shm, QObject *parent = Q_NULLPTR);
+    Screencaster(Shm *shm, QObject *parent = nullptr);
 
     friend class Registry;
 };
@@ -92,7 +92,7 @@ Q_SIGNALS:
     void canceled();
 
 private:
-    Screencast(QObject *parent = Q_NULLPTR);
+    Screencast(QObject *parent = nullptr);
 
     friend class Screencaster;
 };

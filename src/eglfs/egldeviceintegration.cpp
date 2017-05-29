@@ -247,19 +247,19 @@ bool EGLDeviceIntegration::filterConfig(EGLDisplay, EGLConfig) const
 QPlatformWindow *EGLDeviceIntegration::createPlatformWindow(QWindow *window)
 {
     Q_UNUSED(window);
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QPlatformBackingStore *EGLDeviceIntegration::createPlatformBackingStore(QWindow *window)
 {
     Q_UNUSED(window);
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QPlatformOpenGLContext *EGLDeviceIntegration::createPlatformOpenGLContext(QOpenGLContext *context)
 {
     Q_UNUSED(context);
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 EGLNativeWindowType EGLDeviceIntegration::createNativeWindow(QPlatformWindow *platformWindow,
@@ -331,7 +331,7 @@ bool EGLDeviceIntegration::supportsPBuffers() const
 
 void *EGLDeviceIntegration::wlDisplay() const
 {
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 } // namespace Platform

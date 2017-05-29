@@ -42,9 +42,9 @@ namespace WaylandClient {
 
 KeyboardPrivate::KeyboardPrivate()
     : QtWayland::wl_keyboard()
-    , seat(Q_NULLPTR)
+    , seat(nullptr)
     , seatVersion(0)
-    , focusSurface(Q_NULLPTR)
+    , focusSurface(nullptr)
     , repeatRate(0)
     , repeatDelay(0)
 {
@@ -59,12 +59,12 @@ KeyboardPrivate::~KeyboardPrivate()
 Keyboard *KeyboardPrivate::fromWlKeyboard(struct ::wl_keyboard *keyboard)
 {
     if (!keyboard)
-        return Q_NULLPTR;
+        return nullptr;
 
     QtWayland::wl_keyboard *wlKeyboard =
             static_cast<QtWayland::wl_keyboard *>(wl_keyboard_get_user_data(keyboard));
     if (!wlKeyboard)
-        return Q_NULLPTR;
+        return nullptr;
     return static_cast<KeyboardPrivate *>(wlKeyboard)->q_func();
 }
 
@@ -96,7 +96,7 @@ void KeyboardPrivate::keyboard_leave(uint32_t serial, struct ::wl_surface *surfa
 
     Q_Q(Keyboard);
 
-    focusSurface = Q_NULLPTR;
+    focusSurface = nullptr;
     Q_EMIT q->leave(serial);
 }
 

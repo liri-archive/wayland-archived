@@ -68,7 +68,7 @@ public:
     static TaskManagerPrivate *get(TaskManager *tm) { return tm->d_func(); }
 
 protected:
-    void windows_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void windows_bind_resource(Resource *resource) override;
 };
 
 class LIRIWAYLANDSERVER_EXPORT TaskItemPrivate

@@ -119,8 +119,8 @@ QList<UdevDevice *> UdevEnumerate::scan() const
         return list;
     }
 
-    udev_device *drmDevice = Q_NULLPTR;
-    udev_device *drmPrimaryDevice = Q_NULLPTR;
+    udev_device *drmDevice = nullptr;
+    udev_device *drmPrimaryDevice = nullptr;
 
     udev_list_entry *entry;
     udev_list_entry_foreach(entry, udev_enumerate_get_list_entry(d->enumerate)) {
@@ -149,7 +149,7 @@ QList<UdevDevice *> UdevEnumerate::scan() const
             // In any case we'll be adding just one DRM device to the list
             if (d->types.testFlag(UdevDevice::PrimaryVideoDevice)) {
                 udev_device *pci =
-                        udev_device_get_parent_with_subsystem_devtype(dev, "pci", Q_NULLPTR);
+                        udev_device_get_parent_with_subsystem_devtype(dev, "pci", nullptr);
                 if (pci) {
                     if (qstrcmp(udev_device_get_sysattr_value(pci, "boot_vga"), "1") == 0)
                         drmPrimaryDevice = dev;

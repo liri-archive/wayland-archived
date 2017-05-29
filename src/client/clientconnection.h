@@ -45,7 +45,7 @@ class LIRIWAYLANDCLIENT_EXPORT ClientConnection : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(ClientConnection)
 public:
-    ClientConnection(QObject *parent = Q_NULLPTR);
+    ClientConnection(QObject *parent = nullptr);
 
     bool isConnected() const;
 
@@ -61,7 +61,7 @@ public:
     void initializeConnection();
     void synchronousConnection();
 
-    static ClientConnection *fromQt(QObject *parent = Q_NULLPTR);
+    static ClientConnection *fromQt(QObject *parent = nullptr);
 
 public Q_SLOTS:
     void forceRoundTrip();

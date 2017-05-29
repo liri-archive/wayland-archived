@@ -73,15 +73,15 @@ public:
 class ScreencastHandler : public QObject
 {
 public:
-    ScreencastHandler(QObject *parent = Q_NULLPTR)
+    ScreencastHandler(QObject *parent = nullptr)
         : QObject(parent)
-        , screencast(Q_NULLPTR)
+        , screencast(nullptr)
     {}
 
     Screencast *screencast;
 
 protected:
-    bool event(QEvent *event) Q_DECL_OVERRIDE
+    bool event(QEvent *event) override
     {
         if (event->type() == FrameEventType) {
             FrameEvent *e = static_cast<FrameEvent *>(event);
@@ -109,8 +109,8 @@ protected:
 
 ScreencasterPrivate::ScreencasterPrivate()
     : QtWayland::liri_screencaster()
-    , registry(Q_NULLPTR)
-    , shm(Q_NULLPTR)
+    , registry(nullptr)
+    , shm(nullptr)
 {
 }
 
@@ -144,7 +144,7 @@ Screencast *Screencaster::capture(Output *output)
     dScreencast->init(d->capture(o));
     if (!dScreencast->isInitialized()) {
         delete screencast;
-        screencast = Q_NULLPTR;
+        screencast = nullptr;
     }
     return screencast;
 }
@@ -160,7 +160,7 @@ QByteArray Screencaster::interfaceName()
 
 ScreencastPrivate::ScreencastPrivate(Screencaster *s)
     : QtWayland::liri_screencast()
-    , shmPool(Q_NULLPTR)
+    , shmPool(nullptr)
     , screencaster(s)
     , starving(false)
     , thread(new QThread())
@@ -188,7 +188,7 @@ ScreencastPrivate::~ScreencastPrivate()
 void ScreencastPrivate::recordFrame()
 {
     // Pick up a free buffer
-    ScreencastBuffer *buffer = Q_NULLPTR;
+    ScreencastBuffer *buffer = nullptr;
     Q_FOREACH (ScreencastBuffer *sb, buffers) {
         if (!sb->buffer.isNull() && !sb->busy) {
             buffer = sb;
@@ -231,7 +231,7 @@ void ScreencastPrivate::liri_screencast_setup(int32_t width, int32_t height,
     // Create several buffers that can be reused later
     for (int i = 0; i < 6; i++) {
         BufferPtr buffer = shmPool->createBuffer(QSize(width, height),
-                                                 stride, Q_NULLPTR, format);
+                                                 stride, nullptr, format);
         ScreencastBuffer *screencastBuffer = new ScreencastBuffer();
         screencastBuffer->buffer = buffer;
         buffers.append(screencastBuffer);

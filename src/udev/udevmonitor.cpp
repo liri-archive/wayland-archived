@@ -48,7 +48,7 @@ class UdevMonitorPrivate : public QObjectPrivate
 public:
     UdevMonitorPrivate(Udev *u)
         : udev(u)
-        , monitor(Q_NULLPTR)
+        , monitor(nullptr)
     {
         monitor = udev_monitor_new_from_netlink(UdevPrivate::get(u)->udev, "udev");
         if (!monitor) {

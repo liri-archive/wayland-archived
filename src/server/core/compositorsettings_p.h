@@ -53,7 +53,7 @@ class CompositorSettingsPrivate : public QObjectPrivate
 public:
     CompositorSettingsPrivate()
         : initialized(false)
-        , compositor(Q_NULLPTR)
+        , compositor(nullptr)
         , windowActionKey(Qt::MetaModifier)
         , repeatRate(40)
         , repeatDelay(400)

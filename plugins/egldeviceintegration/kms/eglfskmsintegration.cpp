@@ -68,7 +68,7 @@ Q_LOGGING_CATEGORY(lcKms, "liri.qpa.kms")
 QMutex EglFSKmsScreen::m_waitForFlipMutex;
 
 EglFSKmsIntegration::EglFSKmsIntegration()
-    : m_device(Q_NULLPTR)
+    : m_device(nullptr)
     , m_hwCursor(true)
     , m_pbuffers(false)
     , m_separateScreens(false)
@@ -127,7 +127,7 @@ void EglFSKmsIntegration::platformDestroy()
 {
     m_device->close();
     delete m_device;
-    m_device = Q_NULLPTR;
+    m_device = nullptr;
 }
 
 void EglFSKmsIntegration::loadConfiguration(const QString &fileName)
@@ -328,7 +328,7 @@ bool EglFSKmsIntegration::hasCapability(QPlatformIntegration::Capability cap) co
 QPlatformCursor *EglFSKmsIntegration::createCursor(QPlatformScreen *screen) const
 {
     if (m_hwCursor)
-        return Q_NULLPTR;
+        return nullptr;
     else
         return new EglFSCursor(screen);
 }

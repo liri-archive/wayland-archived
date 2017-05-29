@@ -98,12 +98,12 @@ OutputPrivate::OutputPrivate()
 Output *OutputPrivate::fromWlOutput(struct ::wl_output *output)
 {
     if (!output)
-        return Q_NULLPTR;
+        return nullptr;
 
     QtWayland::wl_output *wlOutput =
             static_cast<QtWayland::wl_output *>(wl_output_get_user_data(output));
     if (!wlOutput)
-        return Q_NULLPTR;
+        return nullptr;
     return static_cast<OutputPrivate *>(wlOutput)->q_func();
 }
 
@@ -296,16 +296,16 @@ Output::Transform Output::transform() const
 Output *Output::fromQt(QScreen *screen, QObject *parent)
 {
     if (!QGuiApplication::platformName().startsWith(QLatin1String("wayland")))
-        return Q_NULLPTR;
+        return nullptr;
 
     QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
     if (!native)
-        return Q_NULLPTR;
+        return nullptr;
 
     wl_output *output = reinterpret_cast<wl_output *>(
                 native->nativeResourceForScreen(QByteArrayLiteral("output"), screen));
     if (!output)
-        return Q_NULLPTR;
+        return nullptr;
 
     Output *o = new Output(parent);
     OutputPrivate::get(o)->init(output);

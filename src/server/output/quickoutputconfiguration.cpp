@@ -44,7 +44,7 @@ QuickOutputConfigurationPrivate::QuickOutputConfigurationPrivate()
 QQmlListProperty<OutputChangeset> QuickOutputConfigurationPrivate::changes()
 {
     Q_Q(QuickOutputConfiguration);
-    return QQmlListProperty<OutputChangeset>(q, Q_NULLPTR, changesCount, changesAt);
+    return QQmlListProperty<OutputChangeset>(q, nullptr, changesCount, changesAt);
 }
 
 int QuickOutputConfigurationPrivate::changesCount(QQmlListProperty<OutputChangeset> *prop)

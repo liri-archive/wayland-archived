@@ -58,7 +58,7 @@ public:
         CursorLeftPointer
     };
 
-    XWaylandManager(XWaylandServer *server, QObject *parent = Q_NULLPTR);
+    XWaylandManager(XWaylandServer *server, QObject *parent = nullptr);
     ~XWaylandManager();
 
     void start(int fd);

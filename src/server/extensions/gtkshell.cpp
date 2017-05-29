@@ -125,8 +125,8 @@ QByteArray GtkShell::interfaceName()
 GtkSurfacePrivate::GtkSurfacePrivate()
     : QWaylandCompositorExtensionPrivate()
     , QtWaylandServer::gtk_surface()
-    , m_shell(Q_NULLPTR)
-    , m_surface(Q_NULLPTR)
+    , m_shell(nullptr)
+    , m_surface(nullptr)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 }

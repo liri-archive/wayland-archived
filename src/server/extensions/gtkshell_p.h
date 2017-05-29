@@ -59,10 +59,10 @@ public:
     static GtkShellPrivate *get(GtkShell *shell) { return shell->d_func(); }
 
 protected:
-    void gtk_shell_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void gtk_shell_bind_resource(Resource *resource) override;
 
     void gtk_shell_get_gtk_surface(Resource *resource, uint32_t id,
-                                   wl_resource *surfaceResource)  Q_DECL_OVERRIDE;
+                                   wl_resource *surfaceResource)  override;
 };
 
 class LIRIWAYLANDSERVER_EXPORT GtkSurfacePrivate
@@ -77,7 +77,7 @@ public:
     static GtkSurfacePrivate *get(GtkSurface *surface) { return surface->d_func(); }
 
 protected:
-    void gtk_surface_destroy_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void gtk_surface_destroy_resource(Resource *resource) override;
 
     void gtk_surface_set_dbus_properties(Resource *resource,
                                      const QString &application_id,
@@ -85,10 +85,10 @@ protected:
                                      const QString &menubar_path,
                                      const QString &window_object_path,
                                      const QString &application_object_path,
-                                     const QString &unique_bus_name) Q_DECL_OVERRIDE;
+                                     const QString &unique_bus_name) override;
 
-    void gtk_surface_set_modal(Resource *resource) Q_DECL_OVERRIDE;
-    void gtk_surface_unset_modal(Resource *resource) Q_DECL_OVERRIDE;
+    void gtk_surface_set_modal(Resource *resource) override;
+    void gtk_surface_unset_modal(Resource *resource) override;
 
 private:
     GtkShell *m_shell;

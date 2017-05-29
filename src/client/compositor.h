@@ -46,14 +46,14 @@ class LIRIWAYLANDCLIENT_EXPORT Compositor : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(Compositor)
 public:
-    Surface *createSurface(QObject *parent = Q_NULLPTR);
-    Region *createRegion(QObject *parent = Q_NULLPTR);
-    Region *createRegion(const QRegion &region, QObject *parent = Q_NULLPTR);
+    Surface *createSurface(QObject *parent = nullptr);
+    Region *createRegion(QObject *parent = nullptr);
+    Region *createRegion(const QRegion &region, QObject *parent = nullptr);
 
     static QByteArray interfaceName();
 
 private:
-    Compositor(QObject *parent = Q_NULLPTR);
+    Compositor(QObject *parent = nullptr);
 
     friend class Registry;
 };

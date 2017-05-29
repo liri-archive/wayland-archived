@@ -54,7 +54,7 @@ public:
     void apply();
 
 private:
-    explicit OutputConfiguration(QObject *parent = Q_NULLPTR);
+    explicit OutputConfiguration(QObject *parent = nullptr);
 
     friend class OutputManagement;
 };

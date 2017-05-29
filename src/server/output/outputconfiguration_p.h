@@ -71,23 +71,23 @@ public:
 protected:
     virtual void liri_outputconfiguration_enable(Resource *resource,
                                                  struct ::wl_resource *outputResource,
-                                                 int32_t enable) Q_DECL_OVERRIDE;
+                                                 int32_t enable) override;
     virtual void liri_outputconfiguration_primary(Resource *resource,
                                                   struct ::wl_resource *outputResource,
-                                                  int32_t primary) Q_DECL_OVERRIDE;
+                                                  int32_t primary) override;
     virtual void liri_outputconfiguration_mode(Resource *resource,
                                                struct ::wl_resource *outputResource,
-                                               int32_t mode_id) Q_DECL_OVERRIDE;
+                                               int32_t mode_id) override;
     virtual void liri_outputconfiguration_transform(Resource *resource,
                                                     struct ::wl_resource *outputResource,
-                                                    int32_t wlTransform) Q_DECL_OVERRIDE;
+                                                    int32_t wlTransform) override;
     virtual void liri_outputconfiguration_position(Resource *resource,
                                                    struct ::wl_resource *outputResource,
-                                                   int32_t x, int32_t y) Q_DECL_OVERRIDE;
+                                                   int32_t x, int32_t y) override;
     virtual void liri_outputconfiguration_scale(Resource *resource,
                                                 struct ::wl_resource *outputResource,
-                                                int32_t scale) Q_DECL_OVERRIDE;
-    virtual void liri_outputconfiguration_apply(Resource *resource) Q_DECL_OVERRIDE;
+                                                int32_t scale) override;
+    virtual void liri_outputconfiguration_apply(Resource *resource) override;
 };
 
 } // namespace WaylandServer

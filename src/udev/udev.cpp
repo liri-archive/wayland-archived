@@ -55,7 +55,7 @@ UdevPrivate::~UdevPrivate()
 
 UdevPrivate *UdevPrivate::get(Udev *u)
 {
-    return u ? u->d_func() : Q_NULLPTR;
+    return u ? u->d_func() : nullptr;
 }
 
 /*
@@ -83,14 +83,14 @@ UdevDevice *Udev::deviceFromFileName(const QString &fileName) const
     Q_D(const Udev);
 
     if (!isValid())
-        return Q_NULLPTR;
+        return nullptr;
 
     QT_STATBUF sb;
 
     if (QT_STAT(qPrintable(fileName), &sb) != 0)
-        return Q_NULLPTR;
+        return nullptr;
 
-    udev_device *dev = Q_NULLPTR;
+    udev_device *dev = nullptr;
 
     if (S_ISBLK(sb.st_mode))
         dev = udev_device_new_from_devnum(d->udev, 'b', sb.st_rdev);
@@ -98,7 +98,7 @@ UdevDevice *Udev::deviceFromFileName(const QString &fileName) const
         dev = udev_device_new_from_devnum(d->udev, 'c', sb.st_rdev);
 
     if (!dev)
-        return Q_NULLPTR;
+        return nullptr;
 
     return new UdevDevice(dev);
 }
@@ -108,7 +108,7 @@ UdevDevice *Udev::deviceFromSubSystemAndName(const QString &subSystem, const QSt
     Q_D(const Udev);
 
     if (!isValid())
-        return Q_NULLPTR;
+        return nullptr;
 
     udev_device *dev = udev_device_new_from_subsystem_sysname(d->udev,
                                                               qPrintable(subSystem),
@@ -121,7 +121,7 @@ UdevDevice *Udev::deviceFromSysfsPath(const QString &sysfsPath) const
     Q_D(const Udev);
 
     if (!isValid())
-        return Q_NULLPTR;
+        return nullptr;
 
     udev_device *dev = udev_device_new_from_syspath(d->udev, qPrintable(sysfsPath));
     return new UdevDevice(dev);

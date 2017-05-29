@@ -76,7 +76,7 @@ public:
     int scaleFactor() const;
 
 private:
-    explicit OutputChangeset(QWaylandOutput *output, QObject *parent = Q_NULLPTR);
+    explicit OutputChangeset(QWaylandOutput *output, QObject *parent = nullptr);
 
     friend class OutputConfigurationPrivate;
 };

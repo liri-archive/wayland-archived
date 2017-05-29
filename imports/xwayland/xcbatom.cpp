@@ -90,7 +90,7 @@ void Atom::getReply()
         return;
 
     xcb_intern_atom_reply_t *reply =
-            xcb_intern_atom_reply(connection(), m_cookie, Q_NULLPTR);
+            xcb_intern_atom_reply(connection(), m_cookie, nullptr);
     m_atom = reply->atom;
     free(reply);
     m_retrieved = true;

@@ -54,7 +54,7 @@ class UdevDevicePrivate
 {
 public:
     UdevDevicePrivate()
-        : device(Q_NULLPTR)
+        : device(nullptr)
     {
     }
 
@@ -113,7 +113,7 @@ UdevDevice::DeviceTypes UdevDevice::type() const
         bool isSet = false;
 
         udev_device *pci =
-                udev_device_get_parent_with_subsystem_devtype(d->device, "pci", Q_NULLPTR);
+                udev_device_get_parent_with_subsystem_devtype(d->device, "pci", nullptr);
         if (pci) {
             if (qstrcmp(udev_device_get_sysattr_value(pci, "boot_vga"), "1") == 0) {
                 result |= PrimaryVideoDevice;
@@ -207,7 +207,7 @@ UdevDevice *UdevDevice::parent() const
     udev_device *p = udev_device_get_parent(d->device);
     if (p)
         return new UdevDevice(p);
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QDebug operator<<(QDebug dbg, const UdevDevice &device)

@@ -44,9 +44,9 @@ class TestDisplay : public QObject
 {
     Q_OBJECT
 public:
-    TestDisplay(QObject *parent = Q_NULLPTR)
+    TestDisplay(QObject *parent = nullptr)
         : QObject(parent)
-        , m_compositor(Q_NULLPTR)
+        , m_compositor(nullptr)
     {
     }
 
@@ -65,7 +65,7 @@ private Q_SLOTS:
     void cleanup()
     {
         delete m_compositor;
-        m_compositor = Q_NULLPTR;
+        m_compositor = nullptr;
     }
 
     void testNoThread()

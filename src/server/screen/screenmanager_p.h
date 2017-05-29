@@ -45,7 +45,7 @@ class LIRIWAYLANDSERVER_EXPORT ScreenManagerPrivate : public QObjectPrivate
 public:
     ScreenManagerPrivate()
         : QObjectPrivate()
-        , primaryScreen(Q_NULLPTR)
+        , primaryScreen(nullptr)
     {
         // Determine the backend to use from the application
         const QString backendName = QCoreApplication::instance()->property("__liri_screen_backend").toString();

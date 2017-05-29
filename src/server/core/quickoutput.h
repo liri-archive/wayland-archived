@@ -96,7 +96,7 @@ public:
     static QuickOutput *fromResource(wl_resource *resource);
 
 protected:
-    void initialize() Q_DECL_OVERRIDE;
+    void initialize() override;
 
 Q_SIGNALS:
     void nativeScreenChanged();

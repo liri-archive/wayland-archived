@@ -44,7 +44,7 @@ class LIRIWAYLANDCLIENT_EXPORT Region : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(Region)
 public:
-    Region(const QRegion &region, QObject *parent = Q_NULLPTR);
+    Region(const QRegion &region, QObject *parent = nullptr);
 
     bool isInitialized() const;
 

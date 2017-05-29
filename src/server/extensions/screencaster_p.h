@@ -68,11 +68,11 @@ public:
     static ScreencasterPrivate *get(Screencaster *screencaster) { return screencaster->d_func(); }
 
 protected:
-    void liri_screencaster_bind_resource(Resource *resource) Q_DECL_OVERRIDE;
-    void liri_screencaster_destroy_resource(Resource *resource) Q_DECL_OVERRIDE;
+    void liri_screencaster_bind_resource(Resource *resource) override;
+    void liri_screencaster_destroy_resource(Resource *resource) override;
     void liri_screencaster_capture(Resource *resource,
                                    uint32_t id,
-                                   struct ::wl_resource *outputResource) Q_DECL_OVERRIDE;
+                                   struct ::wl_resource *outputResource) override;
 };
 
 class LIRIWAYLANDSERVER_EXPORT ScreencastPrivate
@@ -96,9 +96,9 @@ public:
     static ScreencastPrivate *get(Screencast *screencast) { return screencast->d_func(); }
 
 protected:
-    void liri_screencast_destroy(Resource *resource) Q_DECL_OVERRIDE;
+    void liri_screencast_destroy(Resource *resource) override;
     void liri_screencast_record(Resource *resource,
-                                struct ::wl_resource *bufferResource) Q_DECL_OVERRIDE;
+                                struct ::wl_resource *bufferResource) override;
 };
 
 } // namespace WaylandServer

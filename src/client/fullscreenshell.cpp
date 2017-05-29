@@ -90,7 +90,7 @@ void FullScreenShell::presentSurface(Surface *surface, Output *output, PresentMe
 void FullScreenShell::hideOutput(Output *output)
 {
     Q_D(FullScreenShell);
-    d->present_surface(Q_NULLPTR,
+    d->present_surface(nullptr,
                        FullScreenShellPrivate::present_method_default,
                        OutputPrivate::get(output)->object());
 }

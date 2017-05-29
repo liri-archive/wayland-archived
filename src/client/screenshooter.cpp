@@ -41,9 +41,9 @@ namespace WaylandClient {
 
 ScreenshooterPrivate::ScreenshooterPrivate()
     : QtWayland::liri_screenshooter()
-    , registry(Q_NULLPTR)
-    , shm(Q_NULLPTR)
-    , shmPool(Q_NULLPTR)
+    , registry(nullptr)
+    , shm(nullptr)
+    , shmPool(nullptr)
 {
 }
 
@@ -147,7 +147,7 @@ QByteArray Screenshooter::interfaceName()
 ScreenshotPrivate::ScreenshotPrivate(Screenshooter *s)
     : QtWayland::liri_screenshot()
     , screenshooter(s)
-    , output(Q_NULLPTR)
+    , output(nullptr)
 {
 }
 
@@ -176,7 +176,7 @@ void ScreenshotPrivate::liri_screenshot_setup(int32_t width, int32_t height, int
     // Create the buffer
     buffer = dScreenshooter->shmPool->createBuffer(
                 QSize(width, height),
-                stride, Q_NULLPTR, format);
+                stride, nullptr, format);
     if (buffer.isNull()) {
         qWarning("Failed to create %dx%d buffer (stride %d) with format %s",
                  width, height, stride, qPrintable(Shm::formatToString(format)));

@@ -66,8 +66,8 @@ public:
     static SeatPrivate *get(Seat *seat) { return seat->d_func(); }
 
 protected:
-    void seat_capabilities(uint32_t capabilities) Q_DECL_OVERRIDE;
-    void seat_name(const QString &name) Q_DECL_OVERRIDE;
+    void seat_capabilities(uint32_t capabilities) override;
+    void seat_name(const QString &name) override;
 };
 
 } // namespace WaylandClient

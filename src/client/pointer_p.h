@@ -71,13 +71,13 @@ public:
 
 protected:
     void pointer_enter(uint32_t serial, struct ::wl_surface *surface,
-                       wl_fixed_t surface_x, wl_fixed_t surface_y) Q_DECL_OVERRIDE;
-    void pointer_leave(uint32_t serial, struct ::wl_surface *surface) Q_DECL_OVERRIDE;
+                       wl_fixed_t surface_x, wl_fixed_t surface_y) override;
+    void pointer_leave(uint32_t serial, struct ::wl_surface *surface) override;
     void pointer_motion(uint32_t time, wl_fixed_t surface_x,
-                        wl_fixed_t surface_y) Q_DECL_OVERRIDE;
+                        wl_fixed_t surface_y) override;
     void pointer_button(uint32_t serial, uint32_t time, uint32_t button,
-                        uint32_t state) Q_DECL_OVERRIDE;
-    void pointer_axis(uint32_t time, uint32_t axis, wl_fixed_t value) Q_DECL_OVERRIDE;
+                        uint32_t state) override;
+    void pointer_axis(uint32_t time, uint32_t axis, wl_fixed_t value) override;
 };
 
 } // namespace WaylandClient

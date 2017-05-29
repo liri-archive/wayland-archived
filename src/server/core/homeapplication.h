@@ -45,7 +45,7 @@ class LIRIWAYLANDSERVER_EXPORT HomeApplication : public QObject
     Q_DECLARE_PRIVATE(HomeApplication)
     Q_PROPERTY(QString screenConfiguration READ screenConfiguration WRITE setScreenConfiguration NOTIFY screenConfigurationChanged)
 public:
-    HomeApplication(QObject *parent = Q_NULLPTR);
+    HomeApplication(QObject *parent = nullptr);
 
     QString screenConfiguration() const;
     void setScreenConfiguration(const QString &fileName);

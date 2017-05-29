@@ -54,7 +54,7 @@ public:
         FrameCallbackCommitMode
     };
 
-    Surface(QObject *parent = Q_NULLPTR);
+    Surface(QObject *parent = nullptr);
 
     void setupFrameCallback();
 
@@ -70,7 +70,7 @@ public:
     void setBufferTransform(Output::Transform transform);
     void setBufferScale(qint32 scale);
 
-    static Surface *fromQt(QWindow *window, QObject *parent = Q_NULLPTR);
+    static Surface *fromQt(QWindow *window, QObject *parent = nullptr);
 
     static QByteArray interfaceName();
 

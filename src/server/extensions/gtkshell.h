@@ -53,7 +53,7 @@ public:
     GtkShell();
     GtkShell(QWaylandCompositor *compositor);
 
-    void initialize() Q_DECL_OVERRIDE;
+    void initialize() override;
 
     static const struct wl_interface *interface();
     static QByteArray interfaceName();
@@ -90,7 +90,7 @@ public:
     QString uniqueBusName() const;
 
 #ifdef QT_WAYLAND_COMPOSITOR_QUICK
-    QWaylandQuickShellIntegration *createIntegration(QWaylandQuickShellSurfaceItem *item) Q_DECL_OVERRIDE;
+    QWaylandQuickShellIntegration *createIntegration(QWaylandQuickShellSurfaceItem *item) override;
 #endif
 
     static const struct wl_interface *interface();
@@ -113,7 +113,7 @@ Q_SIGNALS:
     void unsetModal();
 
 private:
-    void initialize() Q_DECL_OVERRIDE;
+    void initialize() override;
 };
 
 } // namespace WaylandServer

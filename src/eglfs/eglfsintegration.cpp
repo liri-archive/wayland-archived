@@ -82,10 +82,10 @@ namespace Platform {
 EglFSIntegration::EglFSIntegration()
     : QObject()
     , m_display(EGL_NO_DISPLAY)
-    , m_inputContext(Q_NULLPTR)
+    , m_inputContext(nullptr)
     , m_fontDatabase(new QGenericUnixFontDatabase)
     , m_services(new QGenericUnixServices)
-    , m_liHandler(Q_NULLPTR)
+    , m_liHandler(nullptr)
 {
     initResources();
 
@@ -278,7 +278,7 @@ EGLConfig EglFSIntegration::chooseConfig(EGLDisplay display, const QSurfaceForma
     public:
         Chooser(EGLDisplay display)
             : QEglConfigChooser(display) { }
-        bool filterConfig(EGLConfig config) const Q_DECL_OVERRIDE {
+        bool filterConfig(EGLConfig config) const override {
             return egl_device_integration()->filterConfig(display(), config)
                     && QEglConfigChooser::filterConfig(config);
         }

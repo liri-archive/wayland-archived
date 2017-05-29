@@ -41,10 +41,10 @@ namespace WaylandClient {
 
 PointerPrivate::PointerPrivate()
     : QtWayland::wl_pointer()
-    , seat(Q_NULLPTR)
+    , seat(nullptr)
     , seatVersion(0)
-    , cursorSurface(Q_NULLPTR)
-    , focusSurface(Q_NULLPTR)
+    , cursorSurface(nullptr)
+    , focusSurface(nullptr)
     , enterSerial(0)
 {
 }
@@ -58,12 +58,12 @@ PointerPrivate::~PointerPrivate()
 Pointer *PointerPrivate::fromWlPointer(struct ::wl_pointer *pointer)
 {
     if (!pointer)
-        return Q_NULLPTR;
+        return nullptr;
 
     QtWayland::wl_pointer *wlPointer =
             static_cast<QtWayland::wl_pointer *>(wl_pointer_get_user_data(pointer));
     if (!wlPointer)
-        return Q_NULLPTR;
+        return nullptr;
     return static_cast<PointerPrivate *>(wlPointer)->q_func();
 }
 
@@ -87,7 +87,7 @@ void PointerPrivate::pointer_leave(uint32_t serial, struct ::wl_surface *surface
 
     Q_Q(Pointer);
 
-    focusSurface = Q_NULLPTR;
+    focusSurface = nullptr;
     Q_EMIT q->focusSurfaceChanged();
     Q_EMIT q->leave(serial);
 }
@@ -173,7 +173,7 @@ void Pointer::setCursor(Surface *surface, const QPoint &hotSpot)
     Q_D(Pointer);
 
     d->set_cursor(d->enterSerial,
-                  surface ? SurfacePrivate::get(surface)->object() : Q_NULLPTR,
+                  surface ? SurfacePrivate::get(surface)->object() : nullptr,
                   hotSpot.x(), hotSpot.y());
 }
 

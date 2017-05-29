@@ -43,7 +43,7 @@ TaskManagerPrivate::TaskManagerPrivate()
     : QWaylandCompositorExtensionPrivate()
     , QtWaylandServer::liri_windows()
     , initialized(false)
-    , boundResource(Q_NULLPTR)
+    , boundResource(nullptr)
 {
 }
 

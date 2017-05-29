@@ -45,7 +45,7 @@ namespace WaylandClient {
 
 BufferPrivate::BufferPrivate()
     : QtWayland::wl_buffer()
-    , pool(Q_NULLPTR)
+    , pool(nullptr)
     , format(Shm::Format_ARGB32)
     , stride(0)
     , released(false)
@@ -56,12 +56,12 @@ BufferPrivate::BufferPrivate()
 Buffer *BufferPrivate::fromWlBuffer(struct ::wl_buffer *buffer)
 {
     if (!buffer)
-        return Q_NULLPTR;
+        return nullptr;
 
     QtWayland::wl_buffer *wlBuffer =
             static_cast<QtWayland::wl_buffer *>(wl_buffer_get_user_data(buffer));
     if (!wlBuffer)
-        return Q_NULLPTR;
+        return nullptr;
     return static_cast<BufferPrivate *>(wlBuffer)->q_func();
 }
 

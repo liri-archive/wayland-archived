@@ -48,7 +48,7 @@ void LibInputGesture::handlePinchBegin(libinput_event_gesture *event)
     QPointF pos(0, 0);
 
     QWindowSystemInterface::handleGestureEvent(
-                Q_NULLPTR, timestamp, Qt::BeginNativeGesture,
+                nullptr, timestamp, Qt::BeginNativeGesture,
                 pos, pos);
 }
 
@@ -58,7 +58,7 @@ void LibInputGesture::handlePinchEnd(libinput_event_gesture *event)
     QPointF pos(0, 0);
 
     QWindowSystemInterface::handleGestureEvent(
-                Q_NULLPTR, timestamp, Qt::EndNativeGesture,
+                nullptr, timestamp, Qt::EndNativeGesture,
                 pos, pos);
 }
 
@@ -71,11 +71,11 @@ void LibInputGesture::handlePinchUpdate(libinput_event_gesture *event)
                 libinput_event_gesture_get_dy(event));
 
     QWindowSystemInterface::handleGestureEventWithRealValue(
-                Q_NULLPTR, timestamp, Qt::ZoomNativeGesture,
+                nullptr, timestamp, Qt::ZoomNativeGesture,
                 scale, pos, pos);
     if (angle != 0)
         QWindowSystemInterface::handleGestureEventWithRealValue(
-                    Q_NULLPTR, timestamp, Qt::RotateNativeGesture,
+                    nullptr, timestamp, Qt::RotateNativeGesture,
                     angle, pos, pos);
 }
 
@@ -85,7 +85,7 @@ void LibInputGesture::handleSwipeBegin(libinput_event_gesture *event)
     QPointF pos(0, 0);
 
     QWindowSystemInterface::handleGestureEvent(
-                Q_NULLPTR, timestamp, Qt::BeginNativeGesture,
+                nullptr, timestamp, Qt::BeginNativeGesture,
                 pos, pos);
 }
 
@@ -95,7 +95,7 @@ void LibInputGesture::handleSwipeEnd(libinput_event_gesture *event)
     QPointF pos(0, 0);
 
     QWindowSystemInterface::handleGestureEvent(
-                Q_NULLPTR, timestamp, Qt::EndNativeGesture,
+                nullptr, timestamp, Qt::EndNativeGesture,
                 pos, pos);
 }
 
@@ -106,7 +106,7 @@ void LibInputGesture::handleSwipeUpdate(libinput_event_gesture *event)
                 libinput_event_gesture_get_dy(event));
 
     QWindowSystemInterface::handleGestureEvent(
-                Q_NULLPTR, timestamp, Qt::SwipeNativeGesture,
+                nullptr, timestamp, Qt::SwipeNativeGesture,
                 pos, pos);
 }
 

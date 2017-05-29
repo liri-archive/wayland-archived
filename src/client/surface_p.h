@@ -67,8 +67,8 @@ public:
     static SurfacePrivate *get(Surface *surface) { return surface->d_func(); }
 
 protected:
-    void surface_enter(wl_output *output) Q_DECL_OVERRIDE;
-    void surface_leave(wl_output *output) Q_DECL_OVERRIDE;
+    void surface_enter(wl_output *output) override;
+    void surface_leave(wl_output *output) override;
 };
 
 } // namespace WaylandClient

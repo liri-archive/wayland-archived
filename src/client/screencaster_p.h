@@ -93,12 +93,12 @@ public:
 
 protected:
     void liri_screencast_setup(int32_t width, int32_t height,
-                               int32_t stride, int32_t format) Q_DECL_OVERRIDE;
+                               int32_t stride, int32_t format) override;
     void liri_screencast_frame(struct ::wl_buffer *buffer,
-                               uint32_t time, int32_t transform) Q_DECL_OVERRIDE;
+                               uint32_t time, int32_t transform) override;
     void liri_screencast_failed(int32_t error,
-                                struct ::wl_buffer *buffer) Q_DECL_OVERRIDE;
-    void liri_screencast_cancelled(struct ::wl_buffer *buffer) Q_DECL_OVERRIDE;
+                                struct ::wl_buffer *buffer) override;
+    void liri_screencast_cancelled(struct ::wl_buffer *buffer) override;
 };
 
 } // namespace WaylandClient

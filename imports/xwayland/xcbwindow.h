@@ -68,7 +68,7 @@ public:
      * @param parent The parent window
      **/
     Window(const QRect &geometry, uint32_t mask = 0,
-           const uint32_t *values = Q_NULLPTR, xcb_window_t parent = rootWindow());
+           const uint32_t *values = nullptr, xcb_window_t parent = rootWindow());
     /**
      * Creates an xcb_window_t and manages it. It's a convenient method to create a window with
      * depth and visual being copied from parent and border being @c 0.
@@ -79,7 +79,7 @@ public:
      * @param parent The parent window
      **/
     Window(const QRect &geometry, uint16_t windowClass,
-           uint32_t mask = 0, const uint32_t *values = Q_NULLPTR,
+           uint32_t mask = 0, const uint32_t *values = nullptr,
            xcb_window_t parent = rootWindow());
     Window(const Window &other) = delete;
     ~Window();
@@ -95,7 +95,7 @@ public:
      * @param parent The parent window
      **/
     void create(const QRect &geometry, uint32_t mask = 0,
-                const uint32_t *values = Q_NULLPTR,
+                const uint32_t *values = nullptr,
                 xcb_window_t parent = rootWindow());
     /**
      * Creates a new window for which the responsibility is taken over. If a window had been managed
@@ -109,7 +109,7 @@ public:
      * @param parent The parent window
      **/
     void create(const QRect &geometry, uint16_t windowClass, uint32_t mask = 0,
-                const uint32_t *values = Q_NULLPTR,
+                const uint32_t *values = nullptr,
                 xcb_window_t parent = rootWindow());
     /**
      * Frees the existing window and starts to manage the new @p window.
@@ -163,7 +163,7 @@ public:
 
 private:
     xcb_window_t doCreate(const QRect &geometry, uint16_t windowClass, uint32_t mask = 0,
-                          const uint32_t *values = Q_NULLPTR,
+                          const uint32_t *values = nullptr,
                           xcb_window_t parent = rootWindow());
     void destroy();
     xcb_window_t m_window;

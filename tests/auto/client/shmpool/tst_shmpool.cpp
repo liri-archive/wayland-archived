@@ -45,13 +45,13 @@ class TestShmPool : public QObject
 {
     Q_OBJECT
 public:
-    TestShmPool(QObject *parent = Q_NULLPTR)
+    TestShmPool(QObject *parent = nullptr)
         : QObject(parent)
-        , m_compositor(Q_NULLPTR)
-        , m_thread(Q_NULLPTR)
-        , m_display(Q_NULLPTR)
-        , m_shm(Q_NULLPTR)
-        , m_shmPool(Q_NULLPTR)
+        , m_compositor(nullptr)
+        , m_thread(nullptr)
+        , m_display(nullptr)
+        , m_shm(nullptr)
+        , m_shmPool(nullptr)
     {
     }
 
@@ -108,23 +108,23 @@ private Q_SLOTS:
     void cleanup()
     {
         delete m_shmPool;
-        m_shmPool = Q_NULLPTR;
+        m_shmPool = nullptr;
 
         delete m_shm;
-        m_shm = Q_NULLPTR;
+        m_shm = nullptr;
 
         delete m_compositor;
-        m_compositor = Q_NULLPTR;
+        m_compositor = nullptr;
 
         if (m_thread) {
             m_thread->quit();
             m_thread->wait();
             delete m_thread;
-            m_thread = Q_NULLPTR;
+            m_thread = nullptr;
         }
 
         delete m_display;
-        m_display = Q_NULLPTR;
+        m_display = nullptr;
     }
 
     void testCreateEmptyBuffer()

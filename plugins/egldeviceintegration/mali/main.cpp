@@ -36,7 +36,7 @@ class EglFSMaliIntegrationPlugin : public EGLDeviceIntegrationPlugin
     Q_OBJECT
     Q_PLUGIN_METADATA(IID LiriDeviceIntegrationFactoryInterface_iid FILE "mali.json")
 public:
-    EGLDeviceIntegration *create() Q_DECL_OVERRIDE;
+    EGLDeviceIntegration *create() override;
 };
 
 EGLDeviceIntegration *EglFSMaliIntegrationPlugin::create()

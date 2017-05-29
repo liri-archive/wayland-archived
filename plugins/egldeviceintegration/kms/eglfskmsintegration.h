@@ -51,28 +51,28 @@ class EglFSKmsIntegration : public QObject, public EGLDeviceIntegration
 public:
     EglFSKmsIntegration();
 
-    void platformInit() Q_DECL_OVERRIDE;
-    void platformDestroy() Q_DECL_OVERRIDE;
-    void loadConfiguration(const QString &fileName) Q_DECL_OVERRIDE;
-    void saveConfiguration(const QString &fileName) Q_DECL_OVERRIDE;
-    bool needsLogind() Q_DECL_OVERRIDE;
-    EGLNativeDisplayType platformDisplay() const Q_DECL_OVERRIDE;
-    bool usesDefaultScreen() Q_DECL_OVERRIDE;
-    void screenInit() Q_DECL_OVERRIDE;
-    QSurfaceFormat surfaceFormatFor(const QSurfaceFormat &inputFormat) const Q_DECL_OVERRIDE;
-    QPlatformWindow *createPlatformWindow(QWindow *window) Q_DECL_OVERRIDE;
+    void platformInit() override;
+    void platformDestroy() override;
+    void loadConfiguration(const QString &fileName) override;
+    void saveConfiguration(const QString &fileName) override;
+    bool needsLogind() override;
+    EGLNativeDisplayType platformDisplay() const override;
+    bool usesDefaultScreen() override;
+    void screenInit() override;
+    QSurfaceFormat surfaceFormatFor(const QSurfaceFormat &inputFormat) const override;
+    QPlatformWindow *createPlatformWindow(QWindow *window) override;
     EGLNativeWindowType createNativeWindow(QPlatformWindow *platformWindow,
                                            const QSize &size,
-                                           const QSurfaceFormat &format) Q_DECL_OVERRIDE;
-    EGLNativeWindowType createNativeOffscreenWindow(const QSurfaceFormat &format) Q_DECL_OVERRIDE;
-    void destroyNativeWindow(EGLNativeWindowType window) Q_DECL_OVERRIDE;
-    bool hasCapability(QPlatformIntegration::Capability cap) const Q_DECL_OVERRIDE;
-    QPlatformCursor *createCursor(QPlatformScreen *screen) const Q_DECL_OVERRIDE;
-    bool isResizingSurface(QPlatformSurface *surface) const Q_DECL_OVERRIDE;
-    void waitForVSync(QPlatformSurface *surface) const Q_DECL_OVERRIDE;
-    void resizeSurface(QPlatformSurface *surface) Q_DECL_OVERRIDE;
-    void presentBuffer(QPlatformSurface *surface) Q_DECL_OVERRIDE;
-    bool supportsPBuffers() const Q_DECL_OVERRIDE;
+                                           const QSurfaceFormat &format) override;
+    EGLNativeWindowType createNativeOffscreenWindow(const QSurfaceFormat &format) override;
+    void destroyNativeWindow(EGLNativeWindowType window) override;
+    bool hasCapability(QPlatformIntegration::Capability cap) const override;
+    QPlatformCursor *createCursor(QPlatformScreen *screen) const override;
+    bool isResizingSurface(QPlatformSurface *surface) const override;
+    void waitForVSync(QPlatformSurface *surface) const override;
+    void resizeSurface(QPlatformSurface *surface) override;
+    void presentBuffer(QPlatformSurface *surface) override;
+    bool supportsPBuffers() const override;
 
     bool hwCursor() const;
     bool separateScreens() const;

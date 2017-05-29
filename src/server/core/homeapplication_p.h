@@ -71,7 +71,7 @@ public:
         : initialized(false)
         , running(false)
         , notify(true)
-        , engine(Q_NULLPTR)
+        , engine(nullptr)
     {
     }
 

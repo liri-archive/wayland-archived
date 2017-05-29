@@ -73,7 +73,7 @@ ShmPool *Shm::createPool(size_t size)
     ShmPoolPrivate *dPool = ShmPoolPrivate::get(pool);
     if (!dPool->createPool(this, size)) {
         delete pool;
-        return Q_NULLPTR;
+        return nullptr;
     }
     return pool;
 }

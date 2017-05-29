@@ -100,10 +100,10 @@ public:
  */
 
 DeviceIntegration::DeviceIntegration()
-    : m_integration(Q_NULLPTR)
+    : m_integration(nullptr)
 {
     QString preferred = HardwareDetector::detectHardware();
-    QObject *lastInstance = Q_NULLPTR;
+    QObject *lastInstance = nullptr;
     QString lastKey;
 
     const QStringList paths = QCoreApplication::libraryPaths();

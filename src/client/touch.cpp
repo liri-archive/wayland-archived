@@ -41,7 +41,7 @@ namespace WaylandClient {
 
 TouchPrivate::TouchPrivate()
     : QtWayland::wl_touch()
-    , seat(Q_NULLPTR)
+    , seat(nullptr)
     , seatVersion(0)
     , active(false)
 {
@@ -60,18 +60,18 @@ TouchPoint *TouchPrivate::getPressedPoint(qint32 id) const
             return tp;
     }
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 Touch *TouchPrivate::fromWlTouch(struct ::wl_touch *touch)
 {
     if (!touch)
-        return Q_NULLPTR;
+        return nullptr;
 
     QtWayland::wl_touch *wlTouch =
             static_cast<QtWayland::wl_touch *>(wl_touch_get_user_data(touch));
     if (!wlTouch)
-        return Q_NULLPTR;
+        return nullptr;
     return static_cast<TouchPrivate *>(wlTouch)->q_func();
 }
 
@@ -153,7 +153,7 @@ TouchPointPrivate::TouchPointPrivate()
     , upSerial(0)
     , downSerial(0)
     , down(true)
-    , q_ptr(Q_NULLPTR)
+    , q_ptr(nullptr)
 {
 }
 

@@ -41,7 +41,7 @@ class XWaylandServer : public QObject
     Q_OBJECT
     Q_PROPERTY(QWaylandCompositor *compositor READ compositor CONSTANT)
 public:
-    XWaylandServer(QWaylandCompositor *compositor, QObject *parent = Q_NULLPTR);
+    XWaylandServer(QWaylandCompositor *compositor, QObject *parent = nullptr);
     ~XWaylandServer();
 
     inline int wmFd() const {

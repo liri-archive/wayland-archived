@@ -77,7 +77,7 @@ public Q_SLOTS:
     void setFailed();
 
 private:
-    void initialize() Q_DECL_OVERRIDE;
+    void initialize() override;
 };
 
 } // namespace WaylandServer

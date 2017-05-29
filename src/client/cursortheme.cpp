@@ -46,12 +46,12 @@ namespace WaylandClient {
  */
 
 CursorThemePrivate::CursorThemePrivate()
-    : registry(Q_NULLPTR)
-    , compositor(Q_NULLPTR)
-    , pool(Q_NULLPTR)
-    , seat(Q_NULLPTR)
-    , cursorSurface(Q_NULLPTR)
-    , theme(Q_NULLPTR)
+    : registry(nullptr)
+    , compositor(nullptr)
+    , pool(nullptr)
+    , seat(nullptr)
+    , cursorSurface(nullptr)
+    , theme(nullptr)
 {
     // Cursor theme name
     cursorThemeName = QString::fromUtf8(qgetenv("XCURSOR_THEME"));
@@ -212,18 +212,18 @@ void CursorThemePrivate::destroyTheme()
         return;
 
     wl_cursor_theme_destroy(theme);
-    theme = Q_NULLPTR;
+    theme = nullptr;
 }
 
 wl_cursor *CursorThemePrivate::requestCursor(CursorTheme::CursorShape shape)
 {
     // Retrieve a cached cursor
-    wl_cursor *cursor = cursors.value(shape, Q_NULLPTR);
+    wl_cursor *cursor = cursors.value(shape, nullptr);
 
     // Or load it for the first time
     if (!cursor) {
         if (!theme)
-            return Q_NULLPTR;
+            return nullptr;
 
         QList<QByteArray> cursorNames = cursorShapes.values(shape);
         Q_FOREACH (const QByteArray &name, cursorNames) {
@@ -262,11 +262,11 @@ wl_cursor_image *CursorTheme::cursorImage(CursorShape shape)
     // Try to load the theme
     d->loadTheme();
     if (!d->theme)
-        return Q_NULLPTR;
+        return nullptr;
 
     wl_cursor *cursor = d->requestCursor(shape);
     if (!cursor || cursor->image_count <= 0)
-        return Q_NULLPTR;
+        return nullptr;
     return cursor->images[0];
 }
 
@@ -276,7 +276,7 @@ void CursorTheme::changeCursor(CursorShape shape)
 
     // Unset cursor if a blank shape is requested
     if (shape == BlankCursor && d->seat->pointer()) {
-        d->seat->pointer()->setCursor(Q_NULLPTR);
+        d->seat->pointer()->setCursor(nullptr);
         return;
     }
 

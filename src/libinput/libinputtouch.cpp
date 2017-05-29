@@ -51,7 +51,7 @@ namespace Platform {
 
 struct State {
     State()
-        : touchDevice(Q_NULLPTR)
+        : touchDevice(nullptr)
     {
     }
 
@@ -64,7 +64,7 @@ struct State {
                 return &touchPoints[i];
         }
 
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     QTouchDevice *touchDevice;

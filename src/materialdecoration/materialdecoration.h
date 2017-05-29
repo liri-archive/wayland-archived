@@ -68,12 +68,12 @@ public Q_SLOTS:
     void setIconColor(QColor color) { m_iconColor = color; }
 
 protected:
-    QMargins margins() const Q_DECL_OVERRIDE;
-    void paint(QPaintDevice *device) Q_DECL_OVERRIDE;
+    QMargins margins() const override;
+    void paint(QPaintDevice *device) override;
     bool handleMouse(QWaylandInputDevice *inputDevice, const QPointF &local, const QPointF &global,
-                     Qt::MouseButtons b, Qt::KeyboardModifiers mods) Q_DECL_OVERRIDE;
+                     Qt::MouseButtons b, Qt::KeyboardModifiers mods) override;
     bool handleTouch(QWaylandInputDevice *inputDevice, const QPointF &local, const QPointF &global,
-                     Qt::TouchPointState state, Qt::KeyboardModifiers mods) Q_DECL_OVERRIDE;
+                     Qt::TouchPointState state, Qt::KeyboardModifiers mods) override;
 
 private:
     void processMouseTop(QWaylandInputDevice *inputDevice, const QPointF &local, Qt::MouseButtons b,

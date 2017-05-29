@@ -40,7 +40,7 @@ namespace WaylandClient {
 
 OutputManagementPrivate::OutputManagementPrivate()
     : QtWayland::liri_outputmanagement()
-    , registry(Q_NULLPTR)
+    , registry(nullptr)
 {
 }
 

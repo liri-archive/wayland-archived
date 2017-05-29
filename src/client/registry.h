@@ -69,7 +69,7 @@ public:
     };
     Q_ENUM(Interface)
 
-    Registry(QObject *parent = Q_NULLPTR);
+    Registry(QObject *parent = nullptr);
 
     bool isValid() const;
 
@@ -78,19 +78,19 @@ public:
     void create(wl_display *display);
     void setup();
 
-    Compositor *createCompositor(quint32 name, quint32 version, QObject *parent = Q_NULLPTR);
-    FullScreenShell *createFullScreenShell(quint32 name, quint32 version, QObject *parent = Q_NULLPTR);
-    Output *createOutput(quint32 name, quint32 version, QObject *parent = Q_NULLPTR);
-    Seat *createSeat(quint32 name, quint32 version, QObject *parent = Q_NULLPTR);
-    Shm *createShm(quint32 name, quint32 version, QObject *parent = Q_NULLPTR);
+    Compositor *createCompositor(quint32 name, quint32 version, QObject *parent = nullptr);
+    FullScreenShell *createFullScreenShell(quint32 name, quint32 version, QObject *parent = nullptr);
+    Output *createOutput(quint32 name, quint32 version, QObject *parent = nullptr);
+    Seat *createSeat(quint32 name, quint32 version, QObject *parent = nullptr);
+    Shm *createShm(quint32 name, quint32 version, QObject *parent = nullptr);
 
     OutputManagement *createOutputManagement(quint32 name, quint32 version,
-                                             QObject *parent = Q_NULLPTR);
+                                             QObject *parent = nullptr);
 
     Screencaster *createScreencaster(Shm *shm, quint32 name, quint32 version,
-                                     QObject *parent = Q_NULLPTR);
+                                     QObject *parent = nullptr);
     Screenshooter *createScreenshooter(Shm *shm, quint32 name, quint32 version,
-                                       QObject *parent = Q_NULLPTR);
+                                       QObject *parent = nullptr);
 
     static QByteArray interfaceName();
 

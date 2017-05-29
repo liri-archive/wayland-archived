@@ -55,7 +55,7 @@ class LIRIWAYLANDSERVER_EXPORT ScreenPrivate : public QObjectPrivate
 public:
     ScreenPrivate()
         : QObjectPrivate()
-        , m_screen(Q_NULLPTR)
+        , m_screen(nullptr)
         , m_refreshRate(60000)
         , m_subpixel(QWaylandOutput::SubpixelNone)
         , m_transform(QWaylandOutput::TransformNormal)

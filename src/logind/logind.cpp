@@ -73,7 +73,7 @@ class LogindPrivate : public QObjectPrivate
 public:
     LogindPrivate(Logind *self)
         : bus(QDBusConnection::systemBus())
-        , watcher(Q_NULLPTR)
+        , watcher(nullptr)
         , isConnected(false)
         , hasSessionControl(false)
         , sessionActive(false)

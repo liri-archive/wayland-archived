@@ -45,12 +45,12 @@ class LIRIWAYLANDCLIENT_EXPORT OutputManagement : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(OutputManagement)
 public:
-    OutputConfiguration *createConfiguration(QObject *parent = Q_NULLPTR);
+    OutputConfiguration *createConfiguration(QObject *parent = nullptr);
 
     static QByteArray interfaceName();
 
 private:
-    explicit OutputManagement(QObject *parent = Q_NULLPTR);
+    explicit OutputManagement(QObject *parent = nullptr);
 
     friend class Registry;
 };

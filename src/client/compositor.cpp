@@ -61,7 +61,7 @@ Surface *Compositor::createSurface(QObject *parent)
     Q_D(Compositor);
 
     if (!d->isInitialized())
-        return Q_NULLPTR;
+        return nullptr;
 
     Surface *surface = new Surface(parent);
     SurfacePrivate::get(surface)->init(d->create_surface());
@@ -78,7 +78,7 @@ Region *Compositor::createRegion(const QRegion &r, QObject *parent)
     Q_D(Compositor);
 
     if (!d->isInitialized())
-        return Q_NULLPTR;
+        return nullptr;
 
     Region *region = new Region(r, parent);
     RegionPrivate::get(region)->init(d->create_region());

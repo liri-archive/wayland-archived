@@ -38,11 +38,11 @@ class LIRIWAYLANDSERVER_EXPORT FakeScreenBackend : public ScreenBackend
 {
     Q_OBJECT
 public:
-    FakeScreenBackend(QObject *parent = Q_NULLPTR);
+    FakeScreenBackend(QObject *parent = nullptr);
 
     void setConfiguration(const QString &fileName);
 
-    void acquireConfiguration() Q_DECL_OVERRIDE;
+    void acquireConfiguration() override;
 
 private:
     QString m_fileName;

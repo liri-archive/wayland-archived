@@ -45,13 +45,13 @@ class LIRIEGLFS_EXPORT EglFSNativeInterface : public QPlatformNativeInterface
 public:
     EglFSNativeInterface(EglFSIntegration *integration);
 
-    void *nativeResourceForIntegration(const QByteArray &resource) Q_DECL_OVERRIDE;
-    void *nativeResourceForScreen(const QByteArray &resource, QScreen *screen) Q_DECL_OVERRIDE;
-    void *nativeResourceForWindow(const QByteArray &resource, QWindow *window) Q_DECL_OVERRIDE;
-    void *nativeResourceForContext(const QByteArray &resource, QOpenGLContext *context) Q_DECL_OVERRIDE;
-    NativeResourceForContextFunction nativeResourceFunctionForContext(const QByteArray &resource) Q_DECL_OVERRIDE;
+    void *nativeResourceForIntegration(const QByteArray &resource) override;
+    void *nativeResourceForScreen(const QByteArray &resource, QScreen *screen) override;
+    void *nativeResourceForWindow(const QByteArray &resource, QWindow *window) override;
+    void *nativeResourceForContext(const QByteArray &resource, QOpenGLContext *context) override;
+    NativeResourceForContextFunction nativeResourceFunctionForContext(const QByteArray &resource) override;
 
-    QFunctionPointer platformFunction(const QByteArray &function) const Q_DECL_OVERRIDE;
+    QFunctionPointer platformFunction(const QByteArray &function) const override;
 
 private:
     EglFSIntegration *m_integration;

@@ -69,7 +69,7 @@ LibInputManager::LibInputManager(QObject *parent)
     connect(m_handler, &LibInputHandler::keyPressed, this,
             [this](const LibInputKeyEvent &e) {
         QWindowSystemInterface::handleExtendedKeyEvent(
-                    Q_NULLPTR, QKeyEvent::KeyPress, e.key,
+                    nullptr, QKeyEvent::KeyPress, e.key,
                     e.modifiers, e.nativeScanCode,
                     e.nativeVirtualKey, e.nativeModifiers,
                     e.text, e.autoRepeat, e.repeatCount);
@@ -77,7 +77,7 @@ LibInputManager::LibInputManager(QObject *parent)
     connect(m_handler, &LibInputHandler::keyReleased, this,
             [this](const LibInputKeyEvent &e) {
         QWindowSystemInterface::handleExtendedKeyEvent(
-                    Q_NULLPTR, QKeyEvent::KeyRelease, e.key,
+                    nullptr, QKeyEvent::KeyRelease, e.key,
                     e.modifiers, e.nativeScanCode,
                     e.nativeVirtualKey, e.nativeModifiers,
                     e.text, e.autoRepeat, e.repeatCount);
@@ -85,38 +85,38 @@ LibInputManager::LibInputManager(QObject *parent)
     connect(m_handler, &LibInputHandler::mousePressed, this,
             [this](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleMouseEvent(
-                    Q_NULLPTR, e.pos, e.pos, e.buttons,
+                    nullptr, e.pos, e.pos, e.buttons,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::mouseReleased, this,
             [this](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleMouseEvent(
-                    Q_NULLPTR, e.pos, e.pos, e.buttons,
+                    nullptr, e.pos, e.pos, e.buttons,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::mouseMoved, this,
             [this](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleMouseEvent(
-                    Q_NULLPTR, e.pos, e.pos, e.buttons,
+                    nullptr, e.pos, e.pos, e.buttons,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::mouseWheel, this,
             [this](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleWheelEvent(
-                    Q_NULLPTR, e.pos, e.pos,
+                    nullptr, e.pos, e.pos,
                     e.wheelDelta, e.wheelOrientation,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::touchEvent, this,
             [this](const LibInputTouchEvent &e) {
         QWindowSystemInterface::handleTouchEvent(
-                    Q_NULLPTR, e.device, e.touchPoints,
+                    nullptr, e.device, e.touchPoints,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::touchCancel, this,
             [this](const LibInputTouchEvent &e) {
         QWindowSystemInterface::handleTouchCancelEvent(
-                    Q_NULLPTR, e.device, e.modifiers);
+                    nullptr, e.device, e.modifiers);
     });
 
     // Change pointer coordinates when requested by QPA

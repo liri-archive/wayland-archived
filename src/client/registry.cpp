@@ -105,13 +105,13 @@ static const wl_interface *wlInterface(Registry::Interface interface)
         break;
     }
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 RegistryPrivate::RegistryPrivate()
-    : display(Q_NULLPTR)
-    , registry(Q_NULLPTR)
-    , callback(Q_NULLPTR)
+    : display(nullptr)
+    , registry(nullptr)
+    , callback(nullptr)
 {
 }
 
@@ -144,7 +144,7 @@ T *RegistryPrivate::bind(Registry::Interface interface)
     }
 
     qCWarning(WLREGISTRY) << "Cannot bind unknown interface";
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void RegistryPrivate::handleAnnounce(const char *interface, quint32 name, quint32 version)
@@ -264,7 +264,7 @@ void RegistryPrivate::globalSync(void *data, wl_callback *callback, uint32_t ser
     Q_ASSERT(callback == self->callback);
     self->handleSync();
     wl_callback_destroy(self->callback);
-    self->callback = Q_NULLPTR;
+    self->callback = nullptr;
 }
 
 const struct wl_registry_listener RegistryPrivate::s_registryListener = {
@@ -289,7 +289,7 @@ Registry::Registry(QObject *parent)
 bool Registry::isValid() const
 {
     Q_D(const Registry);
-    return d->registry != Q_NULLPTR;
+    return d->registry != nullptr;
 }
 
 wl_display *Registry::display() const

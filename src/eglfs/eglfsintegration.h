@@ -59,22 +59,22 @@ public:
     EGLDisplay display() const;
     EGLNativeDisplayType nativeDisplay() const;
 
-    QPlatformInputContext *inputContext() const Q_DECL_OVERRIDE;
-    QPlatformFontDatabase *fontDatabase() const Q_DECL_OVERRIDE;
-    QPlatformServices *services() const Q_DECL_OVERRIDE;
-    QPlatformNativeInterface *nativeInterface() const Q_DECL_OVERRIDE;
+    QPlatformInputContext *inputContext() const override;
+    QPlatformFontDatabase *fontDatabase() const override;
+    QPlatformServices *services() const override;
+    QPlatformNativeInterface *nativeInterface() const override;
     VtHandler *vtHandler() const;
 
-    void initialize() Q_DECL_OVERRIDE;
-    void destroy() Q_DECL_OVERRIDE;
+    void initialize() override;
+    void destroy() override;
 
-    QAbstractEventDispatcher *createEventDispatcher() const Q_DECL_OVERRIDE;
-    QPlatformWindow *createPlatformWindow(QWindow *window) const Q_DECL_OVERRIDE;
-    QPlatformBackingStore *createPlatformBackingStore(QWindow *window) const Q_DECL_OVERRIDE;
-    QPlatformOpenGLContext *createPlatformOpenGLContext(QOpenGLContext *context) const Q_DECL_OVERRIDE;
-    QPlatformOffscreenSurface *createPlatformOffscreenSurface(QOffscreenSurface *surface) const Q_DECL_OVERRIDE;
+    QAbstractEventDispatcher *createEventDispatcher() const override;
+    QPlatformWindow *createPlatformWindow(QWindow *window) const override;
+    QPlatformBackingStore *createPlatformBackingStore(QWindow *window) const override;
+    QPlatformOpenGLContext *createPlatformOpenGLContext(QOpenGLContext *context) const override;
+    QPlatformOffscreenSurface *createPlatformOffscreenSurface(QOffscreenSurface *surface) const override;
 
-    bool hasCapability(QPlatformIntegration::Capability cap) const Q_DECL_OVERRIDE;
+    bool hasCapability(QPlatformIntegration::Capability cap) const override;
 
     void addScreen(QPlatformScreen *screen);
     void removeScreen(QPlatformScreen *screen);

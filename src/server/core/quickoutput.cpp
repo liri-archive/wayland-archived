@@ -50,7 +50,7 @@ namespace WaylandServer {
 class WindowFilter : public QObject
 {
 public:
-    WindowFilter(QObject *parent = Q_NULLPTR)
+    WindowFilter(QObject *parent = nullptr)
         : QObject(parent)
         , hotSpotLastTime(0)
         , hotSpotEntered(0)
@@ -82,7 +82,7 @@ public:
     quint64 hotSpotEntered;
 
 protected:
-    bool eventFilter(QObject *object, QEvent *event) Q_DECL_OVERRIDE
+    bool eventFilter(QObject *object, QEvent *event) override
     {
         // Do not filter other objects
         if (object != quickWindow)
@@ -147,7 +147,7 @@ class QuickOutputPrivate : public QObjectPrivate
 public:
     QuickOutputPrivate()
         : initialized(false)
-        , nativeScreen(Q_NULLPTR)
+        , nativeScreen(nullptr)
         , enabled(true)
         , hotSpotSize(QSize(5, 5))
         , hotSpotThreshold(1000)
@@ -177,7 +177,7 @@ QuickOutput::QuickOutput()
 }
 
 QuickOutput::QuickOutput(QWaylandCompositor *compositor)
-    : QWaylandQuickOutput(compositor, Q_NULLPTR)
+    : QWaylandQuickOutput(compositor, nullptr)
     , d_ptr(new QuickOutputPrivate())
 {
     // Filter events on the output window
@@ -250,7 +250,7 @@ QuickOutput::PowerState QuickOutput::powerState() const
     Q_D(const QuickOutput);
 
     // Power state is supported only with native screens and our QPA
-    QPlatformScreen *screen = Q_NULLPTR;
+    QPlatformScreen *screen = nullptr;
     if (d->nativeScreen && d->nativeScreen->screen())
         screen = static_cast<QPlatformScreen *>(
                     d->nativeScreen->screen()->handle());
@@ -265,7 +265,7 @@ void QuickOutput::setPowerState(PowerState state)
     Q_D(QuickOutput);
 
     // Power state is supported only with native screens and our QPA
-    QPlatformScreen *screen = Q_NULLPTR;
+    QPlatformScreen *screen = nullptr;
     if (d->nativeScreen && d->nativeScreen->screen())
         screen = static_cast<QPlatformScreen *>(
                     d->nativeScreen->screen()->handle());

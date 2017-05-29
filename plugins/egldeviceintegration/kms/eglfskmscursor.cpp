@@ -61,7 +61,7 @@ Q_DECLARE_LOGGING_CATEGORY(lcKms)
 EglFSKmsCursor::EglFSKmsCursor(EglFSKmsScreen *screen)
     : m_screen(screen)
     , m_cursorSize(64, 64) // 64x64 is the old standard size, we now try to query the real size below
-    , m_bo(Q_NULLPTR)
+    , m_bo(nullptr)
     , m_cursorImage(0, 0, 0, 0, 0, 0)
     , m_visible(true)
 {
@@ -103,7 +103,7 @@ EglFSKmsCursor::~EglFSKmsCursor()
 
     if (m_bo) {
         gbm_bo_destroy(m_bo);
-        m_bo = Q_NULLPTR;
+        m_bo = nullptr;
     }
 }
 

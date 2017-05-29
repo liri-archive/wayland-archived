@@ -54,21 +54,21 @@ public:
     void create();
     void destroy();
 
-    void setGeometry(const QRect &) Q_DECL_OVERRIDE;
-    QRect geometry() const Q_DECL_OVERRIDE;
-    void setVisible(bool visible) Q_DECL_OVERRIDE;
-    void requestActivateWindow() Q_DECL_OVERRIDE;
-    void raise() Q_DECL_OVERRIDE;
-    void lower() Q_DECL_OVERRIDE;
+    void setGeometry(const QRect &) override;
+    QRect geometry() const override;
+    void setVisible(bool visible) override;
+    void requestActivateWindow() override;
+    void raise() override;
+    void lower() override;
 
-    void propagateSizeHints() Q_DECL_OVERRIDE { }
-    void setMask(const QRegion &) Q_DECL_OVERRIDE { }
-    bool setKeyboardGrabEnabled(bool) Q_DECL_OVERRIDE { return false; }
-    bool setMouseGrabEnabled(bool) Q_DECL_OVERRIDE { return false; }
-    void setOpacity(qreal) Q_DECL_OVERRIDE;
-    WId winId() const Q_DECL_OVERRIDE;
+    void propagateSizeHints() override { }
+    void setMask(const QRegion &) override { }
+    bool setKeyboardGrabEnabled(bool) override { return false; }
+    bool setMouseGrabEnabled(bool) override { return false; }
+    void setOpacity(qreal) override;
+    WId winId() const override;
 
-    QSurfaceFormat format() const Q_DECL_OVERRIDE;
+    QSurfaceFormat format() const override;
 
     EGLNativeWindowType eglWindow() const;
     EGLSurface surface() const;
@@ -76,16 +76,16 @@ public:
 
     bool hasNativeWindow() const { return m_flags.testFlag(HasNativeWindow); }
 
-    virtual void invalidateSurface() Q_DECL_OVERRIDE;
+    virtual void invalidateSurface() override;
     virtual void resetSurface();
 
     QOpenGLCompositorBackingStore *backingStore() { return m_backingStore; }
     void setBackingStore(QOpenGLCompositorBackingStore *backingStore) { m_backingStore = backingStore; }
     bool isRaster() const;
 
-    QWindow *sourceWindow() const Q_DECL_OVERRIDE;
-    const QPlatformTextureList *textures() const Q_DECL_OVERRIDE;
-    void endCompositing() Q_DECL_OVERRIDE;
+    QWindow *sourceWindow() const override;
+    const QPlatformTextureList *textures() const override;
+    void endCompositing() override;
 
 protected:
     QOpenGLCompositorBackingStore *m_backingStore;

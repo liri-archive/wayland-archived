@@ -45,7 +45,7 @@ namespace WaylandServer {
 OutputConfigurationPrivate::OutputConfigurationPrivate()
     : QWaylandCompositorExtensionPrivate()
     , QtWaylandServer::liri_outputconfiguration()
-    , management(Q_NULLPTR)
+    , management(nullptr)
 {
 }
 
@@ -53,14 +53,14 @@ OutputChangeset *OutputConfigurationPrivate::pendingChanges(QWaylandOutput *outp
 {
     Q_Q(OutputConfiguration);
 
-    if (!changes.value(output, Q_NULLPTR))
+    if (!changes.value(output, nullptr))
         changes[output] = new OutputChangeset(output, q);
     return changes[output];
 }
 
 bool OutputConfigurationPrivate::hasPendingChanges(QWaylandOutput *output) const
 {
-    if (!changes.value(output, Q_NULLPTR))
+    if (!changes.value(output, nullptr))
         return false;
 
     OutputChangeset *changeset = changes[output];
@@ -236,7 +236,7 @@ OutputConfiguration *OutputConfiguration::fromResource(wl_resource *resource)
             OutputConfigurationPrivate::Resource::fromResource(resource);
     if (res)
         return static_cast<OutputConfigurationPrivate *>(res->liri_outputconfiguration_object)->q_func();
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void OutputConfiguration::initialize()

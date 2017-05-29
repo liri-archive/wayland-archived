@@ -75,7 +75,7 @@ class VtHandlerPrivate : public QObjectPrivate
 public:
     VtHandlerPrivate(VtHandler *self)
         : logind(Logind::instance())
-        , notifier(Q_NULLPTR)
+        , notifier(nullptr)
         , vtFd(-1)
         , vtNumber(0)
         , kbMode(K_OFF)
@@ -257,7 +257,7 @@ public:
     {
         int fd = -1;
 
-        const char *const devices[] = { "/dev/tty0", "/dev/tty", "/dev/console", Q_NULLPTR };
+        const char *const devices[] = { "/dev/tty0", "/dev/tty", "/dev/console", nullptr };
         for (const char *const *device = devices; *device; ++device) {
             fd = ::open(*device, O_RDWR);
             if (fd >= 0) {
@@ -312,7 +312,7 @@ public:
 
         if (notifier) {
             delete notifier;
-            notifier = Q_NULLPTR;
+            notifier = nullptr;
 
             ::close(signalFd[0]);
             ::close(signalFd[1]);

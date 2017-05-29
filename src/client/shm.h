@@ -118,7 +118,7 @@ Q_SIGNALS:
     void formatAdded(Shm::Format format);
 
 private:
-    explicit Shm(QObject *parent = Q_NULLPTR);
+    explicit Shm(QObject *parent = nullptr);
 
     friend class Registry;
 };

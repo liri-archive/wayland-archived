@@ -72,7 +72,7 @@ Q_SIGNALS:
     void capabilitiesChanged();
 
 private:
-    FullScreenShell(QObject *parent = Q_NULLPTR);
+    FullScreenShell(QObject *parent = nullptr);
 
     friend class Registry;
 };

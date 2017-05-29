@@ -130,7 +130,7 @@ EglFSKmsScreen::FrameBuffer *EglFSKmsScreen::framebufferForBufferObject(gbm_bo *
 
     if (ret) {
         qCWarning(lcKms, "Failed to create KMS FB!");
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     gbm_bo_set_user_data(bo, fb.data(), bufferDestroyedHandler);
@@ -144,14 +144,14 @@ EglFSKmsScreen::EglFSKmsScreen(EglFSKmsIntegration *integration,
     : EglFSScreen(eglGetDisplay(reinterpret_cast<EGLNativeDisplayType>(device->device())))
     , m_integration(integration)
     , m_device(device)
-    , m_gbm_surface(Q_NULLPTR)
-    , m_gbm_bo_current(Q_NULLPTR)
-    , m_gbm_bo_next(Q_NULLPTR)
+    , m_gbm_surface(nullptr)
+    , m_gbm_bo_current(nullptr)
+    , m_gbm_bo_next(nullptr)
     , m_suspend(false)
     , m_pendingMode(-1)
     , m_output(output)
     , m_pos(position)
-    , m_cursor(Q_NULLPTR)
+    , m_cursor(nullptr)
     , m_powerState(PowerStateOn)
     , m_interruptHandler(new EglFSKmsInterruptHandler(this))
 {
@@ -188,16 +188,16 @@ EglFSKmsScreen::~EglFSKmsScreen()
 {
     if (m_output.dpms_prop) {
         drmModeFreeProperty(m_output.dpms_prop);
-        m_output.dpms_prop = Q_NULLPTR;
+        m_output.dpms_prop = nullptr;
     }
     if (m_output.edid_blob) {
         drmModeFreePropertyBlob(m_output.edid_blob);
-        m_output.edid_blob = Q_NULLPTR;
+        m_output.edid_blob = nullptr;
     }
     restoreMode();
     if (m_output.saved_crtc) {
         drmModeFreeCrtc(m_output.saved_crtc);
-        m_output.saved_crtc = Q_NULLPTR;
+        m_output.saved_crtc = nullptr;
     }
     delete m_interruptHandler;
 }
@@ -309,17 +309,17 @@ void EglFSKmsScreen::destroySurface()
 {
     if (m_gbm_bo_current) {
         gbm_bo_destroy(m_gbm_bo_current);
-        m_gbm_bo_current = Q_NULLPTR;
+        m_gbm_bo_current = nullptr;
     }
 
     if (m_gbm_bo_next) {
         gbm_bo_destroy(m_gbm_bo_next);
-        m_gbm_bo_next = Q_NULLPTR;
+        m_gbm_bo_next = nullptr;
     }
 
     if (m_gbm_surface) {
         gbm_surface_destroy(m_gbm_surface);
-        m_gbm_surface = Q_NULLPTR;
+        m_gbm_surface = nullptr;
     }
 }
 
@@ -401,7 +401,7 @@ void EglFSKmsScreen::flip()
     if (ret) {
         qErrnoWarning("Could not queue DRM page flip!");
         gbm_surface_release_buffer(m_gbm_surface, m_gbm_bo_next);
-        m_gbm_bo_next = Q_NULLPTR;
+        m_gbm_bo_next = nullptr;
     }
 }
 
@@ -412,7 +412,7 @@ void EglFSKmsScreen::flipFinished()
                                    m_gbm_bo_current);
 
     m_gbm_bo_current = m_gbm_bo_next;
-    m_gbm_bo_next = Q_NULLPTR;
+    m_gbm_bo_next = nullptr;
 }
 
 void EglFSKmsScreen::resizeSurface()

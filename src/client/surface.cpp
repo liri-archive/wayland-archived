@@ -97,7 +97,7 @@ void SurfacePrivate::frameCallback(void *data, wl_callback *callback, uint32_t t
 Surface *SurfacePrivate::fromWlSurface(struct ::wl_surface *surface)
 {
     if (!surface)
-        return Q_NULLPTR;
+        return nullptr;
 
     QtWayland::wl_surface *wlSurface =
             static_cast<QtWayland::wl_surface *>(wl_surface_get_user_data(surface));
@@ -152,7 +152,7 @@ void Surface::attach(Buffer *buffer, const QPoint &position)
         d->attach(BufferPrivate::get(buffer)->object(),
                   position.x(), position.y());
     else
-        d->attach(Q_NULLPTR, 0, 0);
+        d->attach(nullptr, 0, 0);
 }
 
 void Surface::attach(BufferPtr buffer, const QPoint &position)
@@ -189,7 +189,7 @@ void Surface::setOpaqueRegion(Region *region)
     if (!d->isInitialized())
         return;
 
-    d->set_opaque_region(region ? RegionPrivate::get(region)->object() : Q_NULLPTR);
+    d->set_opaque_region(region ? RegionPrivate::get(region)->object() : nullptr);
 }
 
 void Surface::setInputRegion(Region *region)
@@ -199,7 +199,7 @@ void Surface::setInputRegion(Region *region)
     if (!d->isInitialized())
         return;
 
-    d->set_input_region(region ? RegionPrivate::get(region)->object() : Q_NULLPTR);
+    d->set_input_region(region ? RegionPrivate::get(region)->object() : nullptr);
 }
 
 void Surface::setBufferTransform(Output::Transform transform)
@@ -225,16 +225,16 @@ void Surface::setBufferScale(qint32 scale)
 Surface *Surface::fromQt(QWindow *window, QObject *parent)
 {
     if (!QGuiApplication::platformName().startsWith(QLatin1String("wayland")))
-        return Q_NULLPTR;
+        return nullptr;
 
     QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
     if (!native)
-        return Q_NULLPTR;
+        return nullptr;
 
     wl_surface *surface = reinterpret_cast<wl_surface *>(
                 native->nativeResourceForWindow(QByteArrayLiteral("surface"), window));
     if (!surface)
-        return Q_NULLPTR;
+        return nullptr;
 
     Surface *s = new Surface(parent);
     SurfacePrivate::get(s)->init(surface);

@@ -51,15 +51,15 @@ const struct libinput_interface LibInputHandlerPrivate::liInterface = {
 
 LibInputHandlerPrivate::LibInputHandlerPrivate()
     : initialized(false)
-    , udev(Q_NULLPTR)
-    , li(Q_NULLPTR)
-    , keyboard(Q_NULLPTR)
+    , udev(nullptr)
+    , li(nullptr)
+    , keyboard(nullptr)
     , keyboardCount(0)
-    , pointer(Q_NULLPTR)
+    , pointer(nullptr)
     , pointerCount(0)
-    , touch(Q_NULLPTR)
+    , touch(nullptr)
     , touchCount(0)
-    , gesture(Q_NULLPTR)
+    , gesture(nullptr)
     , gestureCount(0)
     , suspended(false)
 {
@@ -116,7 +116,7 @@ void LibInputHandlerPrivate::initialize()
 
     // Create context
     udev = new Udev;
-    li = libinput_udev_create_context(&liInterface, Q_NULLPTR,
+    li = libinput_udev_create_context(&liInterface, nullptr,
                                       UdevPrivate::get(udev)->udev);
     if (Q_UNLIKELY(!li)) {
         qFatal("Unable to get libinput context");
@@ -338,7 +338,7 @@ void LibInputHandler::handleEvents()
     }
 
     libinput_event *event;
-    while ((event = libinput_get_event(d->li)) != Q_NULLPTR) {
+    while ((event = libinput_get_event(d->li)) != nullptr) {
         libinput_event_type type = libinput_event_get_type(event);
         libinput_device *device = libinput_event_get_device(event);
 
@@ -386,7 +386,7 @@ void LibInputHandler::handleEvents()
             }
 
             if (libinput_device_has_capability(device, LIBINPUT_DEVICE_CAP_TOUCH)) {
-                QTouchDevice *td = Q_NULLPTR;
+                QTouchDevice *td = nullptr;
                 d->touch->unregisterDevice(device, &td);
                 Q_EMIT touchDeviceUnregistered(td);
 

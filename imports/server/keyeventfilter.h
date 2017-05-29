@@ -35,7 +35,7 @@ class KeyEventFilter : public QQuickItem
 {
     Q_OBJECT
 public:
-    KeyEventFilter(QQuickItem *parent = Q_NULLPTR);
+    KeyEventFilter(QQuickItem *parent = nullptr);
 
 protected:
     bool eventFilter(QObject *, QEvent *);

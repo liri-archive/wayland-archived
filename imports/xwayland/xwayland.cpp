@@ -40,12 +40,12 @@ Q_LOGGING_CATEGORY(XWAYLAND_TRACE, "liri.xwayland.trace")
 
 XWayland::XWayland(QObject *parent)
     : QObject(parent)
-    , m_compositor(Q_NULLPTR)
+    , m_compositor(nullptr)
     , m_enabled(false)
     , m_initialized(false)
-    , m_server(Q_NULLPTR)
+    , m_server(nullptr)
     , m_serverThread(new QThread())
-    , m_manager(Q_NULLPTR)
+    , m_manager(nullptr)
 {
 }
 

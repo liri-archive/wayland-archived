@@ -43,12 +43,12 @@ class TestOutput : public QObject
 {
     Q_OBJECT
 public:
-    TestOutput(QObject *parent = Q_NULLPTR)
+    TestOutput(QObject *parent = nullptr)
         : QObject(parent)
-        , m_compositor(Q_NULLPTR)
-        , m_output(Q_NULLPTR)
-        , m_thread(Q_NULLPTR)
-        , m_display(Q_NULLPTR)
+        , m_compositor(nullptr)
+        , m_output(nullptr)
+        , m_thread(nullptr)
+        , m_display(nullptr)
     {
     }
 
@@ -65,7 +65,7 @@ private Q_SLOTS:
         m_compositor = new QWaylandCompositor(this);
         m_compositor->setSocketName(s_socketName.toUtf8());
 
-        m_output = new QWaylandOutput(m_compositor, Q_NULLPTR);
+        m_output = new QWaylandOutput(m_compositor, nullptr);
         m_output->addMode(QWaylandOutputMode(QSize(800, 600), 60000), true);
         QWaylandOutputMode currentMode(QSize(1024, 768), 60000);
         m_output->addMode(currentMode);
@@ -96,20 +96,20 @@ private Q_SLOTS:
     void cleanup()
     {
         delete m_output;
-        m_output = Q_NULLPTR;
+        m_output = nullptr;
 
         delete m_compositor;
-        m_compositor = Q_NULLPTR;
+        m_compositor = nullptr;
 
         if (m_thread) {
             m_thread->quit();
             m_thread->wait();
             delete m_thread;
-            m_thread = Q_NULLPTR;
+            m_thread = nullptr;
         }
 
         delete m_display;
-        m_display = Q_NULLPTR;
+        m_display = nullptr;
     }
 
     void testAnnounce()

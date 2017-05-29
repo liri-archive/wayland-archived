@@ -36,7 +36,7 @@ class EglFSVivIntegrationPlugin : public EGLDeviceIntegrationPlugin
     Q_OBJECT
     Q_PLUGIN_METADATA(IID LiriDeviceIntegrationFactoryInterface_iid FILE "viv.json")
 public:
-    EGLDeviceIntegration *create() Q_DECL_OVERRIDE;
+    EGLDeviceIntegration *create() override;
 };
 
 EGLDeviceIntegration *EglFSVivIntegrationPlugin::create()

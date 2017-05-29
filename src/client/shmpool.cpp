@@ -48,9 +48,9 @@ namespace WaylandClient {
 
 ShmPoolPrivate::ShmPoolPrivate()
     : QtWayland::wl_shm_pool()
-    , shm(Q_NULLPTR)
+    , shm(nullptr)
     , file(new QTemporaryFile())
-    , data(Q_NULLPTR)
+    , data(nullptr)
     , size(1024)
     , offset(0)
 {
@@ -63,7 +63,7 @@ ShmPoolPrivate::~ShmPoolPrivate()
 
     if (data) {
         ::munmap(data, size);
-        data = Q_NULLPTR;
+        data = nullptr;
     }
 
     file->close();
@@ -86,10 +86,10 @@ bool ShmPoolPrivate::createPool(Shm *shm, size_t createSize)
         return false;
     }
 
-    data = (uchar *)::mmap(Q_NULLPTR, createSize, PROT_READ | PROT_WRITE, MAP_SHARED, file->handle(), 0);
+    data = (uchar *)::mmap(nullptr, createSize, PROT_READ | PROT_WRITE, MAP_SHARED, file->handle(), 0);
     if (data == (uchar *)MAP_FAILED) {
         qCWarning(WLSHMPOOL, "Failed to mmap /dev/zero: %s", ::strerror(errno));
-        data = Q_NULLPTR;
+        data = nullptr;
         return false;
     }
 
@@ -97,7 +97,7 @@ bool ShmPoolPrivate::createPool(Shm *shm, size_t createSize)
     if (!pool) {
         qCWarning(WLSHMPOOL) << "Failed to create shm pool";
         ::munmap(data, size);
-        data = Q_NULLPTR;
+        data = nullptr;
         return false;
     }
 
@@ -122,10 +122,10 @@ bool ShmPoolPrivate::resizePool(size_t newSize)
     resize(newSize);
 
     ::munmap(data, size);
-    data = (uchar *)::mmap(Q_NULLPTR, newSize, PROT_READ | PROT_WRITE, MAP_SHARED, file->handle(), 0);
+    data = (uchar *)::mmap(nullptr, newSize, PROT_READ | PROT_WRITE, MAP_SHARED, file->handle(), 0);
     if (data == (uchar *)MAP_FAILED) {
         qCWarning(WLSHMPOOL, "Failed to mmap /dev/zero: %s", ::strerror(errno));
-        data = Q_NULLPTR;
+        data = nullptr;
         return false;
     }
 
@@ -164,14 +164,14 @@ QVector<BufferSharedPtr>::iterator ShmPoolPrivate::reuseBuffer(const QSize &s,
     const qint32 bytesCount = s.height() * stride;
     if (offset + bytesCount > size) {
         if (!resizePool(bytesCount + size))
-            return Q_NULLPTR;
+            return nullptr;
     }
 
     // No buffer can be reused, create a new one and advance the offset
     wl_buffer *nativeBuffer =
             create_buffer(offset, s.width(), s.height(), stride, format);
     if (!nativeBuffer)
-        return Q_NULLPTR;
+        return nullptr;
     Buffer *buffer = new Buffer(q, s, stride, offset, format);
     BufferPrivate::get(buffer)->init(nativeBuffer);
     offset += bytesCount;

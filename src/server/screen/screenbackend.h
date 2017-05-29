@@ -69,7 +69,7 @@ public:
         qreal refreshRate;
     };
 
-    Screen(QObject *parent = Q_NULLPTR);
+    Screen(QObject *parent = nullptr);
 
     QScreen *screen() const;
 
@@ -113,7 +113,7 @@ class LIRIWAYLANDSERVER_EXPORT ScreenBackend : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(ScreenBackend)
 public:
-    ScreenBackend(QObject *parent = Q_NULLPTR);
+    ScreenBackend(QObject *parent = nullptr);
     virtual ~ScreenBackend();
 
     QList<Screen *> screens() const;

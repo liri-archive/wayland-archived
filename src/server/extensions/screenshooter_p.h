@@ -66,16 +66,16 @@ protected:
     void liri_screenshooter_capture_output(Resource *resource,
                                            uint32_t id,
                                            struct ::wl_resource *outputResource,
-                                           wl_array *effects) Q_DECL_OVERRIDE;
+                                           wl_array *effects) override;
     void liri_screenshooter_capture_active(Resource *resource,
                                            uint32_t id,
-                                           wl_array *effects) Q_DECL_OVERRIDE;
+                                           wl_array *effects) override;
     void liri_screenshooter_capture_surface(Resource *resource,
                                             uint32_t id,
-                                            wl_array *effects) Q_DECL_OVERRIDE;
+                                            wl_array *effects) override;
     void liri_screenshooter_capture_area(Resource *resource,
                                          uint32_t id,
-                                         wl_array *effects) Q_DECL_OVERRIDE;
+                                         wl_array *effects) override;
 };
 
 class LIRIWAYLANDSERVER_EXPORT ScreenshotPrivate
@@ -97,9 +97,9 @@ public:
     static ScreenshotPrivate *get(Screenshot *screenshot) { return screenshot->d_func(); }
 
 protected:
-    void liri_screenshot_destroy(Resource *resource) Q_DECL_OVERRIDE;
+    void liri_screenshot_destroy(Resource *resource) override;
     void liri_screenshot_record(Resource *resource,
-                                struct ::wl_resource *bufferResource) Q_DECL_OVERRIDE;
+                                struct ::wl_resource *bufferResource) override;
 };
 
 } // namespace WaylandServer

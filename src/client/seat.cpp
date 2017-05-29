@@ -46,9 +46,9 @@ namespace WaylandClient {
 SeatPrivate::SeatPrivate()
     : QtWayland::wl_seat()
     , version(0)
-    , keyboard(Q_NULLPTR)
-    , pointer(Q_NULLPTR)
-    , touch(Q_NULLPTR)
+    , keyboard(nullptr)
+    , pointer(nullptr)
+    , touch(nullptr)
 {
 }
 
@@ -69,7 +69,7 @@ void SeatPrivate::seat_capabilities(uint32_t capabilities)
         Q_EMIT q->keyboardAdded();
     } else if (!(capabilities & capability_keyboard) && keyboard) {
         delete keyboard;
-        keyboard = Q_NULLPTR;
+        keyboard = nullptr;
         Q_EMIT q->keyboardRemoved();
     }
 
@@ -79,7 +79,7 @@ void SeatPrivate::seat_capabilities(uint32_t capabilities)
         Q_EMIT q->pointerAdded();
     } else if (!(capabilities & capability_pointer) && pointer) {
         delete pointer;
-        pointer = Q_NULLPTR;
+        pointer = nullptr;
         Q_EMIT q->pointerRemoved();
     }
 
@@ -89,7 +89,7 @@ void SeatPrivate::seat_capabilities(uint32_t capabilities)
         Q_EMIT q->touchAdded();
     } else if (!(capabilities & capability_touch) && touch) {
         delete touch;
-        touch = Q_NULLPTR;
+        touch = nullptr;
         Q_EMIT q->touchRemoved();
     }
 }

@@ -162,7 +162,7 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
     const int crtc = crtcForConnector(resources, connector);
     if (crtc < 0) {
         qCWarning(lcKms) << "No usable crtc/encoder pair for connector" << connectorName;
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     OutputConfiguration configuration;
@@ -190,14 +190,14 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
 
     if (configuration == OutputConfigOff) {
         qCDebug(lcKms) << "Turning off output" << connectorName;
-        drmModeSetCrtc(m_dri_fd, crtc_id, 0, 0, 0, 0, 0, Q_NULLPTR);
-        return Q_NULLPTR;
+        drmModeSetCrtc(m_dri_fd, crtc_id, 0, 0, 0, 0, 0, nullptr);
+        return nullptr;
     }
 
     // Skip disconnected output
     if (configuration == OutputConfigPreferred && connector->connection == DRM_MODE_DISCONNECTED) {
         qCDebug(lcKms) << "Skipping disconnected output" << connectorName;
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     // Get the current mode on the current crtc
@@ -208,7 +208,7 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
         drmModeFreeEncoder(encoder);
 
         if (!crtc)
-            return Q_NULLPTR;
+            return nullptr;
 
         if (crtc->mode_valid)
             crtc_mode = crtc->mode;
@@ -281,7 +281,7 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
 
     if (selected_mode < 0) {
         qCWarning(lcKms) << "No modes available for output" << connectorName;
-        return Q_NULLPTR;
+        return nullptr;
     } else {
         int width = modes[selected_mode].hdisplay;
         int height = modes[selected_mode].vdisplay;
@@ -330,13 +330,13 @@ drmModePropertyPtr EglFSKmsDevice::connectorProperty(drmModeConnectorPtr connect
         drmModeFreeProperty(prop);
     }
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 drmModePropertyBlobPtr EglFSKmsDevice::extractEdid(drmModeConnectorPtr connector)
 {
     drmModePropertyPtr prop;
-    drmModePropertyBlobPtr blob = Q_NULLPTR;
+    drmModePropertyBlobPtr blob = nullptr;
 
     for (int i = 0; i < connector->count_props && !blob; i++) {
         prop = drmModeGetProperty(m_dri_fd, connector->props[i]);
@@ -365,17 +365,17 @@ EglFSKmsDevice::EglFSKmsDevice(EglFSKmsIntegration *integration, const QString &
     : m_integration(integration)
     , m_path(path)
     , m_dri_fd(-1)
-    , m_gbm_device(Q_NULLPTR)
+    , m_gbm_device(nullptr)
     , m_crtc_allocator(0)
     , m_connector_allocator(0)
-    , m_globalCursor(Q_NULLPTR)
+    , m_globalCursor(nullptr)
 {
 }
 
 bool EglFSKmsDevice::open()
 {
     Q_ASSERT(m_dri_fd == -1);
-    Q_ASSERT(m_gbm_device == Q_NULLPTR);
+    Q_ASSERT(m_gbm_device == nullptr);
 
     Logind *logind = Logind::instance();
 
@@ -414,7 +414,7 @@ void EglFSKmsDevice::close()
 {
     if (m_gbm_device) {
         gbm_device_destroy(m_gbm_device);
-        m_gbm_device = Q_NULLPTR;
+        m_gbm_device = nullptr;
     }
 
     if (m_dri_fd != -1) {
@@ -425,7 +425,7 @@ void EglFSKmsDevice::close()
 
     if (m_globalCursor)
         m_globalCursor->deleteLater();
-    m_globalCursor = Q_NULLPTR;
+    m_globalCursor = nullptr;
 }
 
 void EglFSKmsDevice::createScreens()
@@ -436,7 +436,7 @@ void EglFSKmsDevice::createScreens()
         return;
     }
 
-    EglFSKmsScreen *primaryScreen = Q_NULLPTR;
+    EglFSKmsScreen *primaryScreen = nullptr;
     QList<QScreen *> qscreens = QGuiApplication::screens();
     QList<QPlatformScreen *> connectedScreens;
     QList<QPlatformScreen *> siblings;

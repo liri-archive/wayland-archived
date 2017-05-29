@@ -92,7 +92,7 @@ XWaylandShellSurface::XWaylandShellSurface(xcb_window_t window, const QRect &geo
                                  XCB_CW_EVENT_MASK, values);
 
     xcb_get_geometry_reply_t *reply =
-            xcb_get_geometry_reply(Xcb::connection(), cookie, Q_NULLPTR);
+            xcb_get_geometry_reply(Xcb::connection(), cookie, nullptr);
     if (reply)
         m_hasAlpha = reply->depth == 32;
     else
@@ -259,7 +259,7 @@ void XWaylandShellSurface::readProperties()
 
     Q_FOREACH (xcb_atom_t atom, props.keys()) {
         xcb_get_property_reply_t *reply =
-                xcb_get_property_reply(Xcb::connection(), cookies[atom], Q_NULLPTR);
+                xcb_get_property_reply(Xcb::connection(), cookies[atom], nullptr);
         if (!reply)
             // Bad window, usually
             continue;
@@ -300,7 +300,7 @@ void XWaylandShellSurface::readAndDumpProperty(xcb_atom_t atom)
             xcb_get_property(Xcb::connection(), 0, m_window,
                              atom, XCB_ATOM_ANY, 0, 2048);
     xcb_get_property_reply_t *reply =
-            xcb_get_property_reply(Xcb::connection(), cookie, Q_NULLPTR);
+            xcb_get_property_reply(Xcb::connection(), cookie, nullptr);
 
     dumpProperty(atom, reply);
 
@@ -477,7 +477,7 @@ void *XWaylandShellSurface::decodeProperty(xcb_atom_t type, xcb_get_property_rep
         break;
     }
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void XWaylandShellSurface::handleSurfaceDestroyed()

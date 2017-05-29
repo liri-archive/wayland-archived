@@ -41,13 +41,13 @@ class LIRIWAYLANDSERVER_EXPORT QuickScreenManager : public ScreenManager, public
     Q_INTERFACES(QQmlParserStatus)
     Q_OBJECT
 public:
-    QuickScreenManager(QObject *parent = Q_NULLPTR);
+    QuickScreenManager(QObject *parent = nullptr);
 
-    void create() Q_DECL_OVERRIDE;
+    void create() override;
 
 protected:
-    void classBegin() Q_DECL_OVERRIDE;
-    void componentComplete() Q_DECL_OVERRIDE;
+    void classBegin() override;
+    void componentComplete() override;
 };
 
 } // namespace WaylandServer

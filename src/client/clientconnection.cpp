@@ -45,7 +45,7 @@ namespace WaylandClient {
  */
 
 ClientConnectionPrivate::ClientConnectionPrivate()
-    : display(Q_NULLPTR)
+    : display(nullptr)
     , displayFromQt(false)
     , fd(-1)
     , socketName(QString::fromUtf8(qgetenv("WAYLAND_DISPLAY")))
@@ -130,7 +130,7 @@ ClientConnection::ClientConnection(QObject *parent)
 bool ClientConnection::isConnected() const
 {
     Q_D(const ClientConnection);
-    return d->display != Q_NULLPTR;
+    return d->display != nullptr;
 }
 
 wl_display *ClientConnection::display() const
@@ -200,16 +200,16 @@ void ClientConnection::synchronousConnection()
 ClientConnection *ClientConnection::fromQt(QObject *parent)
 {
     if (!QGuiApplication::platformName().startsWith(QLatin1String("wayland")))
-        return Q_NULLPTR;
+        return nullptr;
 
     QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
     if (!native)
-        return Q_NULLPTR;
+        return nullptr;
 
     wl_display *display = reinterpret_cast<wl_display *>(
                 native->nativeResourceForIntegration(QByteArrayLiteral("wl_display")));
     if (!display)
-        return Q_NULLPTR;
+        return nullptr;
 
     ClientConnection *connection = new ClientConnection(parent);
     ClientConnectionPrivate::get(connection)->display = display;

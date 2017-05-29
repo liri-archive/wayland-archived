@@ -251,11 +251,11 @@ ScreencastPrivate::ScreencastPrivate()
     : QWaylandCompositorExtensionPrivate()
     , QtWaylandServer::liri_screencast()
     , valid(true)
-    , screencaster(Q_NULLPTR)
-    , output(Q_NULLPTR)
-    , window(Q_NULLPTR)
-    , bufferResource(Q_NULLPTR)
-    , buffer(Q_NULLPTR)
+    , screencaster(nullptr)
+    , output(nullptr)
+    , window(nullptr)
+    , bufferResource(nullptr)
+    , buffer(nullptr)
 {
 }
 
@@ -293,7 +293,7 @@ void ScreencastPrivate::liri_screencast_destroy(Resource *resource)
     valid = false;
 
     // Remove the request
-    ScreencasterPrivate::get(screencaster)->removeRequest(Q_NULLPTR, q);
+    ScreencasterPrivate::get(screencaster)->removeRequest(nullptr, q);
 
     // Delete
     q->deleteLater();
@@ -312,8 +312,8 @@ void ScreencastPrivate::liri_screencast_record(Resource *resource,
     listener->listenForDestruction(br);
     QObject::connect(listener, &QWaylandDestroyListener::fired, [this, listener](void *data) {
         if (data == bufferResource) {
-            bufferResource = Q_NULLPTR;
-            buffer = Q_NULLPTR;
+            bufferResource = nullptr;
+            buffer = nullptr;
         }
         delete listener;
     });
@@ -338,22 +338,22 @@ void ScreencastPrivate::liri_screencast_record(Resource *resource,
                 h < output->geometry().height()) {
             qCWarning(gLcScreencaster, "Buffer size %dx%d doesn't match output size %dx%d",
                       w, h, output->geometry().width(), output->geometry().height());
-            buffer = Q_NULLPTR;
+            buffer = nullptr;
         }
         if (s != w * 4) {
             qCWarning(gLcScreencaster, "Buffer stride %d doesn't match calculated stride %d",
                       s, w * 4);
-            buffer = Q_NULLPTR;
+            buffer = nullptr;
         }
         if (f != SCREENCASTER_FORMAT) {
             qCWarning(gLcScreencaster, "Wrong buffer format %d, expected %d",
                       f, SCREENCASTER_FORMAT);
-            buffer = Q_NULLPTR;
+            buffer = nullptr;
         }
     }
     if (!buffer) {
         send_failed(error_bad_buffer, bufferResource);
-        bufferResource = Q_NULLPTR;
+        bufferResource = nullptr;
         return;
     }
 
@@ -403,8 +403,8 @@ bool Screencast::event(QEvent *event)
         }
     }
 
-    d->bufferResource = Q_NULLPTR;
-    d->buffer = Q_NULLPTR;
+    d->bufferResource = nullptr;
+    d->buffer = nullptr;
 
     wl_client_flush(d->resource()->client());
 

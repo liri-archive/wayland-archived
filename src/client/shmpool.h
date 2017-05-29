@@ -53,7 +53,7 @@ public:
 
     BufferPtr createBuffer(const QImage &image);
     BufferPtr createBuffer(const QSize &size, quint32 stride,
-                           const void *source = Q_NULLPTR,
+                           const void *source = nullptr,
                            Shm::Format format = Shm::Format_ARGB32);
 
     BufferPtr findBuffer(const QSize &size, quint32 stride,

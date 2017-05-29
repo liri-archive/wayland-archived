@@ -89,9 +89,9 @@ public:
 
 protected:
     void liri_screenshot_setup(int32_t width, int32_t height,
-                               int32_t stride, int32_t format) Q_DECL_OVERRIDE;
-    void liri_screenshot_done() Q_DECL_OVERRIDE;
-    void liri_screenshot_failed(int32_t error) Q_DECL_OVERRIDE;
+                               int32_t stride, int32_t format) override;
+    void liri_screenshot_done() override;
+    void liri_screenshot_failed(int32_t error) override;
 };
 
 } // namespace WaylandClient

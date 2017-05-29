@@ -57,9 +57,9 @@ class TestRegistry : public QObject
 {
     Q_OBJECT
 public:
-    TestRegistry(QObject *parent = Q_NULLPTR)
+    TestRegistry(QObject *parent = nullptr)
         : QObject(parent)
-        , m_compositor(Q_NULLPTR)
+        , m_compositor(nullptr)
     {
     }
 
@@ -74,7 +74,7 @@ private Q_SLOTS:
         m_compositor = new QWaylandCompositor(this);
         m_compositor->setSocketName(s_socketName.toUtf8());
 
-        new QWaylandOutput(m_compositor, Q_NULLPTR);
+        new QWaylandOutput(m_compositor, nullptr);
         new WaylandServer::Screencaster(m_compositor);
         new WaylandServer::Screenshooter(m_compositor);
 
@@ -84,7 +84,7 @@ private Q_SLOTS:
     void cleanup()
     {
         delete m_compositor;
-        m_compositor = Q_NULLPTR;
+        m_compositor = nullptr;
     }
 
     void testSetup()

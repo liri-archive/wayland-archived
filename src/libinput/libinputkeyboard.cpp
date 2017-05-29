@@ -49,9 +49,9 @@ namespace Platform {
 
 LibInputKeyboardPrivate::LibInputKeyboardPrivate(LibInputHandler *h)
     : handler(h)
-    , context(Q_NULLPTR)
-    , keymap(Q_NULLPTR)
-    , state(Q_NULLPTR)
+    , context(nullptr)
+    , keymap(nullptr)
+    , state(nullptr)
     , repeatRate(40)
     , repeatDelay(400)
 {
@@ -61,12 +61,12 @@ LibInputKeyboardPrivate::LibInputKeyboardPrivate(LibInputHandler *h)
         return;
     }
 
-    keymap = xkb_keymap_new_from_names(context, Q_NULLPTR,
+    keymap = xkb_keymap_new_from_names(context, nullptr,
                                        XKB_KEYMAP_COMPILE_NO_FLAGS);
     if (!keymap) {
         qCWarning(lcInput) << "Unable to compile xkb keymap";
         xkb_context_unref(context);
-        context = Q_NULLPTR;
+        context = nullptr;
         return;
     }
 
@@ -74,9 +74,9 @@ LibInputKeyboardPrivate::LibInputKeyboardPrivate(LibInputHandler *h)
     if (!state) {
         qCWarning(lcInput) << "Unable to create xkb state";
         xkb_keymap_unref(keymap);
-        keymap = Q_NULLPTR;
+        keymap = nullptr;
         xkb_context_unref(context);
-        context = Q_NULLPTR;
+        context = nullptr;
         return;
     }
 

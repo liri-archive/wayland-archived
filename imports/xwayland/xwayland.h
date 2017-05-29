@@ -48,7 +48,7 @@ class XWayland : public QObject, public QQmlParserStatus
     Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
     Q_INTERFACES(QQmlParserStatus)
 public:
-    XWayland(QObject *parent = Q_NULLPTR);
+    XWayland(QObject *parent = nullptr);
     ~XWayland();
 
     QWaylandCompositor *compositor() const;
@@ -57,8 +57,8 @@ public:
     bool isEnabled() const;
     void setEnabled(bool enabled);
 
-    void classBegin() Q_DECL_OVERRIDE {}
-    void componentComplete() Q_DECL_OVERRIDE { initialize(); }
+    void classBegin() override {}
+    void componentComplete() override { initialize(); }
 
 Q_SIGNALS:
     void compositorChanged();

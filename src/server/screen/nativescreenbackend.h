@@ -40,9 +40,9 @@ class LIRIWAYLANDSERVER_EXPORT NativeScreenBackend : public ScreenBackend
 {
     Q_OBJECT
 public:
-    NativeScreenBackend(QObject *parent = Q_NULLPTR);
+    NativeScreenBackend(QObject *parent = nullptr);
 
-    void acquireConfiguration() Q_DECL_OVERRIDE;
+    void acquireConfiguration() override;
 
 private:
     bool m_initialized;
