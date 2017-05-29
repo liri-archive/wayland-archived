@@ -247,7 +247,7 @@ void XWaylandManager::setCursor(xcb_window_t window, const CursorType &cursor)
 
 void XWaylandManager::createWindowManager()
 {
-    static const char name[] = "Green Island the Hawaii compositor";
+    static const char name[] = "Liri";
 
     m_wmWindow = new Xcb::Window(QRect(0, 0, 10, 10),
                                  XCB_WINDOW_CLASS_INPUT_OUTPUT, 0, nullptr);
