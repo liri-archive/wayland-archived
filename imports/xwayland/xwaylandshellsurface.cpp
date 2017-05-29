@@ -347,13 +347,13 @@ void XWaylandShellSurface::unmap()
 void XWaylandShellSurface::moveTo(const QPoint &pos)
 {
     m_geometry.setTopLeft(pos);
-    Q_EMIT setGeometry(m_geometry);
+    Q_EMIT setPosition(pos);
 }
 
 void XWaylandShellSurface::resize(const QSize &size)
 {
     m_geometry.setSize(size);
-    Q_EMIT setGeometry(m_geometry);
+    Q_EMIT setSize(size);
 }
 
 XWaylandQuickShellIntegration *XWaylandShellSurface::createIntegration(XWaylandQuickShellSurfaceItem *item)

@@ -133,7 +133,8 @@ Q_SIGNALS:
     void titleChanged();
     void mapped();
     void unmapped();
-    void setGeometry(const QRect &geometry);
+    void setPosition(const QPoint &pos);
+    void setSize(const QSize &size);
     void activatedChanged();
     void maximizedChanged();
     void fullscreenChanged();

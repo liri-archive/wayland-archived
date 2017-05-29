@@ -40,8 +40,8 @@ XWaylandQuickShellIntegration::XWaylandQuickShellIntegration(XWaylandQuickShellS
 {
     m_item->setSurface(m_shellSurface->surface());
 
-    connect(m_shellSurface, &XWaylandShellSurface::setGeometry,
-            this, &XWaylandQuickShellIntegration::handleSetGeometry);
+    connect(m_shellSurface, &XWaylandShellSurface::setPosition,
+            this, &XWaylandQuickShellIntegration::handleSetPosition);
     connect(m_shellSurface, &XWaylandShellSurface::startMove,
             this, &XWaylandQuickShellIntegration::handleStartMove);
     connect(m_shellSurface, &XWaylandShellSurface::startResize,
@@ -86,10 +86,10 @@ bool XWaylandQuickShellIntegration::mouseReleaseEvent(QMouseEvent *event)
     return false;
 }
 
-void XWaylandQuickShellIntegration::handleSetGeometry(const QRect &geometry)
+void XWaylandQuickShellIntegration::handleSetPosition(const QPoint &pos)
 {
-    m_item->moveItem()->setX(geometry.topLeft().x());
-    m_item->moveItem()->setY(geometry.topLeft().y());
+    m_item->moveItem()->setX(pos.x());
+    m_item->moveItem()->setY(pos.y());
 }
 
 void XWaylandQuickShellIntegration::handleStartMove()
