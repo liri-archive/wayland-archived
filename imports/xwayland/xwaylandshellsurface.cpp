@@ -101,6 +101,9 @@ XWaylandShellSurface::XWaylandShellSurface(xcb_window_t window, const QRect &geo
     free(reply);
 
     m_wm->addWindow(m_window, this);
+
+    Q_EMIT xChanged();
+    Q_EMIT yChanged();
 }
 
 XWaylandShellSurface::~XWaylandShellSurface()
@@ -147,7 +150,6 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
 
         Q_EMIT m_wm->shellSurfaceAdded(this);
         Q_EMIT surfaceChanged();
-        //Q_EMIT setGeometry(m_geometry);
     } else {
         m_wm->removeWindow(m_window);
     }
@@ -161,6 +163,21 @@ QString XWaylandShellSurface::appId() const
 QString XWaylandShellSurface::title() const
 {
     return m_properties.title;
+}
+
+QRect XWaylandShellSurface::geometry() const
+{
+    return m_geometry;
+}
+
+int XWaylandShellSurface::x() const
+{
+    return m_geometry.left();
+}
+
+int XWaylandShellSurface::y() const
+{
+    return m_geometry.top();
 }
 
 bool XWaylandShellSurface::activated() const
@@ -290,9 +307,25 @@ void XWaylandShellSurface::readProperties()
             Q_EMIT titleChanged();
             break;
         case XCB_ATOM_WM_TRANSIENT_FOR:
-            m_transientFor = (XWaylandShellSurface *)p;
+            m_transientFor = static_cast<XWaylandShellSurface *>(p);
+            m_windowType = Qt::SubWindow;
+            Q_EMIT windowTypeChanged();
             break;
         default:
+            if (atom == Xcb::resources()->atoms->net_wm_window_type) {
+                xcb_atom_t *atoms = static_cast<xcb_atom_t *>(p);
+                for (quint32 i = 0; i < reply->value_len; ++i) {
+                    if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_tooltip ||
+                            Xcb::resources()->atoms->net_wm_window_type_utility ||
+                            Xcb::resources()->atoms->net_wm_window_type_dnd ||
+                            Xcb::resources()->atoms->net_wm_window_type_dropdown ||
+                            Xcb::resources()->atoms->net_wm_window_type_popup ||
+                            Xcb::resources()->atoms->net_wm_window_type_combo) {
+                        m_windowType = Qt::Popup;
+                        Q_EMIT windowTypeChanged();
+                    }
+                }
+            }
             break;
         }
 
@@ -348,6 +381,8 @@ void XWaylandShellSurface::moveTo(const QPoint &pos)
 {
     m_geometry.setTopLeft(pos);
     Q_EMIT setPosition(pos);
+    Q_EMIT xChanged();
+    Q_EMIT yChanged();
 }
 
 void XWaylandShellSurface::resize(const QSize &size)
@@ -370,8 +405,6 @@ xcb_window_t XWaylandShellSurface::window() const
 {
     return m_window;
 }
-
-
 
 void *XWaylandShellSurface::decodeProperty(xcb_atom_t type, xcb_get_property_reply_t *reply)
 {

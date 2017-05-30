@@ -49,6 +49,8 @@ class XWaylandShellSurface : public QObject
     Q_PROPERTY(QWaylandSurface *surface READ surface NOTIFY surfaceChanged)
     Q_PROPERTY(QString appId READ appId NOTIFY appIdChanged)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
+    Q_PROPERTY(int x READ x NOTIFY xChanged)
+    Q_PROPERTY(int y READ y NOTIFY yChanged)
     Q_PROPERTY(bool activated READ activated NOTIFY activatedChanged)
     Q_PROPERTY(bool maximized READ maximized NOTIFY maximizedChanged)
     Q_PROPERTY(bool fullscreen READ fullscreen NOTIFY fullscreenChanged)
@@ -86,6 +88,10 @@ public:
 
     QString appId() const;
     QString title() const;
+
+    QRect geometry() const;
+    int x() const;
+    int y() const;
 
     bool activated() const;
     bool maximized() const;
@@ -131,6 +137,8 @@ Q_SIGNALS:
     void surfaceDestroyed();
     void appIdChanged();
     void titleChanged();
+    void xChanged();
+    void yChanged();
     void mapped();
     void unmapped();
     void setPosition(const QPoint &pos);
