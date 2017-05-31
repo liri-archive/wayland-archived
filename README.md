@@ -98,8 +98,12 @@ See `qbs/shared/modules/lirideployment/lirideployment.qbs` for more deployment-r
 
 You can also specify the following options:
 
- * `project.withKmsPlugin=false` to exclude KMS EGL device integration from the build
- * `project.withXWayland=false` to exclude XWayland support from the build
+ * `project.withKmsPlugin=false`: Do not build KMS EGL device integration.
+ * `project.withXWayland=false`: Do not build XWayland support.
+ * `project.withFullscreenShellIntegration=false`: Do not build fullscreen-shell integration.
+ * `project.withMaterialDecoration=false`: Do not build material decoration.
+ * `project.withLibraries=false`: Do not build libraries.
+ * `project.withQPA=false`: Do not build QPA plugin and EGL device integrations.
 
 If you specify `qbs.installRoot` you might need to prefix the entire line with `sudo`,
 depending on whether you have permissions to write there or not.
