@@ -20,7 +20,7 @@ Project {
 
     minimumQbsVersion: "1.6"
 
-    qbsSearchPaths: ["qbs/shared", "qbs/local"]
+    qbsSearchPaths: ["qbs/shared"]
 
     references: [
         "imports/platform/platform.qbs",
