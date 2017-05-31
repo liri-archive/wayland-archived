@@ -42,6 +42,9 @@ Project {
     ]
 
     AutotestRunner {
+        Depends { name: "LiriWaylandClient" }
+        Depends { name: "LiriWaylandServer" }
+
         builtByDefault: autotestEnabled
         name: "liri-wayland-autotest"
         arguments: project.autotestArguments
