@@ -4,7 +4,6 @@ LiriDynamicLibrary {
     name: "kms"
     targetName: "kms"
 
-    Depends { name: "qbsbuildconfig" }
     Depends { name: "lirideployment" }
     Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
     Depends { name: "LiriEglFS" }
@@ -14,7 +13,7 @@ LiriDynamicLibrary {
     Depends { name: "libdrm" }
 
     condition: {
-        if (!qbsbuildconfig.withKmsPlugin) {
+        if (!project.withKmsPlugin) {
             console.info("KMS EGL device integration disabled");
             return false;
         }

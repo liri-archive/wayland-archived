@@ -4,14 +4,13 @@ LiriDynamicLibrary {
     name: "lirixwaylandplugin"
     targetName: "lirixwaylandplugin"
 
-    Depends { name: "qbsbuildconfig" }
     Depends { name: "lirideployment" }
     Depends { name: "LiriWaylandServer" }
     Depends { name: "XCB"; submodules: ["xfixes", "cursor", "composite", "render", "shape"] }
     Depends { name: "X11.xcursor" }
 
     condition: {
-        if (!qbsbuildconfig.withXWayland) {
+        if (!project.withXWayland) {
             console.info("XWayland support disabled");
             return false;
         }

@@ -9,6 +9,9 @@ Project {
     property stringList autotestArguments: []
     property stringList autotestWrapper: []
 
+    property bool withKmsPlugin: true
+    property bool withXWayland: true
+
     condition: qbs.targetOS.contains("linux")
 
     minimumQbsVersion: "1.6"
