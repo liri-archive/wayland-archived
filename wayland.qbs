@@ -44,7 +44,7 @@ Project {
         //"tests/auto/client/registry/registry.qbs",
         "tests/auto/client/shmpool/shmpool.qbs",
         //"tests/auto/logind/logind.qbs",
-        "tests/auto/udev/udev.qbs",
+        //"tests/auto/udev/udev.qbs",
         "tests/manual/libinput/libinput.qbs",
     ]
 
