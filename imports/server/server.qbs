@@ -8,6 +8,15 @@ LiriDynamicLibrary {
     Depends { name: "Qt"; submodules: ["qml", "quick"] }
     Depends { name: "LiriWaylandServer" }
 
+    condition: {
+        if (!project.withLibraries) {
+            console.info("Libraries disabled");
+            return false;
+        }
+
+        return true;
+    }
+
     files: ["*.cpp", "*.h"]
 
     Group {

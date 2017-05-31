@@ -11,6 +11,10 @@ Project {
 
     property bool withKmsPlugin: true
     property bool withXWayland: true
+    property bool withFullscreenShellIntegration: true
+    property bool withMaterialDecoration: true
+    property bool withLibraries: true
+    property bool withQPA: true
 
     condition: qbs.targetOS.contains("linux")
 

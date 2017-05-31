@@ -6,6 +6,15 @@ StaticLibrary {
 
     Depends { name: "Qt"; submodules: ["gui", "gui-private", "waylandclient", "waylandclient-private"] }
 
+    condition: {
+        if (!project.withMaterialDecoration) {
+            console.info("Material decoration disabled");
+            return false;
+        }
+
+        return true;
+    }
+
     cpp.defines: []
     files: ["*.cpp", "*.h", "*.qrc"]
 

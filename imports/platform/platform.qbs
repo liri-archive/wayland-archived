@@ -8,6 +8,15 @@ LiriDynamicLibrary {
     Depends { name: "Qt"; submodules: ["gui", "gui-private", "qml", "quick", "waylandclient", "waylandclient-private"] }
     Depends { name: "materialdecoration" }
 
+    condition: {
+        if (!project.withLibraries) {
+            console.info("Libraries disabled");
+            return false;
+        }
+
+        return true;
+    }
+
     cpp.defines: []
 
     files: ["*.cpp", "*.h"]

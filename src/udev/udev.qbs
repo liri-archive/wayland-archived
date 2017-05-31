@@ -10,6 +10,11 @@ LiriModule {
     Depends { name: "libudev" }
 
     condition: {
+        if (!project.withLibraries) {
+            console.info("Libraries disabled");
+            return false;
+        }
+
         if (!libudev.found) {
             console.error("libudev is required to build " + targetName);
             return false;

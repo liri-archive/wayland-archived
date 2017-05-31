@@ -7,6 +7,15 @@ LiriDynamicLibrary {
     Depends { name: "lirideployment" }
     Depends { name: "materialdecoration" }
 
+    condition: {
+        if (!project.withMaterialDecoration) {
+            console.info("Material decoration disabled");
+            return false;
+        }
+
+        return true;
+    }
+
     files: ["*.cpp"]
 
     Group {

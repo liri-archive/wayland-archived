@@ -10,6 +10,11 @@ LiriModule {
     Depends { name: "WaylandScanner" }
 
     condition: {
+        if (!project.withLibraries) {
+            console.info("Libraries disabled");
+            return false;
+        }
+
         if (!Wayland.client.found) {
             console.error("wayland-client is required to build " + targetName);
             return false;

@@ -9,6 +9,11 @@ StaticLibrary {
     Depends { name: "xkbcommon" }
 
     condition: {
+        if (!project.withLibraries) {
+            console.info("Libraries disabled");
+            return false;
+        }
+
         if (!xkbcommon.found) {
             console.error("xkbcommon is required to build " + targetName);
             return false;
