@@ -63,7 +63,6 @@
 #include "xwaylandmanager.h"
 #include "xwaylandshellsurface.h"
 #include "xwaylandserver.h"
-//#include "xwaylandsurface.h"
 
 #include <unistd.h>
 #include <xcb/composite.h>

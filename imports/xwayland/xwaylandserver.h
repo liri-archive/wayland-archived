@@ -45,7 +45,7 @@ public:
     ~XWaylandServer();
 
     inline int wmFd() const {
-        return m_wmFd;
+        return m_wmPairFd[0];
     }
 
     inline wl_client *client() const {
@@ -54,10 +54,9 @@ public:
 
     QWaylandCompositor *compositor() const;
 
-    bool setup();
+    bool start();
 
 Q_SIGNALS:
-    void spawned();
     void started();
 
 private:
@@ -66,26 +65,16 @@ private:
     int m_display;
     QString m_displayName;
 
-    QString m_lockFileName;
-    int m_abstractFd;
-    int m_unixFd;
-    int m_wmFd;
-
-    pid_t m_pid;
     ServerProcess *m_process;
+    int m_serverPairFd[2];
+    int m_wmPairFd[2];
 
     wl_client *m_client;
 
-    QString createLockFile(int display, int &status);
-
-    int bindToAbstractSocket(int display);
-    int bindToUnixSocket(int display);
-
-    pid_t spawn();
     void shutdown();
 
 private Q_SLOTS:
-    void processEvents();
+    void handleServerStarted();
 };
 
 #endif // XWAYLANDSERVER_H

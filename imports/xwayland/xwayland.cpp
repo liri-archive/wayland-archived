@@ -24,8 +24,6 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtCore/QTimer>
-
 #include <QtWaylandCompositor/QWaylandClient>
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/private/qwaylandsurface_p.h>
@@ -44,18 +42,8 @@ XWayland::XWayland(QObject *parent)
     , m_enabled(false)
     , m_initialized(false)
     , m_server(nullptr)
-    , m_serverThread(new QThread())
     , m_manager(nullptr)
 {
-}
-
-XWayland::~XWayland()
-{
-    delete m_server;
-
-    m_serverThread->quit();
-    m_serverThread->wait();
-    delete m_serverThread;
 }
 
 QWaylandCompositor *XWayland::compositor() const
@@ -93,6 +81,21 @@ void XWayland::setEnabled(bool enabled)
     Q_EMIT enabledChanged();
 }
 
+bool XWayland::startServer()
+{
+    if (!m_enabled) {
+        qCWarning(XWAYLAND) << "XWayland support is disabled, the server won't be started";
+        return true;
+    }
+
+    if (!m_server->start()) {
+        qCWarning(XWAYLAND) << "Failed to start XWayland";
+        return false;
+    }
+
+    return true;
+}
+
 void XWayland::initialize()
 {
     // Try to find a compositor among parents
@@ -127,22 +130,18 @@ void XWayland::initialize()
     m_server = new XWaylandServer(m_compositor, this);
     connect(m_server, &XWaylandServer::started,
             this, &XWayland::serverStarted);
-    m_server->moveToThread(m_serverThread);
+    connect(m_server, &XWaylandServer::started,
+            this, &XWayland::handleServerStarted);
 
     // Window manager
     m_manager = new XWaylandManager(m_server, this);
-    m_manager->moveToThread(m_serverThread);
     connect(m_manager, &XWaylandManager::shellSurfaceAdded,
             this, &XWayland::handleShellSurfaceAdded);
     connect(m_manager, &XWaylandManager::shellSurfaceRemoved,
             this, &XWayland::shellSurfaceClosed);
-
-    // Setup server
-    if (!m_server->setup())
-        qCWarning(XWAYLAND) << "Failed to setup XWayland";
 }
 
-void XWayland::serverStarted()
+void XWayland::handleServerStarted()
 {
     // Start window management
     m_manager->start(m_server->wmFd());

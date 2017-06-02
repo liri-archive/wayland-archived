@@ -29,7 +29,6 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QLoggingCategory>
-#include <QtCore/QThread>
 #include <QtQml/QQmlParserStatus>
 
 #include <QtWaylandCompositor/QWaylandSurface>
@@ -49,7 +48,6 @@ class XWayland : public QObject, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
 public:
     XWayland(QObject *parent = nullptr);
-    ~XWayland();
 
     QWaylandCompositor *compositor() const;
     void setCompositor(QWaylandCompositor *compositor);
@@ -57,17 +55,20 @@ public:
     bool isEnabled() const;
     void setEnabled(bool enabled);
 
+    Q_INVOKABLE bool startServer();
+
     void classBegin() override {}
     void componentComplete() override { initialize(); }
 
 Q_SIGNALS:
     void compositorChanged();
     void enabledChanged();
+    void serverStarted();
     void shellSurfaceCreated(XWaylandShellSurface *shellSurface);
     void shellSurfaceClosed(XWaylandShellSurface *shellSurface);
 
 private Q_SLOTS:
-    void serverStarted();
+    void handleServerStarted();
     void handleSurfaceCreated(QWaylandSurface *surface);
     void handleShellSurfaceAdded(XWaylandShellSurface *shellSurface);
 
@@ -76,7 +77,6 @@ private:
     bool m_enabled;
     bool m_initialized;
     XWaylandServer *m_server;
-    QThread *m_serverThread;
     XWaylandManager *m_manager;
 
     void initialize();
