@@ -284,63 +284,16 @@ void XWaylandManager::handleButton(xcb_button_press_event_t *event)
     qCDebug(XWAYLAND_TRACE, "XCB_BUTTON_%s (detail %d)",
             event->response_type == XCB_BUTTON_PRESS ? "PRESS" : "RELEASE",
             event->detail);
-
-#if 0 // 2016
-    if (!m_windowsMap.contains(event->event))
-        return;
-
-    XWaylandWindow *window = m_windowsMap[event->event];
-    if (!window->isDecorated())
-        return;
-
-    if (event->detail != 1 && event->detail != 2)
-        return;
-
-    // TODO:
-#endif
 }
 
 void XWaylandManager::handleEnter(xcb_enter_notify_event_t *event)
 {
-    if (!m_windowsMap.contains(event->event))
-        return;
-
-#if 0
-    XWaylandWindow *window = m_windowsMap[event->event];
-    if (!window->isDecorated())
-        return;
-
-    // TODO:
-    /*
-     * location = frame_pointer_enter(window->frame, NULL,
-                                       enter->event_x, enter->event_y);
-        if (frame_status(window->frame) & FRAME_STATUS_REPAINT)
-                weston_wm_window_schedule_repaint(window);
-
-        cursor = get_cursor_for_location(location);
-        weston_wm_window_set_cursor(wm, window->frame_id, cursor);
-        */
-#endif
+    setCursor(event->event, CursorLeftPointer);
 }
 
 void XWaylandManager::handleLeave(xcb_leave_notify_event_t *event)
 {
-    if (!m_windowsMap.contains(event->event))
-        return;
-
-#if 0
-    XWaylandWindow *window = m_windowsMap[event->event];
-    if (!window->isDecorated())
-        return;
-
-    /*
-     * frame_pointer_leave(window->frame, NULL);
-        if (frame_status(window->frame) & FRAME_STATUS_REPAINT)
-                weston_wm_window_schedule_repaint(window);
-                */
-
-    setCursor(window->frameId(), CursorLeftPointer);
-#endif
+    setCursor(event->event, CursorLeftPointer);
 }
 
 void XWaylandManager::handleMotion(xcb_motion_notify_event_t *event)
