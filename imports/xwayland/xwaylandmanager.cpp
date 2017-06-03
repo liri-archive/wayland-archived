@@ -133,6 +133,9 @@ void XWaylandManager::start(int fd)
                 (sizeof supported / sizeof supported[0]), supported
             );
 
+    // Unset active window
+    setActiveWindow(XCB_WINDOW_NONE);
+
     // Clain WM selection
     wmSelection();
 
@@ -142,11 +145,9 @@ void XWaylandManager::start(int fd)
     // Flush connection
     xcb_flush(Xcb::connection());
 
-#if 0
     // Setup cursors
     m_cursors = Xcb::Cursors::createCursors();
     setCursor(Xcb::rootWindow(), CursorLeftPointer);
-#endif
 
     // Create window and take WM_S0 selection, this will signal
     // Xwayland that the setup is done
@@ -242,6 +243,13 @@ void XWaylandManager::setCursor(xcb_window_t window, const CursorType &cursor)
     xcb_change_window_attributes(Xcb::connection(), window,
                                  XCB_CW_CURSOR, &cursorValueList);
     xcb_flush(Xcb::connection());
+}
+
+void XWaylandManager::setActiveWindow(xcb_window_t window)
+{
+    xcb_change_property(Xcb::connection(), XCB_PROP_MODE_REPLACE,
+                        Xcb::rootWindow(), Xcb::resources()->atoms->net_active_window,
+                        Xcb::resources()->atoms->window, 32, 1, &window);
 }
 
 void XWaylandManager::createWindowManager()

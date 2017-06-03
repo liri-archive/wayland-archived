@@ -72,6 +72,7 @@ public:
     Atom net_wm_moveresize;
     Atom net_supporting_wm_check;
     Atom net_supported;
+    Atom net_active_window;
     Atom motif_wm_hints;
     Atom clipboard;
     Atom clipboard_manager;
@@ -84,6 +85,7 @@ public:
     Atom compound_text;
     Atom text;
     Atom string;
+    Atom window;
     Atom text_plain_utf8;
     Atom text_plain;
     Atom xdnd_selection;

@@ -94,6 +94,7 @@ private:
     void initializeDragAndDrop();
 
     void setCursor(xcb_window_t window, const CursorType &cursor);
+    void setActiveWindow(xcb_window_t window);
 
     void createWindowManager();
 
