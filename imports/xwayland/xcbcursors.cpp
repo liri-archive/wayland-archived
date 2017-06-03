@@ -187,7 +187,7 @@ xcb_cursor_library_load_cursor(const char *file)
 {
     xcb_cursor_t cursor;
     XcursorImages *images;
-    char *v = NULL;
+    char *v = nullptr;
     int size = 0;
 
     if (!file)
@@ -215,13 +215,13 @@ xcb_cursor_t *createCursors()
     const char *name;
     int count = ARRAY_LENGTH(cursors);
 
-    xcb_cursor_t *c = (xcb_cursor_t *)malloc(count * sizeof(xcb_cursor_t));
+    xcb_cursor_t *c = new xcb_cursor_t[count];
 
     for (int i = 0; i < count; i++) {
         for (size_t j = 0; j < cursors[i].count; j++) {
             name = cursors[i].names[j];
             c[i] = xcb_cursor_library_load_cursor(name);
-            if (c[i] != (xcb_cursor_t)-1)
+            if (c[i] != static_cast<xcb_cursor_t>(-1))
                 break;
         }
     }
@@ -237,7 +237,7 @@ void destroyCursors(xcb_cursor_t *c)
     for (quint8 i = 0; i < ARRAY_LENGTH(c); i++)
         xcb_free_cursor(Xcb::connection(), c[i]);
 
-    free(c);
+    delete []c;
 }
 
 
