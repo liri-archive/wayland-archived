@@ -114,6 +114,7 @@ bool XWaylandServer::start()
 
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     env.insert(QStringLiteral("WAYLAND_SOCKET"), QString::number(::dup(sx[1])));
+    env.insert(QStringLiteral("EGL_PLATFORM"), QByteArrayLiteral("DRM"));
 
     m_process = new ServerProcess();
     m_process->setProcessChannelMode(QProcess::ForwardedErrorChannel);
