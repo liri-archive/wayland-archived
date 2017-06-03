@@ -81,6 +81,11 @@ void XWayland::setCompositor(QWaylandCompositor *compositor)
     Q_EMIT compositorChanged();
 }
 
+XWaylandManager *XWayland::manager() const
+{
+    return m_manager;
+}
+
 bool XWayland::startServer()
 {
     if (!m_enabled) {
@@ -139,6 +144,7 @@ void XWayland::initialize()
             this, &XWayland::handleShellSurfaceAdded);
     connect(m_manager, &XWaylandManager::shellSurfaceRemoved,
             this, &XWayland::shellSurfaceClosed);
+    Q_EMIT managerChanged();
 }
 
 void XWayland::handleServerStarted()
