@@ -43,17 +43,17 @@ class XWaylandShellSurface;
 class XWayland : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
-    Q_PROPERTY(QWaylandCompositor *compositor READ compositor WRITE setCompositor NOTIFY compositorChanged)
     Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
+    Q_PROPERTY(QWaylandCompositor *compositor READ compositor WRITE setCompositor NOTIFY compositorChanged)
     Q_INTERFACES(QQmlParserStatus)
 public:
     XWayland(QObject *parent = nullptr);
 
-    QWaylandCompositor *compositor() const;
-    void setCompositor(QWaylandCompositor *compositor);
-
     bool isEnabled() const;
     void setEnabled(bool enabled);
+
+    QWaylandCompositor *compositor() const;
+    void setCompositor(QWaylandCompositor *compositor);
 
     Q_INVOKABLE bool startServer();
 
@@ -61,8 +61,8 @@ public:
     void componentComplete() override { initialize(); }
 
 Q_SIGNALS:
-    void compositorChanged();
     void enabledChanged();
+    void compositorChanged();
     void serverStarted();
     void shellSurfaceCreated(XWaylandShellSurface *shellSurface);
     void shellSurfaceClosed(XWaylandShellSurface *shellSurface);

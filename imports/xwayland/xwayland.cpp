@@ -46,22 +46,6 @@ XWayland::XWayland(QObject *parent)
 {
 }
 
-QWaylandCompositor *XWayland::compositor() const
-{
-    return m_compositor;
-}
-
-void XWayland::setCompositor(QWaylandCompositor *compositor)
-{
-    if (m_compositor) {
-        qCWarning(XWAYLAND, "Cannot move XWayland to another compositor");
-        return;
-    }
-
-    m_compositor = compositor;
-    Q_EMIT compositorChanged();
-}
-
 bool XWayland::isEnabled() const
 {
     return m_enabled;
@@ -79,6 +63,22 @@ void XWayland::setEnabled(bool enabled)
 
     m_enabled = enabled;
     Q_EMIT enabledChanged();
+}
+
+QWaylandCompositor *XWayland::compositor() const
+{
+    return m_compositor;
+}
+
+void XWayland::setCompositor(QWaylandCompositor *compositor)
+{
+    if (m_compositor) {
+        qCWarning(XWAYLAND, "Cannot move XWayland to another compositor");
+        return;
+    }
+
+    m_compositor = compositor;
+    Q_EMIT compositorChanged();
 }
 
 bool XWayland::startServer()
