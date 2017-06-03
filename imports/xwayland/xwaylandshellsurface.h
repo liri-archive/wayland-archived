@@ -74,9 +74,11 @@ public:
         IconicState = 3
     };
 
-    XWaylandShellSurface(xcb_window_t window, const QRect &geometry,
-                         bool overrideRedirect, XWaylandManager *parent);
+    XWaylandShellSurface(QObject *parent = nullptr);
     ~XWaylandShellSurface();
+
+    Q_INVOKABLE void initialize(XWaylandManager *wm, quint32 window,
+                                const QRect &geometry, bool overrideRedirect);
 
     Qt::WindowType windowType() const;
 

@@ -318,9 +318,9 @@ void XWaylandManager::handleCreateNotify(xcb_create_notify_event_t *event)
     if (Xcb::isOurResource(event->window))
         return;
 
-    new XWaylandShellSurface(event->window,
-                       QRect(QPoint(event->x, event->y), QSize(event->width, event->height)),
-                       event->override_redirect != 0, this);
+    Q_EMIT shellSurfaceRequested(static_cast<quint32>(event->window),
+                                 QRect(QPoint(event->x, event->y), QSize(event->width, event->height)),
+                                 event->override_redirect != 0);
 }
 
 void XWaylandManager::handleMapRequest(xcb_map_request_event_t *event)

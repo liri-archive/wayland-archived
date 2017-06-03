@@ -140,6 +140,8 @@ void XWayland::initialize()
 
     // Window manager
     m_manager = new XWaylandManager(m_server, this);
+    connect(m_manager, &XWaylandManager::shellSurfaceRequested,
+            this, &XWayland::shellSurfaceRequested);
     connect(m_manager, &XWaylandManager::shellSurfaceAdded,
             this, &XWayland::handleShellSurfaceAdded);
     connect(m_manager, &XWaylandManager::shellSurfaceRemoved,

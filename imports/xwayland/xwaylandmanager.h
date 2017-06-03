@@ -69,6 +69,7 @@ public:
     XWaylandShellSurface *shellSurfaceFromId(xcb_window_t id);
 
 Q_SIGNALS:
+    void shellSurfaceRequested(quint32 window, const QRect &geometry, bool overrideRedirect);
     void shellSurfaceAdded(XWaylandShellSurface *shellSurface);
     void shellSurfaceRemoved(XWaylandShellSurface *shellSurface);
 

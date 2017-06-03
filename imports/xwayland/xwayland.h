@@ -68,6 +68,7 @@ Q_SIGNALS:
     void compositorChanged();
     void managerChanged();
     void serverStarted();
+    void shellSurfaceRequested(quint32 window, const QRect &geometry, bool overrideRedirect);
     void shellSurfaceCreated(XWaylandShellSurface *shellSurface);
     void shellSurfaceClosed(XWaylandShellSurface *shellSurface);
 

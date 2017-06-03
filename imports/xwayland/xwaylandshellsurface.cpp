@@ -64,14 +64,12 @@
 #define TYPE_NET_WM_STATE       XCB_ATOM_CUT_BUFFER2
 #define TYPE_WM_NORMAL_HINTS    XCB_ATOM_CUT_BUFFER3
 
-XWaylandShellSurface::XWaylandShellSurface(xcb_window_t window, const QRect &geometry,
-                                           bool overrideRedirect, XWaylandManager *parent)
+XWaylandShellSurface::XWaylandShellSurface(QObject *parent)
     : QObject(parent)
-    , m_wm(parent)
-    , m_window(window)
-    , m_geometry(geometry)
+    , m_wm(nullptr)
+    , m_window(XCB_WINDOW_NONE)
     , m_propsDirty(true)
-    , m_overrideRedirect(overrideRedirect)
+    , m_overrideRedirect(false)
     , m_transientFor(nullptr)
     , m_windowType(Qt::WindowType::Window)
     , m_surfaceId(0)
@@ -82,14 +80,29 @@ XWaylandShellSurface::XWaylandShellSurface(xcb_window_t window, const QRect &geo
     , m_maximized(false)
     , m_fullscreen(false)
 {
+}
+
+XWaylandShellSurface::~XWaylandShellSurface()
+{
+    if (m_wm)
+        m_wm->removeWindow(m_window);
+}
+
+void XWaylandShellSurface::initialize(XWaylandManager *wm, quint32 window, const QRect &geometry, bool overrideRedirect)
+{
+    m_wm = wm;
+    m_window = static_cast<xcb_window_t>(window);
+    m_geometry = geometry;
+    m_overrideRedirect = overrideRedirect;
+
     m_properties.deleteWindow = 0;
 
     xcb_get_geometry_cookie_t cookie =
-            xcb_get_geometry(Xcb::connection(), window);
+            xcb_get_geometry(Xcb::connection(), m_window);
 
     quint32 values[1];
     values[0] = XCB_EVENT_MASK_PROPERTY_CHANGE;
-    xcb_change_window_attributes(Xcb::connection(), window,
+    xcb_change_window_attributes(Xcb::connection(), m_window,
                                  XCB_CW_EVENT_MASK, values);
 
     xcb_get_geometry_reply_t *reply =
@@ -104,11 +117,6 @@ XWaylandShellSurface::XWaylandShellSurface(xcb_window_t window, const QRect &geo
 
     Q_EMIT xChanged();
     Q_EMIT yChanged();
-}
-
-XWaylandShellSurface::~XWaylandShellSurface()
-{
-    m_wm->removeWindow(m_window);
 }
 
 Qt::WindowType XWaylandShellSurface::windowType() const
