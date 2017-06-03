@@ -28,11 +28,29 @@
 #include <QtQml/QQmlExtensionPlugin>
 #include <QtQml/QQmlComponent>
 
-
 #include "xwayland.h"
 #include "xwaylandserver.h"
 #include "xwaylandshellsurface.h"
 #include "xwaylandquickshellsurfaceitem.h"
+
+#define LIRI_DECLARE_QUICK_EXTENSION_CHILDREN_CLASS(className) \
+    class Q_WAYLAND_COMPOSITOR_EXPORT className##QuickExtensionChildren : public className \
+    { \
+/* qmake ignore Q_OBJECT */ \
+        Q_OBJECT \
+        Q_PROPERTY(QQmlListProperty<QObject> data READ data DESIGNABLE false) \
+        Q_CLASSINFO("DefaultProperty", "data") \
+    public: \
+        QQmlListProperty<QObject> data() \
+        { \
+            return QQmlListProperty<QObject>(this, m_objects); \
+        } \
+    private: \
+        QList<QObject *> m_objects; \
+    };
+
+LIRI_DECLARE_QUICK_EXTENSION_CHILDREN_CLASS(XWayland)
+
 
 class LiriXWaylandPluging : public QQmlExtensionPlugin
 {
@@ -47,7 +65,7 @@ void LiriXWaylandPluging::registerTypes(const char *uri)
     // @uri Liri.XWayland
     Q_ASSERT(QLatin1String(uri) == QLatin1String("Liri.XWayland"));
 
-    qmlRegisterType<XWayland>(uri, 1, 0, "XWayland");
+    qmlRegisterType<XWaylandQuickExtensionChildren>(uri, 1, 0, "XWayland");
     qmlRegisterUncreatableType<XWaylandShellSurface>(uri, 1, 0, "XWaylandWindow",
                                                QObject::tr("Cannot create instance of XWaylandWindow"));
     qmlRegisterType<XWaylandQuickShellSurfaceItem>(uri, 1, 0, "XWaylandShellSurfaceItem");
