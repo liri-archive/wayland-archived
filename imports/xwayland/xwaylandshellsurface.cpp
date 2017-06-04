@@ -393,6 +393,25 @@ void XWaylandShellSurface::resize(const QSize &size)
     Q_EMIT setSize(size);
 }
 
+void XWaylandShellSurface::close()
+{
+    xcb_client_message_event_t msg;
+
+    if (m_properties.deleteWindow) {
+        msg.response_type = XCB_CLIENT_MESSAGE;
+        msg.format = 32;
+        msg.window = m_window;
+        msg.type = Xcb::resources()->atoms->wm_protocols;
+        msg.data.data32[0] = Xcb::resources()->atoms->wm_delete_window;
+        msg.data.data32[1] = XCB_CURRENT_TIME;
+
+        xcb_send_event(Xcb::connection(), 0, m_window, XCB_EVENT_MASK_NO_EVENT,
+                       reinterpret_cast<char *>(&msg));
+    } else {
+        xcb_kill_client(Xcb::connection(), m_window);
+    }
+}
+
 XWaylandQuickShellIntegration *XWaylandShellSurface::createIntegration(XWaylandQuickShellSurfaceItem *item)
 {
     return new XWaylandQuickShellIntegration(item);

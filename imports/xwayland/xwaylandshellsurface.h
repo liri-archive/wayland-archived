@@ -126,6 +126,8 @@ public:
     void moveTo(const QPoint &pos);
     void resize(const QSize &size);
 
+    Q_INVOKABLE void close();
+
     XWaylandQuickShellIntegration *createIntegration(XWaylandQuickShellSurfaceItem *item);
 
     operator xcb_window_t() const;
