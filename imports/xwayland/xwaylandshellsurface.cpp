@@ -393,6 +393,26 @@ void XWaylandShellSurface::resize(const QSize &size)
     Q_EMIT setSize(size);
 }
 
+void XWaylandShellSurface::maximize(QWaylandOutput *output)
+{
+    Q_UNUSED(output);
+
+    if (!m_maximized) {
+        m_maximized = true;
+        setNetWmState();
+        Q_EMIT maximizedChanged();
+    }
+}
+
+void XWaylandShellSurface::unmaximize()
+{
+    if (m_maximized) {
+        m_maximized = false;
+        setNetWmState();
+        Q_EMIT maximizedChanged();
+    }
+}
+
 void XWaylandShellSurface::close()
 {
     xcb_client_message_event_t msg;

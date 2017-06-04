@@ -30,6 +30,7 @@
 #include <QtCore/QRect>
 #include <QtCore/QPointer>
 
+#include <QtWaylandCompositor/QWaylandOutput>
 #include <QtWaylandCompositor/QWaylandSurface>
 
 #include <xcb/xcb.h>
@@ -125,6 +126,9 @@ public:
 
     void moveTo(const QPoint &pos);
     void resize(const QSize &size);
+
+    Q_INVOKABLE void maximize(QWaylandOutput *output);
+    Q_INVOKABLE void unmaximize();
 
     Q_INVOKABLE void close();
 
