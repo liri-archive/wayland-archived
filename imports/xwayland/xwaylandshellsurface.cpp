@@ -64,6 +64,10 @@
 #define TYPE_NET_WM_STATE       XCB_ATOM_CUT_BUFFER2
 #define TYPE_WM_NORMAL_HINTS    XCB_ATOM_CUT_BUFFER3
 
+#define MWM_DECOR_EVERYTHING \
+        (MWM_DECOR_BORDER | MWM_DECOR_RESIZEH | MWM_DECOR_TITLE | \
+         MWM_DECOR_MENU | MWM_DECOR_MINIMIZE | MWM_DECOR_MAXIMIZE)
+
 XWaylandShellSurface::XWaylandShellSurface(QObject *parent)
     : QObject(parent)
     , m_wm(nullptr)
@@ -76,6 +80,7 @@ XWaylandShellSurface::XWaylandShellSurface(QObject *parent)
     , m_surface(nullptr)
     , m_wmState(WithdrawnState)
     , m_workspace(0)
+    , m_decorate(true)
     , m_maximized(false)
     , m_fullscreen(false)
 {
@@ -178,6 +183,11 @@ QString XWaylandShellSurface::appId() const
 QString XWaylandShellSurface::title() const
 {
     return m_properties.title;
+}
+
+bool XWaylandShellSurface::decorate() const
+{
+    return m_decorate;
 }
 
 QPoint XWaylandShellSurface::position() const
@@ -529,11 +539,15 @@ void *XWaylandShellSurface::decodeProperty(xcb_atom_t type, xcb_get_property_rep
         break;
     }
     case TYPE_MOTIF_WM_HINTS:
-        memcpy(&m_motifHints,
-               xcb_get_property_value(reply),
-               sizeof m_motifHints);
-        //if (m_motifHints.flags & MWM_HINTS_DECORATIONS)
-        //m_decorated = m_motifHints.decorations;
+        memcpy(&m_motifHints, xcb_get_property_value(reply), sizeof m_motifHints);
+        if (m_motifHints.flags & MWM_HINTS_DECORATIONS) {
+            if (m_motifHints.decorations & MWM_DECOR_ALL)
+                // MWM_DECOR_ALL means all except the other values listed
+                m_decorate = MWM_DECOR_EVERYTHING & (~m_motifHints.decorations);
+            else
+                m_decorate = m_motifHints.decorations > 0;
+            Q_EMIT decorateChanged();
+        }
         break;
     default:
         break;

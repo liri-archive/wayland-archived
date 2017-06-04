@@ -51,6 +51,7 @@ class XWaylandShellSurface : public QObject
     Q_PROPERTY(XWaylandShellSurface *parentSurface READ parentSurface NOTIFY parentSurfaceChanged)
     Q_PROPERTY(QString appId READ appId NOTIFY appIdChanged)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
+    Q_PROPERTY(bool decorate READ decorate NOTIFY decorateChanged)
     Q_PROPERTY(int x READ x NOTIFY xChanged)
     Q_PROPERTY(int y READ y NOTIFY yChanged)
     Q_PROPERTY(bool maximized READ isMaximized NOTIFY maximizedChanged)
@@ -93,6 +94,8 @@ public:
 
     QString appId() const;
     QString title() const;
+
+    bool decorate() const;
 
     QPoint position() const;
     QRect geometry() const;
@@ -147,6 +150,7 @@ Q_SIGNALS:
     void parentSurfaceChanged();
     void appIdChanged();
     void titleChanged();
+    void decorateChanged();
     void xChanged();
     void yChanged();
     void mapped();
@@ -182,6 +186,7 @@ private:
         int deleteWindow;
     } m_properties;
 
+    bool m_decorate;
     bool m_maximized;
     bool m_fullscreen;
 
