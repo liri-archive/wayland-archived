@@ -59,7 +59,7 @@ bool XWaylandQuickShellIntegration::mouseMoveEvent(QMouseEvent *event)
         float scaleFactor = m_item->view()->output()->scaleFactor();
         QPointF delta = (event->windowPos() - resizeState.initialMousePos) / scaleFactor;
         QSize newSize = m_shellSurface->sizeForResize(resizeState.initialSize, delta, resizeState.resizeEdges);
-        m_shellSurface->sendConfigure(newSize);
+        m_shellSurface->sendConfigure(QRect(m_shellSurface->position(), newSize));
     } else if (grabberState == GrabberState::Move) {
         QQuickItem *moveItem = m_item->moveItem();
         if (!moveState.initialized) {

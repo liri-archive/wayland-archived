@@ -91,7 +91,9 @@ public:
     QString appId() const;
     QString title() const;
 
+    QPoint position() const;
     QRect geometry() const;
+
     int x() const;
     int y() const;
 
@@ -116,15 +118,14 @@ public:
     void readProperties();
     void setProperties();
 
-    void resizeFrame(const QSize &size, quint32 mask, quint32 *values);
-
     QSize sizeForResize(const QSizeF &initialSize, const QPointF &delta, ResizeEdge edges);
-    void sendConfigure(const QSize &size);
+    void sendConfigure(const QRect &geometry);
 
     void moveTo(const QPoint &pos);
     void resize(const QSize &size);
 
     Q_INVOKABLE void sendPosition(const QPointF &pos);
+    Q_INVOKABLE void sendResize(const QSizeF &size);
 
     Q_INVOKABLE void maximize(QWaylandOutput *output);
     Q_INVOKABLE void unmaximize();
@@ -157,6 +158,7 @@ private:
     XWaylandManager *m_wm;
     xcb_window_t m_window;
     QRect m_geometry;
+    QRect m_savedGeometry;
     bool m_propsDirty;
     bool m_overrideRedirect;
     bool m_hasAlpha;

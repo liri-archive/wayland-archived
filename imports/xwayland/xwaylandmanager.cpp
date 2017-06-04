@@ -344,6 +344,7 @@ void XWaylandManager::handleMapRequest(xcb_map_request_event_t *event)
     shellSurface->setNetWmState();
     shellSurface->setWorkspace(0);
     xcb_map_window(Xcb::connection(), event->window);
+    xcb_flush(Xcb::connection());
     Q_EMIT shellSurface->mapped();
 }
 
@@ -378,6 +379,7 @@ void XWaylandManager::handleUnmapNotify(xcb_unmap_notify_event_t *event)
     shellSurface->setWmState(XWaylandShellSurface::WithdrawnState);
     shellSurface->setWorkspace(-1);
     xcb_unmap_window(Xcb::connection(), event->window);
+    xcb_flush(Xcb::connection());
 }
 
 void XWaylandManager::handleReparentNotify(xcb_reparent_notify_event_t *event)
@@ -597,20 +599,20 @@ void XWaylandManager::handleMoveResize(XWaylandShellSurface *window, xcb_client_
 
 void XWaylandManager::handleState(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)
 {
-    auto updateState = [](int action, int *state) {
+    auto updateState = [](int action, bool *state) {
 #define _NET_WM_STATE_REMOVE    0
 #define _NET_WM_STATE_ADD       1
 #define _NET_WM_STATE_TOGGLE    2
 
-        int newState;
+        bool newState;
         bool changed;
 
         switch (action) {
         case _NET_WM_STATE_REMOVE:
-            newState = 0;
+            newState = false;
             break;
         case _NET_WM_STATE_ADD:
-            newState = 1;
+            newState = true;
             break;
         case _NET_WM_STATE_TOGGLE:
             newState = !*state;
@@ -630,43 +632,28 @@ void XWaylandManager::handleState(XWaylandShellSurface *shellSurface, xcb_client
 
     bool maximized = shellSurface->isMaximized();
 
-    if (property == Xcb::resources()->atoms->net_wm_state_fullscreen) {
-
-    }
-
-#if 0
     if (property == Xcb::resources()->atoms->net_wm_state_fullscreen &&
-            updateState(action, &shellSurface->m_properties.fullscreen)) {
+            updateState(action, &shellSurface->m_fullscreen)) {
         shellSurface->setNetWmState();
 
-        if (shellSurface->m_properties.fullscreen) {
-            shellSurface->m_properties.savedSize = shellSurface->m_properties.size;
-
-            if (shellSurface->clientWindow())
-                shellSurface->clientWindow()->setFullScreen(true);
-        } else if (shellSurface->m_surfaceInterface) {
-            shellSurface->m_surfaceInterface->setType(QWaylandSurface::Toplevel);
+        if (shellSurface->m_fullscreen) {
+            //shellSurface->m_properties.savedSize = shellSurface->m_properties.size;
+            shellSurface->m_fullscreen = false;
+            Q_EMIT shellSurface->fullscreenChanged();
         }
     } else {
-        if (property == Xcb::resources()->atoms->net_wm_state_maximized_horz &&
-                updateState(action, &shellSurface->m_properties.maximizedHorizontally))
-            shellSurface->setNetWmState();
-        if (property == Xcb::resources()->atoms->net_wm_state_maximized_vert &&
-                updateState(action, &shellSurface->m_properties.maximizedVertically))
+        if ((property == Xcb::resources()->atoms->net_wm_state_maximized_horz ||
+             property == Xcb::resources()->atoms->net_wm_state_maximized_vert) &&
+                updateState(action, &shellSurface->m_maximized))
             shellSurface->setNetWmState();
 
         if (maximized != shellSurface->isMaximized()) {
             if (shellSurface->isMaximized()) {
-                shellSurface->m_properties.savedSize = shellSurface->m_properties.size;
-
-                if (shellSurface->clientWindow())
-                    shellSurface->clientWindow()->maximize();
-            } else if (shellSurface->m_surfaceInterface) {
-                shellSurface->m_surfaceInterface->setType(QWaylandSurface::Toplevel);
+                //shellSurface->m_properties.savedSize = shellSurface->m_properties.size;
+                shellSurface->unmaximize();
             }
         }
     }
-#endif
 }
 
 void XWaylandManager::handleSurfaceId(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)

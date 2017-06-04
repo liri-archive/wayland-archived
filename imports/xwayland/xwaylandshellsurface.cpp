@@ -175,6 +175,11 @@ QString XWaylandShellSurface::title() const
     return m_properties.title;
 }
 
+QPoint XWaylandShellSurface::position() const
+{
+    return m_geometry.topLeft();
+}
+
 QRect XWaylandShellSurface::geometry() const
 {
     return m_geometry;
@@ -212,6 +217,7 @@ void XWaylandShellSurface::setWmState(WmState state)
                         Xcb::resources()->atoms->wm_state,
                         Xcb::resources()->atoms->wm_state,
                         32, 2, property);
+    xcb_flush(Xcb::connection());
 }
 
 void XWaylandShellSurface::setNetWmState()
@@ -232,6 +238,7 @@ void XWaylandShellSurface::setNetWmState()
                         Xcb::resources()->atoms->net_wm_state,
                         XCB_ATOM_ATOM,
                         32, i, property);
+    xcb_flush(Xcb::connection());
 }
 
 void XWaylandShellSurface::setWorkspace(int workspace)
@@ -248,6 +255,7 @@ void XWaylandShellSurface::setWorkspace(int workspace)
         xcb_delete_property(Xcb::connection(),
                             m_window, Xcb::resources()->atoms->net_wm_desktop);
     }
+    xcb_flush(Xcb::connection());
 }
 
 void XWaylandShellSurface::dirtyProperties()
@@ -325,6 +333,7 @@ void XWaylandShellSurface::readProperties()
                             atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dnd ||
                             atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dropdown ||
                             atoms[i] == Xcb::resources()->atoms->net_wm_window_type_menu ||
+                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_notification ||
                             atoms[i] == Xcb::resources()->atoms->net_wm_window_type_popup ||
                             atoms[i] == Xcb::resources()->atoms->net_wm_window_type_combo) {
                         m_windowType = Qt::Popup;
@@ -339,37 +348,25 @@ void XWaylandShellSurface::readProperties()
     }
 }
 
-void XWaylandShellSurface::resizeFrame(const QSize &size, quint32 mask, quint32 *values)
-{
-    xcb_configure_window(Xcb::connection(), m_window, mask, values);
-}
-
 QSize XWaylandShellSurface::sizeForResize(const QSizeF &initialSize, const QPointF &delta, ResizeEdge edges)
 {
     return initialSize.toSize();
 }
 
-void XWaylandShellSurface::sendConfigure(const QSize &size)
+void XWaylandShellSurface::sendConfigure(const QRect &geometry)
 {
-    m_geometry.setSize(size);
+    m_geometry = geometry;
 
-    xcb_configure_notify_event_t configure_notify;
-    configure_notify.response_type = XCB_CONFIGURE_NOTIFY;
-    configure_notify.pad0 = 0;
-    configure_notify.event = m_window;
-    configure_notify.window = m_window;
-    configure_notify.above_sibling = XCB_WINDOW_NONE;
-    configure_notify.x = m_geometry.topLeft().x();
-    configure_notify.y = m_geometry.topLeft().y();
-    configure_notify.width = m_geometry.size().width();
-    configure_notify.height = m_geometry.size().height();
-    configure_notify.border_width = 0;
-    configure_notify.override_redirect = 0;
-    configure_notify.pad1 = 0;
+    quint32 mask = XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+    quint32 values[4];
 
-    xcb_send_event(Xcb::connection(), 0, m_window,
-                   XCB_EVENT_MASK_STRUCTURE_NOTIFY,
-                   reinterpret_cast<char *>(&configure_notify));
+    values[0] = m_geometry.topLeft().x();
+    values[1] = m_geometry.topLeft().y();
+    values[2] = m_geometry.size().width();
+    values[3] = m_geometry.size().height();
+
+    xcb_configure_window(Xcb::connection(), m_window, mask, values);
+    xcb_flush(Xcb::connection());
 }
 
 void XWaylandShellSurface::moveTo(const QPoint &pos)
@@ -401,12 +398,31 @@ void XWaylandShellSurface::sendPosition(const QPointF &pos)
     xcb_flush(Xcb::connection());
 }
 
+void XWaylandShellSurface::sendResize(const QSizeF &size)
+{
+    if (size.toSize() == m_geometry.size())
+        return;
+
+    quint32 mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+    quint32 values[2];
+
+    values[0] = size.toSize().width();
+    values[1] = size.toSize().height();
+    m_geometry.setSize(size.toSize());
+
+    xcb_configure_window(Xcb::connection(), m_window, mask, values);
+    xcb_flush(Xcb::connection());
+}
+
 void XWaylandShellSurface::maximize(QWaylandOutput *output)
 {
     Q_UNUSED(output);
 
     if (!m_maximized) {
         m_maximized = true;
+        m_savedGeometry = m_geometry;
+        sendConfigure(output->availableGeometry());
+        moveTo(position());
         setNetWmState();
         Q_EMIT maximizedChanged();
     }
@@ -416,6 +432,8 @@ void XWaylandShellSurface::unmaximize()
 {
     if (m_maximized) {
         m_maximized = false;
+        sendConfigure(m_savedGeometry);
+        moveTo(position());
         setNetWmState();
         Q_EMIT maximizedChanged();
     }
@@ -438,6 +456,8 @@ void XWaylandShellSurface::close()
     } else {
         xcb_kill_client(Xcb::connection(), m_window);
     }
+
+    xcb_flush(Xcb::connection());
 }
 
 XWaylandQuickShellIntegration *XWaylandShellSurface::createIntegration(XWaylandQuickShellSurfaceItem *item)
