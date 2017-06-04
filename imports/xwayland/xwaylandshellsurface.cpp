@@ -76,7 +76,6 @@ XWaylandShellSurface::XWaylandShellSurface(QObject *parent)
     , m_surface(nullptr)
     , m_wmState(WithdrawnState)
     , m_workspace(0)
-    , m_activated(false)
     , m_maximized(false)
     , m_fullscreen(false)
 {
@@ -186,11 +185,6 @@ int XWaylandShellSurface::x() const
 int XWaylandShellSurface::y() const
 {
     return m_geometry.top();
-}
-
-bool XWaylandShellSurface::activated() const
-{
-    return m_activated;
 }
 
 bool XWaylandShellSurface::maximized() const

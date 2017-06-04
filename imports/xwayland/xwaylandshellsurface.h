@@ -51,7 +51,6 @@ class XWaylandShellSurface : public QObject
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(int x READ x NOTIFY xChanged)
     Q_PROPERTY(int y READ y NOTIFY yChanged)
-    Q_PROPERTY(bool activated READ activated NOTIFY activatedChanged)
     Q_PROPERTY(bool maximized READ maximized NOTIFY maximizedChanged)
     Q_PROPERTY(bool fullscreen READ fullscreen NOTIFY fullscreenChanged)
 public:
@@ -95,7 +94,6 @@ public:
     int x() const;
     int y() const;
 
-    bool activated() const;
     bool maximized() const;
     bool fullscreen() const;
 
@@ -145,7 +143,6 @@ Q_SIGNALS:
     void unmapped();
     void setPosition(const QPoint &pos);
     void setSize(const QSize &size);
-    void activatedChanged();
     void maximizedChanged();
     void fullscreenChanged();
     void startMove();
@@ -174,7 +171,6 @@ private:
         int deleteWindow;
     } m_properties;
 
-    bool m_activated;
     bool m_maximized;
     bool m_fullscreen;
 
