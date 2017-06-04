@@ -343,7 +343,8 @@ void XWaylandManager::handleMapRequest(xcb_map_request_event_t *event)
     shellSurface->setWmState(XWaylandShellSurface::NormalState);
     shellSurface->setNetWmState();
     shellSurface->setWorkspace(0);
-    shellSurface->map();
+    xcb_map_window(Xcb::connection(), event->window);
+    Q_EMIT shellSurface->mapped();
 }
 
 void XWaylandManager::handleMapNotify(xcb_map_notify_event_t *event)
@@ -370,16 +371,13 @@ void XWaylandManager::handleUnmapNotify(xcb_unmap_notify_event_t *event)
     if (!m_windowsMap.contains(event->window))
         return;
 
-#if 0
-    XWaylandWindow *window = m_windowsMap[event->window];
-    if (m_focusWindow == window)
-        m_focusWindow = nullptr;
-    window->setSurface(nullptr);
-
-    window->setWmState(XWaylandWindow::WithdrawnState);
-    window->setWorkspace(-1);
-    window->unmap();
-#endif
+    XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
+    Q_EMIT shellSurface->unmapped();
+    shellSurface->setSurface(nullptr);
+    shellSurface->setSurfaceId(0);
+    shellSurface->setWmState(XWaylandShellSurface::WithdrawnState);
+    shellSurface->setWorkspace(-1);
+    xcb_unmap_window(Xcb::connection(), event->window);
 }
 
 void XWaylandManager::handleReparentNotify(xcb_reparent_notify_event_t *event)
@@ -401,57 +399,51 @@ void XWaylandManager::handleConfigureRequest(xcb_configure_request_event_t *even
     qCDebug(XWAYLAND_TRACE, "XCB_CONFIGURE_REQUEST (window %d) %d,%d @ %dx%d",
             event->window, event->x, event->y, event->width, event->height);
 
-    if (!m_windowsMap.contains(event->window))
-        return;
-
     XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
-    if (!shellSurface->surface())
-        return;
 
-    if (shellSurface->fullscreen()) {
-        xcb_configure_notify_event_t notify;
-        notify.response_type = XCB_CONFIGURE_NOTIFY;
-        notify.pad0 = 0;
-        notify.event = event->window;
-        notify.window = event->window;
-        notify.above_sibling = XCB_WINDOW_NONE;
-        notify.x = event->x;
-        notify.y = event->y;
-        notify.width = event->width;
-        notify.height = event->height;
-        notify.border_width = 0;
-        notify.override_redirect = 0;
-        notify.pad1 = 0;
-        xcb_send_event(Xcb::connection(), 0, event->window, XCB_EVENT_MASK_STRUCTURE_NOTIFY, (char *) &notify);
-        return;
+    quint32 values[6];
+    int i = -1;
+
+    if (event->value_mask & XCB_CONFIG_WINDOW_X) {
+        values[++i] = event->x;
+        if (shellSurface) {
+            QPoint pos = shellSurface->geometry().topLeft();
+            shellSurface->setPosition(QPoint(event->x, pos.y()));
+        }
+    }
+    if (event->value_mask & XCB_CONFIG_WINDOW_Y) {
+        values[++i] = event->y;
+        if (shellSurface) {
+            QPoint pos = shellSurface->geometry().topLeft();
+            shellSurface->setPosition(QPoint(pos.x(), event->y));
+        }
     }
 
-    int x = 0, y = 0;
-    QSize size = shellSurface->surface()->size();
-
-    if (event->value_mask & XCB_CONFIG_WINDOW_WIDTH)
-        size.setWidth(event->width);
-    if (event->value_mask & XCB_CONFIG_WINDOW_HEIGHT)
-        size.setHeight(event->height);
-
-    quint32 i = 0, values[16];
-    values[i++] = x;
-    values[i++] = y;
-    values[i++] = size.width();
-    values[i++] = size.height();
-    values[i++] = 0;
-    quint32 mask = XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y |
-            XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT |
-            XCB_CONFIG_WINDOW_BORDER_WIDTH;
-    if (event->value_mask & XCB_CONFIG_WINDOW_SIBLING) {
-        values[i++] = event->sibling;
-        mask |= XCB_CONFIG_WINDOW_SIBLING;
+    if (event->value_mask & XCB_CONFIG_WINDOW_WIDTH) {
+        values[++i] = event->width;
+        if (shellSurface) {
+            QSize size = shellSurface->geometry().size();
+            shellSurface->setSize(QSize(event->width, size.height()));
+        }
     }
-    if (event->value_mask & XCB_CONFIG_WINDOW_STACK_MODE) {
-        values[i++] = event->stack_mode;
-        mask |= XCB_CONFIG_WINDOW_STACK_MODE;
+    if (event->value_mask & XCB_CONFIG_WINDOW_HEIGHT) {
+        values[++i] = event->height;
+        if (shellSurface) {
+            QSize size = shellSurface->geometry().size();
+            shellSurface->setSize(QSize(size.width(), event->height));
+        }
     }
-    xcb_configure_window(Xcb::connection(), event->window, mask, values);
+
+    if (event->value_mask & XCB_CONFIG_WINDOW_SIBLING)
+        values[++i] = event->sibling;
+
+    if (event->value_mask & XCB_CONFIG_WINDOW_STACK_MODE)
+        values[++i] = event->stack_mode;
+
+    if (i >= 0) {
+        xcb_configure_window(Xcb::connection(), event->window, event->value_mask, values);
+        xcb_flush(Xcb::connection());
+    }
 }
 
 void XWaylandManager::handleConfigureNotify(xcb_configure_notify_event_t *event)
@@ -603,9 +595,8 @@ void XWaylandManager::handleMoveResize(XWaylandShellSurface *window, xcb_client_
     }
 }
 
-void XWaylandManager::handleState(XWaylandShellSurface *window, xcb_client_message_event_t *event)
+void XWaylandManager::handleState(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)
 {
-#if 0
     auto updateState = [](int action, int *state) {
 #define _NET_WM_STATE_REMOVE    0
 #define _NET_WM_STATE_ADD       1
@@ -637,36 +628,41 @@ void XWaylandManager::handleState(XWaylandShellSurface *window, xcb_client_messa
     quint32 action = event->data.data32[0];
     quint32 property = event->data.data32[1];
 
-    bool maximized = window->isMaximized();
+    bool maximized = shellSurface->isMaximized();
 
+    if (property == Xcb::resources()->atoms->net_wm_state_fullscreen) {
+
+    }
+
+#if 0
     if (property == Xcb::resources()->atoms->net_wm_state_fullscreen &&
-            updateState(action, &window->m_properties.fullscreen)) {
-        window->setNetWmState();
+            updateState(action, &shellSurface->m_properties.fullscreen)) {
+        shellSurface->setNetWmState();
 
-        if (window->m_properties.fullscreen) {
-            window->m_properties.savedSize = window->m_properties.size;
+        if (shellSurface->m_properties.fullscreen) {
+            shellSurface->m_properties.savedSize = shellSurface->m_properties.size;
 
-            if (window->clientWindow())
-                window->clientWindow()->setFullScreen(true);
-        } else if (window->m_surfaceInterface) {
-            window->m_surfaceInterface->setType(QWaylandSurface::Toplevel);
+            if (shellSurface->clientWindow())
+                shellSurface->clientWindow()->setFullScreen(true);
+        } else if (shellSurface->m_surfaceInterface) {
+            shellSurface->m_surfaceInterface->setType(QWaylandSurface::Toplevel);
         }
     } else {
         if (property == Xcb::resources()->atoms->net_wm_state_maximized_horz &&
-                updateState(action, &window->m_properties.maximizedHorizontally))
-            window->setNetWmState();
+                updateState(action, &shellSurface->m_properties.maximizedHorizontally))
+            shellSurface->setNetWmState();
         if (property == Xcb::resources()->atoms->net_wm_state_maximized_vert &&
-                updateState(action, &window->m_properties.maximizedVertically))
-            window->setNetWmState();
+                updateState(action, &shellSurface->m_properties.maximizedVertically))
+            shellSurface->setNetWmState();
 
-        if (maximized != window->isMaximized()) {
-            if (window->isMaximized()) {
-                window->m_properties.savedSize = window->m_properties.size;
+        if (maximized != shellSurface->isMaximized()) {
+            if (shellSurface->isMaximized()) {
+                shellSurface->m_properties.savedSize = shellSurface->m_properties.size;
 
-                if (window->clientWindow())
-                    window->clientWindow()->maximize();
-            } else if (window->m_surfaceInterface) {
-                window->m_surfaceInterface->setType(QWaylandSurface::Toplevel);
+                if (shellSurface->clientWindow())
+                    shellSurface->clientWindow()->maximize();
+            } else if (shellSurface->m_surfaceInterface) {
+                shellSurface->m_surfaceInterface->setType(QWaylandSurface::Toplevel);
             }
         }
     }

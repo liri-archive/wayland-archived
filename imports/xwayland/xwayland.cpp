@@ -165,7 +165,6 @@ void XWayland::handleSurfaceCreated(QWaylandSurface *surface)
     Q_FOREACH (XWaylandShellSurface *window, m_manager->m_unpairedWindows) {
         quint32 id = wl_resource_get_id(QWaylandSurfacePrivate::get(surface)->resource()->handle);
 
-        qCDebug(XWAYLAND, "Unpaired surface %d vs %d", window->surfaceId(), id);
         if (window->surfaceId() == id) {
             window->setSurfaceId(0);
             window->setSurface(surface);

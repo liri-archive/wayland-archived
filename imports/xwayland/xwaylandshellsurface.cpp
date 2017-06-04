@@ -148,7 +148,6 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
                    this, &XWaylandShellSurface::handleSurfaceDestroyed);
 
     m_surface = surface;
-    qCDebug(XWAYLAND_TRACE) << "Assign surface" << surface << "to shell surface for" << m_window;
 
     if (m_surface) {
         connect(m_surface, &QWaylandSurface::surfaceDestroyed,
@@ -157,8 +156,12 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
 
         Q_EMIT m_wm->shellSurfaceAdded(this);
         Q_EMIT surfaceChanged();
+
+        qCDebug(XWAYLAND) << "Assign surface" << surface << "to shell surface for" << m_window;
     } else {
         m_wm->removeWindow(m_window);
+
+        qCDebug(XWAYLAND) << "Unassign surface to shell surface for" << m_window;
     }
 }
 
@@ -187,12 +190,12 @@ int XWaylandShellSurface::y() const
     return m_geometry.top();
 }
 
-bool XWaylandShellSurface::maximized() const
+bool XWaylandShellSurface::isMaximized() const
 {
     return m_maximized;
 }
 
-bool XWaylandShellSurface::fullscreen() const
+bool XWaylandShellSurface::isFullscreen() const
 {
     return m_fullscreen;
 }
@@ -299,12 +302,12 @@ void XWaylandShellSurface::readProperties()
 
         switch (atom) {
         case XCB_ATOM_WM_CLASS:
-            m_properties.appId = QString::fromUtf8((char *)p);
+            m_properties.appId = QString::fromUtf8(strdup(reinterpret_cast<char *>(p)));
             free(p);
             Q_EMIT appIdChanged();
             break;
         case XCB_ATOM_WM_NAME:
-            m_properties.title = QString::fromUtf8((char *)p);
+            m_properties.title = QString::fromUtf8(strdup(reinterpret_cast<char *>(p)));
             free(p);
             Q_EMIT titleChanged();
             break;
@@ -318,11 +321,12 @@ void XWaylandShellSurface::readProperties()
                 xcb_atom_t *atoms = static_cast<xcb_atom_t *>(p);
                 for (quint32 i = 0; i < reply->value_len; ++i) {
                     if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_tooltip ||
-                            Xcb::resources()->atoms->net_wm_window_type_utility ||
-                            Xcb::resources()->atoms->net_wm_window_type_dnd ||
-                            Xcb::resources()->atoms->net_wm_window_type_dropdown ||
-                            Xcb::resources()->atoms->net_wm_window_type_popup ||
-                            Xcb::resources()->atoms->net_wm_window_type_combo) {
+                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_utility ||
+                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dnd ||
+                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dropdown ||
+                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_menu ||
+                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_popup ||
+                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_combo) {
                         m_windowType = Qt::Popup;
                         Q_EMIT windowTypeChanged();
                     }
@@ -366,17 +370,6 @@ void XWaylandShellSurface::sendConfigure(const QSize &size)
     xcb_send_event(Xcb::connection(), 0, m_window,
                    XCB_EVENT_MASK_STRUCTURE_NOTIFY,
                    reinterpret_cast<char *>(&configure_notify));
-}
-
-void XWaylandShellSurface::map()
-{
-    xcb_map_window(Xcb::connection(), m_window);
-    Q_EMIT mapped();
-}
-
-void XWaylandShellSurface::unmap()
-{
-    Q_EMIT unmapped();
 }
 
 void XWaylandShellSurface::moveTo(const QPoint &pos)

@@ -52,8 +52,8 @@ class XWaylandShellSurface : public QObject
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(int x READ x NOTIFY xChanged)
     Q_PROPERTY(int y READ y NOTIFY yChanged)
-    Q_PROPERTY(bool maximized READ maximized NOTIFY maximizedChanged)
-    Q_PROPERTY(bool fullscreen READ fullscreen NOTIFY fullscreenChanged)
+    Q_PROPERTY(bool maximized READ isMaximized NOTIFY maximizedChanged)
+    Q_PROPERTY(bool fullscreen READ isFullscreen NOTIFY fullscreenChanged)
 public:
     enum ResizeEdge {
         NoneEdge        =  0,
@@ -95,8 +95,8 @@ public:
     int x() const;
     int y() const;
 
-    bool maximized() const;
-    bool fullscreen() const;
+    bool isMaximized() const;
+    bool isFullscreen() const;
 
     inline WmState wmState() const {
         return m_wmState;
@@ -120,9 +120,6 @@ public:
 
     QSize sizeForResize(const QSizeF &initialSize, const QPointF &delta, ResizeEdge edges);
     void sendConfigure(const QSize &size);
-
-    void map();
-    void unmap();
 
     void moveTo(const QPoint &pos);
     void resize(const QSize &size);
