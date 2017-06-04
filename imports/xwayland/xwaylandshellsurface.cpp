@@ -365,7 +365,7 @@ void XWaylandShellSurface::sendConfigure(const QSize &size)
 
     xcb_send_event(Xcb::connection(), 0, m_window,
                    XCB_EVENT_MASK_STRUCTURE_NOTIFY,
-                   (char *)&configure_notify);
+                   reinterpret_cast<char *>(&configure_notify));
 }
 
 void XWaylandShellSurface::map()
@@ -432,19 +432,19 @@ void *XWaylandShellSurface::decodeProperty(xcb_atom_t type, xcb_get_property_rep
     switch (type) {
     case XCB_ATOM_WM_CLIENT_MACHINE:
     case XCB_ATOM_STRING: {
-        char *p = strndup((char *)xcb_get_property_value(reply),
+        char *p = strndup(reinterpret_cast<char *>(xcb_get_property_value(reply)),
                           xcb_get_property_value_length(reply));
         return p;
     }
     case XCB_ATOM_WINDOW: {
-        xcb_window_t *xid = (xcb_window_t *)xcb_get_property_value(reply);
+        xcb_window_t *xid = reinterpret_cast<xcb_window_t *>(xcb_get_property_value(reply));
         return m_wm->shellSurfaceFromId(*xid);
     }
     case XCB_ATOM_CARDINAL:
     case XCB_ATOM_ATOM:
         return xcb_get_property_value(reply);
     case TYPE_WM_PROTOCOLS: {
-        xcb_atom_t *value = (xcb_atom_t *)xcb_get_property_value(reply);
+        xcb_atom_t *value = reinterpret_cast<xcb_atom_t *>(xcb_get_property_value(reply));
         for (uint32_t i = 0; i < reply->value_len; i++)
             if (value[i] == Xcb::resources()->atoms->wm_delete_window)
                 m_properties.deleteWindow = 1;
@@ -456,7 +456,7 @@ void *XWaylandShellSurface::decodeProperty(xcb_atom_t type, xcb_get_property_rep
                sizeof m_sizeHints);
         break;
     case TYPE_NET_WM_STATE: {
-        xcb_atom_t *value = (xcb_atom_t *)xcb_get_property_value(reply);
+        xcb_atom_t *value = reinterpret_cast<xcb_atom_t *>(xcb_get_property_value(reply));
         uint32_t i;
         for (i = 0; i < reply->value_len; i++) {
             if (value[i] == Xcb::resources()->atoms->net_wm_state_fullscreen && !m_fullscreen) {

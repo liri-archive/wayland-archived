@@ -531,7 +531,7 @@ bool XWaylandManager::handleSelection(xcb_generic_event_t *event)
 {
     switch (event->response_type & ~0x80) {
     case XCB_SELECTION_NOTIFY:
-        handleSelectionNotify((xcb_selection_notify_event_t *)event);
+        handleSelectionNotify(reinterpret_cast<xcb_selection_notify_event_t *>(event));
         return true;
         /*
     case XCB_PROPERTY_NOTIFY:
@@ -706,48 +706,48 @@ void XWaylandManager::wmEvents()
         switch (type) {
         case XCB_BUTTON_PRESS:
         case XCB_BUTTON_RELEASE:
-            handleButton((xcb_button_press_event_t *)event);
+            handleButton(reinterpret_cast<xcb_button_press_event_t *>(event));
             break;
         case XCB_ENTER_NOTIFY:
-            handleEnter((xcb_enter_notify_event_t *)event);
+            handleEnter(reinterpret_cast<xcb_enter_notify_event_t *>(event));
             break;
         case XCB_LEAVE_NOTIFY:
-            handleLeave((xcb_leave_notify_event_t *)event);
+            handleLeave(reinterpret_cast<xcb_leave_notify_event_t *>(event));
             break;
         case XCB_MOTION_NOTIFY:
-            handleMotion((xcb_motion_notify_event_t *)event);
+            handleMotion(reinterpret_cast<xcb_motion_notify_event_t *>(event));
             break;
         case XCB_CREATE_NOTIFY:
-            handleCreateNotify((xcb_create_notify_event_t *)event);
+            handleCreateNotify(reinterpret_cast<xcb_create_notify_event_t *>(event));
             break;
         case XCB_MAP_REQUEST:
-            handleMapRequest((xcb_map_request_event_t *)event);
+            handleMapRequest(reinterpret_cast<xcb_map_request_event_t *>(event));
             break;
         case XCB_MAP_NOTIFY:
-            handleMapNotify((xcb_map_notify_event_t *)event);
+            handleMapNotify(reinterpret_cast<xcb_map_notify_event_t *>(event));
             break;
         case XCB_UNMAP_NOTIFY:
-            handleUnmapNotify((xcb_unmap_notify_event_t *)event);
+            handleUnmapNotify(reinterpret_cast<xcb_unmap_notify_event_t *>(event));
             break;
         case XCB_REPARENT_NOTIFY:
-            handleReparentNotify((xcb_reparent_notify_event_t *)event);
+            handleReparentNotify(reinterpret_cast<xcb_reparent_notify_event_t *>(event));
             break;
         case XCB_CONFIGURE_REQUEST:
-            handleConfigureRequest((xcb_configure_request_event_t *)event);
+            handleConfigureRequest(reinterpret_cast<xcb_configure_request_event_t *>(event));
             break;
         case XCB_CONFIGURE_NOTIFY:
-            handleConfigureNotify((xcb_configure_notify_event_t *)event);
+            handleConfigureNotify(reinterpret_cast<xcb_configure_notify_event_t *>(event));
             break;
         case XCB_DESTROY_NOTIFY:
-            handleDestroyNotify((xcb_destroy_notify_event_t *)event);
+            handleDestroyNotify(reinterpret_cast<xcb_destroy_notify_event_t *>(event));
             break;
         case XCB_MAPPING_NOTIFY:
             break;
         case XCB_PROPERTY_NOTIFY:
-            handlePropertyNotify((xcb_property_notify_event_t *)event);
+            handlePropertyNotify(reinterpret_cast<xcb_property_notify_event_t *>(event));
             break;
         case XCB_CLIENT_MESSAGE:
-            handleClientMessage((xcb_client_message_event_t *)event);
+            handleClientMessage(reinterpret_cast<xcb_client_message_event_t *>(event));
             break;
         default:
             break;
