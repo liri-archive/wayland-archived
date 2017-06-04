@@ -386,6 +386,21 @@ void XWaylandShellSurface::resize(const QSize &size)
     Q_EMIT setSize(size);
 }
 
+void XWaylandShellSurface::sendPosition(const QPointF &pos)
+{
+    if (pos.toPoint() == m_geometry.topLeft())
+        return;
+
+    quint32 mask = XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
+    quint32 values[2];
+    values[0] = pos.toPoint().x();
+    values[1] = pos.toPoint().y();
+    m_geometry.setTopLeft(pos.toPoint());
+
+    xcb_configure_window(Xcb::connection(), m_window, mask, values);
+    xcb_flush(Xcb::connection());
+}
+
 void XWaylandShellSurface::maximize(QWaylandOutput *output)
 {
     Q_UNUSED(output);

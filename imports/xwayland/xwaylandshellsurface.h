@@ -124,6 +124,8 @@ public:
     void moveTo(const QPoint &pos);
     void resize(const QSize &size);
 
+    Q_INVOKABLE void sendPosition(const QPointF &pos);
+
     Q_INVOKABLE void maximize(QWaylandOutput *output);
     Q_INVOKABLE void unmaximize();
 
