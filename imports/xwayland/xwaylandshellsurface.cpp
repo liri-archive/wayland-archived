@@ -165,6 +165,11 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
     }
 }
 
+XWaylandShellSurface *XWaylandShellSurface::parentSurface() const
+{
+    return m_transientFor;
+}
+
 QString XWaylandShellSurface::appId() const
 {
     return m_properties.appId;
@@ -323,6 +328,7 @@ void XWaylandShellSurface::readProperties()
             m_transientFor = static_cast<XWaylandShellSurface *>(p);
             m_windowType = Qt::SubWindow;
             Q_EMIT windowTypeChanged();
+            Q_EMIT parentSurfaceChanged();
             break;
         default:
             if (atom == Xcb::resources()->atoms->net_wm_window_type) {

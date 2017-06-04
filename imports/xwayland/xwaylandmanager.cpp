@@ -387,13 +387,15 @@ void XWaylandManager::handleReparentNotify(xcb_reparent_notify_event_t *event)
     qCDebug(XWAYLAND_TRACE, "XCB_REPARENT_NOTIFY (window %d, parent %d, event %d)",
             event->window, event->parent, event->event);
 
-#if 0
-    if (event->parent == Xcb::rootWindow())
-        new XWaylandWindow(event->window, QRect(QPoint(event->x, event->y), QSize(10, 10)),
-                           event->override_redirect != 0, this);
-    else if (!Xcb::isOurResource(event->parent))
-        m_windowsMap.take(event->window)->deleteLater();
-#endif
+    if (event->parent == Xcb::rootWindow()) {
+        Q_EMIT shellSurfaceRequested(event->window,
+                                     QRect(QPoint(event->x, event->y), QSize(10, 10)),
+                                     event->override_redirect != 0);
+    } else if (!Xcb::isOurResource(event->parent)) {
+        if (!m_windowsMap.contains(event->parent))
+            return;
+        m_windowsMap.take(event->parent)->deleteLater();
+    }
 }
 
 void XWaylandManager::handleConfigureRequest(xcb_configure_request_event_t *event)

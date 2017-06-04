@@ -48,6 +48,7 @@ class XWaylandShellSurface : public QObject
     Q_OBJECT
     Q_PROPERTY(Qt::WindowType windowType READ windowType NOTIFY windowTypeChanged)
     Q_PROPERTY(QWaylandSurface *surface READ surface NOTIFY surfaceChanged)
+    Q_PROPERTY(XWaylandShellSurface *parentSurface READ parentSurface NOTIFY parentSurfaceChanged)
     Q_PROPERTY(QString appId READ appId NOTIFY appIdChanged)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(int x READ x NOTIFY xChanged)
@@ -87,6 +88,8 @@ public:
 
     QWaylandSurface *surface() const;
     void setSurface(QWaylandSurface *surface);
+
+    XWaylandShellSurface *parentSurface() const;
 
     QString appId() const;
     QString title() const;
@@ -141,6 +144,7 @@ Q_SIGNALS:
     void windowTypeChanged();
     void surfaceChanged();
     void surfaceDestroyed();
+    void parentSurfaceChanged();
     void appIdChanged();
     void titleChanged();
     void xChanged();
