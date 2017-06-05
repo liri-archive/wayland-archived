@@ -165,6 +165,7 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
 
         Q_EMIT m_wm->shellSurfaceAdded(this);
         Q_EMIT surfaceChanged();
+        Q_EMIT mapped();
 
         qCDebug(XWAYLAND) << "Assign surface" << surface << "to shell surface for" << m_window;
 

@@ -388,7 +388,8 @@ void XWaylandManager::handleMapRequest(xcb_map_request_event_t *event)
     shellSurface->setWorkspace(0);
     xcb_map_window(Xcb::connection(), event->window);
     xcb_flush(Xcb::connection());
-    Q_EMIT shellSurface->mapped();
+    if (shellSurface->surface())
+        Q_EMIT shellSurface->mapped();
 }
 
 void XWaylandManager::handleMapNotify(xcb_map_notify_event_t *event)
