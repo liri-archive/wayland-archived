@@ -46,6 +46,10 @@ XWaylandQuickShellIntegration::XWaylandQuickShellIntegration(XWaylandQuickShellS
             this, &XWaylandQuickShellIntegration::handleStartMove);
     connect(m_shellSurface, &XWaylandShellSurface::startResize,
             this, &XWaylandQuickShellIntegration::handleStartResize);
+    connect(m_shellSurface, &XWaylandShellSurface::mapped,
+            this, &XWaylandQuickShellIntegration::handleMapped);
+    connect(m_shellSurface, &XWaylandShellSurface::activatedChanged,
+            this, &XWaylandQuickShellIntegration::handleActivatedChanged);
 }
 
 bool XWaylandQuickShellIntegration::mouseMoveEvent(QMouseEvent *event)
@@ -105,6 +109,18 @@ void XWaylandQuickShellIntegration::handleStartResize(XWaylandShellSurface::Resi
     float scaleFactor = m_item->view()->output()->scaleFactor();
     resizeState.initialSize = m_shellSurface->surface()->size() / scaleFactor;
     resizeState.initialized = false;
+}
+
+void XWaylandQuickShellIntegration::handleMapped()
+{
+    if (m_shellSurface->windowType() != Qt::Popup)
+        m_item->takeFocus();
+}
+
+void XWaylandQuickShellIntegration::handleActivatedChanged()
+{
+    if (m_shellSurface->windowType() != Qt::Popup && m_shellSurface->isActivated())
+        m_item->raise();
 }
 
 #include "moc_xwaylandquickshellintegration.cpp"

@@ -29,6 +29,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QMap>
+#include <QtWaylandCompositor/QWaylandCompositor>
 
 #include <xcb/xcb.h>
 
@@ -58,15 +59,21 @@ public:
         CursorLeftPointer
     };
 
-    XWaylandManager(XWaylandServer *server, QObject *parent = nullptr);
+    XWaylandManager(XWaylandServer *server, QWaylandCompositor *compositor, QObject *parent = nullptr);
     ~XWaylandManager();
+
+    QWaylandCompositor *compositor() const;
 
     void start(int fd);
 
     void addWindow(xcb_window_t id, XWaylandShellSurface *shellSurface);
     void removeWindow(xcb_window_t id);
 
+    void setActiveWindow(xcb_window_t window);
+    void setFocusWindow(xcb_window_t window);
+
     XWaylandShellSurface *shellSurfaceFromId(xcb_window_t id);
+    XWaylandShellSurface *shellSurfaceFromSurface(QWaylandSurface *surface);
 
 Q_SIGNALS:
     void shellSurfaceRequested(quint32 window, const QRect &geometry, bool overrideRedirect);
@@ -86,6 +93,8 @@ private:
 
     Xcb::Window *m_wmWindow;
 
+    QWaylandCompositor *m_compositor;
+
     QMap<xcb_window_t, XWaylandShellSurface *> m_windowsMap;
     QList<XWaylandShellSurface *> m_unpairedWindows;
     XWaylandShellSurface *m_focusWindow;
@@ -95,7 +104,6 @@ private:
     void initializeDragAndDrop();
 
     void setCursor(xcb_window_t window, const CursorType &cursor);
-    void setActiveWindow(xcb_window_t window);
 
     void createWindowManager();
 

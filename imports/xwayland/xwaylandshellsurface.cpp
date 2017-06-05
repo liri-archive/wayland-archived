@@ -80,6 +80,7 @@ XWaylandShellSurface::XWaylandShellSurface(QObject *parent)
     , m_surface(nullptr)
     , m_wmState(WithdrawnState)
     , m_workspace(0)
+    , m_activated(false)
     , m_decorate(true)
     , m_maximized(false)
     , m_fullscreen(false)
@@ -148,9 +149,12 @@ QWaylandSurface *XWaylandShellSurface::surface() const
 
 void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
 {
-    if (m_surface)
+    if (m_surface) {
+        disconnect(m_wm->compositor(), &QWaylandCompositor::defaultSeatChanged,
+                this, &XWaylandShellSurface::handleSeatChanged);
         disconnect(m_surface, &QWaylandSurface::surfaceDestroyed,
                    this, &XWaylandShellSurface::handleSurfaceDestroyed);
+    }
 
     m_surface = surface;
 
@@ -163,6 +167,12 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
         Q_EMIT surfaceChanged();
 
         qCDebug(XWAYLAND) << "Assign surface" << surface << "to shell surface for" << m_window;
+
+        handleSeatChanged(m_wm->compositor()->defaultSeat(), nullptr);
+        connect(m_wm->compositor(), &QWaylandCompositor::defaultSeatChanged,
+                this, &XWaylandShellSurface::handleSeatChanged);
+
+        Q_EMIT mapped();
     } else {
         m_wm->removeWindow(m_window);
 
@@ -173,6 +183,11 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
 XWaylandShellSurface *XWaylandShellSurface::parentSurface() const
 {
     return m_transientFor;
+}
+
+bool XWaylandShellSurface::isActivated() const
+{
+    return m_activated;
 }
 
 QString XWaylandShellSurface::appId() const
@@ -554,6 +569,51 @@ void *XWaylandShellSurface::decodeProperty(xcb_atom_t type, xcb_get_property_rep
     }
 
     return nullptr;
+}
+
+void XWaylandShellSurface::handleSeatChanged(QWaylandSeat *newSeat, QWaylandSeat *oldSeat)
+{
+    if (oldSeat)
+        disconnect(oldSeat, &QWaylandSeat::keyboardFocusChanged,
+                   this, &XWaylandShellSurface::handleFocusChanged);
+
+    if (newSeat)
+        connect(newSeat, &QWaylandSeat::keyboardFocusChanged,
+                this, &XWaylandShellSurface::handleFocusChanged);
+}
+
+void XWaylandShellSurface::handleFocusChanged(QWaylandSurface *newSurface, QWaylandSurface *oldSurface)
+{
+    XWaylandShellSurface *newShellSurface = m_wm->shellSurfaceFromSurface(newSurface);
+    XWaylandShellSurface *oldShellSurface = m_wm->shellSurfaceFromSurface(oldSurface);
+
+    if (newShellSurface)
+        newShellSurface->handleFocusReceived();
+
+    if (oldShellSurface)
+        oldShellSurface->handleFocusLost();
+}
+
+void XWaylandShellSurface::handleFocusReceived()
+{
+    if (!surface())
+        return;
+
+    m_wm->setActiveWindow(m_window);
+    m_wm->setFocusWindow(m_window);
+    xcb_flush(Xcb::connection());
+
+    m_activated = true;
+    Q_EMIT activatedChanged();
+}
+
+void XWaylandShellSurface::handleFocusLost()
+{
+    if (!surface())
+        return;
+
+    m_activated = false;
+    Q_EMIT activatedChanged();
 }
 
 void XWaylandShellSurface::handleSurfaceDestroyed()

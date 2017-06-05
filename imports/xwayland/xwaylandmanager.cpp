@@ -68,12 +68,13 @@
 #include <xcb/composite.h>
 #include <wayland-server.h>
 
-XWaylandManager::XWaylandManager(XWaylandServer *server, QObject *parent)
+XWaylandManager::XWaylandManager(XWaylandServer *server, QWaylandCompositor *compositor, QObject *parent)
     : QObject(parent)
     , m_server(server)
     , m_cursors(nullptr)
     , m_lastCursor(CursorUnset)
     , m_wmWindow(nullptr)
+    , m_compositor(compositor)
     , m_focusWindow(nullptr)
 {
 }
@@ -83,6 +84,11 @@ XWaylandManager::~XWaylandManager()
     Xcb::Cursors::destroyCursors(m_cursors);
     delete m_wmWindow;
     Xcb::closeConnection();
+}
+
+QWaylandCompositor *XWaylandManager::compositor() const
+{
+    return m_compositor;
 }
 
 void XWaylandManager::start(int fd)
@@ -167,9 +173,53 @@ void XWaylandManager::removeWindow(xcb_window_t id)
     m_windowsMap.remove(id);
 }
 
+void XWaylandManager::setActiveWindow(xcb_window_t window)
+{
+    xcb_change_property(Xcb::connection(), XCB_PROP_MODE_REPLACE,
+                        Xcb::rootWindow(), Xcb::resources()->atoms->net_active_window,
+                        Xcb::resources()->atoms->window, 32, 1, &window);
+}
+
+void XWaylandManager::setFocusWindow(xcb_window_t window)
+{
+    if (window == XCB_WINDOW_NONE) {
+        xcb_set_input_focus(Xcb::connection(), XCB_INPUT_FOCUS_POINTER_ROOT,
+                            XCB_NONE, XCB_TIME_CURRENT_TIME);
+    } else {
+        xcb_client_message_event_t msg;
+        msg.response_type = XCB_CLIENT_MESSAGE;
+        msg.format = 32;
+        msg.window = window;
+        msg.type = Xcb::resources()->atoms->wm_protocols;
+        msg.data.data32[0] = Xcb::resources()->atoms->wm_take_focus;
+        msg.data.data32[1] = XCB_TIME_CURRENT_TIME;
+
+        xcb_send_event(Xcb::connection(), 0, window, XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT,
+                       reinterpret_cast<char *>(&msg));
+        xcb_set_input_focus(Xcb::connection(), XCB_INPUT_FOCUS_POINTER_ROOT,
+                            window, XCB_TIME_CURRENT_TIME);
+
+        quint32 values[1];
+        values[0] = XCB_STACK_MODE_ABOVE;
+        xcb_configure_window(Xcb::connection(), window,
+                             XCB_CONFIG_WINDOW_STACK_MODE, values);
+    }
+}
+
 XWaylandShellSurface *XWaylandManager::shellSurfaceFromId(xcb_window_t id)
 {
     return m_windowsMap.value(id, nullptr);
+}
+
+XWaylandShellSurface *XWaylandManager::shellSurfaceFromSurface(QWaylandSurface *surface)
+{
+    for (auto item : m_windowsMap.keys()) {
+        auto shellSurface = m_windowsMap.value(item);
+        if (shellSurface->surface() == surface)
+            return shellSurface;
+    }
+
+    return nullptr;
 }
 
 void XWaylandManager::setupVisualAndColormap()
@@ -243,13 +293,6 @@ void XWaylandManager::setCursor(xcb_window_t window, const CursorType &cursor)
     xcb_change_window_attributes(Xcb::connection(), window,
                                  XCB_CW_CURSOR, &cursorValueList);
     xcb_flush(Xcb::connection());
-}
-
-void XWaylandManager::setActiveWindow(xcb_window_t window)
-{
-    xcb_change_property(Xcb::connection(), XCB_PROP_MODE_REPLACE,
-                        Xcb::rootWindow(), Xcb::resources()->atoms->net_active_window,
-                        Xcb::resources()->atoms->window, 32, 1, &window);
 }
 
 void XWaylandManager::createWindowManager()

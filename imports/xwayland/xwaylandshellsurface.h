@@ -31,6 +31,7 @@
 #include <QtCore/QPointer>
 
 #include <QtWaylandCompositor/QWaylandOutput>
+#include <QtWaylandCompositor/QWaylandSeat>
 #include <QtWaylandCompositor/QWaylandSurface>
 
 #include <xcb/xcb.h>
@@ -49,6 +50,7 @@ class XWaylandShellSurface : public QObject
     Q_PROPERTY(Qt::WindowType windowType READ windowType NOTIFY windowTypeChanged)
     Q_PROPERTY(QWaylandSurface *surface READ surface NOTIFY surfaceChanged)
     Q_PROPERTY(XWaylandShellSurface *parentSurface READ parentSurface NOTIFY parentSurfaceChanged)
+    Q_PROPERTY(bool activated READ isActivated NOTIFY activatedChanged)
     Q_PROPERTY(QString appId READ appId NOTIFY appIdChanged)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(bool decorate READ decorate NOTIFY decorateChanged)
@@ -91,6 +93,8 @@ public:
     void setSurface(QWaylandSurface *surface);
 
     XWaylandShellSurface *parentSurface() const;
+
+    bool isActivated() const;
 
     QString appId() const;
     QString title() const;
@@ -148,6 +152,7 @@ Q_SIGNALS:
     void surfaceChanged();
     void surfaceDestroyed();
     void parentSurfaceChanged();
+    void activatedChanged();
     void appIdChanged();
     void titleChanged();
     void decorateChanged();
@@ -186,6 +191,7 @@ private:
         int deleteWindow;
     } m_properties;
 
+    bool m_activated;
     bool m_decorate;
     bool m_maximized;
     bool m_fullscreen;
@@ -195,6 +201,10 @@ private:
     friend class XWaylandManager;
 
 private Q_SLOTS:
+    void handleSeatChanged(QWaylandSeat *newSeat, QWaylandSeat *oldSeat);
+    void handleFocusChanged(QWaylandSurface *newSurface, QWaylandSurface *oldSurface);
+    void handleFocusReceived();
+    void handleFocusLost();
     void handleSurfaceDestroyed();
 };
 
