@@ -67,8 +67,7 @@ void LiriXWaylandPluging::registerTypes(const char *uri)
     Q_ASSERT(QLatin1String(uri) == QLatin1String("Liri.XWayland"));
 
     qmlRegisterType<XWaylandQuickExtensionChildren>(uri, 1, 0, "XWayland");
-    qmlRegisterUncreatableType<XWaylandManager>(uri, 1, 0, "XWaylandManager",
-                                                QLatin1String("Cannot instantiate XWaylandManager"));
+    qmlRegisterType<XWaylandManager>(uri, 1, 0, "XWaylandManager");
     qmlRegisterUncreatableType<XWaylandShellSurface>(uri, 1, 0, "XWaylandShellSurfaceBase",
                                                      QLatin1String("Cannot instantiate XWaylandShellSurfaceBase"));
     qmlRegisterType<XWaylandShellSurfaceQuickExtensionChildren>(uri, 1, 0, "XWaylandShellSurface");

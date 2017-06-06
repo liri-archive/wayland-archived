@@ -86,6 +86,17 @@ XWaylandManager *XWayland::manager() const
     return m_manager;
 }
 
+void XWayland::setManager(XWaylandManager *manager)
+{
+    if (m_manager) {
+        qCWarning(XWAYLAND, "Cannot move XWayland to another window manager");
+        return;
+    }
+
+    m_manager = manager;
+    Q_EMIT managerChanged();
+}
+
 bool XWayland::startServer()
 {
     if (!m_enabled) {
@@ -139,14 +150,8 @@ void XWayland::initialize()
             this, &XWayland::handleServerStarted);
 
     // Window manager
-    m_manager = new XWaylandManager(m_server, m_compositor, this);
-    connect(m_manager, &XWaylandManager::shellSurfaceRequested,
-            this, &XWayland::shellSurfaceRequested);
-    connect(m_manager, &XWaylandManager::shellSurfaceAdded,
-            this, &XWayland::handleShellSurfaceAdded);
-    connect(m_manager, &XWaylandManager::shellSurfaceRemoved,
-            this, &XWayland::shellSurfaceClosed);
-    Q_EMIT managerChanged();
+    m_manager->setServer(m_server);
+    m_manager->setCompositor(m_compositor);
 }
 
 void XWayland::handleServerStarted()
@@ -162,24 +167,16 @@ void XWayland::handleSurfaceCreated(QWaylandSurface *surface)
     if (client && client->client() != m_server->client())
         return;
 
-    Q_FOREACH (XWaylandShellSurface *window, m_manager->m_unpairedWindows) {
+    Q_FOREACH (XWaylandShellSurface *shellSurface, m_manager->m_unpairedWindows) {
         quint32 id = wl_resource_get_id(QWaylandSurfacePrivate::get(surface)->resource()->handle);
 
-        if (window->surfaceId() == id) {
-            window->setSurfaceId(0);
-            window->setSurface(surface);
-            m_manager->m_unpairedWindows.removeOne(window);
+        if (shellSurface->surfaceId() == id) {
+            shellSurface->setSurfaceId(0);
+            shellSurface->setSurface(surface);
+            m_manager->m_unpairedWindows.removeOne(shellSurface);
             break;
         }
     }
-}
-
-void XWayland::handleShellSurfaceAdded(XWaylandShellSurface *shellSurface)
-{
-    connect(shellSurface, &XWaylandShellSurface::surfaceChanged, this, [this, shellSurface] {
-        if (shellSurface->surface())
-            Q_EMIT shellSurfaceCreated(shellSurface);
-    });
 }
 
 #include "moc_xwayland.cpp"

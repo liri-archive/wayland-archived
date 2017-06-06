@@ -93,7 +93,9 @@ XWaylandShellSurface::~XWaylandShellSurface()
         m_wm->removeWindow(m_window);
 }
 
-void XWaylandShellSurface::initialize(XWaylandManager *wm, quint32 window, const QRect &geometry, bool overrideRedirect)
+void XWaylandShellSurface::initialize(XWaylandManager *wm, quint32 window,
+                                      const QRect &geometry, bool overrideRedirect,
+                                      XWaylandShellSurface *parentShellSurface)
 {
     m_wm = wm;
     m_window = static_cast<xcb_window_t>(window);
@@ -118,10 +120,17 @@ void XWaylandShellSurface::initialize(XWaylandManager *wm, quint32 window, const
         m_hasAlpha = false;
     free(reply);
 
-    m_wm->addWindow(m_window, this);
-
     Q_EMIT xChanged();
     Q_EMIT yChanged();
+
+    m_transientFor = parentShellSurface;
+    if (m_transientFor) {
+        m_windowType = Qt::SubWindow;
+        Q_EMIT windowTypeChanged();
+    }
+    Q_EMIT parentSurfaceChanged();
+
+    m_wm->addWindow(m_window, this);
 }
 
 Qt::WindowType XWaylandShellSurface::windowType() const
@@ -136,9 +145,6 @@ quint32 XWaylandShellSurface::surfaceId() const
 
 void XWaylandShellSurface::setSurfaceId(quint32 id)
 {
-    if (m_surfaceId > 0)
-        return;
-
     m_surfaceId = id;
 }
 
@@ -157,17 +163,16 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
     }
 
     m_surface = surface;
+    Q_EMIT surfaceChanged();
 
     if (m_surface) {
         connect(m_surface, &QWaylandSurface::surfaceDestroyed,
                 this, &XWaylandShellSurface::handleSurfaceDestroyed);
-        readProperties();
-
-        Q_EMIT m_wm->shellSurfaceAdded(this);
-        Q_EMIT surfaceChanged();
-        Q_EMIT mapped();
 
         qCDebug(XWAYLAND) << "Assign surface" << surface << "to shell surface for" << m_window;
+
+        readProperties();
+        Q_EMIT m_wm->shellSurfaceCreated(this);
 
         handleSeatChanged(m_wm->compositor()->defaultSeat(), nullptr);
         connect(m_wm->compositor(), &QWaylandCompositor::defaultSeatChanged,
@@ -175,9 +180,9 @@ void XWaylandShellSurface::setSurface(QWaylandSurface *surface)
 
         Q_EMIT mapped();
     } else {
-        m_wm->removeWindow(m_window);
-
         qCDebug(XWAYLAND) << "Unassign surface to shell surface for" << m_window;
+        Q_EMIT unmapped();
+        m_wm->removeWindow(m_window);
     }
 }
 
@@ -309,9 +314,7 @@ void XWaylandShellSurface::readProperties()
     props[Xcb::resources()->atoms->net_wm_state] = TYPE_NET_WM_STATE;
     props[Xcb::resources()->atoms->net_wm_window_type] = XCB_ATOM_ATOM;
     props[Xcb::resources()->atoms->net_wm_name] = XCB_ATOM_STRING;
-    props[Xcb::resources()->atoms->net_wm_pid] = XCB_ATOM_CARDINAL;
     props[Xcb::resources()->atoms->motif_wm_hints] = TYPE_MOTIF_WM_HINTS;
-    props[Xcb::resources()->atoms->wm_client_machine] = XCB_ATOM_WM_CLIENT_MACHINE;
 
     QMap<xcb_atom_t, xcb_get_property_cookie_t> cookies;
     Q_FOREACH (xcb_atom_t atom, props.keys()) {
@@ -323,6 +326,13 @@ void XWaylandShellSurface::readProperties()
     m_sizeHints.flags = 0;
     m_motifHints.flags = 0;
     m_properties.deleteWindow = 0;
+
+    if (m_overrideRedirect) {
+        m_decorate = false;
+        Q_EMIT decorateChanged();
+    }
+
+    qCDebug(XWAYLAND_TRACE) << "Properties:";
 
     Q_FOREACH (xcb_atom_t atom, props.keys()) {
         xcb_get_property_reply_t *reply =
@@ -336,29 +346,37 @@ void XWaylandShellSurface::readProperties()
             continue;
         }
 
-        void *p = decodeProperty(props[atom], reply);
         Xcb::Properties::dumpProperty(atom, reply);
 
-        switch (atom) {
-        case XCB_ATOM_WM_CLASS:
-            m_properties.appId = QString::fromUtf8(strdup(reinterpret_cast<char *>(p)));
-            free(p);
-            Q_EMIT appIdChanged();
+        switch (props[atom]) {
+        case XCB_ATOM_STRING: {
+            char *p = strndup(reinterpret_cast<char *>(xcb_get_property_value(reply)),
+                              xcb_get_property_value_length(reply));
+            if (atom == XCB_ATOM_WM_CLASS) {
+                m_properties.appId = QString::fromUtf8(p);
+                Q_EMIT appIdChanged();
+            } else if (atom == XCB_ATOM_WM_NAME || Xcb::resources()->atoms->net_wm_name) {
+                m_properties.title = QString::fromUtf8(p);
+                Q_EMIT titleChanged();
+            } else {
+                free(p);
+            }
             break;
-        case XCB_ATOM_WM_NAME:
-            m_properties.title = QString::fromUtf8(strdup(reinterpret_cast<char *>(p)));
-            free(p);
-            Q_EMIT titleChanged();
+        }
+        case XCB_ATOM_WINDOW: {
+            xcb_window_t *xid = reinterpret_cast<xcb_window_t *>(xcb_get_property_value(reply));
+            XWaylandShellSurface *shellSurface = m_wm->shellSurfaceFromId(*xid);
+            if (shellSurface) {
+                m_transientFor = shellSurface;
+                m_windowType = Qt::SubWindow;
+                Q_EMIT parentSurfaceChanged();
+                Q_EMIT windowTypeChanged();
+            }
             break;
-        case XCB_ATOM_WM_TRANSIENT_FOR:
-            m_transientFor = static_cast<XWaylandShellSurface *>(p);
-            m_windowType = Qt::SubWindow;
-            Q_EMIT windowTypeChanged();
-            Q_EMIT parentSurfaceChanged();
-            break;
-        default:
-            if (atom == Xcb::resources()->atoms->net_wm_window_type) {
-                xcb_atom_t *atoms = static_cast<xcb_atom_t *>(p);
+        }
+        case XCB_ATOM_ATOM: {
+            if (!m_transientFor && atom == Xcb::resources()->atoms->net_wm_window_type) {
+                xcb_atom_t *atoms = static_cast<xcb_atom_t *>(xcb_get_property_value(reply));
                 for (quint32 i = 0; i < reply->value_len; ++i) {
                     if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_tooltip ||
                             atoms[i] == Xcb::resources()->atoms->net_wm_window_type_utility ||
@@ -373,6 +391,49 @@ void XWaylandShellSurface::readProperties()
                     }
                 }
             }
+            break;
+        }
+        case TYPE_WM_PROTOCOLS: {
+            xcb_atom_t *atoms = reinterpret_cast<xcb_atom_t *>(xcb_get_property_value(reply));
+            for (quint32 i = 0; i < reply->value_len; ++i)
+                if (atoms[i] == Xcb::resources()->atoms->wm_delete_window)
+                    m_properties.deleteWindow = 1;
+            break;
+        }
+        case TYPE_WM_NORMAL_HINTS:
+            memcpy(&m_sizeHints, xcb_get_property_value(reply), sizeof m_sizeHints);
+            break;
+        case TYPE_NET_WM_STATE: {
+            xcb_atom_t *value = reinterpret_cast<xcb_atom_t *>(xcb_get_property_value(reply));
+            uint32_t i;
+            for (i = 0; i < reply->value_len; i++) {
+                if (value[i] == Xcb::resources()->atoms->net_wm_state_fullscreen && !m_fullscreen) {
+                    m_fullscreen = true;
+                    Q_EMIT fullscreenChanged();
+                }
+            }
+            if (value[i] == Xcb::resources()->atoms->net_wm_state_maximized_horz && !m_maximized) {
+                m_maximized = true;
+                Q_EMIT maximizedChanged();
+            }
+            if (value[i] == Xcb::resources()->atoms->net_wm_state_maximized_vert && !m_maximized) {
+                m_maximized = true;
+                Q_EMIT maximizedChanged();
+            }
+            break;
+        }
+        case TYPE_MOTIF_WM_HINTS:
+            memcpy(&m_motifHints, xcb_get_property_value(reply), sizeof m_motifHints);
+            if (m_motifHints.flags & MWM_HINTS_DECORATIONS) {
+                if (m_motifHints.decorations & MWM_DECOR_ALL)
+                    // MWM_DECOR_ALL means all except the other values listed
+                    m_decorate = MWM_DECOR_EVERYTHING & (~m_motifHints.decorations);
+                else
+                    m_decorate = m_motifHints.decorations > 0;
+                Q_EMIT decorateChanged();
+            }
+            break;
+        default:
             break;
         }
 
@@ -405,8 +466,6 @@ void XWaylandShellSurface::moveTo(const QPoint &pos)
 {
     m_geometry.setTopLeft(pos);
     Q_EMIT setPosition(pos);
-    Q_EMIT xChanged();
-    Q_EMIT yChanged();
 }
 
 void XWaylandShellSurface::resize(const QSize &size)
@@ -507,71 +566,6 @@ xcb_window_t XWaylandShellSurface::window() const
     return m_window;
 }
 
-void *XWaylandShellSurface::decodeProperty(xcb_atom_t type, xcb_get_property_reply_t *reply)
-{
-    switch (type) {
-    case XCB_ATOM_WM_CLIENT_MACHINE:
-    case XCB_ATOM_STRING: {
-        char *p = strndup(reinterpret_cast<char *>(xcb_get_property_value(reply)),
-                          xcb_get_property_value_length(reply));
-        return p;
-    }
-    case XCB_ATOM_WINDOW: {
-        xcb_window_t *xid = reinterpret_cast<xcb_window_t *>(xcb_get_property_value(reply));
-        return m_wm->shellSurfaceFromId(*xid);
-    }
-    case XCB_ATOM_CARDINAL:
-    case XCB_ATOM_ATOM:
-        return xcb_get_property_value(reply);
-    case TYPE_WM_PROTOCOLS: {
-        xcb_atom_t *value = reinterpret_cast<xcb_atom_t *>(xcb_get_property_value(reply));
-        for (uint32_t i = 0; i < reply->value_len; i++)
-            if (value[i] == Xcb::resources()->atoms->wm_delete_window)
-                m_properties.deleteWindow = 1;
-        break;
-    }
-    case TYPE_WM_NORMAL_HINTS:
-        memcpy(&m_sizeHints,
-               xcb_get_property_value(reply),
-               sizeof m_sizeHints);
-        break;
-    case TYPE_NET_WM_STATE: {
-        xcb_atom_t *value = reinterpret_cast<xcb_atom_t *>(xcb_get_property_value(reply));
-        uint32_t i;
-        for (i = 0; i < reply->value_len; i++) {
-            if (value[i] == Xcb::resources()->atoms->net_wm_state_fullscreen && !m_fullscreen) {
-                m_fullscreen = true;
-                Q_EMIT fullscreenChanged();
-            }
-        }
-        if (value[i] == Xcb::resources()->atoms->net_wm_state_maximized_horz && !m_maximized) {
-            m_maximized = true;
-            Q_EMIT maximizedChanged();
-        }
-        if (value[i] == Xcb::resources()->atoms->net_wm_state_maximized_vert && !m_maximized) {
-            m_maximized = true;
-            Q_EMIT maximizedChanged();
-        }
-        break;
-    }
-    case TYPE_MOTIF_WM_HINTS:
-        memcpy(&m_motifHints, xcb_get_property_value(reply), sizeof m_motifHints);
-        if (m_motifHints.flags & MWM_HINTS_DECORATIONS) {
-            if (m_motifHints.decorations & MWM_DECOR_ALL)
-                // MWM_DECOR_ALL means all except the other values listed
-                m_decorate = MWM_DECOR_EVERYTHING & (~m_motifHints.decorations);
-            else
-                m_decorate = m_motifHints.decorations > 0;
-            Q_EMIT decorateChanged();
-        }
-        break;
-    default:
-        break;
-    }
-
-    return nullptr;
-}
-
 void XWaylandShellSurface::handleSeatChanged(QWaylandSeat *newSeat, QWaylandSeat *oldSeat)
 {
     if (oldSeat)
@@ -601,7 +595,8 @@ void XWaylandShellSurface::handleFocusReceived()
         return;
 
     m_wm->setActiveWindow(m_window);
-    m_wm->setFocusWindow(m_window);
+    if (!m_overrideRedirect)
+        m_wm->setFocusWindow(m_window);
     xcb_flush(Xcb::connection());
 
     m_activated = true;
@@ -613,6 +608,10 @@ void XWaylandShellSurface::handleFocusLost()
     if (!surface())
         return;
 
+    //m_wm->setActiveWindow(XCB_WINDOW_NONE);
+    //m_wm->setFocusWindow(XCB_WINDOW_NONE);
+    //xcb_flush(Xcb::connection());
+
     m_activated = false;
     Q_EMIT activatedChanged();
 }
@@ -621,6 +620,7 @@ void XWaylandShellSurface::handleSurfaceDestroyed()
 {
     qCWarning(XWAYLAND) << "Surface paired with window" << m_window << "destroyed";
 
+    Q_EMIT unmapped();
     m_surface = nullptr;
     Q_EMIT surfaceChanged();
     Q_EMIT surfaceDestroyed();

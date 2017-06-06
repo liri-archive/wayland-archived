@@ -89,9 +89,8 @@ void dumpProperty(xcb_atom_t property, xcb_get_property_reply_t *reply)
         for (quint32 i = 0; i < reply->value_len; i++) {
             QString name = Xcb::Atom::nameFromAtom(v[i]);
             if (i > 0)
-                buffer += buffer.sprintf(", %s", qPrintable(name));
-            else
-                buffer += name;
+                buffer += QLatin1String(", ");
+            buffer += name;
         }
     } else {
         buffer += QStringLiteral("huh?");

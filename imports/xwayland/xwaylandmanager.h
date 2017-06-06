@@ -59,10 +59,14 @@ public:
         CursorLeftPointer
     };
 
-    XWaylandManager(XWaylandServer *server, QWaylandCompositor *compositor, QObject *parent = nullptr);
+    XWaylandManager(QObject *parent = nullptr);
     ~XWaylandManager();
 
+    XWaylandServer *server() const;
+    void setServer(XWaylandServer *server);
+
     QWaylandCompositor *compositor() const;
+    void setCompositor(QWaylandCompositor *compositor);
 
     void start(int fd);
 
@@ -76,9 +80,9 @@ public:
     XWaylandShellSurface *shellSurfaceFromSurface(QWaylandSurface *surface);
 
 Q_SIGNALS:
-    void shellSurfaceRequested(quint32 window, const QRect &geometry, bool overrideRedirect);
-    void shellSurfaceAdded(XWaylandShellSurface *shellSurface);
-    void shellSurfaceRemoved(XWaylandShellSurface *shellSurface);
+    void shellSurfaceRequested(quint32 window, const QRect &geometry,
+                               bool overrideRedirect, XWaylandShellSurface *parentShellSurface);
+    void shellSurfaceCreated(XWaylandShellSurface *shellSurface);
 
 private:
     XWaylandServer *m_server;
@@ -121,11 +125,12 @@ private:
     void handleDestroyNotify(xcb_destroy_notify_event_t *event);
     void handlePropertyNotify(xcb_property_notify_event_t *event);
     void handleClientMessage(xcb_client_message_event_t *event);
+    void handleFocusIn(xcb_focus_in_event_t *event);
 
     bool handleSelection(xcb_generic_event_t *event);
     void handleSelectionNotify(xcb_selection_notify_event_t *event);
 
-    void handleMoveResize(XWaylandShellSurface *window,
+    void handleMoveResize(XWaylandShellSurface *shellSurface,
                           xcb_client_message_event_t *event);
     void handleState(XWaylandShellSurface *shellSurface,
                      xcb_client_message_event_t *event);

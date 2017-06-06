@@ -68,13 +68,13 @@
 #include <xcb/composite.h>
 #include <wayland-server.h>
 
-XWaylandManager::XWaylandManager(XWaylandServer *server, QWaylandCompositor *compositor, QObject *parent)
+XWaylandManager::XWaylandManager(QObject *parent)
     : QObject(parent)
-    , m_server(server)
+    , m_server(nullptr)
     , m_cursors(nullptr)
     , m_lastCursor(CursorUnset)
     , m_wmWindow(nullptr)
-    , m_compositor(compositor)
+    , m_compositor(nullptr)
     , m_focusWindow(nullptr)
 {
 }
@@ -86,9 +86,24 @@ XWaylandManager::~XWaylandManager()
     Xcb::closeConnection();
 }
 
+XWaylandServer *XWaylandManager::server() const
+{
+    return m_server;
+}
+
+void XWaylandManager::setServer(XWaylandServer *server)
+{
+    m_server = server;
+}
+
 QWaylandCompositor *XWaylandManager::compositor() const
 {
     return m_compositor;
+}
+
+void XWaylandManager::setCompositor(QWaylandCompositor *compositor)
+{
+    m_compositor = compositor;
 }
 
 void XWaylandManager::start(int fd)
@@ -164,12 +179,12 @@ void XWaylandManager::start(int fd)
 
 void XWaylandManager::addWindow(xcb_window_t id, XWaylandShellSurface *shellSurface)
 {
-    m_windowsMap[id] = shellSurface;
+    if (id != XCB_WINDOW_NONE && shellSurface)
+        m_windowsMap[id] = shellSurface;
 }
 
 void XWaylandManager::removeWindow(xcb_window_t id)
 {
-    Q_EMIT shellSurfaceRemoved(m_windowsMap[id]);
     m_windowsMap.remove(id);
 }
 
@@ -203,6 +218,8 @@ void XWaylandManager::setFocusWindow(xcb_window_t window)
         values[0] = XCB_STACK_MODE_ABOVE;
         xcb_configure_window(Xcb::connection(), window,
                              XCB_CONFIG_WINDOW_STACK_MODE, values);
+
+        m_focusWindow = m_windowsMap[window];
     }
 }
 
@@ -215,6 +232,8 @@ XWaylandShellSurface *XWaylandManager::shellSurfaceFromSurface(QWaylandSurface *
 {
     for (auto item : m_windowsMap.keys()) {
         auto shellSurface = m_windowsMap.value(item);
+        if (!shellSurface)
+            continue;
         if (shellSurface->surface() == surface)
             return shellSurface;
     }
@@ -353,17 +372,21 @@ void XWaylandManager::handleMotion(xcb_motion_notify_event_t *event)
 
 void XWaylandManager::handleCreateNotify(xcb_create_notify_event_t *event)
 {
-    qCDebug(XWAYLAND_TRACE, "XCB_CREATE_NOTIFY (window %d, width %d, height %d%s%s)",
-            event->window, event->width, event->height,
+    qCDebug(XWAYLAND_TRACE, "XCB_CREATE_NOTIFY (window %d, x %d, y %d, width %d, height %d%s%s)",
+            event->window, event->x, event->y, event->width, event->height,
             event->override_redirect ? ", override" : "",
             Xcb::isOurResource(event->window) ? ", ours" : "");
 
     if (Xcb::isOurResource(event->window))
         return;
 
+    XWaylandShellSurface *parentShellSurface = nullptr;
+    if (event->override_redirect != 0)
+        parentShellSurface = m_windowsMap[event->parent];
+
     Q_EMIT shellSurfaceRequested(static_cast<quint32>(event->window),
                                  QRect(QPoint(event->x, event->y), QSize(event->width, event->height)),
-                                 event->override_redirect != 0);
+                                 event->override_redirect != 0, parentShellSurface);
 }
 
 void XWaylandManager::handleMapRequest(xcb_map_request_event_t *event)
@@ -378,18 +401,16 @@ void XWaylandManager::handleMapRequest(xcb_map_request_event_t *event)
         return;
 
     XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
-    shellSurface->readProperties();
 
     qCDebug(XWAYLAND_TRACE, "XCB_MAP_REQUEST (window %d, %p)",
             event->window, shellSurface);
 
+    shellSurface->readProperties();
     shellSurface->setWmState(XWaylandShellSurface::NormalState);
     shellSurface->setNetWmState();
     shellSurface->setWorkspace(0);
     xcb_map_window(Xcb::connection(), event->window);
     xcb_flush(Xcb::connection());
-    if (shellSurface->surface())
-        Q_EMIT shellSurface->mapped();
 }
 
 void XWaylandManager::handleMapNotify(xcb_map_notify_event_t *event)
@@ -417,8 +438,11 @@ void XWaylandManager::handleUnmapNotify(xcb_unmap_notify_event_t *event)
         return;
 
     XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
-    Q_EMIT shellSurface->unmapped();
-    shellSurface->setSurface(nullptr);
+
+    if (m_focusWindow == shellSurface)
+        m_focusWindow = nullptr;
+
+    //shellSurface->setSurface(nullptr);
     shellSurface->setSurfaceId(0);
     shellSurface->setWmState(XWaylandShellSurface::WithdrawnState);
     shellSurface->setWorkspace(-1);
@@ -434,7 +458,7 @@ void XWaylandManager::handleReparentNotify(xcb_reparent_notify_event_t *event)
     if (event->parent == Xcb::rootWindow()) {
         Q_EMIT shellSurfaceRequested(event->window,
                                      QRect(QPoint(event->x, event->y), QSize(10, 10)),
-                                     event->override_redirect != 0);
+                                     event->override_redirect != 0, nullptr);
     } else if (!Xcb::isOurResource(event->parent)) {
         if (!m_windowsMap.contains(event->parent))
             return;
@@ -519,17 +543,20 @@ void XWaylandManager::handleDestroyNotify(xcb_destroy_notify_event_t *event)
     if (!m_windowsMap.contains(event->window))
         return;
 
-    m_windowsMap.take(event->window)->deleteLater();
+    XWaylandShellSurface *shellSurface = m_windowsMap.take(event->window);
+    connect(shellSurface, &XWaylandShellSurface::unmapped,
+            shellSurface, &XWaylandShellSurface::deleteLater);
+    shellSurface->setSurface(nullptr);
 }
 
 void XWaylandManager::handlePropertyNotify(xcb_property_notify_event_t *event)
 {
-    if (!m_windowsMap.contains(event->window))
-        return;
-
     qCDebug(XWAYLAND_TRACE, "XCB_PROPERTY_NOTIFY (window %d)", event->window);
 
     XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
+    if (!shellSurface)
+        return;
+
     shellSurface->dirtyProperties();
 
     if (event->state == XCB_PROPERTY_DELETE)
@@ -555,16 +582,29 @@ void XWaylandManager::handleClientMessage(xcb_client_message_event_t *event)
     if (!m_windowsMap.contains(event->window))
         return;
 
-    // Get the surface for this window
-    XWaylandShellSurface *window = m_windowsMap[event->window];
+    // Get the surface for this shell surface
+    XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
 
     // Handle messages
     if (event->type == Xcb::resources()->atoms->net_wm_moveresize)
-        handleMoveResize(window, event);
+        handleMoveResize(shellSurface, event);
     else if (event->type == Xcb::resources()->atoms->net_wm_state)
-        handleState(window, event);
+        handleState(shellSurface, event);
     else if (event->type == Xcb::resources()->atoms->wl_surface_id)
-        handleSurfaceId(window, event);
+        handleSurfaceId(shellSurface, event);
+}
+
+void XWaylandManager::handleFocusIn(xcb_focus_in_event_t *event)
+{
+    // Do not interfere with grabs
+    if (event->mode == XCB_NOTIFY_MODE_GRAB ||
+            event->mode == XCB_NOTIFY_MODE_UNGRAB)
+        return;
+
+    // Do not let X clients change focus behind our back, reset
+    // focus to the old one if it has changed
+    if (!m_focusWindow || event->event != m_focusWindow->window())
+        setFocusWindow(event->event);
 }
 
 bool XWaylandManager::handleSelection(xcb_generic_event_t *event)
@@ -607,36 +647,39 @@ void XWaylandManager::handleSelectionNotify(xcb_selection_notify_event_t *event)
     }
 }
 
-void XWaylandManager::handleMoveResize(XWaylandShellSurface *window, xcb_client_message_event_t *event)
+void XWaylandManager::handleMoveResize(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)
 {
+    if (!shellSurface || !event)
+        return;
+
     int detail = event->data.data32[2];
     switch (detail) {
     case _NET_WM_MOVERESIZE_MOVE:
-        Q_EMIT window->startMove();
+        Q_EMIT shellSurface->startMove();
         break;
     case _NET_WM_MOVERESIZE_SIZE_TOPLEFT:
-        Q_EMIT window->startResize(XWaylandShellSurface::TopLeftEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::TopLeftEdge);
         break;
     case _NET_WM_MOVERESIZE_SIZE_TOP:
-        Q_EMIT window->startResize(XWaylandShellSurface::TopEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::TopEdge);
         break;
     case _NET_WM_MOVERESIZE_SIZE_TOPRIGHT:
-        Q_EMIT window->startResize(XWaylandShellSurface::TopRightEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::TopRightEdge);
         break;
     case _NET_WM_MOVERESIZE_SIZE_RIGHT:
-        Q_EMIT window->startResize(XWaylandShellSurface::RightEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::RightEdge);
         break;
     case _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT:
-        Q_EMIT window->startResize(XWaylandShellSurface::BottomRightEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::BottomRightEdge);
         break;
     case _NET_WM_MOVERESIZE_SIZE_BOTTOM:
-        Q_EMIT window->startResize(XWaylandShellSurface::BottomEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::BottomEdge);
         break;
     case _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT:
-        Q_EMIT window->startResize(XWaylandShellSurface::BottomLeftEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::BottomLeftEdge);
         break;
     case _NET_WM_MOVERESIZE_SIZE_LEFT:
-        Q_EMIT window->startResize(XWaylandShellSurface::LeftEdge);
+        Q_EMIT shellSurface->startResize(XWaylandShellSurface::LeftEdge);
         break;
     default:
         break;
@@ -645,6 +688,9 @@ void XWaylandManager::handleMoveResize(XWaylandShellSurface *window, xcb_client_
 
 void XWaylandManager::handleState(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)
 {
+    if (!shellSurface || !event)
+        return;
+
     auto updateState = [](int action, bool *state) {
 #define _NET_WM_STATE_REMOVE    0
 #define _NET_WM_STATE_ADD       1
@@ -704,6 +750,9 @@ void XWaylandManager::handleState(XWaylandShellSurface *shellSurface, xcb_client
 
 void XWaylandManager::handleSurfaceId(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)
 {
+    if (!shellSurface || !event)
+        return;
+
     if (shellSurface->surface()) {
         qCWarning(XWAYLAND_TRACE) << "Window" << shellSurface->window() << "already has a surface id";
         return;
@@ -778,6 +827,8 @@ void XWaylandManager::wmEvents()
         case XCB_CLIENT_MESSAGE:
             handleClientMessage(reinterpret_cast<xcb_client_message_event_t *>(event));
             break;
+        case XCB_FOCUS_IN:
+            handleFocusIn(reinterpret_cast<xcb_focus_in_event_t *>(event));
         default:
             break;
         }

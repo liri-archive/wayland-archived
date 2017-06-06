@@ -82,7 +82,8 @@ public:
     ~XWaylandShellSurface();
 
     Q_INVOKABLE void initialize(XWaylandManager *wm, quint32 window,
-                                const QRect &geometry, bool overrideRedirect);
+                                const QRect &geometry, bool overrideRedirect,
+                                XWaylandShellSurface *parentShellSurface);
 
     Qt::WindowType windowType() const;
 
@@ -195,8 +196,6 @@ private:
     bool m_decorate;
     bool m_maximized;
     bool m_fullscreen;
-
-    void *decodeProperty(xcb_atom_t type, xcb_get_property_reply_t *reply);
 
     friend class XWaylandManager;
 

@@ -119,7 +119,7 @@ void XWaylandQuickShellIntegration::handleMapped()
 
 void XWaylandQuickShellIntegration::handleActivatedChanged()
 {
-    if (m_shellSurface->windowType() != Qt::Popup && m_shellSurface->isActivated())
+    if (m_shellSurface->isActivated())
         m_item->raise();
 }
 

@@ -45,7 +45,7 @@ class XWayland : public QObject, public QQmlParserStatus
     Q_OBJECT
     Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(QWaylandCompositor *compositor READ compositor WRITE setCompositor NOTIFY compositorChanged)
-    Q_PROPERTY(XWaylandManager *manager READ manager NOTIFY managerChanged)
+    Q_PROPERTY(XWaylandManager *manager READ manager WRITE setManager NOTIFY managerChanged)
     Q_INTERFACES(QQmlParserStatus)
 public:
     XWayland(QObject *parent = nullptr);
@@ -57,6 +57,7 @@ public:
     void setCompositor(QWaylandCompositor *compositor);
 
     XWaylandManager *manager() const;
+    void setManager(XWaylandManager *manager);
 
     Q_INVOKABLE bool startServer();
 
@@ -68,14 +69,10 @@ Q_SIGNALS:
     void compositorChanged();
     void managerChanged();
     void serverStarted();
-    void shellSurfaceRequested(quint32 window, const QRect &geometry, bool overrideRedirect);
-    void shellSurfaceCreated(XWaylandShellSurface *shellSurface);
-    void shellSurfaceClosed(XWaylandShellSurface *shellSurface);
 
 private Q_SLOTS:
     void handleServerStarted();
     void handleSurfaceCreated(QWaylandSurface *surface);
-    void handleShellSurfaceAdded(XWaylandShellSurface *shellSurface);
 
 private:
     QWaylandCompositor *m_compositor;
