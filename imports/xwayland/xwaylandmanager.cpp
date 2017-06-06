@@ -775,6 +775,7 @@ void XWaylandManager::wmEvents()
     //qCDebug(XWAYLAND_TRACE) << "WM event";
 
     xcb_generic_event_t *event;
+    int count = 0;
 
     while ((event = xcb_poll_for_event(Xcb::connection()))) {
         //handle selection event
@@ -834,7 +835,9 @@ void XWaylandManager::wmEvents()
         }
 
         free(event);
+        count++;
     }
 
-    xcb_flush(Xcb::connection());
+    if (count > 0)
+        xcb_flush(Xcb::connection());
 }
