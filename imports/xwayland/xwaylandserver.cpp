@@ -138,6 +138,7 @@ bool XWaylandServer::start()
     QStringList args = QStringList()
             << QStringLiteral("-displayfd") << QString::number(m_serverPairFd[1])
             << QStringLiteral("-rootless")
+            << QStringLiteral("-shm")
             << QStringLiteral("-wm") << QString::number(fd);
     qCDebug(XWAYLAND) << "Running:" << "Xwayland" << qPrintable(args.join(QStringLiteral(" ")));
     m_process->start(QStringLiteral("Xwayland"), args);
