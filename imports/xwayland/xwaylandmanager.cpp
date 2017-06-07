@@ -372,7 +372,7 @@ void XWaylandManager::handleMotion(xcb_motion_notify_event_t *event)
 
 void XWaylandManager::handleCreateNotify(xcb_create_notify_event_t *event)
 {
-    qCDebug(XWAYLAND_TRACE, "XCB_CREATE_NOTIFY (window %d, x %d, y %d, width %d, height %d%s%s)",
+    qCDebug(XWAYLAND_TRACE, "XCB_CREATE_NOTIFY (window %d, %d,%d @ %dx%d%s%s)",
             event->window, event->x, event->y, event->width, event->height,
             event->override_redirect ? ", override" : "",
             Xcb::isOurResource(event->window) ? ", ours" : "");
