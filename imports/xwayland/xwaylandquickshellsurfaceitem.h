@@ -43,6 +43,7 @@ class XWaylandQuickShellSurfaceItem : public QWaylandQuickItem
     Q_PROPERTY(QQuickItem *moveItem READ moveItem WRITE setMoveItem NOTIFY moveItemChanged)
 public:
     XWaylandQuickShellSurfaceItem(QQuickItem *parent = nullptr);
+    ~XWaylandQuickShellSurfaceItem();
 
     XWaylandShellSurface *shellSurface() const;
     void setShellSurface(XWaylandShellSurface *shellSurface);

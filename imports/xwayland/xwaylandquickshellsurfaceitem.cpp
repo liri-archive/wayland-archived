@@ -40,6 +40,11 @@ XWaylandQuickShellSurfaceItem::XWaylandQuickShellSurfaceItem(QQuickItem *parent)
 {
 }
 
+XWaylandQuickShellSurfaceItem::~XWaylandQuickShellSurfaceItem()
+{
+    delete m_shellIntegration;
+}
+
 XWaylandShellSurface *XWaylandQuickShellSurfaceItem::shellSurface() const
 {
     return m_shellSurface;
@@ -51,7 +56,15 @@ void XWaylandQuickShellSurfaceItem::setShellSurface(XWaylandShellSurface *shellS
         return;
 
     m_shellSurface = shellSurface;
-    m_shellIntegration = shellSurface->createIntegration(this);
+
+    if (m_shellIntegration) {
+        delete m_shellIntegration;
+        m_shellIntegration = nullptr;
+    }
+
+    if (m_shellSurface)
+        m_shellIntegration = shellSurface->createIntegration(this);
+
     Q_EMIT shellSurfaceChanged();
 }
 
