@@ -132,6 +132,8 @@ private:
 
     void handleMoveResize(XWaylandShellSurface *shellSurface,
                           xcb_client_message_event_t *event);
+    void handleChangeState(XWaylandShellSurface *shellSurface,
+                           xcb_client_message_event_t *event);
     void handleState(XWaylandShellSurface *shellSurface,
                      xcb_client_message_event_t *event);
     void handleSurfaceId(XWaylandShellSurface *window,

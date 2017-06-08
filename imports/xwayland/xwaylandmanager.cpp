@@ -590,6 +590,8 @@ void XWaylandManager::handleClientMessage(xcb_client_message_event_t *event)
     // Handle messages
     if (event->type == Xcb::resources()->atoms->net_wm_moveresize)
         handleMoveResize(shellSurface, event);
+    else if (event->type == Xcb::resources()->atoms->wm_change_state)
+        handleChangeState(shellSurface, event);
     else if (event->type == Xcb::resources()->atoms->net_wm_state)
         handleState(shellSurface, event);
     else if (event->type == Xcb::resources()->atoms->wl_surface_id)
@@ -686,6 +688,15 @@ void XWaylandManager::handleMoveResize(XWaylandShellSurface *shellSurface, xcb_c
     default:
         break;
     }
+}
+
+void XWaylandManager::handleChangeState(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)
+{
+    if (!shellSurface || !event)
+        return;
+
+    if (event->data.data32[0] == 3)
+        Q_EMIT shellSurface->setMinimized();
 }
 
 void XWaylandManager::handleState(XWaylandShellSurface *shellSurface, xcb_client_message_event_t *event)

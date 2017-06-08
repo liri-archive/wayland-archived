@@ -41,6 +41,7 @@ public:
     Atom wm_take_focus;
     Atom wm_delete_window;
     Atom wm_state;
+    Atom wm_change_state;
     Atom wm_s0;
     Atom wm_client_machine;
     Atom net_wm_cm_s0;

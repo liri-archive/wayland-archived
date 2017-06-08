@@ -167,6 +167,7 @@ Q_SIGNALS:
     void unmapped();
     void setPosition(int x, int y);
     void setSize(const QSize &size);
+    void setMinimized();
     void maximizedChanged();
     void fullscreenChanged();
     void startMove();
