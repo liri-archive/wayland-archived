@@ -48,6 +48,7 @@ class XWaylandShellSurface : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(Qt::WindowType windowType READ windowType NOTIFY windowTypeChanged)
+    Q_PROPERTY(WmWindowType wmWindowType READ wmWindowType NOTIFY wmWindowTypeChanged)
     Q_PROPERTY(QWaylandSurface *surface READ surface NOTIFY surfaceChanged)
     Q_PROPERTY(XWaylandShellSurface *parentSurface READ parentSurface NOTIFY parentSurfaceChanged)
     Q_PROPERTY(bool activated READ isActivated NOTIFY activatedChanged)
@@ -78,6 +79,20 @@ public:
         IconicState = 3
     };
 
+    enum WmWindowType {
+        ToplevelWindow,
+        TooltipWindow,
+        UtilityWindow,
+        DndWindow,
+        DropdownWindow,
+        MenuWindow,
+        NotificationWindow,
+        PopupWindow,
+        ComboWindow,
+        SplashWindow
+    };
+    Q_ENUM(WmWindowType)
+
     XWaylandShellSurface(QObject *parent = nullptr);
     ~XWaylandShellSurface();
 
@@ -86,6 +101,7 @@ public:
                                 XWaylandShellSurface *parentShellSurface);
 
     Qt::WindowType windowType() const;
+    WmWindowType wmWindowType() const;
 
     quint32 surfaceId() const;
     void setSurfaceId(quint32 id);
@@ -154,6 +170,7 @@ public:
 
 Q_SIGNALS:
     void windowTypeChanged();
+    void wmWindowTypeChanged();
     void surfaceChanged();
     void surfaceDestroyed();
     void parentSurfaceChanged();
@@ -183,6 +200,7 @@ private:
     bool m_hasAlpha;
     XWaylandShellSurface *m_transientFor;
     Qt::WindowType m_windowType;
+    WmWindowType m_wmWindowType;
     quint32 m_surfaceId;
     QWaylandSurface *m_surface;
     WmState m_wmState;

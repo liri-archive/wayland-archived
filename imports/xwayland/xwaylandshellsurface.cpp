@@ -76,6 +76,7 @@ XWaylandShellSurface::XWaylandShellSurface(QObject *parent)
     , m_overrideRedirect(false)
     , m_transientFor(nullptr)
     , m_windowType(Qt::WindowType::Window)
+    , m_wmWindowType(ToplevelWindow)
     , m_surfaceId(0)
     , m_surface(nullptr)
     , m_wmState(WithdrawnState)
@@ -136,6 +137,11 @@ void XWaylandShellSurface::initialize(XWaylandManager *wm, quint32 window,
 Qt::WindowType XWaylandShellSurface::windowType() const
 {
     return m_windowType;
+}
+
+XWaylandShellSurface::WmWindowType XWaylandShellSurface::wmWindowType() const
+{
+    return m_wmWindowType;
 }
 
 quint32 XWaylandShellSurface::surfaceId() const
@@ -390,19 +396,55 @@ void XWaylandShellSurface::readProperties()
             break;
         }
         case XCB_ATOM_ATOM: {
-            if (!m_transientFor && atom == Xcb::resources()->atoms->net_wm_window_type) {
+            if (atom == Xcb::resources()->atoms->net_wm_window_type) {
                 xcb_atom_t *atoms = static_cast<xcb_atom_t *>(xcb_get_property_value(reply));
                 for (quint32 i = 0; i < reply->value_len; ++i) {
-                    if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_tooltip ||
-                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_utility ||
-                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dnd ||
-                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dropdown ||
-                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_menu ||
-                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_notification ||
-                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_popup ||
-                            atoms[i] == Xcb::resources()->atoms->net_wm_window_type_combo) {
-                        m_windowType = Qt::Popup;
-                        Q_EMIT windowTypeChanged();
+                    // Set Popup window type unless we already know this is a SubWindow
+                    if (!m_transientFor) {
+                        if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_tooltip ||
+                                atoms[i] == Xcb::resources()->atoms->net_wm_window_type_utility ||
+                                atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dnd ||
+                                atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dropdown ||
+                                atoms[i] == Xcb::resources()->atoms->net_wm_window_type_menu ||
+                                atoms[i] == Xcb::resources()->atoms->net_wm_window_type_notification ||
+                                atoms[i] == Xcb::resources()->atoms->net_wm_window_type_popup ||
+                                atoms[i] == Xcb::resources()->atoms->net_wm_window_type_combo) {
+                            m_windowType = Qt::Popup;
+                            Q_EMIT windowTypeChanged();
+                        }
+                    }
+
+                    // Save XWayland window type
+                    WmWindowType wmWindowType;
+                    if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_tooltip)
+                        wmWindowType = TooltipWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_utility)
+                        wmWindowType = UtilityWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dnd)
+                        wmWindowType = DndWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_dropdown)
+                        wmWindowType = DropdownWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_menu)
+                        wmWindowType = MenuWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_notification)
+                        wmWindowType = NotificationWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_popup)
+                        wmWindowType = PopupWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_combo)
+                        wmWindowType = ComboWindow;
+                    else if (atoms[i] == Xcb::resources()->atoms->net_wm_window_type_splash)
+                        wmWindowType = SplashWindow;
+                    else
+                        wmWindowType = ToplevelWindow;
+                    if (wmWindowType != m_wmWindowType) {
+                        m_wmWindowType = wmWindowType;
+                        Q_EMIT wmWindowTypeChanged();
+                    }
+
+                    // Make sure only toplevel windows are decorated
+                    if (m_decorate && m_wmWindowType != ToplevelWindow) {
+                        m_decorate = false;
+                        Q_EMIT decorateChanged();
                     }
                 }
             }
