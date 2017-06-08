@@ -456,9 +456,22 @@ void XWaylandShellSurface::readProperties()
     }
 }
 
-QSize XWaylandShellSurface::sizeForResize(const QSizeF &initialSize, const QPointF &delta, ResizeEdge edges)
+QSize XWaylandShellSurface::sizeForResize(const QSizeF &size, const QPointF &delta, ResizeEdge edge)
 {
-    return initialSize.toSize();
+    qreal width = size.width();
+    qreal height = size.height();
+
+    if (edge & LeftEdge)
+        width -= delta.x();
+    else if (edge & RightEdge)
+        width += delta.x();
+
+    if (edge & TopEdge)
+        height -= delta.y();
+    else if (edge & BottomEdge)
+        height += delta.y();
+
+    return QSizeF(width, height).toSize();
 }
 
 void XWaylandShellSurface::sendConfigure(const QRect &geometry)

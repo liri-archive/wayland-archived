@@ -131,7 +131,7 @@ public:
     void readProperties();
     void setProperties();
 
-    QSize sizeForResize(const QSizeF &initialSize, const QPointF &delta, ResizeEdge edges);
+    QSize sizeForResize(const QSizeF &size, const QPointF &delta, ResizeEdge edge);
     void sendConfigure(const QRect &geometry);
 
     void moveTo(const QPoint &pos);
