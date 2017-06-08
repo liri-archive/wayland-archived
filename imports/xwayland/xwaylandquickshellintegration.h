@@ -48,7 +48,6 @@ public:
     bool mouseReleaseEvent(QMouseEvent *event);
 
 private Q_SLOTS:
-    void handleSetPosition(const QPoint &pos);
     void handleStartMove();
     void handleStartResize(XWaylandShellSurface::ResizeEdge edges);
     void handleMapped();

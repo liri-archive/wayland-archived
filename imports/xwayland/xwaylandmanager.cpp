@@ -383,6 +383,7 @@ void XWaylandManager::handleCreateNotify(xcb_create_notify_event_t *event)
     XWaylandShellSurface *parentShellSurface = nullptr;
     if (event->override_redirect != 0)
         parentShellSurface = m_windowsMap[event->parent];
+    qCDebug(XWAYLAND_TRACE) << "Parent" << parentShellSurface;
 
     Q_EMIT shellSurfaceRequested(static_cast<quint32>(event->window),
                                  QRect(QPoint(event->x, event->y), QSize(event->width, event->height)),
@@ -478,31 +479,31 @@ void XWaylandManager::handleConfigureRequest(xcb_configure_request_event_t *even
 
     if (event->value_mask & XCB_CONFIG_WINDOW_X) {
         values[++i] = event->x;
-        if (shellSurface) {
+        if (shellSurface && shellSurface->surface()) {
             QPoint pos = shellSurface->geometry().topLeft();
-            shellSurface->setPosition(QPoint(event->x, pos.y()));
+            //shellSurface->moveTo(QPoint(event->x, pos.y()));
         }
     }
     if (event->value_mask & XCB_CONFIG_WINDOW_Y) {
         values[++i] = event->y;
-        if (shellSurface) {
+        if (shellSurface && shellSurface->surface()) {
             QPoint pos = shellSurface->geometry().topLeft();
-            shellSurface->setPosition(QPoint(pos.x(), event->y));
+            //shellSurface->moveTo(QPoint(pos.x(), event->y));
         }
     }
 
     if (event->value_mask & XCB_CONFIG_WINDOW_WIDTH) {
         values[++i] = event->width;
-        if (shellSurface) {
+        if (shellSurface && shellSurface->surface()) {
             QSize size = shellSurface->geometry().size();
-            shellSurface->setSize(QSize(event->width, size.height()));
+            shellSurface->resize(QSize(event->width, size.height()));
         }
     }
     if (event->value_mask & XCB_CONFIG_WINDOW_HEIGHT) {
         values[++i] = event->height;
-        if (shellSurface) {
+        if (shellSurface && shellSurface->surface()) {
             QSize size = shellSurface->geometry().size();
-            shellSurface->setSize(QSize(size.width(), event->height));
+            shellSurface->resize(QSize(size.width(), event->height));
         }
     }
 
@@ -527,8 +528,11 @@ void XWaylandManager::handleConfigureNotify(xcb_configure_notify_event_t *event)
         return;
 
     XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
-    shellSurface->moveTo(QPoint(event->x, event->y));
-    shellSurface->resize(QSize(event->width, event->height));
+    QRect geometry = shellSurface->geometry();
+    geometry.setTopLeft(QPoint(event->x, event->y));
+    if (shellSurface->overrideRedirect())
+        geometry.setSize(QSize(event->width, event->height));
+    shellSurface->setGeometry(geometry);
 }
 
 void XWaylandManager::handleDestroyNotify(xcb_destroy_notify_event_t *event)

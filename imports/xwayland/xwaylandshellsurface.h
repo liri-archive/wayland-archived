@@ -101,9 +101,11 @@ public:
     QString title() const;
 
     bool decorate() const;
+    bool overrideRedirect() const;
 
     QPoint position() const;
     QRect geometry() const;
+    void setGeometry(const QRect &geometry);
 
     int x() const;
     int y() const;
@@ -136,6 +138,8 @@ public:
     void resize(const QSize &size);
 
     Q_INVOKABLE void sendPosition(const QPointF &pos);
+    Q_INVOKABLE void sendX(qreal x);
+    Q_INVOKABLE void sendY(qreal y);
     Q_INVOKABLE void sendResize(const QSizeF &size);
 
     Q_INVOKABLE void maximize(QWaylandOutput *output);
@@ -161,7 +165,7 @@ Q_SIGNALS:
     void yChanged();
     void mapped();
     void unmapped();
-    void setPosition(const QPoint &pos);
+    void setPosition(int x, int y);
     void setSize(const QSize &size);
     void maximizedChanged();
     void fullscreenChanged();

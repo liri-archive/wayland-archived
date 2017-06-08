@@ -124,11 +124,11 @@ void XWaylandShellSurface::initialize(XWaylandManager *wm, quint32 window,
     Q_EMIT yChanged();
 
     m_transientFor = parentShellSurface;
+    Q_EMIT parentSurfaceChanged();
     if (m_transientFor) {
         m_windowType = Qt::SubWindow;
         Q_EMIT windowTypeChanged();
     }
-    Q_EMIT parentSurfaceChanged();
 
     m_wm->addWindow(m_window, this);
 }
@@ -211,6 +211,11 @@ bool XWaylandShellSurface::decorate() const
     return m_decorate;
 }
 
+bool XWaylandShellSurface::overrideRedirect() const
+{
+    return m_overrideRedirect;
+}
+
 QPoint XWaylandShellSurface::position() const
 {
     return m_geometry.topLeft();
@@ -221,14 +226,24 @@ QRect XWaylandShellSurface::geometry() const
     return m_geometry;
 }
 
+void XWaylandShellSurface::setGeometry(const QRect &geometry)
+{
+    if (m_geometry == geometry)
+        return;
+
+    m_geometry = geometry;
+    Q_EMIT xChanged();
+    Q_EMIT yChanged();
+}
+
 int XWaylandShellSurface::x() const
 {
-    return m_geometry.left();
+    return m_geometry.topLeft().x();
 }
 
 int XWaylandShellSurface::y() const
 {
-    return m_geometry.top();
+    return m_geometry.topLeft().y();
 }
 
 bool XWaylandShellSurface::isMaximized() const
@@ -465,7 +480,7 @@ void XWaylandShellSurface::sendConfigure(const QRect &geometry)
 void XWaylandShellSurface::moveTo(const QPoint &pos)
 {
     m_geometry.setTopLeft(pos);
-    Q_EMIT setPosition(pos);
+    Q_EMIT setPosition(pos.x(), pos.y());
 }
 
 void XWaylandShellSurface::resize(const QSize &size)
@@ -484,6 +499,34 @@ void XWaylandShellSurface::sendPosition(const QPointF &pos)
     values[0] = pos.toPoint().x();
     values[1] = pos.toPoint().y();
     m_geometry.setTopLeft(pos.toPoint());
+
+    xcb_configure_window(Xcb::connection(), m_window, mask, values);
+    xcb_flush(Xcb::connection());
+}
+
+void XWaylandShellSurface::sendX(qreal x)
+{
+    if (qRound(x) == m_geometry.topLeft().x())
+        return;
+
+    quint32 mask = XCB_CONFIG_WINDOW_X;
+    quint32 values[1];
+    values[0] = qRound(x);
+    m_geometry.setLeft(qRound(x));
+
+    xcb_configure_window(Xcb::connection(), m_window, mask, values);
+    xcb_flush(Xcb::connection());
+}
+
+void XWaylandShellSurface::sendY(qreal y)
+{
+    if (qRound(y) == m_geometry.topLeft().y())
+        return;
+
+    quint32 mask = XCB_CONFIG_WINDOW_Y;
+    quint32 values[1];
+    values[0] = qRound(y);
+    m_geometry.setTop(qRound(y));
 
     xcb_configure_window(Xcb::connection(), m_window, mask, values);
     xcb_flush(Xcb::connection());
