@@ -481,14 +481,14 @@ void XWaylandManager::handleConfigureRequest(xcb_configure_request_event_t *even
         values[++i] = event->x;
         if (shellSurface && shellSurface->surface()) {
             QPoint pos = shellSurface->geometry().topLeft();
-            //shellSurface->moveTo(QPoint(event->x, pos.y()));
+            shellSurface->moveTo(QPoint(event->x, pos.y()));
         }
     }
     if (event->value_mask & XCB_CONFIG_WINDOW_Y) {
         values[++i] = event->y;
         if (shellSurface && shellSurface->surface()) {
             QPoint pos = shellSurface->geometry().topLeft();
-            //shellSurface->moveTo(QPoint(pos.x(), event->y));
+            shellSurface->moveTo(QPoint(pos.x(), event->y));
         }
     }
 
@@ -528,11 +528,9 @@ void XWaylandManager::handleConfigureNotify(xcb_configure_notify_event_t *event)
         return;
 
     XWaylandShellSurface *shellSurface = m_windowsMap[event->window];
-    QRect geometry = shellSurface->geometry();
-    geometry.setTopLeft(QPoint(event->x, event->y));
+    shellSurface->moveTo(QPoint(event->x, event->y));
     if (shellSurface->overrideRedirect())
-        geometry.setSize(QSize(event->width, event->height));
-    shellSurface->setGeometry(geometry);
+        shellSurface->resize(QSize(event->width, event->y));
 }
 
 void XWaylandManager::handleDestroyNotify(xcb_destroy_notify_event_t *event)
