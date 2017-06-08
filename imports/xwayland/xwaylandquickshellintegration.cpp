@@ -108,12 +108,8 @@ void XWaylandQuickShellIntegration::handleMapped()
     if (m_shellSurface->windowType() == Qt::Popup)
         return;
 
-    if (m_shellSurface->wmWindowType() == XWaylandShellSurface::MenuWindow ||
-            m_shellSurface->wmWindowType() == XWaylandShellSurface::PopupWindow ||
-            m_shellSurface->wmWindowType() == XWaylandShellSurface::ComboWindow)
-        return;
-
-    m_item->takeFocus();
+    if (m_shellSurface->wmWindowType() == XWaylandShellSurface::ToplevelWindow)
+        m_item->takeFocus();
 }
 
 void XWaylandQuickShellIntegration::handleActivatedChanged()
