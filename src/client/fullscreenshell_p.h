@@ -32,7 +32,7 @@
 #include <QtCore/private/qobject_p.h>
 
 #include <LiriWaylandClient/FullScreenShell>
-#include <LiriWaylandClient/private/qwayland-fullscreen-shell-unstable-v1.h>
+#include "qwayland-fullscreen-shell-unstable-v1.h"
 
 //
 //  W A R N I N G

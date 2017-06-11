@@ -1,11 +1,10 @@
 import qbs 1.0
 
-LiriDynamicLibrary {
+LiriQmlPlugin {
     name: "liriwaylandserverprivateplugin"
-    targetName: "liriwaylandserverprivateplugin"
+    pluginPath: "Liri/WaylandServer/Private"
 
-    Depends { name: "lirideployment" }
-    Depends { name: "Qt"; submodules: ["gui", "gui-private", "qml", "quick", "waylandcompositor"] }
+    Depends { name: "Qt"; submodules: ["gui", "gui-private", "waylandcompositor"] }
 
     condition: {
         if (!project.withLibraries) {
@@ -18,20 +17,5 @@ LiriDynamicLibrary {
 
     cpp.defines: base.concat(["QT_WAYLAND_COMPOSITOR_QUICK"])
 
-    files: ["*.cpp", "*.h"]
-
-    Group {
-        name: "QML Files"
-        files: [
-            "*.qml",
-            "qmldir",
-        ]
-        fileTags: ["qml"]
-    }
-
-    Group {
-        qbs.install: true
-        qbs.installDir: lirideployment.qmlDir + "/Liri/WaylandServer/Private"
-        fileTagsFilter: ["dynamiclibrary", "qml"]
-    }
+    files: ["*.cpp", "*.h", "qmldir", "*.qml"]
 }

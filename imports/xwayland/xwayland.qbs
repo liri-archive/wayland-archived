@@ -1,10 +1,9 @@
 import qbs 1.0
 
-LiriDynamicLibrary {
+LiriQmlPlugin {
     name: "lirixwaylandplugin"
-    targetName: "lirixwaylandplugin"
+    pluginPath: "Liri/XWayland"
 
-    Depends { name: "lirideployment" }
     Depends { name: "LiriWaylandServer" }
     Depends { name: "XCB"; submodules: ["xfixes", "cursor", "composite", "render", "shape"] }
     Depends { name: "X11.xcursor" }
@@ -54,20 +53,5 @@ LiriDynamicLibrary {
 
     cpp.defines: ["QT_WAYLAND_COMPOSITOR_QUICK"]
 
-    files: ["*.cpp", "*.h"]
-
-    Group {
-        name: "QML Files"
-        files: [
-            "*.qml",
-            "qmldir",
-        ]
-        fileTags: ["qml"]
-    }
-
-    Group {
-        qbs.install: true
-        qbs.installDir: lirideployment.qmlDir + "/Liri/XWayland"
-        fileTagsFilter: ["dynamiclibrary", "qml"]
-    }
+    files: ["*.cpp", "*.h", "qmldir", "*.qml"]
 }

@@ -35,7 +35,7 @@
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <LiriWaylandServer/Screenshooter>
-#include <LiriWaylandServer/private/qwayland-server-liri-screenshooter.h>
+#include "qwayland-server-liri-screenshooter.h"
 
 //
 //  W A R N I N G

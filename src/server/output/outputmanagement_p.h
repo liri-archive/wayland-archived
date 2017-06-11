@@ -31,7 +31,7 @@
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <LiriWaylandServer/OutputManagement>
-#include <LiriWaylandServer/private/qwayland-server-liri-outputmanagement.h>
+#include "qwayland-server-liri-outputmanagement.h"
 
 //
 //  W A R N I N G

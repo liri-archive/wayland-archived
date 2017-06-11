@@ -1,11 +1,9 @@
 import qbs 1.0
 
-LiriDynamicLibrary {
+LiriQmlPlugin {
     name: "liriwaylandserverplugin"
-    targetName: "liriwaylandserverplugin"
+    pluginPath: "Liri/WaylandServer"
 
-    Depends { name: "lirideployment" }
-    Depends { name: "Qt"; submodules: ["qml", "quick"] }
     Depends { name: "LiriWaylandServer" }
 
     condition: {
@@ -17,20 +15,5 @@ LiriDynamicLibrary {
         return true;
     }
 
-    files: ["*.cpp", "*.h"]
-
-    Group {
-        name: "QML Files"
-        files: [
-            "*.qml",
-            "qmldir",
-        ]
-        fileTags: ["qml"]
-    }
-
-    Group {
-        qbs.install: true
-        qbs.installDir: lirideployment.qmlDir + "/Liri/WaylandServer"
-        fileTagsFilter: ["dynamiclibrary", "qml"]
-    }
+    files: ["*.cpp", "*.h", "qmldir", "*.qml"]
 }

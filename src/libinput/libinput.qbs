@@ -1,74 +1,86 @@
 import qbs 1.0
+import "../../qbs/shared/imports/LiriUtils.js" as LiriUtils
 
-LiriModule {
+LiriModuleProject {
+    id: root
+
     name: "LiriLibInput"
-    targetName: "LiriLibInput"
-    version: "0.0.0"
+    moduleName: "LiriLibInput"
+    description: "Qt API for libinput"
+    pkgConfigDependencies: ["Qt5Core", "libinput", "LiriUDev"]
     createCMake: false
 
-    Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
-    Depends { name: "libinput" }
-    Depends { name: "LiriUDev" }
-    Depends { name: "LiriLogind" }
-    Depends { name: "eglfsxkb" }
-
-    condition: {
-        if (!project.withLibraries) {
-            console.info("Libraries disabled");
-            return false;
-        }
-
-        if (!libinput.found) {
-            console.error("libinput is required to build " + targetName);
-            return false;
-        }
-
-        return true;
-    }
-
-    cpp.defines: base.concat([
-        'LIRIWAYLAND_VERSION="' + project.version + '"',
-        "QT_BUILD_LIRILIBINPUT_LIB"
-    ])
-
-    create_headers.headersMap: ({
-        "libinputgesture.h": "LibInputGestore",
-        "libinputhandler.h": "LibInputHandler",
-        "libinputkeyboard.h": "LibInputKeyboard",
-        "libinputpointer.h": "LibInputPointer",
-        "libinputtouch.h": "LibInputTouch",
+    resolvedProperties: ({
+        Depends: [{ name: LiriUtils.quote("Qt.core") },
+                  { name: LiriUtils.quote("Qt.core-private") },
+                  { name: LiriUtils.quote("Qt.gui") },
+                  { name: LiriUtils.quote("Qt.gui-private") },
+                  { name: LiriUtils.quote("libinput") },
+                  { name: LiriUtils.quote("LiriUDev") },
+                  { name: LiriUtils.quote("LiriLogind") },
+                  { name: LiriUtils.quote("Qt.service_support-private") },
+                  { name: LiriUtils.quote("Qt.theme_support-private") },
+                  { name: LiriUtils.quote("Qt.eventdispatcher_support-private") }],
     })
 
-    create_pkgconfig.name: "Liri LibInput"
-    create_pkgconfig.description: "Qt API for libinput"
-    create_pkgconfig.version: project.version
-    create_pkgconfig.dependencies: ["Qt5Core", "libinput", "LiriUDev"]
+    LiriHeaders {
+        name: root.headersName
+        sync.module: root.moduleName
+        sync.classNames: ({
+            "libinputgesture.h": ["LibInputGestore"],
+            "libinputhandler.h": ["LibInputHandler"],
+            "libinputkeyboard.h": ["LibInputKeyboard"],
+            "libinputpointer.h": ["LibInputPointer"],
+            "libinputtouch.h": ["LibInputTouch"],
+        })
 
-    files: ["*.cpp"]
-
-    Group {
-        name: "Headers"
-        files: ["*.h"]
-        excludeFiles: ["*_p.h"]
-        fileTags: ["public_headers"]
+        Group {
+            name: "Headers"
+            files: "**/*.h"
+            fileTags: ["hpp_syncable"]
+        }
     }
 
-    Group {
-        name: "Private Headers"
-        files: ["*_p.h"]
-        excludeFiles: ["logging_p.h"]
-        fileTags: ["private_headers"]
-    }
+    LiriModule {
+        name: "LiriLibInput"
+        targetName: "LiriLibInput"
+        version: "0.0.0"
 
-    Export {
-        property bool found: true
-
-        Depends { name: "cpp" }
+        Depends { name: root.headersName }
         Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
         Depends { name: "libinput" }
         Depends { name: "LiriUDev" }
         Depends { name: "LiriLogind" }
+        Depends { name: "eglfsxkb" }
 
-        cpp.includePaths: product.generatedHeadersDir
+        condition: {
+            if (!project.withLibraries) {
+                console.info("Libraries disabled");
+                return false;
+            }
+
+            if (!libinput.found) {
+                console.error("libinput is required to build " + targetName);
+                return false;
+            }
+
+            return true;
+        }
+
+        cpp.defines: base.concat([
+            'LIRIWAYLAND_VERSION="' + project.version + '"',
+            "QT_BUILD_LIRILIBINPUT_LIB"
+        ])
+
+        files: ["*.cpp", "*.h"]
+
+        Export {
+            Depends { name: "cpp" }
+            Depends { name: root.headersName }
+            Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
+            Depends { name: "libinput" }
+            Depends { name: "LiriUDev" }
+            Depends { name: "LiriLogind" }
+        }
     }
 }

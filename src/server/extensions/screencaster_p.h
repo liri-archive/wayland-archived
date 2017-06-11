@@ -34,7 +34,7 @@
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <LiriWaylandServer/Screencaster>
-#include <LiriWaylandServer/private/qwayland-server-liri-screencaster.h>
+#include "qwayland-server-liri-screencaster.h"
 
 //
 //  W A R N I N G

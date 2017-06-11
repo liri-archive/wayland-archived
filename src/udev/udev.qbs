@@ -1,66 +1,73 @@
 import qbs 1.0
+import "../../qbs/shared/imports/LiriUtils.js" as LiriUtils
 
-LiriModule {
-    name: "LiriUDev"
-    targetName: "LiriUDev"
-    version: "0.0.0"
+LiriModuleProject {
+    id: root
+
+    name: "UDev"
+    moduleName: "LiriUDev"
+    description: "Qt API for udev"
+    pkgConfigDependencies: ["Qt5Core", "libudev"]
     createCMake: false
 
-    Depends { name: "Qt"; submodules: ["core", "core-private"] }
-    Depends { name: "libudev" }
-
-    condition: {
-        if (!project.withLibraries) {
-            console.info("Libraries disabled");
-            return false;
-        }
-
-        if (!libudev.found) {
-            console.error("libudev is required to build " + targetName);
-            return false;
-        }
-
-        return true;
-    }
-
-    cpp.defines: base.concat([
-        'LIRIWAYLAND_VERSION="' + project.version + '"',
-        "QT_BUILD_LIRIUDEV_LIB"
-    ])
-
-    create_headers.headersMap: ({
-        "udevdevice.h": "UdevDevice",
-        "udevenumerate.h": "UdevEnumerate",
-        "udev.h": "Udev",
-        "udevmonitor.h": "UdevMonitor",
+    resolvedProperties: ({
+        Depends: [{ name: LiriUtils.quote("Qt.core") },
+                  { name: LiriUtils.quote("Qt.core-private") },
+                  { name: LiriUtils.quote("libudev") }],
     })
 
-    create_pkgconfig.name: "Liri UDev"
-    create_pkgconfig.description: "Qt API for udev"
-    create_pkgconfig.version: project.version
-    create_pkgconfig.dependencies: ["Qt5Core", "libudev"]
+    LiriHeaders {
+        name: root.headersName
+        sync.module: root.moduleName
+        sync.classNames: ({
+            "udevdevice.h": ["UdevDevice"],
+            "udevenumerate.h": ["UdevEnumerate"],
+            "udev.h": ["Udev"],
+            "udevmonitor.h": ["UdevMonitor"],
+        })
 
-    files: ["*.cpp"]
-
-    Group {
-        name: "Headers"
-        files: ["*.h"]
-        excludeFiles: ["*_p.h"]
-        fileTags: ["public_headers"]
+        Group {
+            name: "Headers"
+            files: "**/*.h"
+            fileTags: ["hpp_syncable"]
+        }
     }
 
-    Group {
-        name: "Private Headers"
-        files: ["*_p.h"]
-        excludeFiles: ["logging_p.h"]
-        fileTags: ["private_headers"]
-    }
+    LiriModule {
+        name: root.moduleName
+        targetName: root.targetName
+        version: "0.0.0"
 
-    Export {
-        Depends { name: "cpp" }
+        Depends { name: root.headersName }
         Depends { name: "Qt"; submodules: ["core", "core-private"] }
         Depends { name: "libudev" }
 
-        cpp.includePaths: product.generatedHeadersDir
+        condition: {
+            if (!project.withLibraries) {
+                console.info("Libraries disabled");
+                return false;
+            }
+
+            if (!libudev.found) {
+                console.error("libudev is required to build " + targetName);
+                return false;
+            }
+
+            return true;
+        }
+
+        cpp.defines: base.concat([
+            'LIRIWAYLAND_VERSION="' + project.version + '"',
+            "QT_BUILD_LIRIUDEV_LIB"
+        ])
+
+        files: ["*.cpp", "*.h"]
+
+        Export {
+            Depends { name: "cpp" }
+            Depends { name: root.headersName }
+            Depends { name: "Qt"; submodules: ["core", "core-private"] }
+            Depends { name: "libudev" }
+        }
     }
 }

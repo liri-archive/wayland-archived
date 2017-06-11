@@ -1,57 +1,64 @@
 import qbs 1.0
+import "../../qbs/shared/imports/LiriUtils.js" as LiriUtils
 
-LiriModule {
+LiriModuleProject {
+    id: root
+
     name: "LiriLogind"
-    targetName: "LiriLogind"
-    version: "0.0.0"
+    moduleName: "LiriLogind"
+    description: "Qt API for logind"
+    pkgConfigDependencies: ["Qt5Core", "Qt5DBus"]
     createCMake: false
 
-    Depends { name: "Qt"; submodules: ["core", "core-private", "dbus"] }
-
-    condition: {
-        if (!project.withLibraries) {
-            console.info("Libraries disabled");
-            return false;
-        }
-
-        return true;
-    }
-
-    cpp.defines: [
-        'LIRIWAYLAND_VERSION="' + project.version + '"',
-        "QT_BUILD_LIRILOGIND_LIB"
-    ]
-
-    create_headers.headersMap: ({
-        "logind.h": "Logind",
-        "vthandler.h": "VtHandler",
+    resolvedProperties: ({
+        Depends: [{ name: LiriUtils.quote("Qt.core") },
+                  { name: LiriUtils.quote("Qt.core-private") },
+                  { name: LiriUtils.quote("Qt.dbus") }],
     })
 
-    create_pkgconfig.name: "Liri Logind"
-    create_pkgconfig.description: "Qt API for logind"
-    create_pkgconfig.version: project.version
-    create_pkgconfig.dependencies: ["Qt5Core", "Qt5DBus"]
+    LiriHeaders {
+        name: root.headersName
+        sync.module: root.moduleName
+        sync.classNames: ({
+            "logind.h": ["Logind"],
+            "vthandler.h": ["VtHandler"],
+        })
 
-    files: ["*.cpp"]
-
-    Group {
-        name: "Headers"
-        files: ["*.h"]
-        excludeFiles: ["*_p.h"]
-        fileTags: ["public_headers"]
+        Group {
+            name: "Headers"
+            files: "**/*.h"
+            fileTags: ["hpp_syncable"]
+        }
     }
 
-    Group {
-        name: "Private Headers"
-        files: ["*_p.h"]
-        excludeFiles: ["logging_p.h"]
-        fileTags: ["private_headers"]
-    }
+    LiriModule {
+        name: root.moduleName
+        targetName: root.targetName
+        version: "0.0.0"
 
-    Export {
-        Depends { name: "cpp" }
+        Depends { name: root.headersName }
         Depends { name: "Qt"; submodules: ["core", "core-private", "dbus"] }
 
-        cpp.includePaths: product.generatedHeadersDir
+        condition: {
+            if (!project.withLibraries) {
+                console.info("Libraries disabled");
+                return false;
+            }
+
+            return true;
+        }
+
+        cpp.defines: [
+            'LIRIWAYLAND_VERSION="' + project.version + '"',
+            "QT_BUILD_LIRILOGIND_LIB"
+        ]
+
+        files: ["*.cpp", "*.h"]
+
+        Export {
+            Depends { name: "cpp" }
+            Depends { name: root.headersName }
+            Depends { name: "Qt"; submodules: ["core", "core-private", "dbus"] }
+        }
     }
 }

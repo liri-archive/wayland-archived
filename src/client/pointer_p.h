@@ -32,7 +32,7 @@
 
 #include <LiriWaylandClient/Pointer>
 #include <LiriWaylandClient/Surface>
-#include <LiriWaylandClient/private/qwayland-wayland.h>
+#include "qwayland-wayland.h"
 
 #include <wayland-cursor.h>
 

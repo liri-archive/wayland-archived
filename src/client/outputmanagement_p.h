@@ -31,7 +31,7 @@
 #include <QtCore/private/qobject_p.h>
 
 #include <LiriWaylandClient/OutputManagement>
-#include <LiriWaylandClient/private/qwayland-liri-outputmanagement.h>
+#include "qwayland-liri-outputmanagement.h"
 
 //
 //  W A R N I N G

@@ -33,7 +33,7 @@
 #include <QtCore/private/qobject_p.h>
 
 #include <LiriWaylandClient/Screencaster>
-#include <LiriWaylandClient/private/qwayland-liri-screencaster.h>
+#include "qwayland-liri-screencaster.h"
 
 //
 //  W A R N I N G

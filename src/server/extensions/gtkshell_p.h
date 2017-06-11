@@ -31,7 +31,7 @@
 #include <LiriWaylandServer/GtkShell>
 #include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
-#include <LiriWaylandServer/private/qwayland-server-gtk-shell.h>
+#include "qwayland-server-gtk-shell.h"
 
 //
 //  W A R N I N G

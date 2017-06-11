@@ -32,7 +32,8 @@
 
 #include <LiriWaylandClient/Keyboard>
 #include <LiriWaylandClient/Surface>
-#include <LiriWaylandClient/private/qwayland-wayland.h>
+
+#include "qwayland-wayland.h"
 
 //
 //  W A R N I N G

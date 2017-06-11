@@ -32,7 +32,7 @@
 #include <QtCore/private/qobject_p.h>
 
 #include <LiriWaylandClient/Screenshooter>
-#include <LiriWaylandClient/private/qwayland-liri-screenshooter.h>
+#include "qwayland-liri-screenshooter.h"
 
 //
 //  W A R N I N G

@@ -1,11 +1,10 @@
 import qbs 1.0
 
-LiriDynamicLibrary {
+LiriQmlPlugin {
     name: "liriplatformplugin"
-    targetName: "liriplatformplugin"
+    pluginPath: "Liri/Platform"
 
-    Depends { name: "lirideployment" }
-    Depends { name: "Qt"; submodules: ["gui", "gui-private", "qml", "quick", "waylandclient", "waylandclient-private"] }
+    Depends { name: "Qt"; submodules: ["gui", "gui-private", "waylandclient", "waylandclient-private"] }
     Depends { name: "materialdecoration" }
 
     condition: {
@@ -19,20 +18,5 @@ LiriDynamicLibrary {
 
     cpp.defines: []
 
-    files: ["*.cpp", "*.h"]
-
-    Group {
-        name: "QML Files"
-        files: [
-            "*.qml",
-            "qmldir",
-        ]
-        fileTags: ["qml"]
-    }
-
-    Group {
-        qbs.install: true
-        qbs.installDir: lirideployment.qmlDir + "/Liri/Platform"
-        fileTagsFilter: ["dynamiclibrary", "qml"]
-    }
+    files: ["*.cpp", "*.h", "qmldir", "*.qml"]
 }
