@@ -18,6 +18,7 @@ LiriDynamicLibrary {
     }
 
     cpp.defines: []
+    cpp.includePaths: base.concat([product.buildDirectory])
 
     files: ["*.cpp", "*.h"]
 
