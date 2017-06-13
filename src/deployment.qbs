@@ -22,7 +22,12 @@ Project {
         Depends { name: "LiriLogind" }
         Depends { name: "LiriUDev" }
         Depends { name: "LiriWaylandClient" }
+        Depends { name: "LiriWaylandClient-cmake" }
+        Depends { name: "LiriWaylandClient-pkgconfig" }
+        Depends { name: "LiriWaylandClient-qbs" }
         Depends { name: "LiriWaylandServer" }
+        Depends { name: "LiriWaylandServer-pkgconfig" }
+        Depends { name: "LiriWaylandServer-qbs" }
         Depends { name: "materialdecorationplugin" }
         Depends { name: "QPA" }
     }
