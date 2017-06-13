@@ -83,6 +83,7 @@ LiriModuleProject {
             "QT_BUILD_LIRIWAYLANDCLIENT_LIB"
         ])
         cpp.commonCompilerFlags: base.concat(["-Wno-deprecated-declarations"])
+        cpp.includePaths: base.concat([product.buildDirectory])
 
         files: ["*.cpp", "*.h"]
 

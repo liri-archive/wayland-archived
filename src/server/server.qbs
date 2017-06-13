@@ -96,6 +96,7 @@ LiriModuleProject {
             "QT_WAYLAND_COMPOSITOR_QUICK"
         ]
         cpp.commonCompilerFlags: base.concat(["-Wno-deprecated-declarations"])
+        cpp.includePaths: base.concat([product.buildDirectory])
 
         files: [
             "*.cpp",
