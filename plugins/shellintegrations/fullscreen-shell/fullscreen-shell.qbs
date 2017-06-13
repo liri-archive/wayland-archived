@@ -21,6 +21,11 @@ LiriDynamicLibrary {
         fileTags: ["wayland.client.protocol"]
     }
 
+    FileTagger {
+        patterns: "*.json"
+        fileTags: ["qt_plugin_metadata"]
+    }
+
     Group {
         qbs.install: true
         qbs.installDir: lirideployment.pluginsDir + "/wayland-shell-integration"
