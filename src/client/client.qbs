@@ -1,4 +1,5 @@
 import qbs 1.0
+import qbs.FileInfo
 import "../../qbs/shared/imports/LiriUtils.js" as LiriUtils
 
 LiriModuleProject {
@@ -92,6 +93,12 @@ LiriModuleProject {
                 "../../data/protocols/liri/liri-outputmanagement.xml"
             ]
             fileTags: ["wayland.client.protocol"]
+        }
+
+        Group {
+            qbs.install: true
+            qbs.installDir: FileInfo.joinPaths(lirideployment.includeDir, root.moduleName, project.version, root.moduleName, "private")
+            fileTagsFilter: ["hpp_private"]
         }
 
         Export {
