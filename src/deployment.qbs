@@ -18,9 +18,17 @@ Project {
         Depends { name: "liriwaylandserverprivateplugin" }
         Depends { name: "lirixwaylandplugin" }
         Depends { name: "LiriEglFS" }
+        Depends { name: "LiriEglFS-pkgconfig" }
+        Depends { name: "LiriEglFS-qbs" }
         Depends { name: "LiriLibInput" }
+        Depends { name: "LiriLibInput-pkgconfig" }
+        Depends { name: "LiriLibInput-qbs" }
         Depends { name: "LiriLogind" }
+        Depends { name: "LiriLogind-pkgconfig" }
+        Depends { name: "LiriLogind-qbs" }
         Depends { name: "LiriUDev" }
+        Depends { name: "LiriUDev-pkgconfig" }
+        Depends { name: "LiriUDev-qbs" }
         Depends { name: "LiriWaylandClient" }
         Depends { name: "LiriWaylandClient-cmake" }
         Depends { name: "LiriWaylandClient-pkgconfig" }
