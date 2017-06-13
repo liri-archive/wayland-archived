@@ -37,6 +37,6 @@ Project {
         Depends { name: "LiriWaylandServer-pkgconfig" }
         Depends { name: "LiriWaylandServer-qbs" }
         Depends { name: "materialdecorationplugin" }
-        Depends { name: "QPA" }
+        Depends { name: "lirieglfs" }
     }
 }

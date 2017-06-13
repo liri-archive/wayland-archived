@@ -4,7 +4,7 @@ import "../../qbs/shared/imports/LiriUtils.js" as LiriUtils
 LiriModuleProject {
     id: root
 
-    name: "UDev"
+    name: "LiriUDev"
     moduleName: "LiriUDev"
     description: "Qt API for udev"
     pkgConfigDependencies: ["Qt5Core", "libudev"]

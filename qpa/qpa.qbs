@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriDynamicLibrary {
-    name: "QPA"
+    name: targetName
     targetName: "lirieglfs"
 
     Depends { name: "lirideployment" }
