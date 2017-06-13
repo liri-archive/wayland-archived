@@ -11,7 +11,7 @@ Project {
         archiver.type: "tar"
         archiver.outputDirectory: project.buildDirectory
 
-        Depends { name: "Fullscreen Shell Integration" }
+        Depends { name: "fullscreen-shell" }
         Depends { name: "kms" }
         Depends { name: "liriplatformplugin" }
         Depends { name: "liriwaylandserverplugin" }
