@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriDynamicLibrary {
-    name: "kms"
+    name: targetName
     targetName: "kms"
 
     Depends { name: "lirideployment" }

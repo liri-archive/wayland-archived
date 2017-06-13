@@ -1,7 +1,7 @@
 import qbs 1.0
 
 LiriDynamicLibrary {
-    name: "Fullscreen Shell Integration"
+    name: targetName
     targetName: "fullscreen-shell"
 
     Depends { name: "lirideployment" }
