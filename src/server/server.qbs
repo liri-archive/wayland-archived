@@ -81,15 +81,6 @@ LiriModuleProject {
         Depends { name: "LiriEglFS" }
         Depends { name: "WaylandScanner" }
 
-        condition: {
-            if (!project.withLibraries) {
-                console.info("Libraries disabled");
-                return false;
-            }
-
-            return true;
-        }
-
         cpp.defines: [
             'LIRIWAYLAND_VERSION="' + project.version + '"',
             "QT_BUILD_LIRIWAYLANDSERVER_LIB",

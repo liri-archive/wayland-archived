@@ -13,16 +13,6 @@ LiriDynamicLibrary {
     Depends { name: "libdrm" }
 
     condition: {
-        if (!project.withQPA) {
-            console.info("QPA plugin disabled");
-            return false;
-        }
-
-        if (!project.withKmsPlugin) {
-            console.info("KMS EGL device integration disabled");
-            return false;
-        }
-
         if (!gbm.found) {
             console.error("gbm is required to build " + targetName);
             return false;

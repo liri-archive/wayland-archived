@@ -54,11 +54,6 @@ LiriModuleProject {
         Depends { name: "eglfsxkb" }
 
         condition: {
-            if (!project.withLibraries) {
-                console.info("Libraries disabled");
-                return false;
-            }
-
             if (!libinput.found) {
                 console.error("libinput is required to build " + targetName);
                 return false;

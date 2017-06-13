@@ -8,15 +8,6 @@ LiriDynamicLibrary {
     Depends { name: "Qt"; submodules: ["gui", "gui-private", "waylandclient", "waylandclient-private"] }
     Depends { name: "WaylandScanner" }
 
-    condition: {
-        if (!project.withFullscreenShellIntegration) {
-            console.info("fullscreen-shell integration disabled");
-            return false;
-        }
-
-        return true;
-    }
-
     cpp.defines: []
     cpp.includePaths: base.concat([product.buildDirectory])
 

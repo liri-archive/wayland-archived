@@ -39,15 +39,6 @@ LiriModuleProject {
         Depends { name: root.headersName }
         Depends { name: "Qt"; submodules: ["core", "core-private", "dbus"] }
 
-        condition: {
-            if (!project.withLibraries) {
-                console.info("Libraries disabled");
-                return false;
-            }
-
-            return true;
-        }
-
         cpp.defines: [
             'LIRIWAYLAND_VERSION="' + project.version + '"',
             "QT_BUILD_LIRILOGIND_LIB"

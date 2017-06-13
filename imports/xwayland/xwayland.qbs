@@ -9,11 +9,6 @@ LiriQmlPlugin {
     Depends { name: "X11.xcursor" }
 
     condition: {
-        if (!project.withXWayland) {
-            console.info("XWayland support disabled");
-            return false;
-        }
-
         if (!XCB.xcb.found) {
             console.error("xcb is required to build " + targetName);
             return false;
