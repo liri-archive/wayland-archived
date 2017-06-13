@@ -35,7 +35,7 @@ Project {
         "src/materialdecoration/materialdecoration.qbs",
         "src/server/server.qbs",
         "src/udev/udev.qbs",
-        "tests/auto/auto.qbs",
+        //"tests/auto/auto.qbs",
         "tests/manual/libinput/libinput.qbs",
     ]
 }
