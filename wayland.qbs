@@ -10,8 +10,6 @@ Project {
     property stringList autotestArguments: []
     property stringList autotestWrapper: []
 
-    property bool withQPA: true
-
     condition: qbs.targetOS.contains("linux")
 
     minimumQbsVersion: "1.8.0"

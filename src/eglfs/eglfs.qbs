@@ -65,15 +65,6 @@ LiriModuleProject {
         Depends { name: "LiriLogind" }
         Depends { name: "eglfsxkb" }
 
-        condition: {
-            if (!project.withQPA) {
-                console.info("QPA plugin disabled");
-                return false;
-            }
-
-            return true;
-        }
-
         cpp.defines: [
             'LIRIWAYLAND_VERSION="' + project.version + '"',
             "QT_BUILD_LIRIEGLFS_LIB"
