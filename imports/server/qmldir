@@ -1,4 +1,3 @@
 module Liri.WaylandServer
 plugin liriwaylandserverplugin
 classname LiriWaylandServerPlugin
-WindowChrome 1.0 WindowChrome.qml

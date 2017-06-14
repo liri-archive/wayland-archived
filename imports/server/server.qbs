@@ -6,5 +6,5 @@ LiriQmlPlugin {
 
     Depends { name: "LiriWaylandServer" }
 
-    files: ["*.cpp", "*.h", "qmldir", "*.qml"]
+    files: ["*.cpp", "*.h", "qmldir"]
 }
