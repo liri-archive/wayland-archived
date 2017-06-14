@@ -85,6 +85,8 @@ XWaylandShellSurface::XWaylandShellSurface(QObject *parent)
     , m_decorate(true)
     , m_maximized(false)
     , m_fullscreen(false)
+    , m_moving(false)
+    , m_resizing(false)
 {
 }
 
@@ -532,8 +534,46 @@ void XWaylandShellSurface::sendConfigure(const QRect &geometry)
     xcb_flush(Xcb::connection());
 }
 
+void XWaylandShellSurface::sendResize(const QSize &size)
+{
+    m_geometry.setSize(size);
+
+    quint32 mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
+    quint32 values[2];
+
+    values[0] = m_geometry.size().width();
+    values[1] = m_geometry.size().height();
+
+    xcb_configure_window(Xcb::connection(), m_window, mask, values);
+    xcb_flush(Xcb::connection());
+}
+
+bool XWaylandShellSurface::isMoving() const
+{
+    return m_moving;
+}
+
+void XWaylandShellSurface::setMoving(bool moving)
+{
+    m_moving = moving;
+}
+
+bool XWaylandShellSurface::isResizing() const
+{
+    return m_resizing;
+}
+
+void XWaylandShellSurface::setResizing(bool resizing)
+{
+    m_resizing = resizing;
+}
+
 void XWaylandShellSurface::moveTo(const QPoint &pos)
 {
+    // Don't move the window when resizing
+    if (m_resizing)
+        return;
+
     m_geometry.setTopLeft(pos);
     Q_EMIT setPosition(pos.x(), pos.y());
 }

@@ -149,6 +149,13 @@ public:
 
     QSize sizeForResize(const QSizeF &size, const QPointF &delta, ResizeEdge edge);
     void sendConfigure(const QRect &geometry);
+    void sendResize(const QSize &size);
+
+    bool isMoving() const;
+    void setMoving(bool moving);
+
+    bool isResizing() const;
+    void setResizing(bool resizing);
 
     void moveTo(const QPoint &pos);
     void resize(const QSize &size);
@@ -219,6 +226,9 @@ private:
     bool m_decorate;
     bool m_maximized;
     bool m_fullscreen;
+
+    bool m_moving;
+    bool m_resizing;
 
     friend class XWaylandManager;
 

@@ -61,7 +61,7 @@ bool XWaylandQuickShellIntegration::mouseMoveEvent(QMouseEvent *event)
         float scaleFactor = m_item->view()->output()->scaleFactor();
         QPointF delta = (event->windowPos() - resizeState.initialMousePos) / scaleFactor;
         QSize newSize = m_shellSurface->sizeForResize(resizeState.initialSize, delta, resizeState.resizeEdges);
-        m_shellSurface->sendConfigure(QRect(m_shellSurface->position(), newSize));
+        m_shellSurface->sendResize(newSize);
     } else if (grabberState == GrabberState::Move) {
         QQuickItem *moveItem = m_item->moveItem();
         if (!moveState.initialized) {
@@ -83,6 +83,8 @@ bool XWaylandQuickShellIntegration::mouseReleaseEvent(QMouseEvent *event)
     Q_UNUSED(event);
     if (grabberState != GrabberState::Default) {
         grabberState = GrabberState::Default;
+        m_shellSurface->setMoving(false);
+        m_shellSurface->setResizing(false);
         return true;
     }
     return false;
@@ -92,6 +94,7 @@ void XWaylandQuickShellIntegration::handleStartMove()
 {
     grabberState = GrabberState::Move;
     moveState.initialized = false;
+    m_shellSurface->setMoving(true);
 }
 
 void XWaylandQuickShellIntegration::handleStartResize(XWaylandShellSurface::ResizeEdge edges)
@@ -101,6 +104,7 @@ void XWaylandQuickShellIntegration::handleStartResize(XWaylandShellSurface::Resi
     float scaleFactor = m_item->view()->output()->scaleFactor();
     resizeState.initialSize = m_shellSurface->surface()->size() / scaleFactor;
     resizeState.initialized = false;
+    m_shellSurface->setResizing(true);
 }
 
 void XWaylandQuickShellIntegration::handleMapped()
