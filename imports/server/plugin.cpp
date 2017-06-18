@@ -40,6 +40,7 @@
 
 #include "chromeitem.h"
 #include "fpscounter.h"
+#include "hotspot.h"
 #include "keyeventfilter.h"
 
 using namespace Liri::WaylandServer;
@@ -102,6 +103,9 @@ void LiriWaylandServerPlugin::registerTypes(const char *uri)
 
     // Key event filter
     qmlRegisterType<KeyEventFilter>(uri, 1, 0, "KeyEventFilter");
+
+    // Hotspot
+    qmlRegisterType<HotSpot>(uri, 1, 0, "HotSpot");
 
     // Settings
     qmlRegisterType<CompositorSettings>(uri, 1, 0, "CompositorSettings");

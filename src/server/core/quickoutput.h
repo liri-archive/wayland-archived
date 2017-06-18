@@ -48,9 +48,6 @@ class LIRIWAYLANDSERVER_EXPORT QuickOutput : public QWaylandQuickOutput
     Q_PROPERTY(Liri::WaylandServer::Screen *nativeScreen READ nativeScreen WRITE setNativeScreen NOTIFY nativeScreenChanged DESIGNABLE false)
     Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(PowerState powerState READ powerState WRITE setPowerState NOTIFY powerStateChanged)
-    Q_PROPERTY(QSize hotSpotSize READ hotSpotSize WRITE setHotSpotSize NOTIFY hotSpotSizeChanged)
-    Q_PROPERTY(quint64 hotSpotThreshold READ hotSpotThreshold WRITE setHotSpotThreshold NOTIFY hotSpotThresholdChanged)
-    Q_PROPERTY(quint64 hotSpotPushTime READ hotSpotPushTime WRITE setHotSpotPushTime NOTIFY hotSpotPushTimeChanged)
     Q_PROPERTY(QQmlListProperty<QObject> data READ data DESIGNABLE false)
     Q_CLASSINFO("DefaultProperty", "data")
 public:
@@ -61,14 +58,6 @@ public:
         PowerStateOff
     };
     Q_ENUM(PowerState)
-
-    enum HotSpot {
-        TopLeftHotSpot = 0,
-        TopRightHotSpot,
-        BottomLeftHotSpot,
-        BottomRightHotSpot
-    };
-    Q_ENUM(HotSpot)
 
     QuickOutput();
     QuickOutput(QWaylandCompositor *compositor);
@@ -84,15 +73,6 @@ public:
     PowerState powerState() const;
     void setPowerState(PowerState state);
 
-    QSize hotSpotSize() const;
-    void setHotSpotSize(const QSize &size);
-
-    quint64 hotSpotThreshold() const;
-    void setHotSpotThreshold(quint64 value);
-
-    quint64 hotSpotPushTime() const;
-    void setHotSpotPushTime(quint64 value);
-
     static QuickOutput *fromResource(wl_resource *resource);
 
 protected:
@@ -102,10 +82,6 @@ Q_SIGNALS:
     void nativeScreenChanged();
     void enabledChanged();
     void powerStateChanged();
-    void hotSpotSizeChanged();
-    void hotSpotThresholdChanged();
-    void hotSpotPushTimeChanged();
-    void hotSpotTriggered(HotSpot hotSpot);
 
 private:
     QuickOutputPrivate *const d_ptr;
