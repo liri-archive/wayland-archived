@@ -29,8 +29,10 @@
 
 #include <QtCore/QElapsedTimer>
 #include <QtCore/private/qobject_p.h>
+#include <QtGui/QGuiApplication>
 #include <QtGui/QScreen>
 #include <QtGui/qpa/qplatformscreen.h>
+#include <QtGui/qpa/qwindowsysteminterface.h>
 #include <QtWaylandCompositor/QWaylandCompositor>
 #include <QtWaylandCompositor/QWaylandOutputMode>
 
@@ -218,6 +220,11 @@ void QuickOutput::initialize()
 
     // Set the window visible now
     quickWindow->setVisible(true);
+
+    // Center mouse cursor
+    if (quickWindow->screen() == QGuiApplication::primaryScreen())
+        QWindowSystemInterface::handleMouseEvent(quickWindow, geometry().center(),
+                                                 geometry().center(), Qt::NoButton);
 
     d->initialized = true;
 }
