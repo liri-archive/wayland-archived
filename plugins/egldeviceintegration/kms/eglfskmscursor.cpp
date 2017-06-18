@@ -36,6 +36,8 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QLoggingCategory>
 #include <QtGui/QPainter>
+#include <QtGui/private/qguiapplication_p.h>
+#include <QtGui/private/qinputdevicemanager_p.h>
 
 #include "eglfskmscursor.h"
 #include "eglfskmsscreen.h"
@@ -178,6 +180,8 @@ QPoint EglFSKmsCursor::pos() const
 
 void EglFSKmsCursor::setPos(const QPoint &pos)
 {
+    QGuiApplicationPrivate::inputDeviceManager()->setCursorPos(pos);
+
     Q_FOREACH (QPlatformScreen *screen, m_screen->virtualSiblings()) {
         EglFSKmsScreen *kmsScreen = static_cast<EglFSKmsScreen *>(screen);
         QPoint origin = kmsScreen->geometry().topLeft();
