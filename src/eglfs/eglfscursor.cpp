@@ -304,10 +304,8 @@ void EglFSCursor::pointerEvent(const QMouseEvent &event)
 {
     if (event.type() != QEvent::MouseMove)
         return;
-    const QRect oldCursorRect = cursorRect();
-    m_cursor.pos = event.screenPos().toPoint();
-    update(oldCursorRect | cursorRect());
-    m_screen->handleCursorMove(m_cursor.pos);
+
+    setPos(event.screenPos().toPoint());
 }
 
 void EglFSCursor::paintOnScreen()
