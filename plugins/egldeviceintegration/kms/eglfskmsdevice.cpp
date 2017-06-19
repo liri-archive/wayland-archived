@@ -229,7 +229,9 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
     int preferred = -1;
     int current = -1;
     int configured = -1;
+    int fullHd = -1;
     int best = -1;
+    int last = -1;
 
     for (int i = modes.size() - 1; i >= 0; i--) {
         const drmModeModeInfo &m = modes.at(i);
@@ -246,13 +248,22 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
         if (m.type & DRM_MODE_TYPE_PREFERRED)
             preferred = i;
 
-        if (best < 0) {
-            best = i;
-        } else {
-            const drmModeModeInfo &best_mode = modes.at(best);
-            if (best_mode.hdisplay < m.hdisplay && best_mode.vdisplay < m.vdisplay)
-                best = i;
+        if (m.hdisplay == 1920 && m.vdisplay == 1080)
+            fullHd = i;
+
+        last = i;
+    }
+
+    if (preferred >= 0) {
+        const drmModeModeInfo &modeInfo = modes.at(preferred);
+        if (modeInfo.hdisplay < 1920 && modeInfo.vdisplay < 1080) {
+            if (fullHd >= 0)
+                best = fullHd;
+        } else if (modeInfo.hdisplay == 1920 && modeInfo.vdisplay == 1080) {
+            best = preferred;
         }
+    } else if (fullHd >= 0) {
+        best = fullHd;
     }
 
     if (configuration == OutputConfigModeline) {
@@ -278,6 +289,8 @@ EglFSKmsScreen *EglFSKmsDevice::screenForConnector(drmModeResPtr resources, drmM
         selected_mode = preferred;
     else if (current >= 0)
         selected_mode = current;
+    else
+        selected_mode = last;
 
     if (selected_mode < 0) {
         qCWarning(lcKms) << "No modes available for output" << connectorName;
