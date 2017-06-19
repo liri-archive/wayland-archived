@@ -251,10 +251,15 @@ QDpi EglFSKmsScreen::logicalDpi() const
 
 qreal EglFSKmsScreen::pixelDensity() const
 {
-    qreal density = floor(logicalDpi().first / qreal(100));
-    if (density < 1.0)
-        density = 1.0;
-    return density;
+    // Enable HiDPI based on resolution rather than physical size that can be
+    // wrong, this does not make sense for phones and tablets but we'll likely
+    // use libhybris there
+    const QSize s = geometry().size();
+    if (s.width() <= 1920 && s.height() <= 1080)
+        return 1.0;
+
+    // Prevent 0 device pixel ratio with less than 100 dpi
+    return qMax(1.0, floor(logicalDpi().first / qreal(100)));
 }
 
 Qt::ScreenOrientation EglFSKmsScreen::nativeOrientation() const
