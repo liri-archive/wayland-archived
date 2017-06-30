@@ -80,6 +80,7 @@ public:
     XWaylandShellSurface *shellSurfaceFromSurface(QWaylandSurface *surface);
 
 Q_SIGNALS:
+    void created();
     void shellSurfaceRequested(quint32 window, const QRect &geometry,
                                bool overrideRedirect, XWaylandShellSurface *parentShellSurface);
     void shellSurfaceCreated(XWaylandShellSurface *shellSurface);

@@ -175,6 +175,8 @@ void XWaylandManager::start(int fd)
     createWindowManager();
 
     qCDebug(XWAYLAND) << "X window manager created, root" << Xcb::rootWindow();
+
+    Q_EMIT created();
 }
 
 void XWaylandManager::addWindow(xcb_window_t id, XWaylandShellSurface *shellSurface)
