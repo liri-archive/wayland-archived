@@ -145,9 +145,9 @@ void XWayland::initialize()
     // Instantiate the server
     m_server = new XWaylandServer(m_compositor, this);
     connect(m_server, &XWaylandServer::started,
-            this, &XWayland::serverStarted);
-    connect(m_server, &XWaylandServer::started,
             this, &XWayland::handleServerStarted);
+    connect(m_server, &XWaylandServer::failedToStart,
+            this, &XWayland::serverFailedToStart);
 
     // Window manager
     m_manager->setServer(m_server);
@@ -156,6 +156,8 @@ void XWayland::initialize()
 
 void XWayland::handleServerStarted()
 {
+    Q_EMIT serverStarted();
+
     // Start window management
     m_manager->start(m_server->wmFd());
 }

@@ -69,6 +69,7 @@ Q_SIGNALS:
     void compositorChanged();
     void managerChanged();
     void serverStarted();
+    void serverFailedToStart();
 
 private Q_SLOTS:
     void handleServerStarted();

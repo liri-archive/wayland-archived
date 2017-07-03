@@ -58,6 +58,7 @@ public:
 
 Q_SIGNALS:
     void started();
+    void failedToStart();
 
 private:
     QWaylandCompositor *m_compositor;

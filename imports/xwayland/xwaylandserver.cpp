@@ -126,6 +126,10 @@ bool XWaylandServer::start()
         connect(watcher, &QFutureWatcher<void>::finished, watcher, &QFutureWatcher<void>::deleteLater, Qt::QueuedConnection);
         watcher->setFuture(QtConcurrent::run(this, &XWaylandServer::handleServerStarted));
     });
+    connect(m_process, &QProcess::errorOccurred, [this](QProcess::ProcessError error) {
+        if (error == QProcess::FailedToStart)
+            Q_EMIT failedToStart();
+    });
     connect(m_process, (void (QProcess::*)(int))&QProcess::finished, [this](int exitCode) {
         qCDebug(XWAYLAND) << "Xwayland finished with exit code" << exitCode;
 
