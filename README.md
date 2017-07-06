@@ -217,9 +217,4 @@ to learn how to enable them.
 
 ## Licensing
 
-Licensed under either of the following licenses:
-
-* GNU Lesser General Public License version 3.0
-* GNU General Public License version 2.0 or (at your option)
-  version 3.0 or any later version approved by the
-  KDE Free Qt Foundation.
+Licensed under the terms of the GNU General Public License version 3.
