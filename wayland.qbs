@@ -14,8 +14,6 @@ Project {
 
     minimumQbsVersion: "1.8.0"
 
-    qbsSearchPaths: ["qbs/shared"]
-
     references: [
         "imports/imports.qbs",
         "plugins/plugins.qbs",
