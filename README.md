@@ -42,6 +42,10 @@ Qt >= 5.8.0 with at least the following modules is required:
 * [qtdeclarative](http://code.qt.io/cgit/qt/qtdeclarative.git)
 * [qtwayland](http://code.qt.io/cgit/qt/qtwayland.git)
 
+And the following modules:
+
+ * [qbs-shared](https://github.com/lirios/qbs-shared.git)
+
 The following modules and their dependencies are required:
 
 * [udev](http://www.freedesktop.org/software/systemd/libudev/)
