@@ -5,5 +5,7 @@ Project {
 
     references: [
         "eglfsxkb/eglfsxkb.qbs",
+        "platformsupport/edid/edid.qbs",
+        "platformsupport/kmsconvenience/kmsconvenience.qbs",
     ]
 }

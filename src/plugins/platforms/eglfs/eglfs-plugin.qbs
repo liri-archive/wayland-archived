@@ -10,12 +10,12 @@ LiriDynamicLibrary {
         submodules: ["core", "core-private", "gui", "gui-private"]
         versionAtLeast: project.minimumQtVersion
     }
-    Depends { name: "LiriEglFS" }
+    Depends { name: "LiriEglFSDeviceIntegration" }
 
-    files: ["*.cpp", "*.h"]
+    files: ["*.cpp", "*.h", "*.json"]
 
     FileTagger {
-        patterns: "*.json"
+        patterns: "liri.json"
         fileTags: ["qt_plugin_metadata"]
     }
 
