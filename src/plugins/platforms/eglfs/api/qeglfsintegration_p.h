@@ -57,10 +57,17 @@
 #include <qpa/qplatformnativeinterface.h>
 #include <qpa/qplatformscreen.h>
 
+namespace Liri {
+namespace Platform {
+class LibInputManager;
+}
+}
+
 QT_BEGIN_NAMESPACE
 
 class QEglFSWindow;
 class QEglFSContext;
+class QEglFSLogindHandler;
 class QFbVtHandler;
 class QEvdevKeyboardManager;
 
@@ -109,14 +116,14 @@ public:
 private:
     EGLNativeDisplayType nativeDisplay() const;
     void createInputHandlers();
-    static void loadKeymapStatic(const QString &filename);
 
     EGLDisplay m_display;
     QPlatformInputContext *m_inputContext;
     QScopedPointer<QPlatformFontDatabase> m_fontDb;
     QScopedPointer<QPlatformServices> m_services;
     QScopedPointer<QFbVtHandler> m_vtHandler;
-    QEvdevKeyboardManager *m_kbdMgr;
+    QScopedPointer<Liri::Platform::LibInputManager> m_liHandler;
+    QEglFSLogindHandler *m_logindHandler;
     bool m_disableInputHandlers;
 };
 

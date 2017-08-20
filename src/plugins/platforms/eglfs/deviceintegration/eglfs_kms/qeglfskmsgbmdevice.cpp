@@ -47,7 +47,11 @@
 #include <QtCore/QLoggingCategory>
 #include <QtCore/private/qcore_unix_p.h>
 
+#include <LiriLogind/Logind>
+
 #define ARRAY_LENGTH(a) (sizeof (a) / sizeof (a)[0])
+
+using namespace Liri;
 
 QT_BEGIN_NAMESPACE
 
@@ -76,7 +80,20 @@ bool QEglFSKmsGbmDevice::open()
     Q_ASSERT(fd() == -1);
     Q_ASSERT(m_gbm_device == Q_NULLPTR);
 
-    int fd = qt_safe_open(devicePath().toLocal8Bit().constData(), O_RDWR | O_CLOEXEC);
+    Logind *logind = Logind::instance();
+
+    if (!logind->isConnected()) {
+        qCWarning(qLcEglfsKmsDebug, "Cannot open DRM device %s: logind connection was not established",
+                  qPrintable(devicePath()));
+        return false;
+    }
+    if (!logind->hasSessionControl()) {
+        qCWarning(qLcEglfsKmsDebug, "Cannot open DRM device %s: session control not acquired",
+                  qPrintable(devicePath()));
+        return false;
+    }
+
+    int fd = logind->takeDevice(devicePath());
     if (fd == -1) {
         qErrnoWarning("Could not open DRM device %s", qPrintable(devicePath()));
         return false;

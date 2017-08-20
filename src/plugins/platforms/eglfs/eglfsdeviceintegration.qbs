@@ -60,12 +60,14 @@ LiriModuleProject {
             name: "API"
             prefix: "api/"
             files: [
+                "qeglfslogindhandler.cpp",
                 "qeglfswindow.cpp",
                 "qeglfsscreen.cpp",
                 "qeglfshooks.cpp",
                 "qeglfsdeviceintegration.cpp",
                 "qeglfsintegration.cpp",
                 "qeglfsoffscreenwindow.cpp",
+                "qeglfslogindhandler_p.h",
                 "qeglfswindow_p.h",
                 "qeglfsscreen_p.h",
                 "qeglfshooks_p.h",

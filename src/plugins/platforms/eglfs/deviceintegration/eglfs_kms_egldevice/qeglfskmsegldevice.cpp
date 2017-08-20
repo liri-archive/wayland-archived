@@ -45,6 +45,10 @@
 
 #include <QtCore/private/qcore_unix_p.h>
 
+#include <LiriLogind/Logind>
+
+using namespace Liri;
+
 QT_BEGIN_NAMESPACE
 
 QEglFSKmsEglDevice::QEglFSKmsEglDevice(QEglFSKmsEglDeviceIntegration *devInt, QKmsScreenConfig *screenConfig, const QString &path)
@@ -58,7 +62,20 @@ bool QEglFSKmsEglDevice::open()
 {
     Q_ASSERT(fd() == -1);
 
-    int fd = drmOpen(devicePath().toLocal8Bit().constData(), Q_NULLPTR);
+    Logind *logind = Logind::instance();
+
+    if (!logind->isConnected()) {
+        qCWarning(qLcEglfsKmsDebug, "Cannot open DRM device %s: logind connection was not established",
+                  qPrintable(devicePath()));
+        return false;
+    }
+    if (!logind->hasSessionControl()) {
+        qCWarning(qLcEglfsKmsDebug, "Cannot open DRM device %s: session control not acquired",
+                  qPrintable(devicePath()));
+        return false;
+    }
+
+    int fd = logind->takeDevice(devicePath());
     if (Q_UNLIKELY(fd < 0))
         qFatal("Could not open DRM (NV) device");
 

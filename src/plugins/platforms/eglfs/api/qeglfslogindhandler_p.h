@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the plugins of the Qt Toolkit.
@@ -37,8 +37,8 @@
 **
 ****************************************************************************/
 
-#ifndef QEGLFSHOOKS_H
-#define QEGLFSHOOKS_H
+#ifndef QEGLFSLOGINDHANDLER_P_H
+#define QEGLFSLOGINDHANDLER_P_H
 
 //
 //  W A R N I N G
@@ -51,20 +51,32 @@
 // We mean it.
 //
 
+#include <QtCore/QObject>
+#include <QtCore/QEventLoop>
+
 #include "qeglfsglobal_p.h"
-#include "qeglfsdeviceintegration_p.h"
-#include <QtCore/QLoggingCategory>
 
 QT_BEGIN_NAMESPACE
 
-Q_EGLFS_EXPORT Q_DECLARE_LOGGING_CATEGORY(qLcEglDevDebug)
-
-class QEglFSHooks : public QEglFSDeviceIntegration
+class Q_EGLFS_EXPORT QEglFSLogindHandler : public QObject
 {
-};
+    Q_OBJECT
+public:
+    QEglFSLogindHandler();
 
-Q_EGLFS_EXPORT QEglFSDeviceIntegration *qt_egl_device_integration();
+    void initialize();
+    void stop();
+
+Q_SIGNALS:
+    void initializationRequested();
+
+private Q_SLOTS:
+    void takeControl(bool connected);
+
+private:
+    QEventLoop *m_loop;
+};
 
 QT_END_NAMESPACE
 
-#endif // QEGLFSHOOKS_H
+#endif // QEGLFSLOGINDHANDLER_P_H

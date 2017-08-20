@@ -60,6 +60,7 @@
 # include "qeglfscursor_p.h"
 #endif
 #include "qeglfsoffscreenwindow_p.h"
+#include "qeglfslogindhandler_p.h"
 
 #include <QtEglSupport/private/qeglconvenience_p.h>
 #ifndef QT_NO_OPENGL
@@ -78,25 +79,9 @@
 
 #include <QtPlatformHeaders/QEGLNativeContext>
 
-#if QT_CONFIG(libinput)
-#include <QtInputSupport/private/qlibinputhandler_p.h>
-#endif
-
-#if QT_CONFIG(evdev)
-#include <QtInputSupport/private/qevdevmousemanager_p.h>
-#include <QtInputSupport/private/qevdevkeyboardmanager_p.h>
-#include <QtInputSupport/private/qevdevtouchmanager_p.h>
-#endif
-
-#if QT_CONFIG(tslib)
-#include <QtInputSupport/private/qtslib_p.h>
-#endif
-
-#if QT_CONFIG(integrityhid)
-#include <QtInputSupport/qintegrityhidmanager.h>
-#endif
-
 #include <QtPlatformHeaders/qeglfsfunctions.h>
+
+#include <LiriLibInput/private/libinputmanager_p.h>
 
 static void initResources()
 {
@@ -112,7 +97,7 @@ QEglFSIntegration::QEglFSIntegration()
       m_inputContext(0),
       m_fontDb(new QGenericUnixFontDatabase),
       m_services(new QGenericUnixServices),
-      m_kbdMgr(0),
+      m_logindHandler(nullptr),
       m_disableInputHandlers(false)
 {
     m_disableInputHandlers = qEnvironmentVariableIntValue("QT_QPA_EGLFS_DISABLE_INPUT");
@@ -132,28 +117,35 @@ void QEglFSIntegration::removeScreen(QPlatformScreen *screen)
 
 void QEglFSIntegration::initialize()
 {
-    qt_egl_device_integration()->platformInit();
+    m_logindHandler = new QEglFSLogindHandler();
+    connect(m_logindHandler, &QEglFSLogindHandler::initializationRequested, [&] {
+        qt_egl_device_integration()->platformInit();
 
-    m_display = qt_egl_device_integration()->createDisplay(nativeDisplay());
-    if (Q_UNLIKELY(m_display == EGL_NO_DISPLAY))
-        qFatal("Could not open egl display");
+        m_display = qt_egl_device_integration()->createDisplay(nativeDisplay());
+        if (Q_UNLIKELY(m_display == EGL_NO_DISPLAY))
+            qFatal("Could not open egl display");
 
-    EGLint major, minor;
-    if (Q_UNLIKELY(!eglInitialize(m_display, &major, &minor)))
-        qFatal("Could not initialize egl display");
+        EGLint major, minor;
+        if (Q_UNLIKELY(!eglInitialize(m_display, &major, &minor)))
+            qFatal("Could not initialize egl display");
 
-    m_inputContext = QPlatformInputContextFactory::create();
+        m_inputContext = QPlatformInputContextFactory::create();
 
-    m_vtHandler.reset(new QFbVtHandler);
+        m_vtHandler.reset(new QFbVtHandler);
 
-    if (qt_egl_device_integration()->usesDefaultScreen())
-        addScreen(new QEglFSScreen(display()));
-    else
-        qt_egl_device_integration()->screenInit();
+        if (qt_egl_device_integration()->usesDefaultScreen())
+            addScreen(new QEglFSScreen(display()));
+        else
+            qt_egl_device_integration()->screenInit();
 
-    // Input code may rely on the screens, so do it only after the screen init.
-    if (!m_disableInputHandlers)
-        createInputHandlers();
+        // Input code may rely on the screens, so do it only after the screen init.
+        if (!m_disableInputHandlers)
+            createInputHandlers();
+
+        // Exit initialization
+        m_logindHandler->stop();
+    });
+    m_logindHandler->initialize();
 }
 
 void QEglFSIntegration::destroy()
@@ -167,6 +159,8 @@ void QEglFSIntegration::destroy()
         eglTerminate(m_display);
 
     qt_egl_device_integration()->platformDestroy();
+
+    m_logindHandler->deleteLater();
 }
 
 QAbstractEventDispatcher *QEglFSIntegration::createEventDispatcher() const
@@ -424,56 +418,14 @@ QPlatformNativeInterface::NativeResourceForContextFunction QEglFSIntegration::na
 
 QFunctionPointer QEglFSIntegration::platformFunction(const QByteArray &function) const
 {
-#if QT_CONFIG(evdev)
-    if (function == QEglFSFunctions::loadKeymapTypeIdentifier())
-        return QFunctionPointer(loadKeymapStatic);
-#else
     Q_UNUSED(function)
-#endif
 
     return 0;
 }
 
-void QEglFSIntegration::loadKeymapStatic(const QString &filename)
-{
-#if QT_CONFIG(evdev)
-    QEglFSIntegration *self = static_cast<QEglFSIntegration *>(QGuiApplicationPrivate::platformIntegration());
-    if (self->m_kbdMgr)
-        self->m_kbdMgr->loadKeymap(filename);
-    else
-        qWarning("QEglFSIntegration: Cannot load keymap, no keyboard handler found");
-#else
-    Q_UNUSED(filename);
-#endif
-}
-
 void QEglFSIntegration::createInputHandlers()
 {
-#if QT_CONFIG(libinput)
-    if (!qEnvironmentVariableIntValue("QT_QPA_EGLFS_NO_LIBINPUT")) {
-        new QLibInputHandler(QLatin1String("libinput"), QString());
-        return;
-    }
-#endif
-
-#if QT_CONFIG(tslib)
-    bool useTslib = qEnvironmentVariableIntValue("QT_QPA_EGLFS_TSLIB");
-    if (useTslib)
-        new QTsLibMouseHandler(QLatin1String("TsLib"), QString() /* spec */);
-#endif
-
-#if QT_CONFIG(evdev)
-    m_kbdMgr = new QEvdevKeyboardManager(QLatin1String("EvdevKeyboard"), QString() /* spec */, this);
-    new QEvdevMouseManager(QLatin1String("EvdevMouse"), QString() /* spec */, this);
-#if QT_CONFIG(tslib)
-    if (!useTslib)
-#endif
-        new QEvdevTouchManager(QLatin1String("EvdevTouch"), QString() /* spec */, this);
-#endif
-
-#if QT_CONFIG(integrityhid)
-   new QIntegrityHIDManager("HID", "", this);
-#endif
+    m_liHandler.reset(new Liri::Platform::LibInputManager(this));
 }
 
 EGLNativeDisplayType QEglFSIntegration::nativeDisplay() const

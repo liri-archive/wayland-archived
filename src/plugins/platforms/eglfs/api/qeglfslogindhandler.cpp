@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the plugins of the Qt Toolkit.
@@ -37,34 +37,60 @@
 **
 ****************************************************************************/
 
-#ifndef QEGLFSHOOKS_H
-#define QEGLFSHOOKS_H
+#include "qeglfshooks_p.h"
+#include "qeglfslogindhandler_p.h"
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-//
+#include <LiriLogind/Logind>
 
-#include "qeglfsglobal_p.h"
-#include "qeglfsdeviceintegration_p.h"
-#include <QtCore/QLoggingCategory>
+using namespace Liri;
 
-QT_BEGIN_NAMESPACE
-
-Q_EGLFS_EXPORT Q_DECLARE_LOGGING_CATEGORY(qLcEglDevDebug)
-
-class QEglFSHooks : public QEglFSDeviceIntegration
+QEglFSLogindHandler::QEglFSLogindHandler()
+    : QObject()
+    , m_loop(new QEventLoop(this))
 {
-};
+}
 
-Q_EGLFS_EXPORT QEglFSDeviceIntegration *qt_egl_device_integration();
+void QEglFSLogindHandler::initialize()
+{
+    // Connect to logind and take control
+    Logind *logind = Logind::instance();
+    if (logind->isConnected()) {
+        qCDebug(qLcEglDevDebug) << "logind connection already established";
+        takeControl(true);
+    } else {
+        qCDebug(qLcEglDevDebug) << "logind connection not yet established";
+        connect(logind, &Logind::connectedChanged,
+                this, &QEglFSLogindHandler::takeControl,
+                Qt::QueuedConnection);
+    }
 
-QT_END_NAMESPACE
+    // Wait for logind setup
+    m_loop->exec();
+}
 
-#endif // QEGLFSHOOKS_H
+void QEglFSLogindHandler::stop()
+{
+    m_loop->quit();
+}
+
+void QEglFSLogindHandler::takeControl(bool connected)
+{
+    if (!connected)
+        return;
+
+    Logind *logind = Logind::instance();
+
+    disconnect(logind, &Logind::connectedChanged,
+            this, &QEglFSLogindHandler::takeControl);
+
+    if (logind->hasSessionControl()) {
+        qCDebug(qLcEglDevDebug) << "Session control already acquired via logind";
+        Q_EMIT initializationRequested();
+    } else {
+        qCDebug(qLcEglDevDebug) << "Take control of session via logind";
+        logind->takeControl();
+        connect(logind, &Logind::hasSessionControlChanged,
+                this, &QEglFSLogindHandler::initializationRequested,
+                Qt::QueuedConnection);
+    }
+}
