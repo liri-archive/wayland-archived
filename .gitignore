@@ -1,2 +1,7 @@
 build/
+/.moc/
+/.obj/
+/.pch/
+/.rcc/
 *.user
+Makefile
