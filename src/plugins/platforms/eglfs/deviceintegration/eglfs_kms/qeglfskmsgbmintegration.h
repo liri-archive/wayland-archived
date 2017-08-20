@@ -46,6 +46,12 @@
 #include <QtCore/QMap>
 #include <QtCore/QVariant>
 
+namespace Liri {
+namespace Platform {
+class Udev;
+}
+}
+
 QT_BEGIN_NAMESPACE
 
 class QEglFSKmsDevice;
@@ -54,6 +60,7 @@ class QEglFSKmsGbmIntegration : public QEglFSKmsIntegration
 {
 public:
     QEglFSKmsGbmIntegration();
+    ~QEglFSKmsGbmIntegration();
 
     EGLDisplay createDisplay(EGLNativeDisplayType nativeDisplay) override;
     EGLNativeWindowType createNativeWindow(QPlatformWindow *platformWindow,
@@ -69,6 +76,7 @@ protected:
     QKmsDevice *createDevice() override;
 
 private:
+    Liri::Platform::Udev *m_udev;
 };
 
 QT_END_NAMESPACE

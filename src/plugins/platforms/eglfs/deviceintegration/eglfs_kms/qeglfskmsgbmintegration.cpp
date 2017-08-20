@@ -45,7 +45,6 @@
 #include "qeglfskmsgbmcursor.h"
 #include "private/qeglfscursor_p.h"
 
-#include <QtDeviceDiscoverySupport/private/qdevicediscovery_p.h>
 #include <QtCore/QLoggingCategory>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
@@ -54,9 +53,14 @@
 #include <QtGui/qpa/qplatformcursor.h>
 #include <QtGui/QScreen>
 
+#include <LiriUDev/Udev>
+#include <LiriUDev/UdevEnumerate>
+
 #include <xf86drm.h>
 #include <xf86drmMode.h>
 #include <gbm.h>
+
+using namespace Liri::Platform;
 
 QT_BEGIN_NAMESPACE
 
@@ -65,6 +69,13 @@ QMutex QEglFSKmsGbmScreen::m_waitForFlipMutex;
 QEglFSKmsGbmIntegration::QEglFSKmsGbmIntegration()
 {
     qCDebug(qLcEglfsKmsDebug, "New DRM/KMS via GBM integration created");
+
+    m_udev = new Udev();
+}
+
+QEglFSKmsGbmIntegration::~QEglFSKmsGbmIntegration()
+{
+    delete m_udev;
 }
 
 #ifndef EGL_EXT_platform_base
@@ -158,15 +169,16 @@ QKmsDevice *QEglFSKmsGbmIntegration::createDevice()
     if (!path.isEmpty()) {
         qCDebug(qLcEglfsKmsDebug) << "GBM: Using DRM device" << path << "specified in config file";
     } else {
-        QDeviceDiscovery *d = QDeviceDiscovery::create(QDeviceDiscovery::Device_VideoMask);
-        const QStringList devices = d->scanConnectedDevices();
-        qCDebug(qLcEglfsKmsDebug) << "Found the following video devices:" << devices;
-        d->deleteLater();
+        UdevEnumerate enumerate(UdevDevice::PrimaryVideoDevice | UdevDevice::GenericVideoDevice, m_udev);
+        QList<UdevDevice *> devices = enumerate.scan();
+        qCDebug(qLcEglfsKmsDebug) << "Found the following video devices:";
+        for (auto device : qAsConst(devices))
+            qCDebug(qLcEglfsKmsDebug) << '\t' << device->deviceNode().toLocal8Bit().constData();
 
         if (Q_UNLIKELY(devices.isEmpty()))
             qFatal("Could not find DRM device!");
 
-        path = devices.first();
+        path = devices.first()->deviceNode();
         qCDebug(qLcEglfsKmsDebug) << "Using" << path;
     }
 

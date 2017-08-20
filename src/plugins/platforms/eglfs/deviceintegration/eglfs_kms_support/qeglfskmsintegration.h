@@ -58,7 +58,7 @@ class Q_EGLFS_EXPORT QEglFSKmsIntegration : public QEglFSDeviceIntegration
 {
 public:
     QEglFSKmsIntegration();
-    ~QEglFSKmsIntegration();
+    virtual ~QEglFSKmsIntegration();
 
     void platformInit() override;
     void platformDestroy() override;
