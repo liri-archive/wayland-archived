@@ -63,7 +63,7 @@ QT_BEGIN_NAMESPACE
 class QPlatformSurface;
 class QEglFSWindow;
 
-#define QEglFSDeviceIntegrationFactoryInterface_iid "org.qt-project.qt.qpa.egl.QEglFSDeviceIntegrationFactoryInterface.5.5"
+#define QEglFSDeviceIntegrationFactoryInterface_iid "io.liri.qpa.egl.EglFSDeviceIntegrationFactoryInterface.1.0"
 
 class Q_EGLFS_EXPORT QEglFSDeviceIntegration
 {

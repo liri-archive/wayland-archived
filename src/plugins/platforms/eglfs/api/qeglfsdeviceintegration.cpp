@@ -69,7 +69,7 @@ QT_BEGIN_NAMESPACE
 Q_LOGGING_CATEGORY(qLcEglDevDebug, "qt.qpa.egldeviceintegration")
 
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
-                          (QEglFSDeviceIntegrationFactoryInterface_iid, QLatin1String("/egldeviceintegrations"), Qt::CaseInsensitive))
+                          (QEglFSDeviceIntegrationFactoryInterface_iid, QLatin1String("/liri/egldeviceintegrations"), Qt::CaseInsensitive))
 
 #if QT_CONFIG(library)
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, directLoader,
