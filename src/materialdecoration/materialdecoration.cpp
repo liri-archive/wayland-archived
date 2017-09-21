@@ -30,6 +30,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
+#include <QtMath>
+
 #include "materialdecoration.h"
 
 QT_BEGIN_NAMESPACE
@@ -118,14 +120,14 @@ void QWaylandMaterialDecoration::paint(QPaintDevice *device)
 
         QRect titleBar = top;
         titleBar.setLeft(margins().left() + BUTTON_SPACING);
-        titleBar.setRight(minimizeButtonRect().left() - BUTTON_SPACING);
+        titleBar.setRight(qFloor(minimizeButtonRect().left()) - BUTTON_SPACING);
 
         p.save();
         p.setClipRect(titleBar);
         p.setPen(m_textColor);
         QSizeF size = m_windowTitle.size();
-        int dx = (top.width() - size.width()) / 2;
-        int dy = (top.height() - size.height()) / 2;
+        int dx = qFloor((top.width() - size.width()) / 2);
+        int dy = qFloor((top.height() - size.height()) / 2);
         QFont font = p.font();
         font.setBold(true);
         font.setFamily("Roboto");
@@ -306,7 +308,7 @@ void QWaylandMaterialDecoration::processMouseRight(QWaylandInputDevice *inputDev
 int QWaylandMaterialDecoration::dp(int dp) const
 {
     qreal multiplier = 1.4;
-    return round(dp * ((pixelDensity() * 25.4) / 160) * multiplier);
+    return qRound(dp * ((pixelDensity() * 25.4) / 160) * multiplier);
 }
 
 QBitmap QWaylandMaterialDecoration::buttonIcon(const QString &name) const
