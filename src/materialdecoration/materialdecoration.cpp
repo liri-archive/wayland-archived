@@ -185,7 +185,7 @@ bool QWaylandMaterialDecoration::handleMouse(QWaylandInputDevice *inputDevice, c
     if (closeButtonRect().contains(local)) {
         if (clickButton(b, Close))
             QWindowSystemInterface::handleCloseEvent(window());
-    } else if (maximizeButtonRect().contains(local)) {
+    } else if (isMaximizeable() && maximizeButtonRect().contains(local)) {
         if (clickButton(b, Maximize))
             window()->setWindowState(waylandWindow()->isMaximized() ? Qt::WindowNoState
                                                                     : Qt::WindowMaximized);
@@ -222,7 +222,7 @@ bool QWaylandMaterialDecoration::handleTouch(QWaylandInputDevice *inputDevice, c
     if (handled) {
         if (closeButtonRect().contains(local))
             QWindowSystemInterface::handleCloseEvent(window());
-        else if (maximizeButtonRect().contains(local))
+        else if (isMaximizeable() && maximizeButtonRect().contains(local))
             window()->setWindowState(waylandWindow()->isMaximized() ? Qt::WindowNoState
                                                                     : Qt::WindowMaximized);
         else if (minimizeButtonRect().contains(local))
