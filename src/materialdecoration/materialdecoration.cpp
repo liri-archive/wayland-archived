@@ -132,7 +132,7 @@ void QWaylandMaterialDecoration::paint(QPaintDevice *device)
         font.setBold(true);
         font.setFamily("Roboto");
         p.setFont(font);
-        QPoint windowTitlePoint(top.topLeft().x() + dx, top.topLeft().y() + dy - WINDOW_BORDER / 2);
+        QPoint windowTitlePoint(dx, dy - WINDOW_BORDER / 2);
         p.drawStaticText(windowTitlePoint, m_windowTitle);
         p.restore();
     }
