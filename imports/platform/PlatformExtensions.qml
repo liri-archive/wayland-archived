@@ -46,9 +46,9 @@ Object {
 
     function updateDecorationColor() {
         decorations.backgroundColor = decorationColor
-        decorations.iconColor = Material.iconColor
         decorations.textColor = Utils.lightDark(decorationColor, Qt.rgba(0,0,0,0.87),
                 Qt.rgba(1,1,1,1))
+        decorations.iconColor = decorations.textColor
         decorations.update()
     }
 
