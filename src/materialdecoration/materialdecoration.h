@@ -98,6 +98,8 @@ private:
 
     QBitmap buttonIcon(const QString &name) const;
 
+    bool isMaximizeable() const;
+
     Button m_clicking;
     QColor m_backgroundColor;
     QColor m_iconColor;

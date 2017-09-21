@@ -143,7 +143,7 @@ void QWaylandMaterialDecoration::paint(QPaintDevice *device)
     p.drawPixmap(closeButtonRect(), closeIcon, closeIcon.rect());
 
     // Maximize button
-    if (window()->flags() & Qt::WindowMaximizeButtonHint) {
+    if (isMaximizeable()) {
         QBitmap maximizeIcon =
                 buttonIcon(waylandWindow()->isMaximized() ? "window-restore" : "window-maximize");
         p.drawPixmap(maximizeButtonRect(), maximizeIcon, maximizeIcon.rect());
@@ -320,6 +320,14 @@ qreal QWaylandMaterialDecoration::pixelDensity() const
 {
     QScreen *screen = window()->screen();
     return screen->physicalDotsPerInch() / 25.4;
+}
+
+bool QWaylandMaterialDecoration::isMaximizeable() const
+{
+    return window()->flags() & Qt::WindowMaximizeButtonHint || (
+                (window()->maximumSize().width() > window()->minimumSize().width()) &&
+                (window()->maximumSize().height() > window()->minimumSize().height())
+                );
 }
 
 }
