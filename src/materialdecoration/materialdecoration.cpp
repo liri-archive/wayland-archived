@@ -59,6 +59,52 @@ QWaylandMaterialDecoration::QWaylandMaterialDecoration()
     m_windowTitle.setTextOption(option);
 }
 
+QColor QWaylandMaterialDecoration::backgroundColor() const
+{
+    return m_backgroundColor;
+}
+
+void QWaylandMaterialDecoration::setBackgroundColor(const QColor &color)
+{
+    qWarning()<< "COLOR" << color << m_backgroundColor;
+    if (color == m_backgroundColor)
+        return;
+
+    m_backgroundColor = color;
+    update();
+    Q_EMIT backgroundColorChanged();
+}
+
+QColor QWaylandMaterialDecoration::textColor() const
+{
+    return m_textColor;
+}
+
+void QWaylandMaterialDecoration::setTextColor(const QColor &color)
+{
+    if (color == m_textColor)
+        return;
+
+    m_textColor = color;
+    update();
+    Q_EMIT textColorChanged();
+}
+
+QColor QWaylandMaterialDecoration::iconColor() const
+{
+    return m_iconColor;
+}
+
+void QWaylandMaterialDecoration::setIconColor(const QColor &color)
+{
+    if (color == m_iconColor)
+        return;
+
+    m_iconColor = color;
+    update();
+    Q_EMIT iconColorChanged();
+}
+
 QRectF QWaylandMaterialDecoration::closeButtonRect() const
 {
     return QRectF(window()->frameGeometry().width() - BUTTON_WIDTH - BUTTON_SPACING,

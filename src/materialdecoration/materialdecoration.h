@@ -59,16 +59,25 @@ enum Button
 class Q_WAYLAND_CLIENT_EXPORT QWaylandMaterialDecoration : public QWaylandAbstractDecoration
 {
     Q_OBJECT
-
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor NOTIFY textColorChanged)
+    Q_PROPERTY(QColor iconColor READ iconColor WRITE setIconColor NOTIFY iconColorChanged)
 public:
     QWaylandMaterialDecoration();
 
-public Q_SLOTS:
-    void setBackgroundColor(QColor color) { m_backgroundColor = color; }
+    QColor backgroundColor() const;
+    void setBackgroundColor(const QColor &color);
 
-    void setTextColor(QColor color) { m_textColor = color; }
+    QColor textColor() const;
+    void setTextColor(const QColor &color);
 
-    void setIconColor(QColor color) { m_iconColor = color; }
+    QColor iconColor() const;
+    void setIconColor(const QColor &color);
+
+Q_SIGNALS:
+    void backgroundColorChanged();
+    void textColorChanged();
+    void iconColorChanged();
 
 protected:
     QMargins margins() const override;
