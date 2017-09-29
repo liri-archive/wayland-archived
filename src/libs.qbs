@@ -5,6 +5,5 @@ Project {
 
     references: [
         "eglfsxkb/eglfsxkb.qbs",
-        "materialdecoration/materialdecoration.qbs",
     ]
 }

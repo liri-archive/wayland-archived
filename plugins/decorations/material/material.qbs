@@ -5,9 +5,10 @@ LiriDynamicLibrary {
     targetName: "material"
 
     Depends { name: "lirideployment" }
-    Depends { name: "materialdecoration" }
+    Depends { name: "Qt"; submodules: ["gui", "gui-private", "waylandclient", "waylandclient-private"] }
 
-    files: ["*.cpp"]
+    cpp.defines: []
+    files: ["*.cpp", "*.h", "*.qrc"]
 
     FileTagger {
         patterns: "*.json"
