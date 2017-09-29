@@ -66,7 +66,6 @@ QColor QWaylandMaterialDecoration::backgroundColor() const
 
 void QWaylandMaterialDecoration::setBackgroundColor(const QColor &color)
 {
-    qWarning()<< "COLOR" << color << m_backgroundColor;
     if (color == m_backgroundColor)
         return;
 
