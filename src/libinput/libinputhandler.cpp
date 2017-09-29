@@ -258,7 +258,7 @@ LibInputHandler::LibInputHandler(QObject *parent)
     if (Logind::instance()->isConnected())
         d->setup();
     else
-        connect(Logind::instance(), &Logind::connectedChanged, this, [this, d](bool connected) {
+        connect(Logind::instance(), &Logind::connectedChanged, this, [d](bool connected) {
             // Setup libinput the first time we connect
             if (!connected || d->initialized)
                 return;

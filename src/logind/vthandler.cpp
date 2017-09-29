@@ -188,7 +188,8 @@ bool VtHandlerPrivate::installSignalHandler()
         if (vtFd < 0)
             return;
 
-        notifier->setEnabled(false);
+        if (notifier)
+            notifier->setEnabled(false);
 
         char sigNo;
         if (QT_READ(signalFd[1], &sigNo, sizeof(sigNo)) == sizeof(sigNo)) {
@@ -227,7 +228,8 @@ bool VtHandlerPrivate::installSignalHandler()
 #endif
         }
 
-        notifier->setEnabled(true);
+        if (notifier)
+            notifier->setEnabled(true);
     });
 
     struct sigaction sa;

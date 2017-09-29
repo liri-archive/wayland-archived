@@ -45,28 +45,28 @@ LibInputManager::LibInputManager(QObject *parent)
 
     // Tell QPA about input devices
     connect(m_handler, &LibInputHandler::keyboardCountChanged, this,
-            [this, inputManagerPriv](int count) {
+            [inputManagerPriv](int count) {
         inputManagerPriv->setDeviceCount(QInputDeviceManager::DeviceTypeKeyboard,
                                          count);
     });
     connect(m_handler, &LibInputHandler::pointerCountChanged, this,
-            [this, inputManagerPriv](int count) {
+            [inputManagerPriv](int count) {
         inputManagerPriv->setDeviceCount(QInputDeviceManager::DeviceTypePointer,
                                          count);
     });
     connect(m_handler, &LibInputHandler::touchCountChanged, this,
-            [this, inputManagerPriv](int count) {
+            [inputManagerPriv](int count) {
         inputManagerPriv->setDeviceCount(QInputDeviceManager::DeviceTypeTouch,
                                          count);
     });
     connect(m_handler, &LibInputHandler::touchDeviceRegistered, this,
-            [this](QTouchDevice *td) {
+            [](QTouchDevice *td) {
         QWindowSystemInterface::registerTouchDevice(td);
     });
 
     // Events
     connect(m_handler, &LibInputHandler::keyPressed, this,
-            [this](const LibInputKeyEvent &e) {
+            [](const LibInputKeyEvent &e) {
         QWindowSystemInterface::handleExtendedKeyEvent(
                     nullptr, QKeyEvent::KeyPress, e.key,
                     e.modifiers, e.nativeScanCode,
@@ -74,7 +74,7 @@ LibInputManager::LibInputManager(QObject *parent)
                     e.text, e.autoRepeat, e.repeatCount);
     });
     connect(m_handler, &LibInputHandler::keyReleased, this,
-            [this](const LibInputKeyEvent &e) {
+            [](const LibInputKeyEvent &e) {
         QWindowSystemInterface::handleExtendedKeyEvent(
                     nullptr, QKeyEvent::KeyRelease, e.key,
                     e.modifiers, e.nativeScanCode,
@@ -82,38 +82,38 @@ LibInputManager::LibInputManager(QObject *parent)
                     e.text, e.autoRepeat, e.repeatCount);
     });
     connect(m_handler, &LibInputHandler::mousePressed, this,
-            [this](const LibInputMouseEvent &e) {
+            [](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleMouseEvent(
                     nullptr, e.pos, e.pos, e.buttons,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::mouseReleased, this,
-            [this](const LibInputMouseEvent &e) {
+            [](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleMouseEvent(
                     nullptr, e.pos, e.pos, e.buttons,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::mouseMoved, this,
-            [this](const LibInputMouseEvent &e) {
+            [](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleMouseEvent(
                     nullptr, e.pos, e.pos, e.buttons,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::mouseWheel, this,
-            [this](const LibInputMouseEvent &e) {
+            [](const LibInputMouseEvent &e) {
         QWindowSystemInterface::handleWheelEvent(
                     nullptr, e.pos, e.pos,
                     e.wheelDelta, e.wheelOrientation,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::touchEvent, this,
-            [this](const LibInputTouchEvent &e) {
+            [](const LibInputTouchEvent &e) {
         QWindowSystemInterface::handleTouchEvent(
                     nullptr, e.device, e.touchPoints,
                     e.modifiers);
     });
     connect(m_handler, &LibInputHandler::touchCancel, this,
-            [this](const LibInputTouchEvent &e) {
+            [](const LibInputTouchEvent &e) {
         QWindowSystemInterface::handleTouchCancelEvent(
                     nullptr, e.device, e.modifiers);
     });
