@@ -16,7 +16,7 @@ LiriDynamicLibrary {
     Group {
         name: "Wayland Protocols"
         files: [
-            "../../../data/protocols/wayland/fullscreen-shell-unstable-v1.xml"
+            "../../../../data/protocols/wayland/fullscreen-shell-unstable-v1.xml"
         ]
         fileTags: ["wayland.client.protocol"]
     }

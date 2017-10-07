@@ -16,8 +16,6 @@ Project {
     minimumQbsVersion: "1.8.0"
 
     references: [
-        "imports/imports.qbs",
-        "plugins/plugins.qbs",
         "src/deployment.qbs",
         "src/libs.qbs",
         "src/client/client.qbs",
@@ -26,6 +24,8 @@ Project {
         "src/logind/logind.qbs",
         "src/server/server.qbs",
         "src/udev/udev.qbs",
+        "src/imports/imports.qbs",
+        "src/plugins/plugins.qbs",
         //"tests/auto/auto.qbs",
         "tests/manual/manual.qbs",
     ]
