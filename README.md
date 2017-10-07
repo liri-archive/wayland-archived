@@ -189,8 +189,7 @@ to learn how to enable them.
 
 * Server-side:
   * **liri.wlserver:** Core compositor classes
-  * **liri.wlserver.screenbackend.native:** Native screen backend
-  * **liri.wlserver.screenbackend.fake:** Fake screen backend
+  * **liri.wlserver.qml:** Liri.WaylandServer QML plugin
   * **liri.wlserver.outputmanagement:** The liri_outputmanagement protocol
   * **liri.wlserver.gtkshell:** The gtk_shell protocol
   * **liri.wlserver.gtkshell.trace:** The gtk_shell protocol trace

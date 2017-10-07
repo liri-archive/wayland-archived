@@ -167,17 +167,17 @@ Screencaster::Screencaster(QWaylandCompositor *compositor)
 {
 }
 
-void Screencaster::initialize()
+void Screencaster::addWindow(QQuickWindow *window)
 {
-    Q_D(Screencaster);
+    connect(window, &QQuickWindow::afterRendering,
+            this, &Screencaster::readContent,
+            Qt::DirectConnection);
+}
 
-    QWaylandCompositorExtension::initialize();
-    QWaylandCompositor *compositor = static_cast<QWaylandCompositor *>(extensionContainer());
-    if (!compositor) {
-        qCWarning(gLcScreencaster) << "Failed to find QWaylandCompositor when initializing Screencaster";
-        return;
-    }
-    d->init(compositor->display(), 1);
+void Screencaster::removeWindow(QQuickWindow *window)
+{
+    disconnect(window, &QQuickWindow::afterRendering,
+               this, &Screencaster::readContent);
 }
 
 void Screencaster::recordFrame(QQuickWindow *window)
@@ -229,6 +229,16 @@ void Screencaster::recordFrame(QQuickWindow *window)
     }
 }
 
+void Screencaster::readContent()
+{
+    if (!isInitialized())
+        return;
+
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(sender());
+    if (window)
+        recordFrame(window);
+}
+
 const struct wl_interface *Screencaster::interface()
 {
     return ScreencasterPrivate::interface();
@@ -237,6 +247,19 @@ const struct wl_interface *Screencaster::interface()
 QByteArray Screencaster::interfaceName()
 {
     return ScreencasterPrivate::interfaceName();
+}
+
+void Screencaster::initialize()
+{
+    Q_D(Screencaster);
+
+    QWaylandCompositorExtension::initialize();
+    QWaylandCompositor *compositor = static_cast<QWaylandCompositor *>(extensionContainer());
+    if (!compositor) {
+        qCWarning(gLcScreencaster) << "Failed to find QWaylandCompositor when initializing Screencaster";
+        return;
+    }
+    d->init(compositor->display(), 1);
 }
 
 /*

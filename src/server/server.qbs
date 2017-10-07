@@ -20,8 +20,7 @@ LiriModuleProject {
                   { name: LiriUtils.quote("Qt.quick") },
                   { name: LiriUtils.quote("Qt.quick-private") },
                   { name: LiriUtils.quote("Qt.waylandcompositor") },
-                  { name: LiriUtils.quote("Qt.waylandcompositor-private") },
-                  { name: LiriUtils.quote("LiriEglFS") }],
+                  { name: LiriUtils.quote("Qt.waylandcompositor-private") }],
         "cpp.defines": ["QT_WAYLAND_COMPOSITOR_QUICK"].map(LiriUtils.quote),
     })
 
@@ -31,7 +30,6 @@ LiriModuleProject {
         sync.classNames: ({
             "compositorsettings.h": ["CompositorSettings"],
             "homeapplication.h": ["HomeApplication"],
-            "quickoutput.h": ["QuickOutput"],
             "gtkshell.h": ["GtkShell"],
             "screencaster.h": ["Screencaster", "Screencast"],
             "screenshooter.h": ["Screenshooter", "Screenshot"],
@@ -39,11 +37,6 @@ LiriModuleProject {
             "outputconfiguration.h": ["OutputConfiguration"],
             "outputmanagement.h": ["OutputManagement"],
             "quickoutputconfiguration.h": ["QuickOutputConfiguration"],
-            "fakescreenbackend.h": ["FakeScreenBackend"],
-            "nativescreenbackend.h": ["NativeScreenBackend"],
-            "quickscreenmanager.h": ["QuickScreenManager"],
-            "screenbackend.h": ["ScreenBackend", "Screen"],
-            "screenmanager.h": ["ScreenManager"],
         })
 
         Group {
@@ -53,12 +46,10 @@ LiriModuleProject {
                 "core/*.h",
                 "extensions/*.h",
                 "output/*.h",
-                "screen/*.h",
                 "*_p.h",
                 "core/*_p.h",
                 "extensions/*_p.h",
                 "output/*_p.h",
-                "screen/*_p.h"
             ]
             fileTags: ["hpp_syncable"]
         }
@@ -78,7 +69,6 @@ LiriModuleProject {
                 "waylandcompositor", "waylandcompositor-private"
             ]
         }
-        Depends { name: "LiriEglFS" }
         Depends { name: "WaylandScanner" }
 
         cpp.defines: [
@@ -94,7 +84,6 @@ LiriModuleProject {
             "core/*.cpp",
             "extensions/*.cpp",
             "output/*.cpp",
-            "screen/*.cpp",
             "**/*.h"
         ]
         excludeFiles: ["extensions/taskmanager.*"]
@@ -127,7 +116,6 @@ LiriModuleProject {
                     "waylandcompositor", "waylandcompositor-private"
                 ]
             }
-            Depends { name: "LiriEglFS" }
 
             cpp.defines: base.concat(["QT_WAYLAND_COMPOSITOR_QUICK"])
             cpp.includePaths: base.concat([product.buildDirectory])

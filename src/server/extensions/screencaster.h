@@ -32,7 +32,7 @@
 
 #include <LiriWaylandServer/liriwaylandserverglobal.h>
 
-class QQuickWindow;
+QT_FORWARD_DECLARE_CLASS(QQuickWindow);
 
 namespace Liri {
 
@@ -50,15 +50,22 @@ public:
     Screencaster();
     Screencaster(QWaylandCompositor *compositor);
 
-    void initialize() override;
+    Q_INVOKABLE void addWindow(QQuickWindow *window);
+    Q_INVOKABLE void removeWindow(QQuickWindow *window);
 
     void recordFrame(QQuickWindow *window);
 
     static const struct wl_interface* interface();
     static QByteArray interfaceName();
 
+protected:
+    void initialize() override;
+
 Q_SIGNALS:
     void captureRequested(Screencast *screencast);
+
+private Q_SLOTS:
+    void readContent();
 };
 
 class LIRIWAYLANDSERVER_EXPORT Screencast : public QWaylandCompositorExtensionTemplate<Screencast>

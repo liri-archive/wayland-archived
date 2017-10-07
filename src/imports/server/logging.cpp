@@ -21,33 +21,6 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include "quickscreenmanager.h"
+#include "logging_p.h"
 
-namespace Liri {
-
-namespace WaylandServer {
-
-QuickScreenManager::QuickScreenManager(QObject *parent)
-    : ScreenManager(parent)
-{
-}
-
-void QuickScreenManager::create()
-{
-    ScreenManager::create();
-}
-
-void QuickScreenManager::classBegin()
-{
-}
-
-void QuickScreenManager::componentComplete()
-{
-    create();
-}
-
-} // namespace WaylandServer
-
-} // namespace Liri
-
-#include "moc_quickscreenmanager.cpp"
+Q_LOGGING_CATEGORY(gLcServerQml, "liri.wlserver.qml", QtDebugMsg)

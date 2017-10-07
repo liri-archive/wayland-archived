@@ -21,33 +21,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef LIRI_QUICKSCREENMANAGER_H
-#define LIRI_QUICKSCREENMANAGER_H
+#pragma once
 
-#include <QtQml/QQmlParserStatus>
+#include <QLoggingCategory>
 
-#include <LiriWaylandServer/ScreenManager>
-
-namespace Liri {
-
-namespace WaylandServer {
-
-class LIRIWAYLANDSERVER_EXPORT QuickScreenManager : public ScreenManager, public QQmlParserStatus
-{
-    Q_INTERFACES(QQmlParserStatus)
-    Q_OBJECT
-public:
-    QuickScreenManager(QObject *parent = nullptr);
-
-    void create() override;
-
-protected:
-    void classBegin() override;
-    void componentComplete() override;
-};
-
-} // namespace WaylandServer
-
-} // namespace Liri
-
-#endif // LIRI_QUICKSCREENMANAGER_H
+Q_DECLARE_LOGGING_CATEGORY(gLcServerQml)

@@ -28,22 +28,40 @@
 #include <LiriWaylandServer/CompositorSettings>
 #include <LiriWaylandServer/OutputChangeset>
 #include <LiriWaylandServer/OutputManagement>
-#include <LiriWaylandServer/QuickOutput>
 #include <LiriWaylandServer/QuickOutputConfiguration>
 #include <LiriWaylandServer/GtkShell>
 #include <LiriWaylandServer/Screen>
 #include <LiriWaylandServer/Screencaster>
 #include <LiriWaylandServer/Screenshooter>
 //#include <LiriWaylandServer/TaskManager>
-#include <LiriWaylandServer/QuickScreenManager>
 
 #include "chromeitem.h"
 #include "fpscounter.h"
 #include "hotspot.h"
 #include "keyeventfilter.h"
+#include "quickoutput.h"
+#include "outputsettings.h"
+#include "screenmodel.h"
+
+#define LIRI_DECLARE_QUICK_EXTENSION_CHILDREN_CLASS(className) \
+    class Q_WAYLAND_COMPOSITOR_EXPORT className##QuickExtensionChildren : public className \
+    { \
+/* qmake ignore Q_OBJECT */ \
+        Q_OBJECT \
+        Q_PROPERTY(QQmlListProperty<QObject> data READ data DESIGNABLE false) \
+        Q_CLASSINFO("DefaultProperty", "data") \
+    public: \
+        QQmlListProperty<QObject> data() \
+        { \
+            return QQmlListProperty<QObject>(this, m_objects); \
+        } \
+    private: \
+        QList<QObject *> m_objects; \
+    };
 
 using namespace Liri::WaylandServer;
 
+LIRI_DECLARE_QUICK_EXTENSION_CHILDREN_CLASS(QuickOutput)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(GtkShell)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(OutputManagement)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(Screencaster)
@@ -63,7 +81,8 @@ void LiriWaylandServerPlugin::registerTypes(const char *uri)
     Q_ASSERT(QLatin1String(uri) == QLatin1String("Liri.WaylandServer"));
 
     // More specialized output
-    qmlRegisterType<QuickOutput>(uri, 1, 0, "ExtendedOutput");
+    qmlRegisterType<QuickOutputQuickExtensionChildren>(uri, 1, 0, "WaylandOutput");
+    qmlRegisterType<OutputSettings>(uri, 1, 0, "WaylandOutputSettings");
 
     // Chrome container
     qmlRegisterType<ChromeItem>(uri, 1, 0, "ChromeItem");
@@ -73,9 +92,11 @@ void LiriWaylandServerPlugin::registerTypes(const char *uri)
     qmlRegisterType<GtkSurface>(uri, 1, 0, "GtkSurface");
 
     // Screen
-    qmlRegisterType<QuickScreenManager>(uri, 1, 0, "ScreenManager");
-    qmlRegisterUncreatableType<Screen>(uri, 1, 0, "Screen",
-                                       QObject::tr("Cannot create instance of Screen"));
+    qmlRegisterType<ScreenModel>(uri, 1, 0, "ScreenModel");
+    qmlRegisterUncreatableType<ScreenMode>(uri, 1, 0, "ScreenMode",
+                                           QObject::tr("Cannot create instance of ScreenMode"));
+    qmlRegisterUncreatableType<ScreenItem>(uri, 1, 0, "ScreenItem",
+                                           QObject::tr("Cannot create instance of ScreenItem"));
 
     // Output management
     qmlRegisterType<QuickOutputConfiguration>(uri, 1, 0, "OutputConfiguration");

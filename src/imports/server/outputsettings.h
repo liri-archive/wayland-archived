@@ -21,31 +21,18 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef LIRI_QUICKOUTPUT_H
-#define LIRI_QUICKOUTPUT_H
+#pragma once
 
-#include <QtQml/QQmlListProperty>
+#include <QObject>
+#include <QQmlParserStatus>
+#include <QScreen>
 
-#include <QtWaylandCompositor/QWaylandQuickOutput>
-#include <LiriWaylandServer/Screen>
-
-#include <LiriWaylandServer/liriwaylandserverglobal.h>
-
-namespace Liri {
-
-namespace WaylandServer {
-
-class QuickOutputPrivate;
-
-class LIRIWAYLANDSERVER_EXPORT QuickOutput : public QWaylandQuickOutput
+class OutputSettings : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(QuickOutput)
-    Q_PROPERTY(Liri::WaylandServer::Screen *nativeScreen READ nativeScreen WRITE setNativeScreen NOTIFY nativeScreenChanged DESIGNABLE false)
-    Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
+    Q_PROPERTY(QScreen *screen READ screen WRITE setScreen NOTIFY screenChanged)
     Q_PROPERTY(PowerState powerState READ powerState WRITE setPowerState NOTIFY powerStateChanged)
-    Q_PROPERTY(QQmlListProperty<QObject> data READ data DESIGNABLE false)
-    Q_CLASSINFO("DefaultProperty", "data")
+    Q_INTERFACES(QQmlParserStatus)
 public:
     enum PowerState {
         PowerStateOn,
@@ -55,39 +42,24 @@ public:
     };
     Q_ENUM(PowerState)
 
-    QuickOutput();
-    QuickOutput(QWaylandCompositor *compositor);
+    explicit OutputSettings(QObject *parent = nullptr);
 
-    QQmlListProperty<QObject> data();
-
-    Liri::WaylandServer::Screen *nativeScreen() const;
-    void setNativeScreen(Screen *screen);
-
-    bool isEnabled() const;
-    void setEnabled(bool value);
+    QScreen *screen() const;
+    void setScreen(QScreen *screen);
 
     PowerState powerState() const;
     void setPowerState(PowerState state);
 
-    static QuickOutput *fromResource(wl_resource *resource);
-
-protected:
-    void initialize() override;
-
 Q_SIGNALS:
-    void nativeScreenChanged();
-    void enabledChanged();
+    void screenChanged();
     void powerStateChanged();
 
+protected:
+    void classBegin() override;
+    void componentComplete() override;
+
 private:
-    QuickOutputPrivate *const d_ptr;
-
-private Q_SLOTS:
-    void readContent();
+    bool m_initialized = false;
+    QScreen *m_screen = nullptr;
+    PowerState m_powerState = PowerStateOn;
 };
-
-} // namespace WaylandServer
-
-} // namespace Liri
-
-#endif // LIRI_QUICKOUTPUT_H

@@ -21,39 +21,41 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef LIRI_SCREENMANAGER_H
-#define LIRI_SCREENMANAGER_H
+#pragma once
 
-#include <LiriWaylandServer/Screen>
+#include <QQmlListProperty>
+#include <QWaylandQuickOutput>
 
-namespace Liri {
+class ScreenMode;
 
-namespace WaylandServer {
-
-class ScreenManagerPrivate;
-
-class LIRIWAYLANDSERVER_EXPORT ScreenManager : public QObject
+class QuickOutput : public QWaylandQuickOutput
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(ScreenManager)
-    Q_PROPERTY(Screen *primaryScreen READ primaryScreen NOTIFY primaryScreenChanged)
+    Q_PROPERTY(QQmlListProperty<ScreenMode> modes READ screenModes NOTIFY modesChanged)
+    Q_PROPERTY(int currentModeIndex READ currentModeIndex WRITE setCurrentModeIndex NOTIFY currentModeIndexChanged)
+    Q_PROPERTY(int preferredModeIndex READ preferredModeIndex WRITE setPreferredModeIndex NOTIFY preferredModeIndexChanged)
 public:
-    ScreenManager(QObject *parent = nullptr);
+    explicit QuickOutput();
 
-    Screen *primaryScreen() const;
+    QQmlListProperty<ScreenMode> screenModes();
 
-    Q_INVOKABLE int indexOf(Screen *screen) const;
+    int currentModeIndex() const;
+    void setCurrentModeIndex(int index);
 
-    virtual void create();
+    int preferredModeIndex() const;
+    void setPreferredModeIndex(int index);
 
 Q_SIGNALS:
-    void screenAdded(Screen *screen);
-    void screenRemoved(Screen *screen);
-    void primaryScreenChanged(Screen *screen);
+    void modesChanged();
+    void currentModeIndexChanged();
+    void preferredModeIndexChanged();
+
+protected:
+    void initialize() override;
+
+private:
+    bool m_initialized = false;
+    QVector<ScreenMode *> m_modes;
+    int m_currentModeIndex = 0;
+    int m_preferredModexIndex = 0;
 };
-
-} // namespace WaylandServer
-
-} // namespace Liri
-
-#endif // LIRI_SCREENMANAGER_H
