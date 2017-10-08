@@ -30,7 +30,6 @@
 #include <LiriWaylandServer/OutputManagement>
 #include <LiriWaylandServer/QuickOutputConfiguration>
 #include <LiriWaylandServer/GtkShell>
-#include <LiriWaylandServer/Screen>
 #include <LiriWaylandServer/Screencaster>
 #include <LiriWaylandServer/Screenshooter>
 //#include <LiriWaylandServer/TaskManager>
