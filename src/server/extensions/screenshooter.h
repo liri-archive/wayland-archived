@@ -24,6 +24,7 @@
 #ifndef LIRI_SCREENSHOOTER_H
 #define LIRI_SCREENSHOOTER_H
 
+#include <QQuickItem>
 #include <QtWaylandCompositor/QWaylandCompositorExtension>
 
 #include <LiriWaylandServer/liriwaylandserverglobal.h>
