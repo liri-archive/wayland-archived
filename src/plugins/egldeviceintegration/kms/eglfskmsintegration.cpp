@@ -72,6 +72,8 @@ EglFSKmsIntegration::EglFSKmsIntegration()
     , m_hwCursor(true)
     , m_pbuffers(false)
     , m_separateScreens(false)
+    , m_udev(new Udev())
+    , m_udevMonitor(new UdevMonitor(m_udev, this))
 {
 }
 
@@ -81,19 +83,16 @@ void EglFSKmsIntegration::platformInit()
     // see https://github.com/libretro/RetroArch/issues/4790
     qputenv("EGL_PLATFORM", "0x31D7");
 
-    Udev *udev = new Udev;
-
     // Autodetect DRM device unless it's specified by the configuration
     if (m_devicePath.isEmpty()) {
         UdevEnumerate *udevEnumerate = new UdevEnumerate(UdevDevice::PrimaryVideoDevice |
-                                                         UdevDevice::GenericVideoDevice, udev);
+                                                         UdevDevice::GenericVideoDevice, m_udev);
         QList<UdevDevice *> devices = udevEnumerate->scan();
         qCDebug(lcKms) << "Found the following video devices:";
         Q_FOREACH (UdevDevice *device, devices)
             qCDebug(lcKms) << '\t' << device->deviceNode().toUtf8().constData();
 
         delete udevEnumerate;
-        delete udev;
 
         if (devices.isEmpty())
             qFatal("Could not find DRM device!");
@@ -105,8 +104,7 @@ void EglFSKmsIntegration::platformInit()
     }
 
     // Monitor for hotplug events
-    UdevMonitor *udevMonitor = new UdevMonitor(udev, this);
-    connect(udevMonitor, &UdevMonitor::deviceChanged, this, [this](UdevDevice *device) {
+    connect(m_udevMonitor, &UdevMonitor::deviceChanged, this, [this](UdevDevice *device) {
         // We are interested only on the DRM device
         if (device->deviceNode() != m_devicePath)
             return;
@@ -128,6 +126,12 @@ void EglFSKmsIntegration::platformDestroy()
     m_device->close();
     delete m_device;
     m_device = nullptr;
+
+    delete m_udevMonitor;
+    m_udevMonitor = nullptr;
+
+    delete m_udev;
+    m_udev = nullptr;
 }
 
 void EglFSKmsIntegration::loadConfiguration(const QString &fileName)

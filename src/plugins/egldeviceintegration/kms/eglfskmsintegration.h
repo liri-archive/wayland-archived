@@ -43,6 +43,8 @@ namespace Liri {
 
 namespace Platform {
 
+class Udev;
+class UdevMonitor;
 class EglFSKmsDevice;
 
 class EglFSKmsIntegration : public QObject, public EGLDeviceIntegration
@@ -85,6 +87,8 @@ private:
     bool m_separateScreens;
     QString m_devicePath;
     QMap<QString, QVariantMap> m_outputSettings;
+    Udev *m_udev;
+    UdevMonitor *m_udevMonitor;
 };
 
 } // namespace Platform
