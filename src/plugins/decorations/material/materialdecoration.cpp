@@ -134,6 +134,29 @@ QMargins QWaylandMaterialDecoration::margins() const
 
 void QWaylandMaterialDecoration::paint(QPaintDevice *device)
 {
+    // Set decoration colors of Fluid applications
+    if (window()) {
+        QVariant bgColor = window()->property("__material_decoration_backgroundColor");
+        if (bgColor.isValid()) {
+            QColor color = bgColor.value<QColor>();
+            if (color != m_backgroundColor) {
+                m_backgroundColor = color;
+                Q_EMIT backgroundColorChanged();
+            }
+        }
+
+        QVariant fgColor = window()->property("__material_decoration_foregroundColor");
+        if (fgColor.isValid()) {
+            QColor color = fgColor.value<QColor>();
+            if (color != m_textColor) {
+                m_textColor = color;
+                Q_EMIT textColorChanged();
+                m_iconColor = color;
+                Q_EMIT iconColorChanged();
+            }
+        }
+    }
+
     const QRect frameGeometry = window()->frameGeometry();
     QRect top(QPoint(WINDOW_BORDER, WINDOW_BORDER), QSize(frameGeometry.width(), margins().top()));
 
