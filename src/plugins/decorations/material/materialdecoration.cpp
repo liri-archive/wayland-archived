@@ -199,6 +199,7 @@ void QWaylandMaterialDecoration::paint(QPaintDevice *device)
         QFont font = p.font();
         font.setBold(true);
         font.setFamily("Roboto");
+        font.setPixelSize(dp(11));
         p.setFont(font);
         QPoint windowTitlePoint(dx, dy - WINDOW_BORDER / 2);
         p.drawStaticText(windowTitlePoint, m_windowTitle);
@@ -375,8 +376,7 @@ void QWaylandMaterialDecoration::processMouseRight(QWaylandInputDevice *inputDev
 
 int QWaylandMaterialDecoration::dp(int dp) const
 {
-    qreal multiplier = 1.4;
-    return qRound(dp * ((pixelDensity() * 25.4) / 160) * multiplier);
+    return qRound(dp * pixelDensity());
 }
 
 QBitmap QWaylandMaterialDecoration::buttonIcon(const QString &name) const
@@ -389,7 +389,9 @@ QBitmap QWaylandMaterialDecoration::buttonIcon(const QString &name) const
 qreal QWaylandMaterialDecoration::pixelDensity() const
 {
     QScreen *screen = window()->screen();
-    return screen->physicalDotsPerInch() / 25.4;
+    if (!screen)
+        screen = QGuiApplication::primaryScreen();
+    return screen->devicePixelRatio();
 }
 
 bool QWaylandMaterialDecoration::isMaximizeable() const
