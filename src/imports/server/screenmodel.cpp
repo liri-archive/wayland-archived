@@ -354,7 +354,7 @@ void ScreenModel::addFakeScreens()
         bool primary = outputSettings.value(QStringLiteral("primary")).toBool();
         qCDebug(gLcServerQml) << "Output primary:" << primary;
 
-        int scale = qMin<int>(1, outputSettings.value(QStringLiteral("scale")).toInt());
+        int scale = qMax<int>(1, outputSettings.value(QStringLiteral("scale")).toInt());
         qCDebug(gLcServerQml) << "Scale:" << scale;
 
         const QVariantMap posValue = outputSettings.value(QStringLiteral("position")).toMap();
