@@ -36,7 +36,7 @@
 
 QT_BEGIN_NAMESPACE
 
-inline void initResources() { Q_INIT_RESOURCE(icons); }
+inline void initResources() { Q_INIT_RESOURCE(material); }
 
 namespace QtWaylandClient {
 
