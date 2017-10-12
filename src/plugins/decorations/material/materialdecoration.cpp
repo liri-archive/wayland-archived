@@ -377,7 +377,7 @@ void QWaylandMaterialDecoration::processMouseRight(QWaylandInputDevice *inputDev
 
 int QWaylandMaterialDecoration::dp(int dp) const
 {
-    return dp * (waylandWindow() ? waylandWindow()->scale() : 1);
+    return dp;
 }
 
 QBitmap QWaylandMaterialDecoration::buttonIcon(const QString &name) const
