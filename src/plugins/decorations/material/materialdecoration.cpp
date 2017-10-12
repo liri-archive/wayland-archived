@@ -43,6 +43,7 @@ namespace QtWaylandClient {
 #define BUTTON_WIDTH dp(24)
 #define BUTTON_SPACING dp(12)
 #define TITLE_BAR_HEIGHT dp(32)
+#define TITLE_FONT_SIZE dp(16)
 #define WINDOW_BORDER 4 // big enough to resize
 
 QWaylandMaterialDecoration::QWaylandMaterialDecoration()
@@ -195,11 +196,11 @@ void QWaylandMaterialDecoration::paint(QPaintDevice *device)
         p.setPen(m_textColor);
         QSizeF size = m_windowTitle.size();
         int dx = qFloor((top.width() - size.width()) / 2);
-        int dy = qFloor((top.height() - size.height()) / 2);
+        int dy = qFloor((top.height() - TITLE_FONT_SIZE) / 2);
         QFont font = p.font();
         font.setBold(true);
         font.setFamily("Roboto");
-        font.setPixelSize(dp(11));
+        font.setPixelSize(TITLE_FONT_SIZE);
         p.setFont(font);
         QPoint windowTitlePoint(dx, dy - WINDOW_BORDER / 2);
         p.drawStaticText(windowTitlePoint, m_windowTitle);
