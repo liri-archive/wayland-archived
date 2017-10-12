@@ -103,7 +103,6 @@ private:
     QRectF minimizeButtonRect() const;
 
     int dp(int dp) const;
-    qreal pixelDensity() const;
 
     QBitmap buttonIcon(const QString &name) const;
 

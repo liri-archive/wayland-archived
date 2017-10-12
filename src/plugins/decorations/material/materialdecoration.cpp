@@ -377,7 +377,7 @@ void QWaylandMaterialDecoration::processMouseRight(QWaylandInputDevice *inputDev
 
 int QWaylandMaterialDecoration::dp(int dp) const
 {
-    return qRound(dp * pixelDensity());
+    return dp * (waylandWindow() ? waylandWindow()->scale() : 1);
 }
 
 QBitmap QWaylandMaterialDecoration::buttonIcon(const QString &name) const
@@ -385,14 +385,6 @@ QBitmap QWaylandMaterialDecoration::buttonIcon(const QString &name) const
     QIcon icon(":/icons/" + name + ".svg");
     QPixmap pixmap = icon.pixmap(QSize(BUTTON_WIDTH, BUTTON_WIDTH));
     return pixmap.createMaskFromColor(QColor("black"), Qt::MaskOutColor);
-}
-
-qreal QWaylandMaterialDecoration::pixelDensity() const
-{
-    QScreen *screen = window()->screen();
-    if (!screen)
-        screen = QGuiApplication::primaryScreen();
-    return screen->devicePixelRatio();
 }
 
 bool QWaylandMaterialDecoration::isMaximizeable() const
