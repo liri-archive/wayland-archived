@@ -40,7 +40,6 @@
 
 #include <LiriEglFS/EglFSGlobal>
 #include <LiriEglFS/EglFSNativeInterface>
-#include <LiriLogind/VtHandler>
 
 namespace Liri {
 
@@ -49,6 +48,7 @@ namespace Platform {
 class EglFSContext;
 class EglFSWindow;
 class LibInputManager;
+class VtHandler;
 
 class LIRIEGLFS_EXPORT EglFSIntegration : public QObject, public QPlatformIntegration
 {

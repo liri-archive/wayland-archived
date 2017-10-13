@@ -20,7 +20,7 @@ This project includes:
   applicaion manager, task manager and output management
 * XWayland support
 * Screen configuration
-* Qt-style API for udev, logind and libinput
+* Qt-style API for udev, libinput
 * QPA plugin
 * QtWaylandClient fullscreen shell integration
 * Pluggable hardware abstraction with support for:
@@ -208,11 +208,11 @@ to learn how to enable them.
 * Platform:
   * **liri.qpa.deviceintegration:** Device integration
   * **liri.qpa.input:** Input management on device integration plugins
-  * **liri.qpa.logind:** Logind integration
   * **liri.qpa.udev:** udev integration
 
 * EGL Device Integrations:
   * **liri.qpa.kms:** KMS/DRM EGL device integration
+  * **liri.qpa.vthandler:** Vt handler
 
 ## Licensing
 

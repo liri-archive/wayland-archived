@@ -27,8 +27,9 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/private/qcore_unix_p.h>
 
+#include <LiriLogind/Logind>
+
 #include "logging_p.h"
-#include "logind.h"
 #include "vthandler.h"
 #include "vthandler_p.h"
 
@@ -57,6 +58,10 @@ extern "C" {
 
 #define VT_HANDLER_LOGIND 1
 
+Q_LOGGING_CATEGORY(lcVtHandler, "liri.qpa.vthandler")
+
+using namespace Liri;
+
 namespace Liri {
 
 namespace Platform {
@@ -74,6 +79,7 @@ VtHandlerPrivate::VtHandlerPrivate(VtHandler *self)
     , vtNumber(0)
     , kbMode(K_OFF)
     , active(false)
+    , q_ptr(self)
 {
     vth = self;
 
@@ -104,7 +110,7 @@ void VtHandlerPrivate::setup(int nr)
 
     // Need a valid vt number
     if (nr < 0) {
-        qCWarning(lcLogind, "Invalid vt number");
+        qCWarning(lcVtHandler, "Invalid vt number");
         return;
     }
 
@@ -112,14 +118,14 @@ void VtHandlerPrivate::setup(int nr)
     devName = QStringLiteral("/dev/tty%1").arg(nr);
     vtFd = ::open(qPrintable(devName), O_RDWR | O_CLOEXEC | O_NONBLOCK);
     if (vtFd < 0) {
-        qCWarning(lcLogind, "Failed to open vt \"%s\": %s",
+        qCWarning(lcVtHandler, "Failed to open vt \"%s\": %s",
                   qPrintable(devName), ::strerror(errno));
         return;
     }
 
     // Must be a valid vt
     if (!isValidVt(vtFd)) {
-        qCWarning(lcLogind, "TTY \"%s\" is not a virtual terminal",
+        qCWarning(lcVtHandler, "TTY \"%s\" is not a virtual terminal",
                   qPrintable(devName));
         closeFd();
         return;
@@ -130,7 +136,7 @@ void VtHandlerPrivate::setup(int nr)
 
     // Graphics mode
     if (::ioctl(vtFd, KDSETMODE, KD_GRAPHICS) < 0) {
-        qCWarning(lcLogind, "Unable to set KD_GRAPHICS mode on \"%s\": %s",
+        qCWarning(lcVtHandler, "Unable to set KD_GRAPHICS mode on \"%s\": %s",
                   qPrintable(devName), ::strerror(errno));
         toggleKeyboard(true);
         closeFd();
@@ -149,7 +155,7 @@ void VtHandlerPrivate::setup(int nr)
     // Take over VT
     vt_mode mode = { VT_PROCESS, 0, short(SIGRTMIN), short(SIGRTMIN), 0 };
     if (::ioctl(vtFd, VT_SETMODE, &mode) < 0) {
-        qCWarning(lcLogind, "Unable to take over VT \"%s\": %s",
+        qCWarning(lcVtHandler, "Unable to take over VT \"%s\": %s",
                   qPrintable(devName), qPrintable(::strerror(errno)));
         ::ioctl(vtFd, KDSETMODE, KD_TEXT);
         toggleKeyboard(true);
@@ -173,14 +179,14 @@ bool VtHandlerPrivate::installSignalHandler()
     // their exact values are unknown at compile time; verify if we
     // exceed the limit (POSIX has 32 of them)
     if (SIGRTMIN > SIGRTMAX) {
-        qCWarning(lcLogind, "Not enough RT signals available: %u-%u",
+        qCWarning(lcVtHandler, "Not enough RT signals available: %u-%u",
                   SIGRTMIN, SIGRTMAX);
         return false;
     }
 #endif
 
     if (::socketpair(AF_UNIX, SOCK_STREAM, 0, signalFd)) {
-        qCWarning(lcLogind, "Failed to create socket pair: %s",
+        qCWarning(lcVtHandler, "Failed to create socket pair: %s",
                   ::strerror(errno));
     }
     notifier = new QSocketNotifier(signalFd[1], QSocketNotifier::Read, q);
@@ -273,15 +279,15 @@ void VtHandlerPrivate::toggleKeyboard(bool enable)
 
     if (enable) {
         if (::ioctl(vtFd, KDSKBMUTE, 0) < 0)
-            qCWarning(lcLogind, "Unable to unmute keyboard on \"%s\": %s",
+            qCWarning(lcVtHandler, "Unable to unmute keyboard on \"%s\": %s",
                       qPrintable(devName), ::strerror(errno));
         if (::ioctl(vtFd, KDSKBMODE, kbMode) < 0)
-            qCWarning(lcLogind, "Unable to restore keyboard mode on \"%s\": %s",
+            qCWarning(lcVtHandler, "Unable to restore keyboard mode on \"%s\": %s",
                       qPrintable(devName), ::strerror(errno));
     } else {
         // Read keyboard mode
         if (::ioctl(vtFd, KDGKBMODE, &kbMode) < 0) {
-            qCWarning(lcLogind, "Unable to read keyboard mode on \"%s\": %s",
+            qCWarning(lcVtHandler, "Unable to read keyboard mode on \"%s\": %s",
                       qPrintable(devName), ::strerror(errno));
             kbMode = K_UNICODE;
         } else if (kbMode == K_OFF) {
@@ -292,7 +298,7 @@ void VtHandlerPrivate::toggleKeyboard(bool enable)
             // Avoid input going to the tty
             if (::ioctl(vtFd, KDSKBMUTE, 1) < 0 &&
                     ::ioctl(vtFd, KDSKBMODE, K_OFF) < 0) {
-                qCWarning(lcLogind, "Unable to set K_OFF keyboard mode on \"%s\": %s",
+                qCWarning(lcVtHandler, "Unable to set K_OFF keyboard mode on \"%s\": %s",
                           qPrintable(devName), ::strerror(errno));
                 closeFd();
             }
@@ -335,7 +341,7 @@ bool VtHandlerPrivate::isValidVt(int fd)
 
     struct stat st;
     if (::fstat(fd, &st) == -1) {
-        qCWarning(lcLogind) << "Failed to fstat tty";
+        qCWarning(lcVtHandler) << "Failed to fstat tty";
         return false;
     }
 
@@ -357,7 +363,8 @@ void VtHandlerPrivate::signalHandler(int sigNo)
  */
 
 VtHandler::VtHandler(QObject *parent)
-    : QObject(*new VtHandlerPrivate(this), parent)
+    : QObject(parent)
+    , d_ptr(new VtHandlerPrivate(this))
 {
     Q_D(VtHandler);
 
@@ -379,7 +386,7 @@ VtHandler::VtHandler(QObject *parent)
     // Handle pause and resume of DRM devices
     connect(d->logind, &Logind::devicePaused, this, [d]
             (quint32 devMajor, quint32 devMinor, const QString &type) {
-        qCDebug(lcLogind, "Device with major %d minor %d paused with %s",
+        qCDebug(lcVtHandler, "Device with major %d minor %d paused with %s",
                 devMajor, devMinor, qPrintable(type));
 
         if (type == QLatin1String("pause"))
@@ -387,7 +394,7 @@ VtHandler::VtHandler(QObject *parent)
     });
     connect(d->logind, &Logind::deviceResumed, this, []
             (quint32 devMajor, quint32 devMinor, int) {
-        qCDebug(lcLogind, "Device with major %d minor %d resumed",
+        qCDebug(lcVtHandler, "Device with major %d minor %d resumed",
                 devMajor, devMinor);
     });
 #endif
@@ -398,6 +405,11 @@ VtHandler::VtHandler(QObject *parent)
     else
         connect(d->logind, &Logind::connectedChanged,
                 d->logind, &Logind::takeControl);
+}
+
+VtHandler::~VtHandler()
+{
+    delete d_ptr;
 }
 
 bool VtHandler::isActive() const
@@ -416,7 +428,7 @@ void VtHandler::activate(quint32 nr)
     if (d->vtNumber == int(nr))
         return;
 
-    qCDebug(lcLogind, "Switching to vt %d", nr);
+    qCDebug(lcVtHandler, "Switching to vt %d", nr);
     d->logind->switchTo(nr);
     d->setActive(false);
 }

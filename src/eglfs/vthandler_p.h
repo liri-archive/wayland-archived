@@ -1,10 +1,7 @@
 /****************************************************************************
  * This file is part of Liri.
  *
- * Copyright (C) 2015-2016 Pier Luigi Fiorini
- *
- * Author(s):
- *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -31,12 +28,13 @@
 
 namespace Liri {
 
+class Logind;
+
 namespace Platform {
 
-class Logind;
 class VtHandler;
 
-class VtHandlerPrivate : public QObjectPrivate
+class VtHandlerPrivate
 {
     Q_DECLARE_PUBLIC(VtHandler)
 public:
@@ -56,7 +54,7 @@ public:
     static bool isValidVt(int fd);
     static void signalHandler(int sigNo);
 
-    Logind *logind;
+    Liri::Logind *logind;
 
     int signalFd[2];
     QSocketNotifier *notifier;
@@ -68,6 +66,9 @@ public:
     int kbMode;
 
     bool active;
+
+protected:
+    VtHandler *q_ptr;
 };
 
 } // namespace Platform

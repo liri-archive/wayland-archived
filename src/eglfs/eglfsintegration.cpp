@@ -55,6 +55,7 @@
 #include "eglfsoffscreenwindow.h"
 #include "eglfswindow.h"
 #include "logging_p.h"
+#include "vthandler.h"
 
 #include <QtEglSupport/private/qeglconvenience_p.h>
 #include <QtEglSupport/private/qeglplatformcontext_p.h>
@@ -297,7 +298,7 @@ void EglFSIntegration::takeControl(bool connected)
     Logind *logind = Logind::instance();
 
     disconnect(logind, &Logind::connectedChanged,
-            this, &EglFSIntegration::takeControl);
+               this, &EglFSIntegration::takeControl);
 
     if (logind->hasSessionControl()) {
         qCDebug(lcDeviceIntegration) << "Session control already acquired via logind";

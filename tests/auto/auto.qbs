@@ -8,7 +8,6 @@ Project {
         //"client/output/output.qbs",
         //"client/registry/registry.qbs",
         "client/shmpool/shmpool.qbs",
-        //"logind/logind.qbs",
         //"udev/udev.qbs",
     ]
 

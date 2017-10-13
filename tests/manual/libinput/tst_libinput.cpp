@@ -27,6 +27,7 @@
 #include <LiriLibInput/LibInputHandler>
 #include <LiriLogind/Logind>
 
+using namespace Liri;
 using namespace Liri::Platform;
 
 int main(int argc, char *argv[])

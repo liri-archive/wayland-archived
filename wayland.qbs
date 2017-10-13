@@ -21,7 +21,6 @@ Project {
         "src/client/client.qbs",
         "src/eglfs/eglfs.qbs",
         "src/libinput/libinput.qbs",
-        "src/logind/logind.qbs",
         "src/server/server.qbs",
         "src/udev/udev.qbs",
         "src/imports/imports.qbs",

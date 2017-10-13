@@ -127,8 +127,10 @@ DeviceIntegration::DeviceIntegration()
 
         Q_FOREACH (const QFileInfo &info, infoList) {
             QPluginLoader loader(info.filePath());
-            if (!loader.load())
+            if (!loader.load()) {
+                qWarning("Skipping \"%s\" due to an error: %s", qPrintable(info.filePath()), qPrintable(loader.errorString()));
                 continue;
+            }
 
             QJsonObject metaData = loader.metaData()[QLatin1String("MetaData")].toObject();
 

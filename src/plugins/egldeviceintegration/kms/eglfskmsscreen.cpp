@@ -37,7 +37,7 @@
 
 #include <LiriEglFS/EglFSIntegration>
 #include <LiriEglFS/EglFSWindow>
-#include <LiriLogind/VtHandler>
+#include <LiriEglFS/VtHandler>
 
 #include "eglfskmsscreen.h"
 #include "eglfskmsdevice.h"

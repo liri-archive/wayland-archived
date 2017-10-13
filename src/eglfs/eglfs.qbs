@@ -7,7 +7,7 @@ LiriModuleProject {
     name: "LiriEglFS"
     moduleName: "LiriEglFS"
     description: "EGL device integration"
-    pkgConfigDependencies: ["Qt5Core", "Qt5Gui", "LiriUDev", "LiriLibInput"]
+    pkgConfigDependencies: ["Qt5Core", "Qt5Gui", "LiriUDev", "LiriLibInput", "LiriLogind"]
     createCMake: false
 
     resolvedProperties: ({
@@ -20,7 +20,9 @@ LiriModuleProject {
                   { name: LiriUtils.quote("Qt.fontdatabase_support-private") },
                   { name: LiriUtils.quote("Qt.service_support-private") },
                   { name: LiriUtils.quote("Qt.theme_support-private") },
-                  { name: LiriUtils.quote("Qt.eventdispatcher_support-private") }],
+                  { name: LiriUtils.quote("LiriUDev") },
+                  { name: LiriUtils.quote("LiriLibInput") },
+                  { name: LiriUtils.quote("LiriLogind") }],
     })
 
     LiriHeaders {
@@ -36,6 +38,7 @@ LiriModuleProject {
             "eglfsoffscreenwindow.h": ["EglFSOffscreenWindow"],
             "eglfsscreen.h": ["EglFSScreen"],
             "eglfswindow.h": ["EglFSWindow"],
+            "vthandler.h": ["VtHandler"],
         })
 
         Group {

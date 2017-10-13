@@ -1,10 +1,7 @@
 /****************************************************************************
  * This file is part of Liri.
  *
- * Copyright (C) 2015-2016 Pier Luigi Fiorini
- *
- * Author(s):
- *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -24,6 +21,44 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include "logging_p.h"
+#pragma once
 
-Q_LOGGING_CATEGORY(lcLogind, "liri.qpa.logind")
+#include <QtCore/QObject>
+#include <QtCore/QLoggingCategory>
+
+#include <LiriEglFS/lirieglfsglobal.h>
+
+Q_DECLARE_LOGGING_CATEGORY(lcVtHandler)
+
+namespace Liri {
+
+namespace Platform {
+
+class VtHandlerPrivate;
+
+class LIRIEGLFS_EXPORT VtHandler : public QObject
+{
+    Q_OBJECT
+    Q_DECLARE_PRIVATE(VtHandler)
+public:
+    explicit VtHandler(QObject *parent = nullptr);
+    ~VtHandler();
+
+    bool isActive() const;
+
+    void activate(quint32 nr);
+
+Q_SIGNALS:
+    void created();
+    void activeChanged(bool active);
+    void interrupted();
+    void aboutToSuspend();
+    void resumed();
+
+private:
+    VtHandlerPrivate *const d_ptr;
+};
+
+} // namespace Platform
+
+} // namespace Liri
