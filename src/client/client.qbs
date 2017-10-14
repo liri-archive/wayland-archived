@@ -56,7 +56,11 @@ LiriModuleProject {
         version: "0.0.0"
 
         Depends { name: root.headersName }
-        Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
+        Depends {
+            name: "Qt"
+            submodules: ["core", "core-private", "gui", "gui-private"]
+            versionAtLeast: project.minimumQtVersion
+        }
         Depends { name: "Wayland"; submodules: ["client", "cursor"] }
         Depends { name: "WaylandScanner" }
 

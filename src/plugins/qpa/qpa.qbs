@@ -5,7 +5,11 @@ LiriDynamicLibrary {
     targetName: "lirieglfs"
 
     Depends { name: "lirideployment" }
-    Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
+    Depends {
+        name: "Qt"
+        submodules: ["core", "core-private", "gui", "gui-private"]
+        versionAtLeast: project.minimumQtVersion
+    }
     Depends { name: "LiriEglFS" }
 
     files: ["*.cpp", "*.h"]

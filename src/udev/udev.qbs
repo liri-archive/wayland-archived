@@ -39,7 +39,11 @@ LiriModuleProject {
         version: "0.0.0"
 
         Depends { name: root.headersName }
-        Depends { name: "Qt"; submodules: ["core", "core-private"] }
+        Depends {
+            name: "Qt"
+            submodules: ["core", "core-private"]
+            versionAtLeast: project.minimumQtVersion
+        }
         Depends { name: "libudev" }
 
         condition: {

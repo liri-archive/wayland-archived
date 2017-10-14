@@ -5,7 +5,11 @@ LiriDynamicLibrary {
     targetName: "fullscreen-shell"
 
     Depends { name: "lirideployment" }
-    Depends { name: "Qt"; submodules: ["gui", "gui-private", "waylandclient", "waylandclient-private"] }
+    Depends {
+        name: "Qt"
+        submodules: ["gui", "gui-private", "waylandclient", "waylandclient-private"]
+        versionAtLeast: project.minimumQtVersion
+    }
     Depends { name: "WaylandScanner" }
 
     cpp.defines: []

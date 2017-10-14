@@ -4,7 +4,11 @@ LiriQmlPlugin {
     name: "liriwaylandserverprivateplugin"
     pluginPath: "Liri/WaylandServer/Private"
 
-    Depends { name: "Qt"; submodules: ["gui", "gui-private", "waylandcompositor"] }
+    Depends {
+        name: "Qt"
+        submodules: ["gui", "gui-private", "waylandcompositor"]
+        versionAtLeast: project.minimumQtVersion
+    }
 
     cpp.defines: base.concat(["QT_WAYLAND_COMPOSITOR_QUICK"])
 

@@ -68,6 +68,7 @@ LiriModuleProject {
                 "qml", "quick", "quick-private",
                 "waylandcompositor", "waylandcompositor-private"
             ]
+            versionAtLeast: project.minimumQtVersion
         }
         Depends { name: "WaylandScanner" }
 

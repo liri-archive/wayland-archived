@@ -5,7 +5,7 @@ StaticLibrary {
     targetName: "eglfsxkb"
 
     Depends { name: "cpp" }
-    Depends { name: "Qt.core" }
+    Depends { name: "Qt.core"; versionAtLeast: project.minimumQtVersion }
     Depends { name: "xkbcommon" }
 
     condition: {

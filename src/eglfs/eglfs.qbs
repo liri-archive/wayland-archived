@@ -62,6 +62,7 @@ LiriModuleProject {
                 "fontdatabase_support-private", "service_support-private",
                 "theme_support-private", "eventdispatcher_support-private"
             ]
+            versionAtLeast: project.minimumQtVersion
         }
         Depends { name: "LiriUDev" }
         Depends { name: "LiriLibInput" }
