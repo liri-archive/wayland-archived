@@ -45,6 +45,7 @@ Qt >= 5.8.0 with at least the following modules is required:
 And the following modules:
 
  * [qbs-shared](https://github.com/lirios/qbs-shared.git)
+ * [libliri](https://github.com/lirios/libliri.git)
 
 The following modules and their dependencies are required:
 
