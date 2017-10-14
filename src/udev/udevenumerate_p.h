@@ -21,8 +21,43 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#pragma once
+#ifndef UDEVENUMERATE_P_H
+#define UDEVENUMERATE_P_H
 
-#include <QtCore/QLoggingCategory>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Liri.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-Q_DECLARE_LOGGING_CATEGORY(lcUdev)
+#include "udevdevice.h"
+
+extern "C" {
+#include <libudev.h>
+}
+
+namespace Liri {
+
+namespace Platform {
+
+class UdevEnumeratePrivate
+{
+public:
+    UdevEnumeratePrivate(UdevDevice::DeviceTypes t, Udev *u);
+    ~UdevEnumeratePrivate();
+
+    UdevDevice::DeviceTypes types;
+    Udev *udev;
+    udev_enumerate *enumerate;
+};
+
+} // namespace Platform
+
+} // namespace Liri
+
+#endif // UDEVENUMERATE_P_H

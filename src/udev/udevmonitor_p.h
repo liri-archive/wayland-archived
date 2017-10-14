@@ -21,8 +21,8 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef LIRI_UDEV_P_H
-#define LIRI_UDEV_P_H
+#ifndef UDEVMONITOR_P_H
+#define UDEVMONITOR_P_H
 
 //
 //  W A R N I N G
@@ -35,36 +35,30 @@
 // We mean it.
 //
 
-#include <QLoggingCategory>
-
-#include <LiriUDev/liriudevglobal.h>
-
-extern "C" {
-#include <libudev.h>
-}
-
-Q_DECLARE_LOGGING_CATEGORY(lcUdev)
+#include "udevmonitor.h"
 
 namespace Liri {
 
 namespace Platform {
 
-class Udev;
-
-class LIRIUDEV_EXPORT UdevPrivate
+class UdevMonitorPrivate
 {
+    Q_DECLARE_PUBLIC(UdevMonitor)
 public:
-    UdevPrivate();
-    ~UdevPrivate();
+    UdevMonitorPrivate(UdevMonitor *qq, Udev *u);
+    ~UdevMonitorPrivate();
 
-    static UdevPrivate *get(Udev *u);
+    void _q_udevEventHandler();
 
-    struct udev *udev;
+    Udev *udev;
+    struct udev_monitor *monitor;
+
+protected:
+    UdevMonitor *q_ptr;
 };
 
 } // namespace Platform
 
 } // namespace Liri
 
-#endif // LIRI_UDEV_P_H
-
+#endif // UDEVMONITOR_P_H

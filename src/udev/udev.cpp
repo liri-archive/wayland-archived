@@ -23,10 +23,11 @@
 
 #include <qplatformdefs.h>
 
-#include "logging_p.h"
 #include "udev.h"
 #include "udev_p.h"
 #include "udevdevice.h"
+
+Q_LOGGING_CATEGORY(lcUdev, "liri.udev")
 
 namespace Liri {
 

@@ -41,7 +41,8 @@ class LIRIUDEV_EXPORT UdevMonitor : public QObject
     Q_OBJECT
     Q_DECLARE_PRIVATE(UdevMonitor)
 public:
-    UdevMonitor(Udev *udev, QObject *parent = 0);
+    explicit UdevMonitor(Udev *udev, QObject *parent = nullptr);
+    ~UdevMonitor();
 
     bool isValid() const;
 
@@ -56,6 +57,8 @@ Q_SIGNALS:
     void deviceOfflined(UdevDevice *device);
 
 private:
+    UdevMonitorPrivate *const d_ptr;
+
     Q_PRIVATE_SLOT(d_func(), void _q_udevEventHandler())
 };
 

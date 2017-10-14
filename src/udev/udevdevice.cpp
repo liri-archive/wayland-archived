@@ -21,10 +21,11 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "udev_p.h"
 #include "udevdevice.h"
+#include "udevdevice_p.h"
 
 namespace Liri {
 
@@ -46,22 +47,16 @@ static inline QStringList listFromEntries(udev_list_entry *l)
  * UdevDevicePrivate
  */
 
-class UdevDevicePrivate
+UdevDevicePrivate::UdevDevicePrivate()
+    : device(nullptr)
 {
-public:
-    UdevDevicePrivate()
-        : device(nullptr)
-    {
-    }
+}
 
-    ~UdevDevicePrivate()
-    {
-        if (device)
-            udev_device_unref(device);
-    }
-
-    udev_device *device;
-};
+UdevDevicePrivate::~UdevDevicePrivate()
+{
+    if (device)
+        udev_device_unref(device);
+}
 
 /*
  * UdevDevice

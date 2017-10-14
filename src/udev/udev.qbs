@@ -12,7 +12,6 @@ LiriModuleProject {
 
     resolvedProperties: ({
         Depends: [{ name: LiriUtils.quote("Qt.core") },
-                  { name: LiriUtils.quote("Qt.core-private") },
                   { name: LiriUtils.quote("libudev") }],
     })
 
@@ -40,8 +39,7 @@ LiriModuleProject {
 
         Depends { name: root.headersName }
         Depends {
-            name: "Qt"
-            submodules: ["core", "core-private"]
+            name: "Qt.core"
             versionAtLeast: project.minimumQtVersion
         }
         Depends { name: "libudev" }
@@ -65,7 +63,7 @@ LiriModuleProject {
         Export {
             Depends { name: "cpp" }
             Depends { name: root.headersName }
-            Depends { name: "Qt"; submodules: ["core", "core-private"] }
+            Depends { name: "Qt.core" }
             Depends { name: "libudev" }
         }
     }

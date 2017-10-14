@@ -21,6 +21,39 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include "logging_p.h"
+#ifndef UDEVDEVICE_P_H
+#define UDEVDEVICE_P_H
 
-Q_LOGGING_CATEGORY(lcUdev, "liri.qpa.udev")
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Liri.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+extern "C" {
+#include <libudev.h>
+}
+
+namespace Liri {
+
+namespace Platform {
+
+class UdevDevicePrivate
+{
+public:
+    UdevDevicePrivate();
+    ~UdevDevicePrivate();
+
+    udev_device *device;
+};
+
+} // namespace Platform
+
+} // namespace Liri
+
+#endif // UDEVDEVICE_P_H

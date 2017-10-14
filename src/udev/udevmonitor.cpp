@@ -21,14 +21,13 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtCore/QSocketNotifier>
-#include <QtCore/private/qobject_p.h>
+#include <QSocketNotifier>
 
-#include "logging_p.h"
 #include "udev.h"
 #include "udev_p.h"
 #include "udevdevice.h"
 #include "udevmonitor.h"
+#include "udevmonitor_p.h"
 
 namespace Liri {
 
@@ -38,72 +37,71 @@ namespace Platform {
  * UdevMonitorPrivate
  */
 
-class UdevMonitorPrivate : public QObjectPrivate
+UdevMonitorPrivate::UdevMonitorPrivate(UdevMonitor *qq, Udev *u)
+    : udev(u)
+    , monitor(nullptr)
+    , q_ptr(qq)
 {
-    Q_DECLARE_PUBLIC(UdevMonitor)
-public:
-    UdevMonitorPrivate(Udev *u)
-        : udev(u)
-        , monitor(nullptr)
-    {
-        monitor = udev_monitor_new_from_netlink(UdevPrivate::get(u)->udev, "udev");
-        if (!monitor) {
-            qCWarning(lcUdev, "Unable to create an udev monitor: no devices can be detected");
-            return;
-        }
-
-        udev_monitor_enable_receiving(monitor);
+    monitor = udev_monitor_new_from_netlink(UdevPrivate::get(u)->udev, "udev");
+    if (!monitor) {
+        qCWarning(lcUdev, "Unable to create an udev monitor: no devices can be detected");
+        return;
     }
 
-    ~UdevMonitorPrivate()
-    {
-        if (monitor)
-            udev_monitor_unref(monitor);
+    udev_monitor_enable_receiving(monitor);
+}
+
+UdevMonitorPrivate::~UdevMonitorPrivate()
+{
+    if (monitor)
+        udev_monitor_unref(monitor);
+}
+
+void UdevMonitorPrivate::_q_udevEventHandler()
+{
+    Q_Q(UdevMonitor);
+
+    udev_device *dev = udev_monitor_receive_device(monitor);
+    if (!dev)
+        return;
+
+    const char *action = udev_device_get_action(dev);
+    if (!action) {
+        udev_device_unref(dev);
+        return;
     }
 
-    void _q_udevEventHandler()
-    {
-        Q_Q(UdevMonitor);
+    UdevDevice *device = new UdevDevice(dev);
 
-        udev_device *dev = udev_monitor_receive_device(monitor);
-        if (!dev)
-            return;
-
-        const char *action = udev_device_get_action(dev);
-        if (!action) {
-            udev_device_unref(dev);
-            return;
-        }
-
-        UdevDevice *device = new UdevDevice(dev);
-
-        if (strcmp(action, "add") == 0)
-            Q_EMIT q->deviceAdded(device);
-        else if (strcmp(action, "remove") == 0)
-            Q_EMIT q->deviceRemoved(device);
-        else if (strcmp(action, "change") == 0)
-            Q_EMIT q->deviceChanged(device);
-        else if (strcmp(action, "online") == 0)
-            Q_EMIT q->deviceOnlined(device);
-        else if (strcmp(action, "offline") == 0)
-            Q_EMIT q->deviceOfflined(device);
-    }
-
-    Udev *udev;
-    struct udev_monitor *monitor;
-};
+    if (strcmp(action, "add") == 0)
+        Q_EMIT q->deviceAdded(device);
+    else if (strcmp(action, "remove") == 0)
+        Q_EMIT q->deviceRemoved(device);
+    else if (strcmp(action, "change") == 0)
+        Q_EMIT q->deviceChanged(device);
+    else if (strcmp(action, "online") == 0)
+        Q_EMIT q->deviceOnlined(device);
+    else if (strcmp(action, "offline") == 0)
+        Q_EMIT q->deviceOfflined(device);
+}
 
 /*
  * UdevMonitor
  */
 
 UdevMonitor::UdevMonitor(Udev *udev, QObject *parent)
-    : QObject(*new UdevMonitorPrivate(udev), parent)
+    : QObject(parent)
+    , d_ptr(new UdevMonitorPrivate(this, udev))
 {
     Q_D(UdevMonitor);
     int fd = udev_monitor_get_fd(d->monitor);
     QSocketNotifier *notifier = new QSocketNotifier(fd, QSocketNotifier::Read, this);
     connect(notifier, SIGNAL(activated(int)), this, SLOT(_q_udevEventHandler()));
+}
+
+UdevMonitor::~UdevMonitor()
+{
+    delete d_ptr;
 }
 
 bool UdevMonitor::isValid() const

@@ -21,10 +21,10 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include "logging_p.h"
 #include "udev.h"
 #include "udev_p.h"
 #include "udevenumerate.h"
+#include "udevenumerate_p.h"
 
 namespace Liri {
 
@@ -34,58 +34,50 @@ namespace Platform {
  * UdevEnumeratePrivate
  */
 
-class UdevEnumeratePrivate
+UdevEnumeratePrivate::UdevEnumeratePrivate(UdevDevice::DeviceTypes t, Udev *u)
+    : types(t)
+    , udev(u)
 {
-public:
-    UdevEnumeratePrivate(UdevDevice::DeviceTypes t, Udev *u)
-        : types(t)
-        , udev(u)
-    {
-        enumerate = udev_enumerate_new(UdevPrivate::get(u)->udev);
-        if (!enumerate) {
-            qCWarning(lcUdev, "Unable to enumerate connected devices");
-            return;
-        }
-
-        if (types.testFlag(UdevDevice::InputDevice_Mask))
-            udev_enumerate_add_match_subsystem(enumerate, "input");
-
-        if (types.testFlag(UdevDevice::VideoDevice_Mask)) {
-            udev_enumerate_add_match_subsystem(enumerate, "drm");
-            udev_enumerate_add_match_sysname(enumerate, "card[0-9]*");
-        }
-
-        if (types.testFlag(UdevDevice::KeyboardDevice)) {
-            udev_enumerate_add_match_property(enumerate, "ID_INPUT_KEYBOARD", "1");
-            udev_enumerate_add_match_property(enumerate, "ID_INPUT_KEY", "1");
-        }
-
-        if (types.testFlag(UdevDevice::MouseDevice))
-            udev_enumerate_add_match_property(enumerate, "ID_INPUT_MOUSE", "1");
-
-        if (types.testFlag(UdevDevice::TouchpadDevice))
-            udev_enumerate_add_match_property(enumerate, "ID_INPUT_TOUCHPAD", "1");
-
-        if (types.testFlag(UdevDevice::TouchscreenDevice))
-            udev_enumerate_add_match_property(enumerate, "ID_INPUT_TOUCHSCREEN", "1");
-
-        if (types.testFlag(UdevDevice::TabletDevice))
-            udev_enumerate_add_match_property(enumerate, "ID_INPUT_TABLET", "1");
-
-        if (types.testFlag(UdevDevice::JoystickDevice))
-            udev_enumerate_add_match_property(enumerate, "ID_INPUT_JOYSTICK", "1");
+    enumerate = udev_enumerate_new(UdevPrivate::get(u)->udev);
+    if (!enumerate) {
+        qCWarning(lcUdev, "Unable to enumerate connected devices");
+        return;
     }
 
-    ~UdevEnumeratePrivate()
-    {
-        if (enumerate)
-            udev_enumerate_unref(enumerate);
+    if (types.testFlag(UdevDevice::InputDevice_Mask))
+        udev_enumerate_add_match_subsystem(enumerate, "input");
+
+    if (types.testFlag(UdevDevice::VideoDevice_Mask)) {
+        udev_enumerate_add_match_subsystem(enumerate, "drm");
+        udev_enumerate_add_match_sysname(enumerate, "card[0-9]*");
     }
 
-    UdevDevice::DeviceTypes types;
-    Udev *udev;
-    udev_enumerate *enumerate;
-};
+    if (types.testFlag(UdevDevice::KeyboardDevice)) {
+        udev_enumerate_add_match_property(enumerate, "ID_INPUT_KEYBOARD", "1");
+        udev_enumerate_add_match_property(enumerate, "ID_INPUT_KEY", "1");
+    }
+
+    if (types.testFlag(UdevDevice::MouseDevice))
+        udev_enumerate_add_match_property(enumerate, "ID_INPUT_MOUSE", "1");
+
+    if (types.testFlag(UdevDevice::TouchpadDevice))
+        udev_enumerate_add_match_property(enumerate, "ID_INPUT_TOUCHPAD", "1");
+
+    if (types.testFlag(UdevDevice::TouchscreenDevice))
+        udev_enumerate_add_match_property(enumerate, "ID_INPUT_TOUCHSCREEN", "1");
+
+    if (types.testFlag(UdevDevice::TabletDevice))
+        udev_enumerate_add_match_property(enumerate, "ID_INPUT_TABLET", "1");
+
+    if (types.testFlag(UdevDevice::JoystickDevice))
+        udev_enumerate_add_match_property(enumerate, "ID_INPUT_JOYSTICK", "1");
+}
+
+UdevEnumeratePrivate::~UdevEnumeratePrivate()
+{
+    if (enumerate)
+        udev_enumerate_unref(enumerate);
+}
 
 /*
  * UdevEnumerate
