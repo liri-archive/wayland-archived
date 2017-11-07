@@ -237,7 +237,11 @@ void EglFSWindow::setGeometry(const QRect &r)
 
     // if we corrected the size, trigger a resize event
     if (rect != r)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+        QWindowSystemInterface::handleGeometryChange(window(), r);
+#else
         QWindowSystemInterface::handleGeometryChange(window(), rect, r);
+#endif
 }
 
 QRect EglFSWindow::geometry() const

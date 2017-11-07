@@ -46,9 +46,15 @@ void LibInputGesture::handlePinchBegin(libinput_event_gesture *event)
     const quint64 timestamp = libinput_event_gesture_get_time_usec(event);
     QPointF pos(0, 0);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QWindowSystemInterface::handleGestureEvent(
+                nullptr, nullptr, timestamp, Qt::BeginNativeGesture,
+                pos, pos);
+#else
     QWindowSystemInterface::handleGestureEvent(
                 nullptr, timestamp, Qt::BeginNativeGesture,
                 pos, pos);
+#endif
 }
 
 void LibInputGesture::handlePinchEnd(libinput_event_gesture *event)
@@ -56,9 +62,15 @@ void LibInputGesture::handlePinchEnd(libinput_event_gesture *event)
     const quint64 timestamp = libinput_event_gesture_get_time_usec(event);
     QPointF pos(0, 0);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QWindowSystemInterface::handleGestureEvent(
+                nullptr, nullptr, timestamp, Qt::EndNativeGesture,
+                pos, pos);
+#else
     QWindowSystemInterface::handleGestureEvent(
                 nullptr, timestamp, Qt::EndNativeGesture,
                 pos, pos);
+#endif
 }
 
 void LibInputGesture::handlePinchUpdate(libinput_event_gesture *event)
@@ -69,13 +81,23 @@ void LibInputGesture::handlePinchUpdate(libinput_event_gesture *event)
     QPointF pos(libinput_event_gesture_get_dx(event),
                 libinput_event_gesture_get_dy(event));
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QWindowSystemInterface::handleGestureEventWithRealValue(
+                nullptr, nullptr, timestamp, Qt::ZoomNativeGesture,
+                scale, pos, pos);
+    if (angle != 0.0)
+        QWindowSystemInterface::handleGestureEventWithRealValue(
+                    nullptr, nullptr, timestamp, Qt::RotateNativeGesture,
+                    angle, pos, pos);
+#else
     QWindowSystemInterface::handleGestureEventWithRealValue(
                 nullptr, timestamp, Qt::ZoomNativeGesture,
                 scale, pos, pos);
-    if (angle != 0)
+    if (angle != 0.0)
         QWindowSystemInterface::handleGestureEventWithRealValue(
                     nullptr, timestamp, Qt::RotateNativeGesture,
                     angle, pos, pos);
+#endif
 }
 
 void LibInputGesture::handleSwipeBegin(libinput_event_gesture *event)
@@ -83,9 +105,15 @@ void LibInputGesture::handleSwipeBegin(libinput_event_gesture *event)
     const quint64 timestamp = libinput_event_gesture_get_time_usec(event);
     QPointF pos(0, 0);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QWindowSystemInterface::handleGestureEvent(
+                nullptr, nullptr, timestamp, Qt::BeginNativeGesture,
+                pos, pos);
+#else
     QWindowSystemInterface::handleGestureEvent(
                 nullptr, timestamp, Qt::BeginNativeGesture,
                 pos, pos);
+#endif
 }
 
 void LibInputGesture::handleSwipeEnd(libinput_event_gesture *event)
@@ -93,9 +121,15 @@ void LibInputGesture::handleSwipeEnd(libinput_event_gesture *event)
     const quint64 timestamp = libinput_event_gesture_get_time_usec(event);
     QPointF pos(0, 0);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QWindowSystemInterface::handleGestureEvent(
+                nullptr, nullptr, timestamp, Qt::EndNativeGesture,
+                pos, pos);
+#else
     QWindowSystemInterface::handleGestureEvent(
                 nullptr, timestamp, Qt::EndNativeGesture,
                 pos, pos);
+#endif
 }
 
 void LibInputGesture::handleSwipeUpdate(libinput_event_gesture *event)
@@ -104,9 +138,15 @@ void LibInputGesture::handleSwipeUpdate(libinput_event_gesture *event)
     QPointF pos(libinput_event_gesture_get_dx(event),
                 libinput_event_gesture_get_dy(event));
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QWindowSystemInterface::handleGestureEvent(
+                nullptr, nullptr, timestamp, Qt::SwipeNativeGesture,
+                pos, pos);
+#else
     QWindowSystemInterface::handleGestureEvent(
                 nullptr, timestamp, Qt::SwipeNativeGesture,
                 pos, pos);
+#endif
 }
 
 } // namespace Platform
