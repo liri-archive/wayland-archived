@@ -60,6 +60,7 @@
 namespace Liri {
 namespace Platform {
 class LibInputManager;
+class VtHandler;
 }
 }
 
@@ -108,7 +109,7 @@ public:
 
     QFunctionPointer platformFunction(const QByteArray &function) const override;
 
-    QFbVtHandler *vtHandler() { return m_vtHandler.data(); }
+    Liri::Platform::VtHandler *vtHandler() { return m_vtHandler.data(); }
 
     void addScreen(QPlatformScreen *screen, bool isPrimary = false);
     void removeScreen(QPlatformScreen *screen);
@@ -121,7 +122,7 @@ private:
     QPlatformInputContext *m_inputContext;
     QScopedPointer<QPlatformFontDatabase> m_fontDb;
     QScopedPointer<QPlatformServices> m_services;
-    QScopedPointer<QFbVtHandler> m_vtHandler;
+    QScopedPointer<Liri::Platform::VtHandler> m_vtHandler;
     QScopedPointer<Liri::Platform::LibInputManager> m_liHandler;
     QEglFSLogindHandler *m_logindHandler;
     bool m_disableInputHandlers;

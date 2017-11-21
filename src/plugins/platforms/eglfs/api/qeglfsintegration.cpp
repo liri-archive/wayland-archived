@@ -61,6 +61,7 @@
 #endif
 #include "qeglfsoffscreenwindow_p.h"
 #include "qeglfslogindhandler_p.h"
+#include "vthandler.h"
 
 #include <QtEglSupport/private/qeglconvenience_p.h>
 #ifndef QT_NO_OPENGL
@@ -82,6 +83,8 @@
 #include <QtPlatformHeaders/qeglfsfunctions.h>
 
 #include <LiriLibInput/private/libinputmanager_p.h>
+
+using namespace Liri::Platform;
 
 static void initResources()
 {
@@ -131,7 +134,7 @@ void QEglFSIntegration::initialize()
 
         m_inputContext = QPlatformInputContextFactory::create();
 
-        m_vtHandler.reset(new QFbVtHandler);
+        m_vtHandler.reset(new VtHandler);
 
         if (qt_egl_device_integration()->usesDefaultScreen())
             addScreen(new QEglFSScreen(display()));

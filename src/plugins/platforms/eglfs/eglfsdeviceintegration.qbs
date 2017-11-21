@@ -75,6 +75,9 @@ LiriModuleProject {
                 "qeglfsintegration_p.h",
                 "qeglfsoffscreenwindow_p.h",
                 "qeglfsglobal_p.h",
+                "vthandler.cpp",
+                "vthandler.h",
+                "vthandler_p.h",
             ]
 
             Group {
