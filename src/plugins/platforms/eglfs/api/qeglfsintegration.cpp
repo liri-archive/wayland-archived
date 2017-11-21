@@ -80,9 +80,9 @@
 
 #include <QtPlatformHeaders/QEGLNativeContext>
 
-#include <QtPlatformHeaders/qeglfsfunctions.h>
-
 #include <LiriLibInput/private/libinputmanager_p.h>
+
+#include <QtPlatformHeaders/qeglfsfunctions.h>
 
 using namespace Liri::Platform;
 
@@ -321,6 +321,7 @@ void *QEglFSIntegration::nativeResourceForIntegration(const QByteArray &resource
         result = qt_egl_device_integration()->wlDisplay();
         break;
     default:
+        result = qt_egl_device_integration()->nativeResourceForIntegration(resource);
         break;
     }
 
@@ -421,9 +422,7 @@ QPlatformNativeInterface::NativeResourceForContextFunction QEglFSIntegration::na
 
 QFunctionPointer QEglFSIntegration::platformFunction(const QByteArray &function) const
 {
-    Q_UNUSED(function)
-
-    return 0;
+    return qt_egl_device_integration()->platformFunction(function);
 }
 
 void QEglFSIntegration::createInputHandlers()

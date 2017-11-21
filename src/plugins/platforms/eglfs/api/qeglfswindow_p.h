@@ -95,7 +95,11 @@ public:
 
     EGLNativeWindowType eglWindow() const;
     EGLSurface surface() const;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QEglFSScreen *screen() const override;
+#else
     QEglFSScreen *screen() const;
+#endif
 
     bool hasNativeWindow() const { return m_flags.testFlag(HasNativeWindow); }
 

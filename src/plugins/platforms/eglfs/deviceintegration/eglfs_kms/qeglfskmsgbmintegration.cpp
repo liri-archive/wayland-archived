@@ -43,21 +43,15 @@
 #include "qeglfskmsgbmdevice.h"
 #include "qeglfskmsgbmscreen.h"
 #include "qeglfskmsgbmcursor.h"
+#include "qeglfskmsgbmwindow.h"
 #include "private/qeglfscursor_p.h"
 
 #include <QtCore/QLoggingCategory>
-#include <QtCore/QJsonDocument>
-#include <QtCore/QJsonObject>
-#include <QtCore/QJsonArray>
-#include <QtGui/qpa/qplatformwindow.h>
-#include <QtGui/qpa/qplatformcursor.h>
 #include <QtGui/QScreen>
 
 #include <LiriUDev/Udev>
 #include <LiriUDev/UdevEnumerate>
 
-#include <xf86drm.h>
-#include <xf86drmMode.h>
 #include <gbm.h>
 
 using namespace Liri::Platform;
@@ -80,6 +74,7 @@ QEglFSKmsGbmIntegration::~QEglFSKmsGbmIntegration()
 
 #ifndef EGL_EXT_platform_base
 typedef EGLDisplay (EGLAPIENTRYP PFNEGLGETPLATFORMDISPLAYEXTPROC) (EGLenum platform, void *native_display, const EGLint *attrib_list);
+typedef EGLSurface (EGLAPIENTRYP PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC) (EGLDisplay dpy, EGLConfig config, void *native_window, const EGLint *attrib_list);
 #endif
 
 #ifndef EGL_PLATFORM_GBM_KHR
@@ -108,28 +103,11 @@ EGLDisplay QEglFSKmsGbmIntegration::createDisplay(EGLNativeDisplayType nativeDis
     return display;
 }
 
-EGLNativeWindowType QEglFSKmsGbmIntegration::createNativeWindow(QPlatformWindow *platformWindow,
-                                                     const QSize &size,
-                                                     const QSurfaceFormat &format)
-{
-    Q_UNUSED(size);
-    Q_UNUSED(format);
-
-    QEglFSKmsGbmScreen *screen = static_cast<QEglFSKmsGbmScreen *>(platformWindow->screen());
-    if (screen->surface()) {
-        qWarning("Only single window per screen supported!");
-        return 0;
-    }
-
-    return reinterpret_cast<EGLNativeWindowType>(screen->createSurface());
-}
-
 EGLNativeWindowType QEglFSKmsGbmIntegration::createNativeOffscreenWindow(const QSurfaceFormat &format)
 {
     Q_UNUSED(format);
     Q_ASSERT(device());
 
-    qCDebug(qLcEglfsKmsDebug) << "Creating native off screen window";
     gbm_surface *surface = gbm_surface_create(static_cast<QEglFSKmsGbmDevice *>(device())->gbmDevice(),
                                               1, 1,
                                               GBM_FORMAT_XRGB8888,
@@ -158,8 +136,7 @@ QPlatformCursor *QEglFSKmsGbmIntegration::createCursor(QPlatformScreen *screen) 
 void QEglFSKmsGbmIntegration::presentBuffer(QPlatformSurface *surface)
 {
     QWindow *window = static_cast<QWindow *>(surface->surface());
-    QEglFSKmsScreen *screen = static_cast<QEglFSKmsScreen *>(window->screen()->handle());
-
+    QEglFSKmsGbmScreen *screen = static_cast<QEglFSKmsGbmScreen *>(window->screen()->handle());
     screen->flip();
 }
 
@@ -183,6 +160,11 @@ QKmsDevice *QEglFSKmsGbmIntegration::createDevice()
     }
 
     return new QEglFSKmsGbmDevice(screenConfig(), path);
+}
+
+QEglFSWindow *QEglFSKmsGbmIntegration::createWindow(QWindow *window) const
+{
+    return new QEglFSKmsGbmWindow(window, this);
 }
 
 QT_END_NAMESPACE

@@ -39,48 +39,29 @@
 **
 ****************************************************************************/
 
-#ifndef QEGLFSKMSINTEGRATION_H
-#define QEGLFSKMSINTEGRATION_H
+#ifndef QEGLFSKMSGBMWINDOW_H
+#define QEGLFSKMSGBMWINDOW_H
 
-#include "private/qeglfsdeviceintegration_p.h"
-#include <QtCore/QMap>
-#include <QtCore/QVariant>
-#include <QtCore/QLoggingCategory>
+#include "private/qeglfswindow_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QKmsDevice;
-class QKmsScreenConfig;
+class QEglFSKmsGbmIntegration;
 
-Q_EGLFS_EXPORT Q_DECLARE_LOGGING_CATEGORY(qLcEglfsKmsDebug)
-
-class Q_EGLFS_EXPORT QEglFSKmsIntegration : public QEglFSDeviceIntegration
+class QEglFSKmsGbmWindow : public QEglFSWindow
 {
 public:
-    QEglFSKmsIntegration();
-    ~QEglFSKmsIntegration();
+    QEglFSKmsGbmWindow(QWindow *w, const QEglFSKmsGbmIntegration *integration)
+        : QEglFSWindow(w),
+          m_integration(integration)
+    { }
+    void resetSurface() override;
+    void invalidateSurface() override;
 
-    void platformInit() override;
-    void platformDestroy() override;
-    EGLNativeDisplayType platformDisplay() const override;
-    bool usesDefaultScreen() override;
-    void screenInit() override;
-    QSurfaceFormat surfaceFormatFor(const QSurfaceFormat &inputFormat) const override;
-    bool hasCapability(QPlatformIntegration::Capability cap) const override;
-    void waitForVSync(QPlatformSurface *surface) const override;
-    bool supportsPBuffers() const override;
-    void *nativeResourceForIntegration(const QByteArray &name) override;
-
-    QKmsDevice *device() const;
-    QKmsScreenConfig *screenConfig() const;
-
-protected:
-    virtual QKmsDevice *createDevice() = 0;
-
-    QKmsDevice *m_device;
-    QKmsScreenConfig *m_screenConfig;
+private:
+    const QEglFSKmsGbmIntegration *m_integration;
 };
 
 QT_END_NAMESPACE
 
-#endif
+#endif // QEGLFSKMSGBMWINDOW_H

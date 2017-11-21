@@ -1,8 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
-** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (C) 2016 Pelagicore AG
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the plugins of the Qt Toolkit.
@@ -39,48 +37,44 @@
 **
 ****************************************************************************/
 
-#ifndef QEGLFSKMSINTEGRATION_H
-#define QEGLFSKMSINTEGRATION_H
+#include "qeglfskmsgbmwindow.h"
+#include "qeglfskmsgbmintegration.h"
+#include "qeglfskmsgbmscreen.h"
 
-#include "private/qeglfsdeviceintegration_p.h"
-#include <QtCore/QMap>
-#include <QtCore/QVariant>
-#include <QtCore/QLoggingCategory>
+#include <QtEglSupport/private/qeglconvenience_p.h>
 
 QT_BEGIN_NAMESPACE
 
-class QKmsDevice;
-class QKmsScreenConfig;
-
-Q_EGLFS_EXPORT Q_DECLARE_LOGGING_CATEGORY(qLcEglfsKmsDebug)
-
-class Q_EGLFS_EXPORT QEglFSKmsIntegration : public QEglFSDeviceIntegration
+void QEglFSKmsGbmWindow::resetSurface()
 {
-public:
-    QEglFSKmsIntegration();
-    ~QEglFSKmsIntegration();
+    QEglFSKmsGbmScreen *gbmScreen = static_cast<QEglFSKmsGbmScreen *>(screen());
+    EGLDisplay display = gbmScreen->display();
+    QSurfaceFormat platformFormat = m_integration->surfaceFormatFor(window()->requestedFormat());
+    m_config = QEglFSDeviceIntegration::chooseConfig(display, platformFormat);
+    m_format = q_glFormatFromConfig(display, m_config, platformFormat);
+    // One fullscreen window per screen -> the native window is simply the gbm_surface the screen created.
+    m_window = reinterpret_cast<EGLNativeWindowType>(gbmScreen->createSurface());
 
-    void platformInit() override;
-    void platformDestroy() override;
-    EGLNativeDisplayType platformDisplay() const override;
-    bool usesDefaultScreen() override;
-    void screenInit() override;
-    QSurfaceFormat surfaceFormatFor(const QSurfaceFormat &inputFormat) const override;
-    bool hasCapability(QPlatformIntegration::Capability cap) const override;
-    void waitForVSync(QPlatformSurface *surface) const override;
-    bool supportsPBuffers() const override;
-    void *nativeResourceForIntegration(const QByteArray &name) override;
+    PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC createPlatformWindowSurface = nullptr;
+    const char *extensions = eglQueryString(EGL_NO_DISPLAY, EGL_EXTENSIONS);
+    if (extensions && (strstr(extensions, "EGL_KHR_platform_gbm") || strstr(extensions, "EGL_MESA_platform_gbm"))) {
+        createPlatformWindowSurface = reinterpret_cast<PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC>(
+            eglGetProcAddress("eglCreatePlatformWindowSurfaceEXT"));
+    }
 
-    QKmsDevice *device() const;
-    QKmsScreenConfig *screenConfig() const;
+    if (createPlatformWindowSurface) {
+        m_surface = createPlatformWindowSurface(display, m_config, reinterpret_cast<void *>(m_window), nullptr);
+    } else {
+        qCDebug(qLcEglfsKmsDebug, "No eglCreatePlatformWindowSurface for GBM, falling back to eglCreateWindowSurface");
+        m_surface = eglCreateWindowSurface(display, m_config, m_window, nullptr);
+    }
+}
 
-protected:
-    virtual QKmsDevice *createDevice() = 0;
-
-    QKmsDevice *m_device;
-    QKmsScreenConfig *m_screenConfig;
-};
+void QEglFSKmsGbmWindow::invalidateSurface()
+{
+    QEglFSKmsGbmScreen *gbmScreen = static_cast<QEglFSKmsGbmScreen *>(screen());
+    QEglFSWindow::invalidateSurface();
+    gbmScreen->resetSurface();
+}
 
 QT_END_NAMESPACE
-
-#endif

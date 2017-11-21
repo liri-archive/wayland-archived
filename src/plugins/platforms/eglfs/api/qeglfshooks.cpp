@@ -42,6 +42,8 @@
 
 QT_BEGIN_NAMESPACE
 
+Q_DECLARE_LOGGING_CATEGORY(qLcEglDevDebug)
+
 #ifdef EGLFS_PLATFORM_HOOKS
 
 QEglFSDeviceIntegration *qt_egl_device_integration()

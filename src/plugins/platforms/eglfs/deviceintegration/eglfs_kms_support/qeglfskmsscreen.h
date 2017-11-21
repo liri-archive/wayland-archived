@@ -61,7 +61,7 @@ class QEglFSKmsInterruptHandler;
 class Q_EGLFS_EXPORT QEglFSKmsScreen : public QEglFSScreen
 {
 public:
-    QEglFSKmsScreen(QKmsDevice *device, const QKmsOutput &output);
+    QEglFSKmsScreen(QKmsDevice *device, const QKmsOutput &output, bool headless = false);
     ~QEglFSKmsScreen();
 
     void setVirtualPosition(const QPoint &pos);
@@ -94,11 +94,7 @@ public:
 
     QKmsDevice *device() const { return m_device; }
 
-    void destroySurface();
-
     virtual void waitForFlip();
-    virtual void flip();
-    virtual void flipFinished();
 
     QKmsOutput &output() { return m_output; }
     void restoreMode();
@@ -120,6 +116,8 @@ protected:
     PowerState m_powerState;
 
     QEglFSKmsInterruptHandler *m_interruptHandler;
+
+    bool m_headless;
 };
 
 QT_END_NAMESPACE
