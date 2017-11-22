@@ -26,7 +26,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QLoggingCategory>
 
-#include <LiriEglFS/lirieglfsglobal.h>
+#include "qeglfsglobal_p.h"
 
 Q_DECLARE_LOGGING_CATEGORY(lcVtHandler)
 
@@ -36,7 +36,7 @@ namespace Platform {
 
 class VtHandlerPrivate;
 
-class LIRIEGLFS_EXPORT VtHandler : public QObject
+class Q_EGLFS_EXPORT VtHandler : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(VtHandler)
