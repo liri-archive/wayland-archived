@@ -7,6 +7,14 @@ LiriModuleProject {
     description: "KMS shared code"
     createPkgConfig: false
     createCMake: false
+    conditionFunction: (function() {
+        if (!libdrm.found) {
+            console.error("libdrm is required to build " + targetName);
+            return false;
+        }
+
+        return true;
+    })
 
     resolvedProperties: ({
         Depends: [{ name: LiriUtils.quote("Qt.core-private") },
@@ -22,29 +30,16 @@ LiriModuleProject {
         }
     }
 
-    LiriModule {
-        name: project.moduleName
+    LiriPrivateModule {
         targetName: project.targetName
-        version: "0.0.0"
-        type: ["staticlibrary"]
 
         Depends { name: project.headersName }
         Depends { name: "Qt"; submodules: ["core-private", "gui-private"] }
         Depends { name: "libdrm" }
 
-        condition: {
-            if (!libdrm.found) {
-                console.error("libdrm is required to build " + targetName);
-                return false;
-            }
-
-            return true;
-        }
-
-        cpp.defines: [
+        cpp.defines: base.concat([
             'LIRIWAYLAND_VERSION="' + project.version + '"',
-            "QT_NO_CAST_FROM_ASCII",
-        ]
+        ])
 
         files: ["*.cpp", "*.h"]
 
@@ -54,6 +49,7 @@ LiriModuleProject {
             Depends { name: "Qt"; submodules: ["core-private", "gui-private"] }
             Depends { name: "libdrm" }
 
+            cpp.defines: project.defines
             cpp.includePaths: product.sourceDirectory
         }
     }

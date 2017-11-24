@@ -12,8 +12,8 @@ LiriModuleProject {
         Depends: [{ name: LiriUtils.quote("Qt.core-private") },
                   { name: LiriUtils.quote("Qt.gui-private") },
                   { name: LiriUtils.quote("LiriEglFSDeviceIntegration") },
-                  { name: LiriUtils.quote("LiriEdidSupport") },
-                  { name: LiriUtils.quote("LiriKmsSupport") }],
+                  { name: LiriUtils.quote("LiriEdidSupport-private") },
+                  { name: LiriUtils.quote("LiriKmsSupport-private") }],
     })
 
     LiriHeaders {
@@ -35,8 +35,8 @@ LiriModuleProject {
             submodules: ["core-private", "gui-private"]
         }
         Depends { name: "LiriEglFSDeviceIntegration" }
-        Depends { name: "LiriEdidSupport" }
-        Depends { name: "LiriKmsSupport" }
+        Depends { name: "LiriEdidSupport-private" }
+        Depends { name: "LiriKmsSupport-private" }
         Depends { name: "gbm" }
         Depends { name: "libdrm" }
 
@@ -68,8 +68,8 @@ LiriModuleProject {
                 submodules: ["core-private", "gui-private"]
             }
             Depends { name: "LiriEglFSDeviceIntegration" }
-            Depends { name: "LiriEdidSupport" }
-            Depends { name: "LiriKmsSupport" }
+            Depends { name: "LiriEdidSupport-private" }
+            Depends { name: "LiriKmsSupport-private" }
             Depends { name: "gbm" }
             Depends { name: "libdrm" }
 

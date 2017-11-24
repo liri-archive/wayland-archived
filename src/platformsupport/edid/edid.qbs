@@ -20,19 +20,15 @@ LiriModuleProject {
         }
     }
 
-    LiriModule {
-        name: project.moduleName
+    LiriPrivateModule {
         targetName: project.targetName
-        version: "0.0.0"
-        type: ["staticlibrary"]
 
         Depends { name: project.headersName }
         Depends { name: "Qt.core-private" }
 
-        cpp.defines: [
+        cpp.defines: base.concat([
             'LIRIWAYLAND_VERSION="' + project.version + '"',
-            "QT_NO_CAST_FROM_ASCII",
-        ]
+        ])
 
         files: ["*.cpp", "*.h"]
 
@@ -41,6 +37,7 @@ LiriModuleProject {
             Depends { name: project.headersName }
             Depends { name: "Qt.core-private" }
 
+            cpp.defines: project.defines
             cpp.includePaths: product.sourceDirectory
         }
     }
