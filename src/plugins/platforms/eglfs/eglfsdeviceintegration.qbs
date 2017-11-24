@@ -82,7 +82,6 @@ LiriModuleProject {
 
             Group {
                 name: "API (OpenGL)"
-                condition: Qt.core.qtConfig.contains("opengl")
                 prefix: "api/"
                 files: [
                     "qeglfscursor.cpp",
