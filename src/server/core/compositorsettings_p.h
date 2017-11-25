@@ -24,9 +24,7 @@
 #ifndef LIRI_COMPOSITORSETTINGS_P_H
 #define LIRI_COMPOSITORSETTINGS_P_H
 
-#include <QtCore/private/qobject_p.h>
-
-#include <LiriWaylandServer/CompositorSettings>
+#include <QtWaylandCompositor/QtWaylandCompositor>
 
 //
 //  W A R N I N G
@@ -43,18 +41,10 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class CompositorSettingsPrivate : public QObjectPrivate
+class CompositorSettingsPrivate
 {
-    Q_DECLARE_PUBLIC(CompositorSettings)
 public:
-    CompositorSettingsPrivate()
-        : initialized(false)
-        , compositor(nullptr)
-        , windowActionKey(Qt::MetaModifier)
-        , repeatRate(40)
-        , repeatDelay(400)
-    {
-    }
+    CompositorSettingsPrivate();
 
     void _q_setupKeyboard();
 

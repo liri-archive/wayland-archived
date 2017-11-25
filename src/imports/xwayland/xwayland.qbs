@@ -4,6 +4,10 @@ LiriQmlPlugin {
     name: "lirixwaylandplugin"
     pluginPath: "Liri/XWayland"
 
+    Depends {
+        name: "Qt.waylandcompositor-private"
+        versionAtLeast: project.minimumQtVersion
+    }
     Depends { name: "LiriWaylandServer" }
     Depends { name: "XCB"; submodules: ["xfixes", "cursor", "composite", "render", "shape"] }
     Depends { name: "X11.xcursor" }

@@ -48,6 +48,7 @@ class LIRIWAYLANDSERVER_EXPORT GtkShell : public QWaylandCompositorExtensionTemp
 public:
     GtkShell();
     GtkShell(QWaylandCompositor *compositor);
+    ~GtkShell();
 
     void initialize() override;
 
@@ -58,6 +59,9 @@ Q_SIGNALS:
     void gtkSurfaceRequested(QWaylandSurface *surface,
                              const QWaylandResource &resource);
     void gtkSurfaceCreated(GtkSurface *gtkSurface);
+
+private:
+    GtkShellPrivate *const d_ptr;
 };
 
 class LIRIWAYLANDSERVER_EXPORT GtkSurface : public QWaylandShellSurfaceTemplate<GtkSurface>
@@ -71,6 +75,7 @@ public:
     GtkSurface();
     GtkSurface(GtkShell *shell, QWaylandSurface *surface,
                const QWaylandResource &resource);
+    ~GtkSurface();
 
     Q_INVOKABLE void initialize(GtkShell *shell, QWaylandSurface *surface,
                                 const QWaylandResource &resource);
@@ -109,6 +114,8 @@ Q_SIGNALS:
     void unsetModal();
 
 private:
+    GtkSurfacePrivate *const d_ptr;
+
     void initialize() override;
 };
 

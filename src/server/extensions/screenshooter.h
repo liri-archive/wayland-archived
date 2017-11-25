@@ -54,6 +54,7 @@ public:
 
     Screenshooter();
     Screenshooter(QWaylandCompositor *compositor);
+    ~Screenshooter();
 
     void initialize() override;
 
@@ -62,6 +63,9 @@ public:
 
 Q_SIGNALS:
     void captureRequested(Screenshot *screenshot);
+
+private:
+    ScreenshooterPrivate *const d_ptr;
 };
 
 class LIRIWAYLANDSERVER_EXPORT Screenshot : public QWaylandCompositorExtensionTemplate<Screenshot>
@@ -84,6 +88,8 @@ public:
     };
     Q_ENUM(Error)
 
+    ~Screenshot();
+
     CaptureType captureType() const;
     Screenshooter::Effects effects() const;
 
@@ -102,6 +108,8 @@ private:
     explicit Screenshot(CaptureType type, Screenshooter::Effects effects);
 
     friend class ScreenshooterPrivate;
+
+    ScreenshotPrivate *const d_ptr;
 };
 
 } // namespace WaylandServer

@@ -49,9 +49,9 @@ namespace WaylandServer {
  * ScreenshooterPrivate
  */
 
-ScreenshooterPrivate::ScreenshooterPrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::liri_screenshooter()
+ScreenshooterPrivate::ScreenshooterPrivate(Screenshooter *self)
+    : QtWaylandServer::liri_screenshooter()
+    , q_ptr(self)
 {
 }
 
@@ -145,12 +145,12 @@ void ScreenshooterPrivate::liri_screenshooter_capture_area(Resource *resource,
  * ScreenshotPrivate
  */
 
-ScreenshotPrivate::ScreenshotPrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::liri_screenshot()
+ScreenshotPrivate::ScreenshotPrivate(Screenshot *self)
+    : QtWaylandServer::liri_screenshot()
     , output(nullptr)
     , selectedSurface(nullptr)
     , selectedArea(nullptr)
+    , q_ptr(self)
 {
 }
 
@@ -255,13 +255,20 @@ void ScreenshotPrivate::liri_screenshot_record(Resource *resource,
  */
 
 Screenshooter::Screenshooter()
-    : QWaylandCompositorExtensionTemplate<Screenshooter>(*new ScreenshooterPrivate())
+    : QWaylandCompositorExtensionTemplate<Screenshooter>()
+    , d_ptr(new ScreenshooterPrivate(this))
 {
 }
 
 Screenshooter::Screenshooter(QWaylandCompositor *compositor)
-    : QWaylandCompositorExtensionTemplate<Screenshooter>(compositor, *new ScreenshooterPrivate())
+    : QWaylandCompositorExtensionTemplate<Screenshooter>(compositor)
+    , d_ptr(new ScreenshooterPrivate(this))
 {
+}
+
+Screenshooter::~Screenshooter()
+{
+    delete d_ptr;
 }
 
 void Screenshooter::initialize()
@@ -292,10 +299,16 @@ QByteArray Screenshooter::interfaceName()
  */
 
 Screenshot::Screenshot(CaptureType type, Screenshooter::Effects effects)
-    : QWaylandCompositorExtensionTemplate<Screenshot>(*new ScreenshotPrivate())
+    : QWaylandCompositorExtensionTemplate<Screenshot>()
+    , d_ptr(new ScreenshotPrivate(this))
 {
     d_func()->captureType = type;
     d_func()->effects = effects;
+}
+
+Screenshot::~Screenshot()
+{
+    delete d_ptr;
 }
 
 Screenshot::CaptureType Screenshot::captureType() const

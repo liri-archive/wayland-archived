@@ -73,6 +73,8 @@ public Q_SLOTS:
     void setFailed();
 
 private:
+    OutputConfigurationPrivate *const d_ptr;
+
     void initialize() override;
 };
 

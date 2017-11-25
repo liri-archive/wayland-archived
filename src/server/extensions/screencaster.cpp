@@ -76,9 +76,9 @@ public:
  * ScreencasterPrivate
  */
 
-ScreencasterPrivate::ScreencasterPrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::liri_screencaster()
+ScreencasterPrivate::ScreencasterPrivate(Screencaster *self)
+    : QtWaylandServer::liri_screencaster()
+    , q_ptr(self)
 {
 }
 
@@ -158,13 +158,20 @@ void ScreencasterPrivate::liri_screencaster_capture(Resource *resource, uint32_t
  */
 
 Screencaster::Screencaster()
-    : QWaylandCompositorExtensionTemplate<Screencaster>(*new ScreencasterPrivate())
+    : QWaylandCompositorExtensionTemplate<Screencaster>()
+    , d_ptr(new ScreencasterPrivate(this))
 {
 }
 
 Screencaster::Screencaster(QWaylandCompositor *compositor)
-    : QWaylandCompositorExtensionTemplate<Screencaster>(compositor, *new ScreencasterPrivate())
+    : QWaylandCompositorExtensionTemplate<Screencaster>(compositor)
+    , d_ptr(new ScreencasterPrivate(this))
 {
+}
+
+Screencaster::~Screencaster()
+{
+    delete d_ptr;
 }
 
 void Screencaster::addWindow(QQuickWindow *window)
@@ -266,15 +273,15 @@ void Screencaster::initialize()
  * ScreencastPrivate
  */
 
-ScreencastPrivate::ScreencastPrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::liri_screencast()
+ScreencastPrivate::ScreencastPrivate(Screencast *self)
+    : QtWaylandServer::liri_screencast()
     , valid(true)
     , screencaster(nullptr)
     , output(nullptr)
     , window(nullptr)
     , bufferResource(nullptr)
     , buffer(nullptr)
+    , q_ptr(self)
 {
 }
 
@@ -385,7 +392,8 @@ void ScreencastPrivate::liri_screencast_record(Resource *resource,
  */
 
 Screencast::Screencast()
-    : QWaylandCompositorExtensionTemplate<Screencast>(*new ScreencastPrivate())
+    : QWaylandCompositorExtensionTemplate<Screencast>()
+    , d_ptr(new ScreencastPrivate(this))
 {
 }
 
@@ -393,6 +401,7 @@ Screencast::~Screencast()
 {
     Q_D(Screencast);
     ScreencasterPrivate::get(d->screencaster)->removeRequest(d->window, this);
+    delete d_ptr;
 }
 
 const struct wl_interface *Screencast::interface()

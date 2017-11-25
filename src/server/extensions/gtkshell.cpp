@@ -36,9 +36,9 @@ namespace WaylandServer {
  * GtkShellPrivate
  */
 
-GtkShellPrivate::GtkShellPrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::gtk_shell()
+GtkShellPrivate::GtkShellPrivate(GtkShell *self)
+    : QtWaylandServer::gtk_shell()
+    , q_ptr(self)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 }
@@ -78,15 +78,22 @@ void GtkShellPrivate::gtk_shell_get_gtk_surface(Resource *resource, uint32_t id,
  */
 
 GtkShell::GtkShell()
-    : QWaylandCompositorExtensionTemplate<GtkShell>(*new GtkShellPrivate())
+    : QWaylandCompositorExtensionTemplate<GtkShell>()
+    , d_ptr(new GtkShellPrivate(this))
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 }
 
 GtkShell::GtkShell(QWaylandCompositor *compositor)
-    : QWaylandCompositorExtensionTemplate<GtkShell>(compositor, *new GtkShellPrivate())
+    : QWaylandCompositorExtensionTemplate<GtkShell>(compositor)
+    , d_ptr(new GtkShellPrivate(this))
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
+}
+
+GtkShell::~GtkShell()
+{
+    delete d_ptr;
 }
 
 void GtkShell::initialize()
@@ -118,17 +125,13 @@ QByteArray GtkShell::interfaceName()
  * GtkSurfacePrivate
  */
 
-GtkSurfacePrivate::GtkSurfacePrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::gtk_surface()
+GtkSurfacePrivate::GtkSurfacePrivate(GtkSurface *self)
+    : QtWaylandServer::gtk_surface()
+    , q_ptr(self)
     , m_shell(nullptr)
     , m_surface(nullptr)
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
-}
-
-GtkSurfacePrivate::~GtkSurfacePrivate()
-{
 }
 
 void GtkSurfacePrivate::gtk_surface_destroy_resource(Resource *resource)
@@ -202,18 +205,25 @@ void GtkSurfacePrivate::gtk_surface_unset_modal(Resource *resource)
  */
 
 GtkSurface::GtkSurface()
-    : QWaylandShellSurfaceTemplate<GtkSurface>(*new GtkSurfacePrivate())
+    : QWaylandShellSurfaceTemplate<GtkSurface>(nullptr)
+    , d_ptr(new GtkSurfacePrivate(this))
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 }
 
 GtkSurface::GtkSurface(GtkShell *shell, QWaylandSurface *surface,
                        const QWaylandResource &resource)
-    : QWaylandShellSurfaceTemplate<GtkSurface>(*new GtkSurfacePrivate())
+    : QWaylandShellSurfaceTemplate<GtkSurface>(nullptr)
+    , d_ptr(new GtkSurfacePrivate(this))
 {
     qCDebug(gLcGtkShellTrace) << Q_FUNC_INFO;
 
     initialize(shell, surface, resource);
+}
+
+GtkSurface::~GtkSurface()
+{
+    delete d_ptr;
 }
 
 void GtkSurface::initialize(GtkShell *shell, QWaylandSurface *surface,

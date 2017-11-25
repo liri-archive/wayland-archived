@@ -24,8 +24,6 @@
 #ifndef LIRI_OUTPUTCHANGESET_P_H
 #define LIRI_OUTPUTCHANGESET_P_H
 
-#include <QtCore/private/qobject_p.h>
-
 #include <LiriWaylandServer/OutputChangeset>
 #include "qwayland-server-liri-outputmanagement.h"
 
@@ -44,9 +42,8 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class LIRIWAYLANDSERVER_EXPORT OutputChangesetPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT OutputChangesetPrivate
 {
-    Q_DECLARE_PUBLIC(OutputChangeset)
 public:
     OutputChangesetPrivate(QWaylandOutput *output);
 

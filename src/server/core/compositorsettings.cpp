@@ -36,6 +36,15 @@ namespace WaylandServer {
  * CompositorSettingsPrivate
  */
 
+CompositorSettingsPrivate::CompositorSettingsPrivate()
+    : initialized(false)
+    , compositor(nullptr)
+    , windowActionKey(Qt::MetaModifier)
+    , repeatRate(40)
+    , repeatDelay(400)
+{
+}
+
 void CompositorSettingsPrivate::_q_setupKeyboard()
 {
     if (!compositor || !initialized)
@@ -53,8 +62,14 @@ void CompositorSettingsPrivate::_q_setupKeyboard()
  */
 
 CompositorSettings::CompositorSettings(QObject *parent)
-    : QObject(*new CompositorSettingsPrivate(), parent)
+    : QObject(parent)
+    , d_ptr(new CompositorSettingsPrivate())
 {
+}
+
+CompositorSettings::~CompositorSettings()
+{
+    delete d_ptr;
 }
 
 QWaylandCompositor *CompositorSettings::compositor() const

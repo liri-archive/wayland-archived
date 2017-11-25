@@ -55,6 +55,8 @@ class LIRIWAYLANDSERVER_EXPORT OutputChangeset : public QObject
     Q_PROPERTY(QPoint position READ position CONSTANT)
     Q_PROPERTY(int scaleFactor READ scaleFactor CONSTANT)
 public:
+    ~OutputChangeset();
+
     QWaylandOutput *output() const;
 
     bool isEnabledChanged() const;
@@ -75,6 +77,8 @@ private:
     explicit OutputChangeset(QWaylandOutput *output, QObject *parent = nullptr);
 
     friend class OutputConfigurationPrivate;
+
+    OutputChangesetPrivate *const d_ptr;
 };
 
 } // namespace WaylandServer

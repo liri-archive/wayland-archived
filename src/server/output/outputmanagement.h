@@ -54,6 +54,9 @@ public:
 Q_SIGNALS:
     void createOutputConfiguration(const QWaylandResource &resource);
     void outputConfigurationCreated(Liri::WaylandServer::OutputConfiguration *configuration);
+
+private:
+    OutputManagementPrivate *const d_ptr;
 };
 
 } // namespace WaylandServer

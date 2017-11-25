@@ -33,7 +33,8 @@ namespace WaylandServer {
  * QuickOutputConfigurationPrivate
  */
 
-QuickOutputConfigurationPrivate::QuickOutputConfigurationPrivate()
+QuickOutputConfigurationPrivate::QuickOutputConfigurationPrivate(QuickOutputConfiguration *self)
+    : q_ptr(self)
 {
 }
 
@@ -61,7 +62,13 @@ OutputChangeset *QuickOutputConfigurationPrivate::changesAt(QQmlListProperty<Out
 
 QuickOutputConfiguration::QuickOutputConfiguration()
     : OutputConfiguration()
+    , d_ptr(new QuickOutputConfigurationPrivate(this))
 {
+}
+
+QuickOutputConfiguration::~QuickOutputConfiguration()
+{
+    delete d_ptr;
 }
 
 QQmlListProperty<QObject> QuickOutputConfiguration::data()

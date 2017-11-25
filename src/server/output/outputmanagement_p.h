@@ -24,8 +24,6 @@
 #ifndef LIRI_OUTPUTMANAGEMENT_P_H
 #define LIRI_OUTPUTMANAGEMENT_P_H
 
-#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
-
 #include <LiriWaylandServer/OutputManagement>
 #include "qwayland-server-liri-outputmanagement.h"
 
@@ -44,13 +42,11 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class LIRIWAYLANDSERVER_EXPORT OutputManagementPrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::liri_outputmanagement
+class LIRIWAYLANDSERVER_EXPORT OutputManagementPrivate : public QtWaylandServer::liri_outputmanagement
 {
     Q_DECLARE_PUBLIC(OutputManagement)
 public:
-    OutputManagementPrivate();
+    OutputManagementPrivate(OutputManagement *self);
 
     void removeConfiguration(OutputConfiguration *configuration);
 
@@ -59,6 +55,8 @@ public:
     static OutputManagementPrivate *get(OutputManagement *management) { return management->d_func(); }
 
 protected:
+    OutputManagement *q_ptr;
+
     virtual void liri_outputmanagement_create_configuration(Resource *resource, uint32_t id) override;
 };
 

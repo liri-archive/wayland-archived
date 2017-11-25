@@ -25,7 +25,6 @@
 #define LIRI_GTKSHELL_P_H
 
 #include <LiriWaylandServer/GtkShell>
-#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include "qwayland-server-gtk-shell.h"
 
@@ -44,31 +43,28 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class LIRIWAYLANDSERVER_EXPORT GtkShellPrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::gtk_shell
+class LIRIWAYLANDSERVER_EXPORT GtkShellPrivate : public QtWaylandServer::gtk_shell
 {
     Q_DECLARE_PUBLIC(GtkShell)
 public:
-    GtkShellPrivate();
+    GtkShellPrivate(GtkShell *self);
 
     static GtkShellPrivate *get(GtkShell *shell) { return shell->d_func(); }
 
 protected:
+    GtkShell *q_ptr;
+
     void gtk_shell_bind_resource(Resource *resource) override;
 
     void gtk_shell_get_gtk_surface(Resource *resource, uint32_t id,
                                    wl_resource *surfaceResource)  override;
 };
 
-class LIRIWAYLANDSERVER_EXPORT GtkSurfacePrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::gtk_surface
+class LIRIWAYLANDSERVER_EXPORT GtkSurfacePrivate : public QtWaylandServer::gtk_surface
 {
     Q_DECLARE_PUBLIC(GtkSurface)
 public:
-    GtkSurfacePrivate();
-    ~GtkSurfacePrivate();
+    GtkSurfacePrivate(GtkSurface *self);
 
     static GtkSurfacePrivate *get(GtkSurface *surface) { return surface->d_func(); }
 
@@ -85,6 +81,9 @@ protected:
 
     void gtk_surface_set_modal(Resource *resource) override;
     void gtk_surface_unset_modal(Resource *resource) override;
+
+protected:
+    GtkSurface *q_ptr;
 
 private:
     GtkShell *m_shell;

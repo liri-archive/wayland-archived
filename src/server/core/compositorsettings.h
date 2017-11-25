@@ -47,7 +47,8 @@ class LIRIWAYLANDSERVER_EXPORT CompositorSettings : public QObject, public QQmlP
     Q_PROPERTY(quint32 keyboardRepeatRate READ keyboardRepeatRate WRITE setKeyboardRepeatRate NOTIFY keyboardRepeatRateChanged)
     Q_PROPERTY(quint32 keyboardRepeatDelay READ keyboardRepeatDelay WRITE setKeyboardRepeatDelay NOTIFY keyboardRepeatDelayChanged)
 public:
-    CompositorSettings(QObject *parent = nullptr);
+    explicit CompositorSettings(QObject *parent = nullptr);
+    ~CompositorSettings();
 
     QWaylandCompositor *compositor() const;
     void setCompositor(QWaylandCompositor *compositor);
@@ -72,6 +73,8 @@ protected:
     void componentComplete() override;
 
 private:
+    CompositorSettingsPrivate *const d_ptr;
+
     Q_PRIVATE_SLOT(d_func(), void _q_setupKeyboard())
 };
 

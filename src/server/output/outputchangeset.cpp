@@ -52,8 +52,14 @@ OutputChangesetPrivate::OutputChangesetPrivate(QWaylandOutput *output)
  */
 
 OutputChangeset::OutputChangeset(QWaylandOutput *output, QObject *parent)
-    : QObject(*new OutputChangesetPrivate(output), parent)
+    : QObject(parent)
+    , d_ptr(new OutputChangesetPrivate(output))
 {
+}
+
+OutputChangeset::~OutputChangeset()
+{
+    delete d_ptr;
 }
 
 QWaylandOutput *OutputChangeset::output() const

@@ -27,7 +27,6 @@
 #include <QtQuick/QQuickWindow>
 
 #include <QtWaylandCompositor/QWaylandOutput>
-#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <LiriWaylandServer/Screencaster>
 #include "qwayland-server-liri-screencaster.h"
@@ -47,13 +46,11 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class LIRIWAYLANDSERVER_EXPORT ScreencasterPrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::liri_screencaster
+class LIRIWAYLANDSERVER_EXPORT ScreencasterPrivate : public QtWaylandServer::liri_screencaster
 {
     Q_DECLARE_PUBLIC(Screencaster)
 public:
-    ScreencasterPrivate();
+    ScreencasterPrivate(Screencaster *self);
 
     QMutex requestsMutex;
     QMultiHash<QQuickWindow *, Screencast *> requests;
@@ -64,6 +61,8 @@ public:
     static ScreencasterPrivate *get(Screencaster *screencaster) { return screencaster->d_func(); }
 
 protected:
+    Screencaster *q_ptr;
+
     void liri_screencaster_bind_resource(Resource *resource) override;
     void liri_screencaster_destroy_resource(Resource *resource) override;
     void liri_screencaster_capture(Resource *resource,
@@ -71,13 +70,11 @@ protected:
                                    struct ::wl_resource *outputResource) override;
 };
 
-class LIRIWAYLANDSERVER_EXPORT ScreencastPrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::liri_screencast
+class LIRIWAYLANDSERVER_EXPORT ScreencastPrivate : public QtWaylandServer::liri_screencast
 {
     Q_DECLARE_PUBLIC(Screencast)
 public:
-    ScreencastPrivate();
+    ScreencastPrivate(Screencast *self);
 
     bool valid;
     Screencaster *screencaster;
@@ -92,6 +89,8 @@ public:
     static ScreencastPrivate *get(Screencast *screencast) { return screencast->d_func(); }
 
 protected:
+    Screencast *q_ptr;
+
     void liri_screencast_destroy(Resource *resource) override;
     void liri_screencast_record(Resource *resource,
                                 struct ::wl_resource *bufferResource) override;

@@ -24,8 +24,8 @@
 #ifndef LIRI_OUTPUTCONFIGURATION_P_H
 #define LIRI_OUTPUTCONFIGURATION_P_H
 
+#include <QtCore/QHash>
 #include <QtWaylandCompositor/QWaylandOutput>
-#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <LiriWaylandServer/OutputConfiguration>
 #include "qwayland-server-liri-outputmanagement.h"
@@ -47,13 +47,11 @@ namespace WaylandServer {
 
 class OutputChangeset;
 
-class LIRIWAYLANDSERVER_EXPORT OutputConfigurationPrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::liri_outputconfiguration
+class LIRIWAYLANDSERVER_EXPORT OutputConfigurationPrivate : public QtWaylandServer::liri_outputconfiguration
 {
     Q_DECLARE_PUBLIC(OutputConfiguration)
 public:
-    OutputConfigurationPrivate();
+    OutputConfigurationPrivate(OutputConfiguration *self);
 
     OutputManagement *management;
     QHash<QWaylandOutput *, OutputChangeset *> changes;
@@ -65,25 +63,27 @@ public:
     static OutputConfigurationPrivate *get(OutputConfiguration *configuration) { return configuration->d_func(); }
 
 protected:
-    virtual void liri_outputconfiguration_enable(Resource *resource,
-                                                 struct ::wl_resource *outputResource,
-                                                 int32_t enable) override;
-    virtual void liri_outputconfiguration_primary(Resource *resource,
-                                                  struct ::wl_resource *outputResource,
-                                                  int32_t primary) override;
-    virtual void liri_outputconfiguration_mode(Resource *resource,
-                                               struct ::wl_resource *outputResource,
-                                               int32_t mode_id) override;
-    virtual void liri_outputconfiguration_transform(Resource *resource,
-                                                    struct ::wl_resource *outputResource,
-                                                    int32_t wlTransform) override;
-    virtual void liri_outputconfiguration_position(Resource *resource,
-                                                   struct ::wl_resource *outputResource,
-                                                   int32_t x, int32_t y) override;
-    virtual void liri_outputconfiguration_scale(Resource *resource,
-                                                struct ::wl_resource *outputResource,
-                                                int32_t scale) override;
-    virtual void liri_outputconfiguration_apply(Resource *resource) override;
+    OutputConfiguration *q_ptr;
+
+    void liri_outputconfiguration_enable(Resource *resource,
+                                         struct ::wl_resource *outputResource,
+                                         int32_t enable) override;
+    void liri_outputconfiguration_primary(Resource *resource,
+                                          struct ::wl_resource *outputResource,
+                                          int32_t primary) override;
+    void liri_outputconfiguration_mode(Resource *resource,
+                                       struct ::wl_resource *outputResource,
+                                       int32_t mode_id) override;
+    void liri_outputconfiguration_transform(Resource *resource,
+                                            struct ::wl_resource *outputResource,
+                                            int32_t wlTransform) override;
+    void liri_outputconfiguration_position(Resource *resource,
+                                           struct ::wl_resource *outputResource,
+                                           int32_t x, int32_t y) override;
+    void liri_outputconfiguration_scale(Resource *resource,
+                                        struct ::wl_resource *outputResource,
+                                        int32_t scale) override;
+    void liri_outputconfiguration_apply(Resource *resource) override;
 };
 
 } // namespace WaylandServer

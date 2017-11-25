@@ -41,11 +41,11 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class LIRIWAYLANDSERVER_EXPORT QuickOutputConfigurationPrivate : public QObjectPrivate
+class LIRIWAYLANDSERVER_EXPORT QuickOutputConfigurationPrivate
 {
     Q_DECLARE_PUBLIC(QuickOutputConfiguration)
 public:
-    QuickOutputConfigurationPrivate();
+    QuickOutputConfigurationPrivate(QuickOutputConfiguration *self);
 
     QQmlListProperty<OutputChangeset> changes();
 
@@ -53,6 +53,9 @@ public:
 
     static int changesCount(QQmlListProperty<OutputChangeset> *prop);
     static OutputChangeset *changesAt(QQmlListProperty<OutputChangeset> *prop, int index);
+
+protected:
+    QuickOutputConfiguration *q_ptr;
 };
 
 } // namespace WaylandServer

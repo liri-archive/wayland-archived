@@ -49,6 +49,7 @@ class LIRIWAYLANDSERVER_EXPORT Screencaster : public QWaylandCompositorExtension
 public:
     Screencaster();
     Screencaster(QWaylandCompositor *compositor);
+    ~Screencaster();
 
     Q_INVOKABLE void addWindow(QQuickWindow *window);
     Q_INVOKABLE void removeWindow(QQuickWindow *window);
@@ -66,6 +67,9 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void readContent();
+
+private:
+    ScreencasterPrivate *const d_ptr;
 };
 
 class LIRIWAYLANDSERVER_EXPORT Screencast : public QWaylandCompositorExtensionTemplate<Screencast>
@@ -85,6 +89,8 @@ private:
     explicit Screencast();
 
     friend class ScreencasterPrivate;
+
+    ScreencastPrivate *const d_ptr;
 };
 
 } // namespace WaylandServer

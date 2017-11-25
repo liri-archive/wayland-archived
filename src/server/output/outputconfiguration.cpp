@@ -21,8 +21,6 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#include <QtWaylandCompositor/private/qwaylandoutput_p.h>
-
 #include "outputchangeset.h"
 #include "outputchangeset_p.h"
 #include "outputconfiguration.h"
@@ -38,10 +36,10 @@ namespace WaylandServer {
  * OutputConfigurationPrivate
  */
 
-OutputConfigurationPrivate::OutputConfigurationPrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::liri_outputconfiguration()
+OutputConfigurationPrivate::OutputConfigurationPrivate(OutputConfiguration *self)
+    : QtWaylandServer::liri_outputconfiguration()
     , management(nullptr)
+    , q_ptr(self)
 {
 }
 
@@ -107,35 +105,7 @@ void OutputConfigurationPrivate::liri_outputconfiguration_transform(Resource *re
 {
     Q_UNUSED(resource);
 
-    QWaylandOutput::Transform transform;
-
-    switch (wlTransform) {
-    case QWaylandOutputPrivate::transform_90:
-        transform = QWaylandOutput::Transform90;
-        break;
-    case QWaylandOutputPrivate::transform_180:
-        transform = QWaylandOutput::Transform180;
-        break;
-    case QWaylandOutputPrivate::transform_270:
-        transform = QWaylandOutput::Transform270;
-        break;
-    case QWaylandOutputPrivate::transform_flipped:
-        transform = QWaylandOutput::TransformFlipped;
-        break;
-    case QWaylandOutputPrivate::transform_flipped_90:
-        transform = QWaylandOutput::TransformFlipped90;
-        break;
-    case QWaylandOutputPrivate::transform_flipped_180:
-        transform = QWaylandOutput::TransformFlipped180;
-        break;
-    case QWaylandOutputPrivate::transform_flipped_270:
-        transform = QWaylandOutput::TransformFlipped270;
-        break;
-    default:
-        transform = QWaylandOutput::TransformNormal;
-        break;
-    }
-
+    QWaylandOutput::Transform transform = static_cast<QWaylandOutput::Transform>(wlTransform);
     QWaylandOutput *output = QWaylandOutput::fromResource(outputResource);
     OutputChangesetPrivate::get(pendingChanges(output))->transform = transform;
 }
@@ -171,12 +141,14 @@ void OutputConfigurationPrivate::liri_outputconfiguration_apply(Resource *resour
  */
 
 OutputConfiguration::OutputConfiguration()
-    : QWaylandCompositorExtensionTemplate<OutputConfiguration>(*new OutputConfigurationPrivate())
+    : QWaylandCompositorExtensionTemplate<OutputConfiguration>()
+    , d_ptr(new OutputConfigurationPrivate(this))
 {
 }
 
 OutputConfiguration::OutputConfiguration(OutputManagement *parent, const QWaylandResource &resource)
-    : QWaylandCompositorExtensionTemplate<OutputConfiguration>(*new OutputConfigurationPrivate())
+    : QWaylandCompositorExtensionTemplate<OutputConfiguration>()
+    , d_ptr(new OutputConfigurationPrivate(this))
 {
     initialize(parent, resource);
 }
@@ -185,6 +157,7 @@ OutputConfiguration::~OutputConfiguration()
 {
     Q_D(OutputConfiguration);
     OutputManagementPrivate::get(d->management)->removeConfiguration(this);
+    delete d_ptr;
 }
 
 void OutputConfiguration::initialize(OutputManagement *parent, const QWaylandResource &resource)

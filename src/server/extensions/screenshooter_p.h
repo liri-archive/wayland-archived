@@ -28,7 +28,6 @@
 
 #include <QtWaylandCompositor/QWaylandOutput>
 #include <QtWaylandCompositor/QWaylandSurface>
-#include <QtWaylandCompositor/private/qwaylandcompositorextension_p.h>
 
 #include <LiriWaylandServer/Screenshooter>
 #include "qwayland-server-liri-screenshooter.h"
@@ -48,17 +47,17 @@ namespace Liri {
 
 namespace WaylandServer {
 
-class LIRIWAYLANDSERVER_EXPORT ScreenshooterPrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::liri_screenshooter
+class LIRIWAYLANDSERVER_EXPORT ScreenshooterPrivate : public QtWaylandServer::liri_screenshooter
 {
     Q_DECLARE_PUBLIC(Screenshooter)
 public:
-    ScreenshooterPrivate();
+    ScreenshooterPrivate(Screenshooter *self);
 
     static ScreenshooterPrivate *get(Screenshooter *screenshooter) { return screenshooter->d_func(); }
 
 protected:
+    Screenshooter *q_ptr;
+
     void liri_screenshooter_capture_output(Resource *resource,
                                            uint32_t id,
                                            struct ::wl_resource *outputResource,
@@ -74,13 +73,11 @@ protected:
                                          wl_array *effects) override;
 };
 
-class LIRIWAYLANDSERVER_EXPORT ScreenshotPrivate
-        : public QWaylandCompositorExtensionPrivate
-        , public QtWaylandServer::liri_screenshot
+class LIRIWAYLANDSERVER_EXPORT ScreenshotPrivate : public QtWaylandServer::liri_screenshot
 {
     Q_DECLARE_PUBLIC(Screenshot)
 public:
-    ScreenshotPrivate();
+    ScreenshotPrivate(Screenshot *self);
 
     QImage grabItem(QQuickItem *item);
 
@@ -93,6 +90,8 @@ public:
     static ScreenshotPrivate *get(Screenshot *screenshot) { return screenshot->d_func(); }
 
 protected:
+    Screenshot *q_ptr;
+
     void liri_screenshot_destroy(Resource *resource) override;
     void liri_screenshot_record(Resource *resource,
                                 struct ::wl_resource *bufferResource) override;

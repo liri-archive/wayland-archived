@@ -43,11 +43,15 @@ class LIRIWAYLANDSERVER_EXPORT QuickOutputConfiguration : public OutputConfigura
     Q_CLASSINFO("DefaultProperty", "data")
 public:
     QuickOutputConfiguration();
+    ~QuickOutputConfiguration();
 
     QQmlListProperty<QObject> data();
 
 Q_SIGNALS:
     void changesChanged();
+
+private:
+    QuickOutputConfigurationPrivate *const d_ptr;
 };
 
 } // namespace WaylandServer

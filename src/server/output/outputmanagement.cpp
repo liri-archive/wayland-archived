@@ -38,9 +38,9 @@ namespace WaylandServer {
  * OutputManagementPrivate
  */
 
-OutputManagementPrivate::OutputManagementPrivate()
-    : QWaylandCompositorExtensionPrivate()
-    , QtWaylandServer::liri_outputmanagement()
+OutputManagementPrivate::OutputManagementPrivate(OutputManagement *self)
+    : QtWaylandServer::liri_outputmanagement()
+    , q_ptr(self)
 {
 }
 
@@ -78,12 +78,14 @@ void OutputManagementPrivate::liri_outputmanagement_create_configuration(Resourc
  */
 
 OutputManagement::OutputManagement()
-    : QWaylandCompositorExtensionTemplate<OutputManagement>(*new OutputManagementPrivate())
+    : QWaylandCompositorExtensionTemplate<OutputManagement>()
+    , d_ptr(new OutputManagementPrivate(this))
 {
 }
 
 OutputManagement::OutputManagement(QWaylandCompositor *compositor)
-    : QWaylandCompositorExtensionTemplate<OutputManagement>(compositor, *new OutputManagementPrivate())
+    : QWaylandCompositorExtensionTemplate<OutputManagement>(compositor)
+    , d_ptr(new OutputManagementPrivate(this))
 {
 }
 

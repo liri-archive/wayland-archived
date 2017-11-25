@@ -13,14 +13,10 @@ LiriModuleProject {
 
     resolvedProperties: ({
         Depends: [{ name: LiriUtils.quote("Qt.core") },
-                  { name: LiriUtils.quote("Qt.core-private") },
                   { name: LiriUtils.quote("Qt.gui") },
-                  { name: LiriUtils.quote("Qt.gui-private") },
                   { name: LiriUtils.quote("Qt.qml") },
                   { name: LiriUtils.quote("Qt.quick") },
-                  { name: LiriUtils.quote("Qt.quick-private") },
-                  { name: LiriUtils.quote("Qt.waylandcompositor") },
-                  { name: LiriUtils.quote("Qt.waylandcompositor-private") }],
+                  { name: LiriUtils.quote("Qt.waylandcompositor") }],
         "cpp.defines": ["QT_WAYLAND_COMPOSITOR_QUICK"].map(LiriUtils.quote),
     })
 
@@ -63,11 +59,7 @@ LiriModuleProject {
         Depends { name: root.headersName }
         Depends {
             name: "Qt"
-            submodules: [
-                "core", "core-private", "gui", "gui-private",
-                "qml", "quick", "quick-private",
-                "waylandcompositor", "waylandcompositor-private"
-            ]
+            submodules: [ "core", "gui", "qml", "quick", "waylandcompositor" ]
             versionAtLeast: project.minimumQtVersion
         }
         Depends { name: "WaylandScanner" }
@@ -111,11 +103,7 @@ LiriModuleProject {
             Depends { name: root.headersName }
             Depends {
                 name: "Qt"
-                submodules: [
-                    "core", "core-private", "gui", "gui-private",
-                    "qml", "quick", "quick-private",
-                    "waylandcompositor", "waylandcompositor-private"
-                ]
+                submodules: [ "core", "gui", "qml", "quick", "waylandcompositor" ]
             }
 
             cpp.defines: base.concat(["QT_WAYLAND_COMPOSITOR_QUICK"])
