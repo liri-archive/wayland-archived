@@ -113,7 +113,7 @@ void QEglFSKmsGbmDevice::close()
     }
 
     if (fd() != -1) {
-        qt_safe_close(fd());
+        Logind::instance()->releaseDevice(fd());
         setFd(-1);
     }
 }
