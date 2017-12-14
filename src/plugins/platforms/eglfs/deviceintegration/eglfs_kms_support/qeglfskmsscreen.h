@@ -46,13 +46,8 @@
 #include <QtCore/QList>
 #include <QtCore/QMutex>
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-#include <QtKmsSupport/private/qkmsdevice_p.h>
-#include <QtEdidSupport/private/qedidparser_p.h>
-#else
 #include <LiriKmsSupport/private/qkmsdevice_p.h>
 #include <LiriEdidSupport/private/qedidparser_p.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

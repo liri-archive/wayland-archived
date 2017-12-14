@@ -42,11 +42,7 @@
 #include "qeglfskmsintegration.h"
 #include "qeglfskmsscreen.h"
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-#include <QtKmsSupport/private/qkmsdevice_p.h>
-#else
 #include <LiriKmsSupport/private/qkmsdevice_p.h>
-#endif
 
 #include <QtGui/qpa/qplatformwindow.h>
 #include <QtGui/QScreen>

@@ -42,11 +42,7 @@
 #define QEGLFSKMSDEVICE_H
 
 #include "private/qeglfsglobal_p.h"
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-#include <QtKmsSupport/private/qkmsdevice_p.h>
-#else
 #include <LiriKmsSupport/private/qkmsdevice_p.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
