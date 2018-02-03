@@ -79,6 +79,6 @@ private:
 
 } // namespace WaylandClient
 
-} // namespace GreenIslanmd
+} // namespace Liri
 
 #endif // LIRIWAYLANDCLIENT_CLIENTCONNECTION_H

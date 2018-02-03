@@ -1,4 +1,4 @@
-Green Island
+Liri
 ============
 
 This is the list of contributors to this project.

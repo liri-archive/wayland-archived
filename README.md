@@ -180,7 +180,7 @@ plugin:
 
 ### Logging categories
 
-Qt 5.2 introduced logging categories and Hawaii takes advantage of
+Qt 5.2 introduced logging categories and Liri takes advantage of
 them to make debugging easier.
 
 Please refer to the [Qt](http://doc.qt.io/qt-5/qloggingcategory.html) documentation
