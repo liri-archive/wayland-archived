@@ -7,7 +7,7 @@ Liri Wayland
 [![GitHub release](https://img.shields.io/github/release/lirios/wayland.svg)](https://github.com/lirios/wayland)
 [![Build Status](https://travis-ci.org/lirios/wayland.svg?branch=develop)](https://travis-ci.org/lirios/wayland)
 [![GitHub issues](https://img.shields.io/github/issues/lirios/wayland.svg)](https://github.com/lirios/wayland/issues)
-[![Maintained](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/lirios/wayland/commits/develop)
+[![Maintained](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/lirios/wayland/commits/develop)
 
 Wayland client and server libraries for Liri OS.
 

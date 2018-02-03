@@ -2,7 +2,7 @@
 <protocol name="liri_outputmanagement">
   <copyright>
     <![CDATA[
-      Copyright (C) 2016 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+      Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
       Copyright (C) 2015 Sebastian Kügler <sebas@kde.org>
 
       Permission to use, copy, modify, distribute, and sell this

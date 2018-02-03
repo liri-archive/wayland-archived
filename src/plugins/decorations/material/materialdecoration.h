@@ -2,7 +2,7 @@
  * This file is part of Liri.
  *
  * Copyright (C) 2016 Robin Burchell <robin.burchell@viroteck.net>
- * Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  * Copyright (C) 2017 Michael Spencer <sonrisesoftware@gmail.com>
  * Copyright (C) 2016 The Qt Company Ltd.
  *
