@@ -146,7 +146,7 @@ void LibInputTouch::handleTouchUp(libinput_event_touch *event)
         touchPoint->state = Qt::TouchPointReleased;
 
         Qt::TouchPointStates states = 0;
-        Q_FOREACH (const QWindowSystemInterface::TouchPoint &tp, state->touchPoints)
+        for (const QWindowSystemInterface::TouchPoint &tp : qAsConst(state->touchPoints))
             states |= tp.state;
         if (states == Qt::TouchPointReleased)
             handleTouchFrame(event);

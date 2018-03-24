@@ -166,7 +166,7 @@ void XWayland::handleSurfaceCreated(QWaylandSurface *surface)
     if (client && client->client() != m_server->client())
         return;
 
-    Q_FOREACH (XWaylandShellSurface *shellSurface, m_manager->m_unpairedWindows) {
+    for (XWaylandShellSurface *shellSurface : m_manager->m_unpairedWindows) {
         quint32 id = wl_resource_get_id(QWaylandSurfacePrivate::get(surface)->resource()->handle);
 
         if (shellSurface->surfaceId() == id) {

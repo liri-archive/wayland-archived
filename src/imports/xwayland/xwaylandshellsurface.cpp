@@ -337,7 +337,7 @@ void XWaylandShellSurface::readProperties()
     props[Xcb::resources()->atoms->motif_wm_hints] = TYPE_MOTIF_WM_HINTS;
 
     QMap<xcb_atom_t, xcb_get_property_cookie_t> cookies;
-    Q_FOREACH (xcb_atom_t atom, props.keys()) {
+    for (xcb_atom_t atom : props.keys()) {
         xcb_get_property_cookie_t cookie = xcb_get_property(
                     Xcb::connection(), 0, m_window, atom, XCB_ATOM_ANY, 0, 2048);
         cookies[atom] = cookie;
@@ -354,7 +354,7 @@ void XWaylandShellSurface::readProperties()
 
     qCDebug(XWAYLAND_TRACE) << "Properties:";
 
-    Q_FOREACH (xcb_atom_t atom, props.keys()) {
+    for (xcb_atom_t atom : props.keys()) {
         xcb_get_property_reply_t *reply =
                 xcb_get_property_reply(Xcb::connection(), cookies[atom], nullptr);
         if (!reply)

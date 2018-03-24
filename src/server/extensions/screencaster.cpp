@@ -207,7 +207,7 @@ void Screencaster::recordFrame(QQuickWindow *window)
     uint time = compositor->currentTimeMsecs();
 
     // Satisfy all pending record requests
-    Q_FOREACH (Screencast *screencast, d->requests.values(window)) {
+    for (Screencast *screencast : d->requests.values(window)) {
         // Remove request
         d->requests.remove(window, screencast);
 

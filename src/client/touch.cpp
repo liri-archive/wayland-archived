@@ -54,7 +54,7 @@ TouchPrivate::~TouchPrivate()
 
 TouchPoint *TouchPrivate::getPressedPoint(qint32 id) const
 {
-    Q_FOREACH (TouchPoint *tp, points) {
+    for (TouchPoint *tp : qAsConst(points)) {
         if (tp->id() == id && tp->isDown())
             return tp;
     }
@@ -111,7 +111,7 @@ void TouchPrivate::touch_up(uint32_t serial, uint32_t time, int32_t id)
     Q_EMIT q->pointRemoved(tp);
 
     // Sequence is finished when no touch point is down
-    Q_FOREACH (TouchPoint *curPt, points) {
+    for (TouchPoint *curPt : qAsConst(points)) {
         if (curPt->isDown())
             return;
     }

@@ -188,7 +188,7 @@ void ScreencastPrivate::recordFrame()
 {
     // Pick up a free buffer
     ScreencastBuffer *buffer = nullptr;
-    Q_FOREACH (ScreencastBuffer *sb, buffers) {
+    for (ScreencastBuffer *sb : qAsConst(buffers)) {
         if (!sb->buffer.isNull() && !sb->busy) {
             buffer = sb;
             break;
@@ -250,7 +250,7 @@ void ScreencastPrivate::liri_screencast_frame(struct ::wl_buffer *buffer,
     recordFrame();
 
     Buffer *b = BufferPrivate::fromWlBuffer(buffer);
-    Q_FOREACH (ScreencastBuffer *sb, buffers) {
+    for (ScreencastBuffer *sb : qAsConst(buffers)) {
         if (!sb->buffer.isNull() && sb->buffer.data() == b) {
             QCoreApplication::postEvent(handler, new FrameEvent(sb, time, static_cast<Screencast::Transform>(transform)));
             break;
@@ -272,7 +272,7 @@ void ScreencastPrivate::liri_screencast_cancelled(struct ::wl_buffer *buffer)
     Q_Q(Screencast);
 
     Buffer *b = BufferPrivate::fromWlBuffer(buffer);
-    Q_FOREACH (ScreencastBuffer *sb, buffers) {
+    for (ScreencastBuffer *sb : qAsConst(buffers)) {
         if (sb->buffer.isNull() && sb->buffer.data() == b) {
             sb->busy = false;
             break;

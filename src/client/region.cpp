@@ -61,7 +61,7 @@ void Region::add(const QRegion &region)
     Q_D(Region);
 
     d->region = d->region.united(region);
-    Q_FOREACH (const QRect &rect, region.rects())
+    for (const QRect &rect : region.rects())
         d->add(rect.x(), rect.y(), rect.width(), rect.height());
 }
 
@@ -78,7 +78,7 @@ void Region::subtract(const QRegion &region)
     Q_D(Region);
 
     d->region = d->region.subtracted(region);
-    Q_FOREACH (const QRect &rect, region.rects())
+    for (const QRect &rect : region.rects())
         d->subtract(rect.x(), rect.y(), rect.width(), rect.height());
 }
 

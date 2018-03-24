@@ -225,7 +225,7 @@ wl_cursor *CursorThemePrivate::requestCursor(CursorTheme::CursorShape shape)
             return nullptr;
 
         QList<QByteArray> cursorNames = cursorShapes.values(shape);
-        Q_FOREACH (const QByteArray &name, cursorNames) {
+        for (const QByteArray &name : qAsConst(cursorNames)) {
             cursor = wl_cursor_theme_get_cursor(theme, name.constData());
             if (cursor) {
                 cursors.insert(shape, cursor);
