@@ -4,6 +4,19 @@ set -e
 
 source /usr/local/share/liri-travis/functions
 
+# Install dependencies
+travis_start "install_packages"
+msg "Install packages..."
+sudo apt-get install -y \
+     libgbm-dev \
+     libx11-xcb-dev \
+     libxcb-cursor-dev libxcursor-dev \
+     libxcb-composite0-dev \
+     libxcb-xfixes0-dev \
+     libxcb-render0-dev \
+     libxcb-shape0-dev
+travis_end "install_packages"
+
 # Install artifacts
 travis_start "artifacts"
 msg "Install artifacts..."
