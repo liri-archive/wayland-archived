@@ -25,15 +25,12 @@ This project includes:
 * QtWaylandClient fullscreen shell integration
 * Pluggable hardware abstraction with support for:
   * DRM/KMS
-  * All Raspberry Pi boards
-  * Mali
-  * Vivante
 
 ## Dependencies
 
 Compiler requirements:
 
-* [gcc >= 4.8](https://gcc.gnu.org/gcc-4.8/) or
+* [gcc](https://gcc.gnu.org/gcc-4.8/) >= 4.8 or
 * [Clang](http://clang.llvm.org/)
 
 Qt >= 5.9.0 with at least the following modules is required:
@@ -44,26 +41,18 @@ Qt >= 5.9.0 with at least the following modules is required:
 
 And the following modules:
 
- * [qbs-shared](https://github.com/lirios/qbs-shared.git)
+ * [qbs-shared](https://github.com/lirios/qbs-shared.git) >= 1.2.0
  * [libliri](https://github.com/lirios/libliri.git)
 
 The following modules and their dependencies are required:
 
 * [udev](http://www.freedesktop.org/software/systemd/libudev/)
-* [libinput >= 0.12](http://www.freedesktop.org/wiki/Software/libinput/)
+* [libinput](http://www.freedesktop.org/wiki/Software/libinput/) >= 0.12
 
 If you enable DRM/KMS device integration you also need:
 
 * [libdrm](https://wiki.freedesktop.org/dri/)
 * [gbm](http://www.mesa3d.org)
-
-If you enable Broadcom VideoCore device integration you also need:
-
-* [bcmhost](https://github.com/raspberrypi/firmware)
-
-If you enable Vivante device integration you also need:
-
-* [mx6q](https://community.freescale.com/docs/DOC-95560)
 
 If you enable XWayland support you also need:
 
@@ -83,21 +72,22 @@ From the root of the repository, run:
 qbs setup-toolchains --type gcc /usr/bin/g++ gcc
 qbs setup-qt /usr/bin/qmake-qt5 qt5
 qbs config profiles.qt5.baseProfile gcc
+```
+
+Then, from the root of the repository, run:
+
+```sh
 qbs -d build -j $(nproc) profile:qt5 # use sudo if necessary
 ```
 
-On the last `qbs` line, you can specify additional configuration parameters at the end:
+To the `qbs` call above you can append additional configuration parameters:
 
- * `qbs.installRoot:/path/to/install` (for example `/`)
- * `qbs.installPrefix:path/to/install` (for example `opt/liri` or `usr`)
-
-The following are only needed if `qbs.installPrefix` is a system-wide path such as `usr`
-and the default value doesn't suit your needs. All are relative to `qbs.installRoot`:
-
- * `modules.lirideployment.libDir:path/to/lib` where libraries are installed (default: `lib`)
- * `modules.lirideployment.qmlDir:path/to/qml` where QML plugins are installed (default: `lib/qml`)
- * `modules.lirideployment.pluginsDir:path/to/plugins` where Qt plugins are installed (default: `lib/plugins`)
- * `modules.lirideployment.qbsModulesDir:path/to/qbs` where Qbs modules are installed (default: `share/qbs/modules`)
+ * `modules.lirideployment.prefix:/path/to/prefix` where most files are installed (default: `/usr/local`)
+ * `modules.lirideployment.dataDir:path/to/lib` where data files are installed (default: `/usr/local/share`)
+ * `modules.lirideployment.libDir:path/to/lib` where libraries are installed (default: `/usr/local/lib`)
+ * `modules.lirideployment.qmlDir:path/to/qml` where QML plugins are installed (default: `/usr/local/lib/qml`)
+ * `modules.lirideployment.pluginsDir:path/to/plugins` where Qt plugins are installed (default: `/usr/local/lib/plugins`)
+ * `modules.lirideployment.qbsModulesDir:path/to/qbs` where Qbs modules are installed (default: `/usr/local/share/qbs/modules`)
 
 See [lirideployment.qbs](https://github.com/lirios/qbs-shared/blob/develop/modules/lirideployment/lirideployment.qbs)
 for more deployment-related parameters.
@@ -110,73 +100,13 @@ You can also specify the following options:
  * `products.materialdecorationplugin.condition:false`: Do not build material decoration.
  * `products.lirieglfs.condition:false`: Do not build QPA plugin.
 
-If you specify `qbs.installRoot` you might need to prefix the entire line with `sudo`,
-depending on whether you have permissions to write there or not.
-
 ### Environment variables
 
 The liri QPA plugin supports different graphics hardware through EGL
 device integration plugins.
 
-There are a number of environment variables that can influence the QPA
-plugin:
-
-* **LIRI_QPA_DEBUG:** When set, some debugging information is
-  printed on the debug output such as the EGL configuration being used
-  while creating a new context.
-
-* **LIRI_QPA_WIDTH** and **LIRI_QPA_HEIGHT:**
-  Screen width and height in pixels (screen resolution). This variable
-  is used only on platforms where detecting it from the framebuffer device
-  /dev/fb0 fails.
-
-* **LIRI_QPA_DEPTH:** Overrides the color depth for the screen.
-  On platforms where the framebuffer device /dev/fb0 is not available or
-  the query is not successful, the default value of 32 is used.
-  Setting this variable can override any such default.
-  Please note that this affects only the color depth reported by the
-  screen and it is irrelevant to EGL configurations and the color depth
-  used for OpenGL rendering.
-
-* **LIRI_QPA_PHYSICAL_WIDTH** and **LIRI_QPA_PHYSICAL_HEIGHT:**
-  Physical screen width and height in millimiters. On platforms where the
-  /dev/fb0 framebuffer device is not available, or the query is not
-  successful, the values are calculated based on a default DPI of 100.
-  These variables can be used to override such default values.
-
-* **LIRI_QPA_CONFIG:** Path to the QPA plugin configuration, used
-  only by the kms EGL device integration. By default the path is
-  "~/.config/liri/platform.json".
-
-* **LIRI_QPA_SWAPINTERVAL:** By default a swap interval of 1 will
-  be requested. This enables synchronizing to the display vertical
-  refresh. Passing 0 will disable blocking on swap, resulting in running
-  as fast as it's possible without any synchronization.
-
-* **LIRI_QPA_FORCEVSYNC:** When set, FBIO_WAITFORVSYNC is
-  requested on the framebuffer device.
-
-* **LIRI_QPA_FORCE888:** When set, the red, green and blue color
-  channels are ignored whenever creating a new context, window or
-  offscreen surface. Instead a configuration of 8 bits per channel is
-  requested. Useful on devices where configurations with less than
-  24 or 32 bits per channel are chosen by default but are not suitable,
-  for example due to banding effects. This variable moves the control
-  of color channels from the compositor to a setting that allows a
-  more flexible per-device configuration.
-
-* **LIRI_QPA_ENABLE_TERMINAL_KEYBOARD:** By default terminal
-  keyboard is disabled on compositor startup by setting tty's keyboard
-  mode to K_OFF preventing keystrokes from going to the terminal.
-
-* **LIRI_QPA_INTEGRATION:** EGL device integration to be loaded
-  at compositor startup. By default the QPA plugin autodetects which
-  plugin needs to be loaded, if for some reason autodetection fails
-  a specific plugin can be set with this variable. Set the EGL device
-  integration plugin file name without path and extension (for example
-  "kms" for the DRM/KMS integration, "brcm" for Broadcom etc...).
-
-* **LIRI_QPA_HIDECURSOR:** Set to 1 in order to hide the hardware cursor.
+The environment variables that can influence the QPA plugin
+are the same as those of [eglfs](http://doc.qt.io/qt-5/embedded-linux.html#eglfs).
 
 ### Logging categories
 
