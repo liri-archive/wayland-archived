@@ -16,33 +16,13 @@ env:
     # DEPLOY_HOST
     - secure: "H9hZHSkvfZHzwehMmtyGnl0FkHs6BnBGX5QO82/aZGEVq12a7/OXoQ40LWMjEFe5zCYzuN0eWy9d+wuEWbcJ2Wff93jjHnWW/aHYsztfrxJ6FdWAzeocaPbbLVJXonO+7bka7Ob725QRjobCLUreVfKy4VMIRZtIPFQp6muGk3MXof2PB5NNYZpzBjRgnkleKlN6eCN5UHJLVLhoJaL8HNEMghSEaG2oj1SSzxmv7JUc8YKa+ffYzkKAC4QR0H4fNmEH0Kn4xlSufhRZhkYrjWdL9hnxX9btO+3o/BKfXb6mo0tK/2tUzgvacEdV5f+ImgaWbPwX/PYG2rBN7Icjp0v0lT5z6cfMAlv3bE9Y1LGWQYDmb34mlf1uth1A5k1FebpL32auCw3PXisawm//xh+NOtcTT3bAa+FkaUPAdQEUKxu1cGzHlBdqKn6h+jiPgVX55FJ9P2JcOAEd2fqRpwtdkYCsC0QPv86i4aFmpVxunoopVLhmN0albAXvM5rhSwv4QvvzS5FmBM509RuaJvd4OoWTdoZVj2+JVIeFBao83RVs8G8ZhpV1yw357YQ0NkJIOLobJM+T5bkP5j30LtTVSJCw89GTzr/F+yEVi2AoH+Q73j33MpHWPvgya4f56azq7vxJxGeafSgyZTrjJUhmqNHHkjHvX9ZFsepzkOw="
 
-arch:
-  artifacts:
-    - qbs-shared-artifacts.tar.gz
-    - libliri-artifacts.tar.gz
-  packages:
-    - qbs
-    - qt5-declarative
-    - qt5-wayland
-    - libdrm
-    - mesa-libgl
-    - wayland
-    - wayland-protocols
-    - libinput
-    - libxkbcommon
-    - xcb-util-cursor
-    - libxcursor
-    - xorg-server-xvfb
-    #- clazy-git
-  script:
-    #- export CLAZY_CHECKS="level1"
-    - qbs-setup-toolchains --detect
-    - qbs-setup-qt /usr/bin/qmake-qt5 qt5
-    - qbs config profiles.qt5.baseProfile ${CC}
-    - dbus-run-session -- xvfb-run -a -s "-screen 0 800x600x24" qbs build -d build -j $(nproc) --all-products profile:qt5 modules.qbs.installRoot:/ modules.lirideployment.prefix:/usr modules.lirideployment.qmlDir:/usr/lib/qt/qml
+branches:
+  except:
+    - /^(?i:continuous)$/
 
 script:
-  - "curl -s https://raw.githubusercontent.com/lirios/repotools/develop/travis/docker-travis.sh | bash"
+  - wget -c https://raw.githubusercontent.com/lirios/infra-travis/master/run
+  - bash run ./.travis/build.sh
 
 deploy:
   - provider: script
