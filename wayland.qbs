@@ -3,7 +3,7 @@ import qbs 1.0
 Project {
     name: "Wayland"
 
-    readonly property string version: "0.9.0.1"
+    readonly property string version: "0.9.1"
     readonly property var versionParts: version.split('.').map(function(part) { return parseInt(part); })
 
     readonly property string minimumQtVersion: "5.9.0"
