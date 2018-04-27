@@ -7,7 +7,7 @@ LiriModuleProject {
     name: "LiriLibInput"
     moduleName: "LiriLibInput"
     description: "Qt API for libinput"
-    pkgConfigDependencies: ["Qt5Core", "libinput", "LiriUDev"]
+    pkgConfigDependencies: ["Qt5Core", "libinput", "Qt5Udev"]
     createCMake: false
 
     resolvedProperties: ({
@@ -16,7 +16,7 @@ LiriModuleProject {
                   { name: LiriUtils.quote("Qt.gui") },
                   { name: LiriUtils.quote("Qt.gui-private") },
                   { name: LiriUtils.quote("libinput") },
-                  { name: LiriUtils.quote("LiriUDev") },
+                  { name: LiriUtils.quote("Qt5Udev") },
                   { name: LiriUtils.quote("LiriLogind") },
                   { name: LiriUtils.quote("Qt.service_support-private") },
                   { name: LiriUtils.quote("Qt.theme_support-private") },
@@ -53,7 +53,7 @@ LiriModuleProject {
             versionAtLeast: project.minimumQtVersion
         }
         Depends { name: "libinput" }
-        Depends { name: "LiriUDev" }
+        Depends { name: "Qt5Udev" }
         Depends { name: "LiriLogind" }
         Depends { name: "eglfsxkb" }
 
@@ -78,7 +78,7 @@ LiriModuleProject {
             Depends { name: root.headersName }
             Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
             Depends { name: "libinput" }
-            Depends { name: "LiriUDev" }
+            Depends { name: "Qt5Udev" }
             Depends { name: "LiriLogind" }
         }
     }

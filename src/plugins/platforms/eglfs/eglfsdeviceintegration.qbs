@@ -44,7 +44,7 @@ LiriModuleProject {
                 "egl_support-private", "platformcompositor_support-private"
             ]
         }
-        Depends { name: "LiriUDev" }
+        Depends { name: "Qt5Udev" }
         Depends { name: "LiriLibInput" }
         Depends { name: "LiriLogind" }
 
@@ -104,7 +104,7 @@ LiriModuleProject {
                     "egl_support-private", "platformcompositor_support-private"
                 ]
             }
-            Depends { name: "LiriUDev" }
+            Depends { name: "Qt5Udev" }
             Depends { name: "LiriLibInput" }
             Depends { name: "LiriLogind" }
 

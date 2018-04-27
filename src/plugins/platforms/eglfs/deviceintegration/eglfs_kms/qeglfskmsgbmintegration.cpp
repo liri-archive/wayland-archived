@@ -49,8 +49,8 @@
 #include <QtCore/QLoggingCategory>
 #include <QtGui/QScreen>
 
-#include <LiriUDev/Udev>
-#include <LiriUDev/UdevEnumerate>
+#include <Qt5Udev/Udev>
+#include <Qt5Udev/UdevEnumerate>
 
 #include <gbm.h>
 
@@ -64,7 +64,7 @@ QEglFSKmsGbmIntegration::QEglFSKmsGbmIntegration()
 {
     qCDebug(qLcEglfsKmsDebug, "New DRM/KMS via GBM integration created");
 
-    m_udev = new Udev();
+    m_udev = new QtUdev::Udev();
 }
 
 QEglFSKmsGbmIntegration::~QEglFSKmsGbmIntegration()
@@ -146,8 +146,8 @@ QKmsDevice *QEglFSKmsGbmIntegration::createDevice()
     if (!path.isEmpty()) {
         qCDebug(qLcEglfsKmsDebug) << "GBM: Using DRM device" << path << "specified in config file";
     } else {
-        UdevEnumerate enumerate(UdevDevice::PrimaryVideoDevice | UdevDevice::GenericVideoDevice, m_udev);
-        QList<UdevDevice *> devices = enumerate.scan();
+        QtUdev::UdevEnumerate enumerate(QtUdev::UdevDevice::PrimaryVideoDevice | QtUdev::UdevDevice::GenericVideoDevice, m_udev);
+        QList<QtUdev::UdevDevice *> devices = enumerate.scan();
         qCDebug(qLcEglfsKmsDebug) << "Found the following video devices:";
         for (auto device : qAsConst(devices))
             qCDebug(qLcEglfsKmsDebug) << '\t' << device->deviceNode().toLocal8Bit().constData();

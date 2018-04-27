@@ -23,7 +23,6 @@ Project {
         "src/client/client.qbs",
         "src/libinput/libinput.qbs",
         "src/server/server.qbs",
-        "src/udev/udev.qbs",
         "src/imports/imports.qbs",
         "src/plugins/plugins.qbs",
         //"tests/auto/auto.qbs",

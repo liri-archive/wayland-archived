@@ -20,7 +20,7 @@ This project includes:
   applicaion manager, task manager and output management
 * XWayland support
 * Screen configuration
-* Qt-style API for udev, libinput
+* Qt-style API for libinput
 * QPA plugin
 * QtWaylandClient fullscreen shell integration
 * Pluggable hardware abstraction with support for:
@@ -43,10 +43,10 @@ And the following modules:
 
  * [qbs-shared](https://github.com/lirios/qbs-shared.git) >= 1.2.0
  * [libliri](https://github.com/lirios/libliri.git)
+ * [qtudev](https://github.com/lirios/qtudev.git) >= 1.0.0
 
 The following modules and their dependencies are required:
 
-* [udev](http://www.freedesktop.org/software/systemd/libudev/)
 * [libinput](http://www.freedesktop.org/wiki/Software/libinput/) >= 0.12
 
 If you enable DRM/KMS device integration you also need:
@@ -139,7 +139,6 @@ to learn how to enable them.
 * Platform:
   * **liri.qpa.deviceintegration:** Device integration
   * **liri.qpa.input:** Input management on device integration plugins
-  * **liri.qpa.udev:** udev integration
 
 * EGL Device Integrations:
   * **liri.qpa.kms:** KMS/DRM EGL device integration

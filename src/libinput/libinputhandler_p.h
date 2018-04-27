@@ -31,7 +31,7 @@
 
 #include <LiriLibInput/lirilibinputglobal.h>
 
-#include <LiriUDev/udev.h>
+#include <Qt5Udev/Udev>
 
 #include <LiriLibInput/libinputgesture.h>
 #include <LiriLibInput/libinputkeyboard.h>
@@ -73,7 +73,7 @@ public:
 
     bool initialized;
 
-    Udev *udev;
+    QtUdev::Udev *udev;
     libinput *li;
 
     LibInputKeyboard *keyboard;

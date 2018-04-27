@@ -8,7 +8,7 @@ LiriDynamicLibrary {
     Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
     Depends { name: "LiriEglFSDeviceIntegration" }
     Depends { name: "LiriEglFSKmsSupport" }
-    Depends { name: "LiriUDev" }
+    Depends { name: "Qt5Udev" }
 
     files: ["*.cpp", "*.h", "*.json"]
 

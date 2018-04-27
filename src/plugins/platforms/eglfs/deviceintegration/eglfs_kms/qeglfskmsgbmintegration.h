@@ -46,10 +46,8 @@
 #include <QtCore/QMap>
 #include <QtCore/QVariant>
 
-namespace Liri {
-namespace Platform {
+namespace QtUdev {
 class Udev;
-}
 }
 
 QT_BEGIN_NAMESPACE
@@ -74,7 +72,7 @@ protected:
     QKmsDevice *createDevice() override;
 
 private:
-    Liri::Platform::Udev *m_udev;
+    QtUdev::Udev *m_udev;
 };
 
 QT_END_NAMESPACE

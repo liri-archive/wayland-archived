@@ -28,7 +28,7 @@
 #include <QtGui/private/qguiapplication_p.h>
 #include <qplatformdefs.h>
 
-#include <LiriUDev/private/udev_p.h>
+#include <Qt5Udev/private/udev_p.h>
 #include <LiriLogind/Logind>
 
 #include "logging_p.h"
@@ -114,9 +114,9 @@ void LibInputHandlerPrivate::initialize()
     qCDebug(lcInput) << "Initializing libinput";
 
     // Create context
-    udev = new Udev;
+    udev = new QtUdev::Udev;
     li = libinput_udev_create_context(&liInterface, nullptr,
-                                      UdevPrivate::get(udev)->udev);
+                                      QtUdev::UdevPrivate::get(udev)->udev);
     if (Q_UNLIKELY(!li)) {
         qFatal("Unable to get libinput context");
         return;
