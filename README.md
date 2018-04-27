@@ -97,7 +97,6 @@ You can also specify the following options:
  * `products.kms.condition:false`: Do not build KMS EGL device integration.
  * `products.lirixwaylandplugin.condition:false`: Do not build XWayland support.
  * `products.fullscreen-shell.condition:false`: Do not build fullscreen-shell integration.
- * `products.materialdecorationplugin.condition:false`: Do not build material decoration.
  * `products.lirieglfs.condition:false`: Do not build QPA plugin.
 
 ### Environment variables
