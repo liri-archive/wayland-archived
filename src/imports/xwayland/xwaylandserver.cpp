@@ -26,7 +26,6 @@
 #include <QtCore/QFutureWatcher>
 #include <QtCore/QSocketNotifier>
 #include <QtConcurrent/QtConcurrentRun>
-#include <QtGui/private/qguiapplication_p.h>
 
 #include "xwayland.h"
 #include "xwaylandserver.h"

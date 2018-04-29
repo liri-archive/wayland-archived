@@ -23,12 +23,13 @@
 
 #include <QtWaylandCompositor/QWaylandClient>
 #include <QtWaylandCompositor/QWaylandCompositor>
-#include <QtWaylandCompositor/private/qwaylandsurface_p.h>
 
 #include "xwayland.h"
 #include "xwaylandmanager.h"
 #include "xwaylandshellsurface.h"
 #include "xwaylandserver.h"
+
+#include <wayland-server-core.h>
 
 Q_LOGGING_CATEGORY(XWAYLAND, "liri.xwayland")
 Q_LOGGING_CATEGORY(XWAYLAND_TRACE, "liri.xwayland.trace")
@@ -167,7 +168,7 @@ void XWayland::handleSurfaceCreated(QWaylandSurface *surface)
         return;
 
     for (XWaylandShellSurface *shellSurface : m_manager->m_unpairedWindows) {
-        quint32 id = wl_resource_get_id(QWaylandSurfacePrivate::get(surface)->resource()->handle);
+        quint32 id = wl_resource_get_id(surface->resource());
 
         if (shellSurface->surfaceId() == id) {
             shellSurface->setSurfaceId(0);
