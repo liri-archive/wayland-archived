@@ -23,7 +23,6 @@
 
 #include <QGuiApplication>
 #include <QWaylandOutputMode>
-#include <qpa/qwindowsysteminterface.h>
 
 #include "quickoutput.h"
 #include "screenmodel.h"
@@ -106,10 +105,4 @@ void QuickOutput::initialize()
     }
 
     QWaylandQuickOutput::initialize();
-
-    // Center mouse cursor
-    QQuickWindow *quickWindow = qobject_cast<QQuickWindow *>(window());
-    if (quickWindow && quickWindow->screen() == QGuiApplication::primaryScreen())
-        QWindowSystemInterface::handleMouseEvent(quickWindow, geometry().center(),
-                                                 geometry().center(), Qt::NoButton);
 }
