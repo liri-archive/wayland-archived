@@ -50,6 +50,10 @@ LibInputPointer::LibInputPointer(LibInputHandler *handler)
     : m_handler(handler)
     , m_buttons(Qt::NoButton)
 {
+    // Center the pointer to the primary screen
+    QScreen *const primaryScreen = QGuiApplication::primaryScreen();
+    const QRect geometry = QHighDpi::toNativePixels(primaryScreen->virtualGeometry(), primaryScreen);
+    setPosition(geometry.center());
 }
 
 void LibInputPointer::setPosition(const QPoint &pos)
