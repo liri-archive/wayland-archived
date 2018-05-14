@@ -24,8 +24,11 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#pragma once
+#ifndef LIRI_LIBINPUT_LOGGING_P_H
+#define LIRI_LIBINPUT_LOGGING_P_H
 
 #include <QtCore/QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(lcInput)
+
+#endif // LIRI_LIBINPUT_LOGGING_P_H

@@ -2,13 +2,19 @@ import qbs 1.0
 import LiriUtils
 
 LiriModuleProject {
-    id: root
-
-    name: "LiriLibInput"
+    name: moduleName
     moduleName: "LiriLibInput"
     description: "Qt API for libinput"
-    pkgConfigDependencies: ["Qt5Core", "libinput", "Qt5Udev"]
+    createPkgConfig: false
     createCMake: false
+    conditionFunction: (function() {
+        if (!libinput.found) {
+            console.error("libinput is required to build " + targetName);
+            return false;
+        }
+
+        return true;
+    })
 
     resolvedProperties: ({
         Depends: [{ name: LiriUtils.quote("Qt.core") },
@@ -24,8 +30,8 @@ LiriModuleProject {
     })
 
     LiriHeaders {
-        name: root.headersName
-        sync.module: root.moduleName
+        name: project.headersName
+        sync.module: project.moduleName
         sync.classNames: ({
             "libinputgesture.h": ["LibInputGestore"],
             "libinputhandler.h": ["LibInputHandler"],
@@ -41,12 +47,10 @@ LiriModuleProject {
         }
     }
 
-    LiriModule {
-        name: "LiriLibInput"
-        targetName: "LiriLibInput"
-        version: "0.0.0"
+    LiriPrivateModule {
+        targetName: project.targetName
 
-        Depends { name: root.headersName }
+        Depends { name: project.headersName }
         Depends {
             name: "Qt"
             submodules: ["core", "core-private", "gui", "gui-private"]
@@ -57,29 +61,24 @@ LiriModuleProject {
         Depends { name: "LiriLogind" }
         Depends { name: "eglfsxkb" }
 
-        condition: {
-            if (!libinput.found) {
-                console.error("libinput is required to build " + targetName);
-                return false;
-            }
-
-            return true;
-        }
-
         cpp.defines: base.concat([
             'LIRIWAYLAND_VERSION="' + project.version + '"',
-            "QT_BUILD_LIRILIBINPUT_LIB"
+            "LIRI_BUILD_LIRILIBINPUT_LIB",
+            "LIRILIBINPUT_STATIC_LIB"
         ])
 
         files: ["*.cpp", "*.h"]
 
         Export {
             Depends { name: "cpp" }
-            Depends { name: root.headersName }
+            Depends { name: project.headersName }
             Depends { name: "Qt"; submodules: ["core", "core-private", "gui", "gui-private"] }
             Depends { name: "libinput" }
             Depends { name: "Qt5Udev" }
             Depends { name: "LiriLogind" }
+
+            cpp.defines: project.defines
+            cpp.includePaths: product.sourceDirectory
         }
     }
 }

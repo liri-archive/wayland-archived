@@ -45,7 +45,7 @@ LiriModuleProject {
             ]
         }
         Depends { name: "Qt5Udev" }
-        Depends { name: "LiriLibInput" }
+        Depends { name: "LiriLibInput-private" }
         Depends { name: "LiriLogind" }
 
         cpp.defines: [
@@ -60,6 +60,8 @@ LiriModuleProject {
             name: "API"
             prefix: "api/"
             files: [
+                "libinputmanager.cpp",
+                "libinputmanager_p.h",
                 "qeglfslogindhandler.cpp",
                 "qeglfswindow.cpp",
                 "qeglfsscreen.cpp",
@@ -105,7 +107,7 @@ LiriModuleProject {
                 ]
             }
             Depends { name: "Qt5Udev" }
-            Depends { name: "LiriLibInput" }
+            Depends { name: "LiriLibInput-private" }
             Depends { name: "LiriLogind" }
 
             cpp.defines: ["QT_EGL_NO_X11"]

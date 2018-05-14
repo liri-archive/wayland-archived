@@ -1,10 +1,7 @@
 /****************************************************************************
  * This file is part of Liri.
  *
- * Copyright (C) 2015-2016 Pier Luigi Fiorini
- *
- * Author(s):
- *    Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+ * Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
  *
  * $BEGIN_LICENSE:LGPLv3+$
  *
@@ -27,9 +24,7 @@
 #ifndef LIRI_LIBINPUTMANAGER_P_H
 #define LIRI_LIBINPUTMANAGER_P_H
 
-#include <QtCore/QObject>
-
-#include <LiriLibInput/lirilibinputglobal.h>
+#include <QObject>
 
 //
 //  W A R N I N G
@@ -48,11 +43,11 @@ namespace Platform {
 
 class LibInputHandler;
 
-class LIRILIBINPUT_EXPORT LibInputManager : public QObject
+class LibInputManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit LibInputManager(QObject *parent = 0);
+    explicit LibInputManager(QObject *parent = nullptr);
 
     LibInputHandler *handler() const;
 

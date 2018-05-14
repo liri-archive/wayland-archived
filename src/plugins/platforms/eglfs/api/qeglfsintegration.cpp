@@ -62,6 +62,7 @@
 #include "qeglfsoffscreenwindow_p.h"
 #include "qeglfslogindhandler_p.h"
 #include "vthandler.h"
+#include "libinputmanager_p.h"
 
 #include <QtEglSupport/private/qeglconvenience_p.h>
 #ifndef QT_NO_OPENGL
@@ -79,8 +80,6 @@
 #endif
 
 #include <QtPlatformHeaders/QEGLNativeContext>
-
-#include <LiriLibInput/private/libinputmanager_p.h>
 
 #include <QtPlatformHeaders/qeglfsfunctions.h>
 

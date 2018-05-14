@@ -21,13 +21,20 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#pragma once
+#ifndef LIRI_LIBINPUTGLOBAL_H
+#define LIRI_LIBINPUTGLOBAL_H
 
 #include <QtCore/qglobal.h>
 
-#if defined(QT_BUILD_LIRILIBINPUT_LIB)
-#  define LIRILIBINPUT_EXPORT Q_DECL_EXPORT
+#if defined(LIRILIBINPUT_STATIC_LIB)
+#  define LIRILIBINPUT_EXPORT
 #else
-#  define LIRILIBINPUT_EXPORT Q_DECL_IMPORT
+#  if defined(LIRI_BUILD_LIRILIBINPUT_LIB)
+#    define LIRILIBINPUT_EXPORT Q_DECL_EXPORT
+#  else
+#    define LIRILIBINPUT_EXPORT Q_DECL_IMPORT
+#  endif
+#  define LIRILIBINPUT_NO_EXPORT Q_DECL_HIDDEN
 #endif
-#define LIRILIBINPUT_NO_EXPORT Q_DECL_HIDDEN
+
+#endif // LIRI_LIBINPUTGLOBAL_H

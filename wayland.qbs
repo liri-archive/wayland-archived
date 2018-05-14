@@ -21,7 +21,6 @@ Project {
         "src/deployment.qbs",
         "src/libs.qbs",
         "src/client/client.qbs",
-        "src/libinput/libinput.qbs",
         "src/server/server.qbs",
         "src/imports/imports.qbs",
         "src/plugins/plugins.qbs",

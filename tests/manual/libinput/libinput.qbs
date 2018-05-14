@@ -8,7 +8,7 @@ QtApplication {
         submodules: ["gui", "gui-private", "testlib"]
         versionAtLeast: project.minimumQtVersion
     }
-    Depends { name: "LiriLibInput" }
+    Depends { name: "LiriLibInput-private" }
     Depends { name: "LiriLogind" }
 
     files: ["*.cpp"]
