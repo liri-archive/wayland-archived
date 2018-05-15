@@ -34,10 +34,7 @@
 #include <LiriWaylandServer/Screenshooter>
 //#include <LiriWaylandServer/TaskManager>
 
-#include "chromeitem.h"
 #include "fpscounter.h"
-#include "hotspot.h"
-#include "keyeventfilter.h"
 #include "quickoutput.h"
 #include "outputsettings.h"
 #include "screenmodel.h"
@@ -83,9 +80,6 @@ void LiriWaylandServerPlugin::registerTypes(const char *uri)
     qmlRegisterType<QuickOutputQuickExtensionChildren>(uri, 1, 0, "WaylandOutput");
     qmlRegisterType<OutputSettings>(uri, 1, 0, "WaylandOutputSettings");
 
-    // Chrome container
-    qmlRegisterType<ChromeItem>(uri, 1, 0, "ChromeItem");
-
     // gtk-shell
     qmlRegisterType<GtkShellQuickExtension>(uri, 1, 0, "GtkShell");
     qmlRegisterType<GtkSurface>(uri, 1, 0, "GtkSurface");
@@ -119,12 +113,6 @@ void LiriWaylandServerPlugin::registerTypes(const char *uri)
     qmlRegisterType<ScreenshooterQuickExtension>(uri, 1, 0, "Screenshooter");
     qmlRegisterUncreatableType<Screenshot>(uri, 1, 0, "Screenshot",
                                            QObject::tr("Cannot create instance of Screenshot"));
-
-    // Key event filter
-    qmlRegisterType<KeyEventFilter>(uri, 1, 0, "KeyEventFilter");
-
-    // Hotspot
-    qmlRegisterType<HotSpot>(uri, 1, 0, "HotSpot");
 
     // Settings
     qmlRegisterType<CompositorSettings>(uri, 1, 0, "CompositorSettings");
