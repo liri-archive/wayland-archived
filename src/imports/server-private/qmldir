@@ -1,3 +1,0 @@
-module Liri.WaylandServer.Private
-plugin liriwaylandserverprivateplugin
-classname LiriWaylandServerPrivatePlugin

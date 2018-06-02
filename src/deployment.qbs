@@ -14,8 +14,6 @@ Project {
         Depends { name: "fullscreen-shell"; required: false }
         Depends { name: "kms"; required: false }
         Depends { name: "liriplatformplugin"; required: false }
-        Depends { name: "liriwaylandserverplugin"; required: false }
-        Depends { name: "liriwaylandserverprivateplugin"; required: false }
         Depends { name: "lirixwaylandplugin"; required: false }
         Depends { name: "LiriEglFS"; required: false }
         Depends { name: "LiriEglFS-pkgconfig"; required: false }
