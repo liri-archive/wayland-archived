@@ -24,10 +24,6 @@ Project {
         Depends { name: "LiriLogind"; required: false }
         Depends { name: "LiriLogind-pkgconfig"; required: false }
         Depends { name: "LiriLogind-qbs"; required: false }
-        Depends { name: "LiriWaylandClient"; required: false }
-        Depends { name: "LiriWaylandClient-cmake"; required: false }
-        Depends { name: "LiriWaylandClient-pkgconfig"; required: false }
-        Depends { name: "LiriWaylandClient-qbs"; required: false }
         Depends { name: "LiriWaylandServer"; required: false }
         Depends { name: "LiriWaylandServer-pkgconfig"; required: false }
         Depends { name: "LiriWaylandServer-qbs"; required: false }

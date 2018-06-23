@@ -20,10 +20,8 @@ Project {
     references: [
         "src/deployment.qbs",
         "src/libs.qbs",
-        "src/client/client.qbs",
         "src/imports/imports.qbs",
         "src/plugins/plugins.qbs",
-        //"tests/auto/auto.qbs",
         "tests/manual/manual.qbs",
     ]
 }
