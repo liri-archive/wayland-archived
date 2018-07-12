@@ -17,7 +17,8 @@ LiriModuleProject {
                   { name: LiriUtils.quote("Qt.fontdatabase_support-private") },
                   { name: LiriUtils.quote("Qt.fb_support-private") },
                   { name: LiriUtils.quote("Qt.egl_support-private") },
-                  { name: LiriUtils.quote("Qt.platformcompositor_support-private") }],
+                  { name: LiriUtils.quote("Qt.platformcompositor_support-private") },
+                  { name: LiriUtils.quote("LiriPlatformHeaders") }],
         "cpp.defines": [LiriUtils.quote("QT_EGL_NO_X11")],
     })
 
@@ -46,6 +47,7 @@ LiriModuleProject {
         }
         Depends { name: "Qt5Udev" }
         Depends { name: "LiriLibInput-private" }
+        Depends { name: "LiriPlatformHeaders" }
         Depends { name: "LiriLogind" }
 
         cpp.defines: [

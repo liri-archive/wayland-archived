@@ -118,6 +118,9 @@ private:
     EGLNativeDisplayType nativeDisplay() const;
     void createInputHandlers();
 
+    static void enableScreenCaptureStatic(QScreen *screen);
+    static void disableScreenCaptureStatic(QScreen *screen);
+
     EGLDisplay m_display;
     QPlatformInputContext *m_inputContext;
     QScopedPointer<QPlatformFontDatabase> m_fontDb;

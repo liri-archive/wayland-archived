@@ -90,6 +90,9 @@ public:
 
     void handleCursorMove(const QPoint &pos);
 
+    bool isRecordingEnabled() const { return m_recordingEnabled; }
+    void setRecordingEnabled(bool enabled) { m_recordingEnabled = enabled; }
+
 private:
     void setPrimarySurface(EGLSurface surface);
 
@@ -97,6 +100,7 @@ private:
     QPointer<QWindow> m_pointerWindow;
     EGLSurface m_surface;
     QPlatformCursor *m_cursor;
+    bool m_recordingEnabled = true;
 
     friend class QEglFSWindow;
 };

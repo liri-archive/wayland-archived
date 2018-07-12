@@ -82,6 +82,7 @@
 #include <QtPlatformHeaders/QEGLNativeContext>
 
 #include <QtPlatformHeaders/qeglfsfunctions.h>
+#include <LiriPlatformHeaders/lirieglfsfunctions.h>
 
 using namespace Liri::Platform;
 
@@ -421,12 +422,29 @@ QPlatformNativeInterface::NativeResourceForContextFunction QEglFSIntegration::na
 
 QFunctionPointer QEglFSIntegration::platformFunction(const QByteArray &function) const
 {
+    if (function == Liri::Platform::EglFSFunctions::enableScreenCaptureIdentifier())
+        return QFunctionPointer(enableScreenCaptureStatic);
+    else if (function == Liri::Platform::EglFSFunctions::disableScreenCaptureIdentifier())
+        return QFunctionPointer(disableScreenCaptureStatic);
+
     return qt_egl_device_integration()->platformFunction(function);
 }
 
 void QEglFSIntegration::createInputHandlers()
 {
     m_liHandler.reset(new Liri::Platform::LibInputManager(this));
+}
+
+void QEglFSIntegration::enableScreenCaptureStatic(QScreen *screen)
+{
+    QEglFSScreen *platformScreen = static_cast<QEglFSScreen *>(screen->handle());
+    platformScreen->setRecordingEnabled(true);
+}
+
+void QEglFSIntegration::disableScreenCaptureStatic(QScreen *screen)
+{
+    QEglFSScreen *platformScreen = static_cast<QEglFSScreen *>(screen->handle());
+    platformScreen->setRecordingEnabled(false);
 }
 
 EGLNativeDisplayType QEglFSIntegration::nativeDisplay() const

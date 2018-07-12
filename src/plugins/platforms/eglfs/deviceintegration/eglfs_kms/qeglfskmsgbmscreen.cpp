@@ -45,11 +45,33 @@
 #include "qeglfsintegration_p.h"
 
 #include <QtCore/QLoggingCategory>
-
+#include <QOpenGLFunctions_3_0>
 #include <QtGui/private/qguiapplication_p.h>
 #include <QtFbSupport/private/qfbvthandler_p.h>
 
 #include <errno.h>
+
+static const char *formatGLError(GLenum err)
+{
+    switch(err) {
+    case GL_NO_ERROR:
+        return "GL_NO_ERROR";
+    case GL_INVALID_ENUM:
+        return "GL_INVALID_ENUM";
+    case GL_INVALID_VALUE:
+        return "GL_INVALID_VALUE";
+    case GL_INVALID_OPERATION:
+        return "GL_INVALID_OPERATION";
+    case GL_STACK_OVERFLOW:
+        return "GL_STACK_OVERFLOW";
+    case GL_STACK_UNDERFLOW:
+        return "GL_STACK_UNDERFLOW";
+    case GL_OUT_OF_MEMORY:
+        return "GL_OUT_OF_MEMORY";
+    default:
+        return (QLatin1String("0x") + QString::number(err, 16)).toLocal8Bit().constData();
+    }
+}
 
 QT_BEGIN_NAMESPACE
 
@@ -268,6 +290,12 @@ void QEglFSKmsGbmScreen::flip()
         return;
     }
 
+    // GBM surface is released on page flip so we should record
+    // the frame here, before it's presented
+    if (isRecordingEnabled())
+        recordFrame(m_gbm_bo_next, gbm_bo_get_width(m_gbm_bo_next),
+                    gbm_bo_get_height(m_gbm_bo_next));
+
     FrameBuffer *fb = framebufferForBufferObject(m_gbm_bo_next);
     ensureModeSet(fb->fb);
 
@@ -302,6 +330,58 @@ void QEglFSKmsGbmScreen::flip()
             }
         }
     }
+}
+
+void QEglFSKmsGbmScreen::recordFrame(EGLClientBuffer bo, int width, int height)
+{
+    // Create EGL image from BO
+    EGLImage image = eglCreateImage(display(), nullptr, EGL_NATIVE_PIXMAP_KHR, bo, nullptr);
+    if (image == EGL_NO_IMAGE_KHR) {
+        qCritical("Error creating EGLImage: %s", formatGLError(glGetError()));
+        return;
+    }
+
+    // Create GL 2D texture for framebuffer
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glEGLImageTargetTexture2DOES(GL_TEXTURE_2D, image);
+
+    // OpenGL 3.0 functions
+    auto glContext = QOpenGLContext::currentContext();
+    auto funcs = glContext->versionFunctions<QOpenGLFunctions_3_0>();
+
+    // Bind framebuffer to copy pixels from
+    GLuint framebuffer;
+    funcs->glGenFramebuffers(1, &framebuffer);
+    funcs->glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    funcs->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+    const GLenum status = funcs->glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+        qCritical("glCheckFramebufferStatus failed: %s", formatGLError(glGetError()));
+        funcs->glDeleteTextures(1, &texture);
+        funcs->glDeleteFramebuffers(1, &framebuffer);
+        eglDestroyImage(display(), image);
+        return;
+    }
+
+    // Capture to an image
+    QImage capture(QSize(width, height), QImage::Format_RGBA8888);
+    glViewport(0, 0, width, height);
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, capture.bits());
+
+    // Post the event
+    QCoreApplication::postEvent(QCoreApplication::instance(),
+                                new Liri::Platform::FrameCaptureEvent(capture));
+
+    // Free resources
+    funcs->glDeleteTextures(1, &texture);
+    funcs->glDeleteFramebuffers(1, &framebuffer);
+    eglDestroyImage(display(), image);
 }
 
 void QEglFSKmsGbmScreen::pageFlipHandler(int fd, unsigned int sequence, unsigned int tv_sec, unsigned int tv_usec, void *user_data)
