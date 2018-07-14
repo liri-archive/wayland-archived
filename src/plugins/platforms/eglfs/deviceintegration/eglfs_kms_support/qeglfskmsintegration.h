@@ -74,11 +74,16 @@ public:
     QKmsDevice *device() const;
     QKmsScreenConfig *screenConfig() const;
 
+    QFunctionPointer platformFunction(const QByteArray &function) const override;
+
 protected:
     virtual QKmsDevice *createDevice() = 0;
 
     QKmsDevice *m_device;
     QKmsScreenConfig *m_screenConfig;
+
+private:
+    static void setScreenScaleFactorStatic(QScreen *screen, qreal factor);
 };
 
 QT_END_NAMESPACE

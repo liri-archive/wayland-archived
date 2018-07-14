@@ -207,6 +207,35 @@ void QEglFSWindow::resetSurface()
     m_surface = eglCreateWindowSurface(display, m_config, m_window, NULL);
 }
 
+bool QEglFSWindow::resizeSurface(const QSize &size)
+{
+    EGLDisplay display = screen()->display();
+    EGLNativeWindowType window = qt_egl_device_integration()->createNativeWindow(this, size, m_format);
+    EGLSurface surface = eglCreateWindowSurface(display, m_config, window, NULL);
+
+    if (Q_UNLIKELY(surface == EGL_NO_SURFACE)) {
+        qt_egl_device_integration()->destroyNativeWindow(window);
+        return false;
+    }
+
+    // Keep track of the old surface
+    EGLSurface oldSurface = m_surface;
+    EGLNativeWindowType oldWindow = m_window;
+
+    // Switch to the new one
+    screen()->setPrimarySurface(surface);
+    m_window = window;
+    m_surface = surface;
+
+    // New surface created: destroy the old one
+    if (oldSurface != EGL_NO_SURFACE)
+        eglDestroySurface(display, oldSurface);
+    if (oldWindow)
+        qt_egl_device_integration()->destroyNativeWindow(oldWindow);
+
+    return true;
+}
+
 void QEglFSWindow::setVisible(bool visible)
 {
 #ifndef QT_NO_OPENGL

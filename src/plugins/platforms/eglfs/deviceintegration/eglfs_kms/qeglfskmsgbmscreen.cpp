@@ -189,6 +189,11 @@ void QEglFSKmsGbmScreen::resetSurface()
     m_gbm_surface = nullptr;
 }
 
+void QEglFSKmsGbmScreen::setSurface(gbm_surface *surface)
+{
+    m_gbm_surface = surface;
+}
+
 void QEglFSKmsGbmScreen::initCloning(QPlatformScreen *screenThisScreenClones,
                                      const QVector<QPlatformScreen *> &screensCloningThisScreen)
 {
@@ -249,7 +254,7 @@ void QEglFSKmsGbmScreen::ensureModeSet(uint32_t fb)
 
 void QEglFSKmsGbmScreen::waitForFlip()
 {
-    if (m_headless || m_cloneSource)
+    if (m_headless || m_cloneSource || modeChangeRequested())
         return;
 
     // Don't lock the mutex unless we actually need to
@@ -278,6 +283,9 @@ void QEglFSKmsGbmScreen::flip()
         qWarning("Screen %s clones another screen. swapBuffers() not allowed.", qPrintable(name()));
         return;
     }
+
+    if (modeChangeRequested())
+        return;
 
     if (!m_gbm_surface) {
         qWarning("Cannot sync before platform init!");

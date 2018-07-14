@@ -68,6 +68,7 @@ public:
 
     QSizeF physicalSize() const override;
     QDpi logicalDpi() const override;
+    qreal pixelDensity() const override;
     Qt::ScreenOrientation nativeOrientation() const override;
     Qt::ScreenOrientation orientation() const override;
 
@@ -85,6 +86,7 @@ public:
     QVector<QPlatformScreen::Mode> modes() const override;
 
     int currentMode() const override;
+    void setCurrentMode(int modeIndex);
     int preferredMode() const override;
 
     QKmsDevice *device() const { return m_device; }
@@ -99,12 +101,16 @@ public:
     QPlatformScreen::PowerState powerState() const override;
     void setPowerState(QPlatformScreen::PowerState state) override;
 
+    qreal scaleFactor() const;
+    void setScaleFactor(qreal value);
+
 protected:
     QKmsDevice *m_device;
 
     QKmsOutput m_output;
     QEdidParser m_edid;
     QPoint m_pos;
+    qreal m_scaleFactor = -1;
 
     QList<QPlatformScreen *> m_siblings;
 

@@ -90,6 +90,9 @@ public:
 
     void handleCursorMove(const QPoint &pos);
 
+    virtual bool modeChangeRequested() const { return m_modeChangeRequested; }
+    virtual void setModeChangeRequested(bool enabled) { m_modeChangeRequested = enabled; }
+
     bool isRecordingEnabled() const { return m_recordingEnabled; }
     void setRecordingEnabled(bool enabled) { m_recordingEnabled = enabled; }
 
@@ -100,6 +103,7 @@ private:
     QPointer<QWindow> m_pointerWindow;
     EGLSurface m_surface;
     QPlatformCursor *m_cursor;
+    bool m_modeChangeRequested = false;
     bool m_recordingEnabled = true;
 
     friend class QEglFSWindow;

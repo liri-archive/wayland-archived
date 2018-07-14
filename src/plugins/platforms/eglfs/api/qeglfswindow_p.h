@@ -101,6 +101,7 @@ public:
 
     void invalidateSurface() override;
     virtual void resetSurface();
+    virtual bool resizeSurface(const QSize &size);
 
 #ifndef QT_NO_OPENGL
     QOpenGLCompositorBackingStore *backingStore() { return m_backingStore; }

@@ -61,6 +61,7 @@ public:
 
     gbm_surface *createSurface();
     void resetSurface();
+    void setSurface(gbm_surface *surface);
 
     void initCloning(QPlatformScreen *screenThisScreenClones,
                      const QVector<QPlatformScreen *> &screensCloningThisScreen);

@@ -48,6 +48,8 @@
 
 #include <QtCore/QLoggingCategory>
 #include <QtGui/QScreen>
+#include <QtGui/QWindow>
+#include <qpa/qwindowsysteminterface.h>
 
 #include <Qt5Udev/Udev>
 #include <Qt5Udev/UdevEnumerate>
@@ -103,6 +105,24 @@ EGLDisplay QEglFSKmsGbmIntegration::createDisplay(EGLNativeDisplayType nativeDis
     return display;
 }
 
+EGLNativeWindowType QEglFSKmsGbmIntegration::createNativeWindow(QPlatformWindow *platformWindow,
+                                                                const QSize &size,
+                                                                const QSurfaceFormat &format)
+{
+    Q_UNUSED(platformWindow);
+    Q_UNUSED(format);
+    Q_ASSERT(device());
+
+    //uint32_t gbmFormat = drmFormatToGbmFormat(m_output.drm_format);
+
+    gbm_surface *surface =
+            gbm_surface_create(static_cast<QEglFSKmsGbmDevice *>(device())->gbmDevice(),
+                               size.width(), size.height(), GBM_FORMAT_XRGB8888,
+                               GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING);
+
+    return reinterpret_cast<EGLNativeWindowType>(surface);
+}
+
 EGLNativeWindowType QEglFSKmsGbmIntegration::createNativeOffscreenWindow(const QSurfaceFormat &format)
 {
     Q_UNUSED(format);
@@ -137,7 +157,27 @@ void QEglFSKmsGbmIntegration::presentBuffer(QPlatformSurface *surface)
 {
     QWindow *window = static_cast<QWindow *>(surface->surface());
     QEglFSKmsGbmScreen *screen = static_cast<QEglFSKmsGbmScreen *>(window->screen()->handle());
-    screen->flip();
+    if (!screen->modeChangeRequested())
+        screen->flip();
+}
+
+QEglFSWindow *QEglFSKmsGbmIntegration::createWindow(QWindow *window) const
+{
+    return new QEglFSKmsGbmWindow(window, this);
+}
+
+QFunctionPointer QEglFSKmsGbmIntegration::platformFunction(const QByteArray &function) const
+{
+    auto returnValue = QEglFSKmsIntegration::platformFunction(function);
+    if (returnValue)
+        return returnValue;
+
+    if (function == Liri::Platform::EglFSFunctions::setScreenPositionIdentifier())
+        return QFunctionPointer(setScreenPositionStatic);
+    else if (function == Liri::Platform::EglFSFunctions::setScreenModeIdentifier())
+        return QFunctionPointer(setScreenModeStatic);
+
+    return nullptr;
 }
 
 QKmsDevice *QEglFSKmsGbmIntegration::createDevice()
@@ -162,9 +202,41 @@ QKmsDevice *QEglFSKmsGbmIntegration::createDevice()
     return new QEglFSKmsGbmDevice(screenConfig(), path);
 }
 
-QEglFSWindow *QEglFSKmsGbmIntegration::createWindow(QWindow *window) const
+void QEglFSKmsGbmIntegration::setScreenPositionStatic(QScreen *screen, const QPoint &pos)
 {
-    return new QEglFSKmsGbmWindow(window, this);
+    QEglFSKmsGbmScreen *gbmScreen = static_cast<QEglFSKmsGbmScreen *>(screen->handle());
+    gbmScreen->setVirtualPosition(pos);
+}
+
+void QEglFSKmsGbmIntegration::setScreenModeStatic(QScreen *screen, int modeIndex)
+{
+    QEglFSKmsGbmScreen *gbmScreen = static_cast<QEglFSKmsGbmScreen *>(screen->handle());
+
+    if (modeIndex < 0 || modeIndex > gbmScreen->modes().size() - 1) {
+        qCWarning(qLcEglfsKmsDebug) << "Invalid screen mode index" << modeIndex;
+        return;
+    }
+
+    gbmScreen->setModeChangeRequested(true);
+
+    QPlatformScreen::Mode mode = gbmScreen->modes().at(modeIndex);
+
+    for (auto window : QGuiApplication::topLevelWindows()) {
+        if (window->screen() == screen) {
+            QEglFSKmsGbmWindow *gbmWindow = static_cast<QEglFSKmsGbmWindow *>(window->handle());
+            if (gbmWindow->resizeSurface(mode.size)) {
+                gbmScreen->setSurface(reinterpret_cast<gbm_surface *>(gbmWindow->eglWindow()));
+                gbmScreen->setCurrentMode(modeIndex);
+                gbmWindow->setGeometry(QRect());
+                //QWindowSystemInterface::handleGeometryChange(gbmWindow->window(), gbmScreen->rawGeometry());
+            }
+            break;
+        }
+    }
+
+    gbmScreen->setModeChangeRequested(false);
+
+    //QWindowSystemInterface::handleScreenGeometryChange(screen, gbmScreen->geometry(), gbmScreen->availableGeometry());
 }
 
 QT_END_NAMESPACE

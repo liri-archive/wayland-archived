@@ -50,6 +50,8 @@
 #include <xf86drm.h>
 #include <xf86drmMode.h>
 
+#include <LiriPlatformHeaders/lirieglfsfunctions.h>
+
 QT_BEGIN_NAMESPACE
 
 Q_LOGGING_CATEGORY(qLcEglfsKmsDebug, "qt.qpa.eglfs.kms")
@@ -149,6 +151,20 @@ QKmsDevice *QEglFSKmsIntegration::device() const
 QKmsScreenConfig *QEglFSKmsIntegration::screenConfig() const
 {
     return m_screenConfig;
+}
+
+QFunctionPointer QEglFSKmsIntegration::platformFunction(const QByteArray &function) const
+{
+    if (function == Liri::Platform::EglFSFunctions::setScreenScaleFactorIdentifier())
+        return QFunctionPointer(setScreenScaleFactorStatic);
+
+    return nullptr;
+}
+
+void QEglFSKmsIntegration::setScreenScaleFactorStatic(QScreen *screen, qreal factor)
+{
+    QEglFSKmsScreen *kmsScreen = static_cast<QEglFSKmsScreen *>(screen->handle());
+    kmsScreen->setScaleFactor(factor);
 }
 
 QT_END_NAMESPACE

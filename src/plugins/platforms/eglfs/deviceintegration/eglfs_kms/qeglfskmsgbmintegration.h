@@ -61,6 +61,9 @@ public:
     ~QEglFSKmsGbmIntegration();
 
     EGLDisplay createDisplay(EGLNativeDisplayType nativeDisplay) override;
+    EGLNativeWindowType createNativeWindow(QPlatformWindow *platformWindow,
+                                           const QSize &size,
+                                           const QSurfaceFormat &format);
     EGLNativeWindowType createNativeOffscreenWindow(const QSurfaceFormat &format) override;
     void destroyNativeWindow(EGLNativeWindowType window) override;
 
@@ -68,11 +71,16 @@ public:
     void presentBuffer(QPlatformSurface *surface) override;
     QEglFSWindow *createWindow(QWindow *window) const override;
 
+    QFunctionPointer platformFunction(const QByteArray &function) const override;
+
 protected:
     QKmsDevice *createDevice() override;
 
 private:
     QtUdev::Udev *m_udev;
+
+    static void setScreenPositionStatic(QScreen *screen, const QPoint &pos);
+    static void setScreenModeStatic(QScreen *screen, int modeIndex);
 };
 
 QT_END_NAMESPACE

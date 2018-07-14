@@ -57,6 +57,7 @@ public:
     { }
     void resetSurface() override;
     void invalidateSurface() override;
+    bool resizeSurface(const QSize &size) override;
 
 private:
     const QEglFSKmsGbmIntegration *m_integration;

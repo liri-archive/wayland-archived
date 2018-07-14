@@ -77,4 +77,50 @@ void QEglFSKmsGbmWindow::invalidateSurface()
     gbmScreen->resetSurface();
 }
 
+bool QEglFSKmsGbmWindow::resizeSurface(const QSize &size)
+{
+    QEglFSKmsGbmIntegration *integration = const_cast<QEglFSKmsGbmIntegration *>(m_integration);
+    QEglFSKmsGbmScreen *gbmScreen = static_cast<QEglFSKmsGbmScreen *>(screen());
+    EGLDisplay display = gbmScreen->display();
+    // One fullscreen window per screen -> the native window is simply the gbm_surface the screen created.
+    EGLNativeWindowType window = integration->createNativeWindow(this, size, m_format);
+
+    PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC createPlatformWindowSurface = nullptr;
+    const char *extensions = eglQueryString(EGL_NO_DISPLAY, EGL_EXTENSIONS);
+    if (extensions && (strstr(extensions, "EGL_KHR_platform_gbm") || strstr(extensions, "EGL_MESA_platform_gbm"))) {
+        createPlatformWindowSurface = reinterpret_cast<PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC>(
+            eglGetProcAddress("eglCreatePlatformWindowSurfaceEXT"));
+    }
+
+    EGLSurface surface = EGL_NO_SURFACE;
+
+    if (createPlatformWindowSurface) {
+        surface = createPlatformWindowSurface(display, m_config, reinterpret_cast<void *>(window), nullptr);
+    } else {
+        qCDebug(qLcEglfsKmsDebug, "No eglCreatePlatformWindowSurface for GBM, falling back to eglCreateWindowSurface");
+        surface = eglCreateWindowSurface(display, m_config, window, nullptr);
+    }
+
+    if (Q_UNLIKELY(surface == EGL_NO_SURFACE)) {
+        integration->destroyNativeWindow(window);
+        return false;
+    }
+
+    // Keep track of the old surface
+    EGLSurface oldSurface = m_surface;
+    EGLNativeWindowType oldWindow = m_window;
+
+    // Switch to the new one
+    m_window = window;
+    m_surface = surface;
+
+    // New surface created: destroy the old one
+    if (oldSurface != EGL_NO_SURFACE)
+        eglDestroySurface(display, oldSurface);
+    if (oldWindow)
+        integration->destroyNativeWindow(oldWindow);
+
+    return true;
+}
+
 QT_END_NAMESPACE

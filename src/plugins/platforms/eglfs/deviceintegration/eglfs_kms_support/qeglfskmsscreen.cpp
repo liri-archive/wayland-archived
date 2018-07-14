@@ -170,6 +170,13 @@ QDpi QEglFSKmsScreen::logicalDpi() const
         return QDpi(100, 100);
 }
 
+qreal QEglFSKmsScreen::pixelDensity() const
+{
+    if (m_scaleFactor > 0)
+        return m_scaleFactor;
+    return qMax(1, qRound(logicalDpi().first / qreal(100)));
+}
+
 Qt::ScreenOrientation QEglFSKmsScreen::nativeOrientation() const
 {
     return Qt::PrimaryOrientation;
@@ -235,6 +242,15 @@ int QEglFSKmsScreen::currentMode() const
     return m_output.mode;
 }
 
+void QEglFSKmsScreen::setCurrentMode(int modeIndex)
+{
+    if (m_output.mode == modeIndex)
+        return;
+
+    m_output.mode = modeIndex;
+    m_output.mode_set = false;
+}
+
 int QEglFSKmsScreen::preferredMode() const
 {
     return m_output.preferred_mode;
@@ -254,6 +270,16 @@ void QEglFSKmsScreen::setPowerState(QPlatformScreen::PowerState state)
 {
     m_output.setPowerState(m_device, state);
     m_powerState = state;
+}
+
+qreal QEglFSKmsScreen::scaleFactor() const
+{
+    return m_scaleFactor;
+}
+
+void QEglFSKmsScreen::setScaleFactor(qreal value)
+{
+    m_scaleFactor = value;
 }
 
 QT_END_NAMESPACE
