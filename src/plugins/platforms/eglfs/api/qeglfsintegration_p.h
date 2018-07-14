@@ -57,6 +57,8 @@
 #include <qpa/qplatformnativeinterface.h>
 #include <qpa/qplatformscreen.h>
 
+#include <LiriPlatformHeaders/lirieglfsfunctions.h>
+
 namespace Liri {
 namespace Platform {
 class LibInputManager;
@@ -117,6 +119,9 @@ public:
 private:
     EGLNativeDisplayType nativeDisplay() const;
     void createInputHandlers();
+
+    static Liri::Platform::EglFSFunctions::PowerState getPowerStateStatic(QScreen *screen);
+    static void setPowerStateStatic(QScreen *screen, Liri::Platform::EglFSFunctions::PowerState powerState);
 
     static void enableScreenCaptureStatic(QScreen *screen);
     static void disableScreenCaptureStatic(QScreen *screen);

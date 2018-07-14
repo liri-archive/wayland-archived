@@ -82,7 +82,6 @@
 #include <QtPlatformHeaders/QEGLNativeContext>
 
 #include <QtPlatformHeaders/qeglfsfunctions.h>
-#include <LiriPlatformHeaders/lirieglfsfunctions.h>
 
 using namespace Liri::Platform;
 
@@ -422,7 +421,11 @@ QPlatformNativeInterface::NativeResourceForContextFunction QEglFSIntegration::na
 
 QFunctionPointer QEglFSIntegration::platformFunction(const QByteArray &function) const
 {
-    if (function == Liri::Platform::EglFSFunctions::enableScreenCaptureIdentifier())
+    if (function == Liri::Platform::EglFSFunctions::getPowerStateIdentifier())
+        return QFunctionPointer(getPowerStateStatic);
+    else if (function == Liri::Platform::EglFSFunctions::setPowerStateIdentifier())
+        return QFunctionPointer(setPowerStateStatic);
+    else if (function == Liri::Platform::EglFSFunctions::enableScreenCaptureIdentifier())
         return QFunctionPointer(enableScreenCaptureStatic);
     else if (function == Liri::Platform::EglFSFunctions::disableScreenCaptureIdentifier())
         return QFunctionPointer(disableScreenCaptureStatic);
@@ -433,6 +436,40 @@ QFunctionPointer QEglFSIntegration::platformFunction(const QByteArray &function)
 void QEglFSIntegration::createInputHandlers()
 {
     m_liHandler.reset(new Liri::Platform::LibInputManager(this));
+}
+
+Liri::Platform::EglFSFunctions::PowerState QEglFSIntegration::getPowerStateStatic(QScreen *screen)
+{
+    QPlatformScreen::PowerState powerState = screen->handle()->powerState();
+    switch (powerState) {
+    case QPlatformScreen::PowerStateOn:
+        return Liri::Platform::EglFSFunctions::PowerStateOn;
+    case QPlatformScreen::PowerStateOff:
+        return Liri::Platform::EglFSFunctions::PowerStateOff;
+    case QPlatformScreen::PowerStateStandby:
+        return Liri::Platform::EglFSFunctions::PowerStateStandby;
+    case QPlatformScreen::PowerStateSuspend:
+        return Liri::Platform::EglFSFunctions::PowerStateSuspend;
+    }
+    Q_UNREACHABLE();
+}
+
+void QEglFSIntegration::setPowerStateStatic(QScreen *screen, Liri::Platform::EglFSFunctions::PowerState powerState)
+{
+    switch (powerState) {
+    case Liri::Platform::EglFSFunctions::PowerStateOn:
+        screen->handle()->setPowerState(QPlatformScreen::PowerStateOn);
+        break;
+    case Liri::Platform::EglFSFunctions::PowerStateOff:
+        screen->handle()->setPowerState(QPlatformScreen::PowerStateOff);
+        break;
+    case Liri::Platform::EglFSFunctions::PowerStateStandby:
+        screen->handle()->setPowerState(QPlatformScreen::PowerStateStandby);
+        break;
+    case Liri::Platform::EglFSFunctions::PowerStateSuspend:
+        screen->handle()->setPowerState(QPlatformScreen::PowerStateSuspend);
+        break;
+    }
 }
 
 void QEglFSIntegration::enableScreenCaptureStatic(QScreen *screen)
