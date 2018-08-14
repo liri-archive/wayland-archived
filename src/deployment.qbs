@@ -12,7 +12,6 @@ Project {
         archiver.outputDirectory: project.buildDirectory
 
         Depends { name: "fullscreen-shell"; required: false }
-        Depends { name: "lirixwaylandplugin"; required: false }
         Depends { name: "LiriEglFSDeviceIntegration"; required: false }
         Depends { name: "LiriEglFSDeviceIntegration-qbs"; required: false }
         Depends { name: "LiriLibInput"; required: false }
