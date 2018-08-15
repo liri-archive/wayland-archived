@@ -39,11 +39,13 @@ void FullScreenShellSurface::setType(Qt::WindowType type, QWaylandWindow *transi
     Q_UNUSED(type);
     Q_UNUSED(transientParent);
 
+    auto screen = static_cast<QWaylandScreen *>(m_window->screen());
+
     // setType is called after the wl_surface is initialized by QWaylandWindow,
     // we should be safe calling present_surface() here
     m_shell->present_surface(m_window->object(),
                              QtWayland::zwp_fullscreen_shell_v1::present_method_default,
-                             m_window->screen()->output());
+                             screen->output());
 }
 
 } // namespace QtWaylandClient
